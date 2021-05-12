@@ -1,30 +1,26 @@
 {
   "implicitDependencies": {
-    "package.json": {
-      "dependencies": "*",
-      "devDependencies": "*"
-    },
-    ".eslintrc.json": "*"
+    "angular.json": "*",
+    "package.json": { "dependencies": "*", "devDependencies": "*" },
+    ".eslintrc.json": "*",
+    "nx.json": "*"
   },
-  "affected": {
-    "defaultBase": "master"
-  },
-  "npmScope": "intuiface-sdk",
+  "affected": { "defaultBase": "master" },
+  "npmScope": "intuiface-cdk",
   "tasksRunnerOptions": {
     "default": {
       "runner": "@nrwl/workspace/tasks-runners/default",
-      "options": {
-        "cacheableOperations": ["build", "lint", "test", "e2e"]
-      }
+      "options": { "cacheableOperations": ["build", "lint", "test", "e2e"] }
     }
   },
   "projects": {
-    "sdk": {
-      "tags": []
-    },
-    "sdk-e2e": {
-      "tags": [],
-      "implicitDependencies": ["sdk"]
-    }
+    "cdk": { "tags": [] },
+    "cdk-e2e": { "tags": [], "implicitDependencies": ["cdk"] },
+    "core": { "tags": [] },
+    "components": { "tags": [], "implicitDependencies": ["core"] },
+    "custom-asset-builder": { "tags": [] },
+    "interface-asset-builder": { "tags": [] },
+    "interface-asset-schematics": { "tags": [] },
+    "custom-asset-schematics": { "tags": [] }
   }
 }

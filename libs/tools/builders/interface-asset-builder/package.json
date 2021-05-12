@@ -1,0 +1,12 @@
+{
+  "name": "@intuiface/interface-asset-builder",
+  "version": "1.0.0",
+  "description": "Builder for Intuiface Component plugin",
+  "builders": "builders.json",
+  "scripts": {
+    "build": "tsc -p ./tsconfig.builders.json"
+  },
+  "peerDependencies": {
+    "webpack": "*"
+  }
+}

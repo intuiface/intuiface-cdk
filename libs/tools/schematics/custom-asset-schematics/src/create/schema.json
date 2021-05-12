@@ -1,0 +1,27 @@
+{
+    "$schema": "http://json-schema.org/schema",
+    "id": "custom-asset",
+    "title": "ng new options schema",
+    "type": "object",
+    "description": "Initialise a new project",
+    "properties": {
+        "customAssetName": {
+            "type": "string",
+            "description": "The name of the custom asset/collection",
+            "x-prompt": "What is your custom asset/collection name ? ",
+            "$default": {
+                "$source": "argv",
+                "index": 0
+            }
+        },
+        "isCollection": {
+            "type": "boolean",
+            "description": "Your custom asset is a collection",
+            "x-prompt": "Is it a collection (Y) ? or an asset (N) ? ",
+            "$default": {
+                "$source": "argv",
+                "index": 1
+            }
+        }
+    }
+}

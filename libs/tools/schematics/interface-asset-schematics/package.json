@@ -1,0 +1,20 @@
+{
+  "name": "@intuiface/interface-asset",
+  "version": "0.0.0",
+  "description": "Schematic to create an interface asset.",
+  "scripts": {
+    "build": "tsc -p tsconfig.json"
+  },
+  "keywords": [
+    "schematics"
+  ],
+  "author": "",
+  "license": "MIT",
+  "schematics": "./src/collection.json",
+  "peerDependencies": {
+    "@angular-devkit/core": "*",
+    "@angular-devkit/schematics": "*",
+    "@types/node": "*",
+    "typescript": "*"
+  }
+}

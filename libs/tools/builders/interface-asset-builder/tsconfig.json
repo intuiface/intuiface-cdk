@@ -2,22 +2,34 @@
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "./",
-    "rootDir": ".",
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,
     "downlevelIteration": true,
     "experimentalDecorators": true,
-    "module": "es2020",
+    "module": "commonjs",
     "moduleResolution": "node",
     "importHelpers": true,
     "target": "es2015",
     "typeRoots": ["node_modules/@types"],
+    "types": ["node"],
     "lib": ["es2018", "dom"],
     "paths": {
-      "@intuiface/core": ["libs/core/src/index.ts"],
-      "@intuiface/components": ["libs/components/src/index.ts"]
+      "other": ["dist/other/other", "dist/other"]
     }
   },
-  "exclude": ["node_modules", "tmp"]
+  "angularCompilerOptions": {
+    "fullTemplateTypeCheck": true,
+    "strictInjectionParameters": true
+  },
+  "files": [],
+  "include": [],
+  "references": [
+    {
+      "path": "./tsconfig.builders.json"
+    },
+    {
+      "path": "./tsconfig.builders.json"
+    }
+  ]
 }

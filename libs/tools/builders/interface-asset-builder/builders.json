@@ -1,0 +1,9 @@
+{
+  "builders": {
+    "IABuilder": {
+      "implementation": ".",
+      "schema": "./schema.json",
+      "description": "IA Builder"
+    }
+  }
+}

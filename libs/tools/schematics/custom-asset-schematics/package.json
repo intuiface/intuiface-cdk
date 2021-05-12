@@ -1,0 +1,21 @@
+{
+  "name": "@intuiface/custom-asset",
+  "version": "0.0.0",
+  "description": "Schematic to create a custom asset/collection",
+  "scripts": {
+    "build": "tsc -p tsconfig.json"
+  },
+  "keywords": [
+    "schematics"
+  ],
+  "author": "",
+  "license": "MIT",
+  "schematics": "./src/collection.json",
+  "peerDependencies": {
+    "@angular-devkit/core": "*",
+    "@angular-devkit/schematics": "*",
+    "@schematics/angular": "*",
+    "@types/node": "*",
+    "typescript": "*"
+  }
+}

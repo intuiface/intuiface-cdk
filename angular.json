@@ -3,7 +3,7 @@
   "cli": {
     "defaultCollection": "@nrwl/angular"
   },
-  "defaultProject": "sdk",
+  "defaultProject": "cdk",
   "schematics": {
     "@nrwl/angular": {
       "application": {
@@ -32,31 +32,30 @@
     }
   },
   "projects": {
-    "sdk": {
+    "cdk": {
       "projectType": "application",
-      "root": "apps/sdk",
-      "sourceRoot": "apps/sdk/src",
-      "prefix": "intuiface-sdk",
+      "root": "apps/cdk",
+      "sourceRoot": "apps/cdk/src",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/apps/sdk",
-            "index": "apps/sdk/src/index.html",
-            "main": "apps/sdk/src/main.ts",
-            "polyfills": "apps/sdk/src/polyfills.ts",
-            "tsConfig": "apps/sdk/tsconfig.app.json",
+            "outputPath": "dist/apps/cdk",
+            "index": "apps/cdk/src/index.html",
+            "main": "apps/cdk/src/main.ts",
+            "polyfills": "apps/cdk/src/polyfills.ts",
+            "tsConfig": "apps/cdk/tsconfig.app.json",
             "aot": true,
-            "assets": ["apps/sdk/src/favicon.ico", "apps/sdk/src/assets"],
-            "styles": ["apps/sdk/src/styles.scss"],
+            "assets": ["apps/cdk/src/favicon.ico", "apps/cdk/src/assets"],
+            "styles": ["apps/cdk/src/styles.scss"],
             "scripts": []
           },
           "configurations": {
             "production": {
               "fileReplacements": [
                 {
-                  "replace": "apps/sdk/src/environments/environment.ts",
-                  "with": "apps/sdk/src/environments/environment.prod.ts"
+                  "replace": "apps/cdk/src/environments/environment.ts",
+                  "with": "apps/cdk/src/environments/environment.prod.ts"
                 }
               ],
               "optimization": true,
@@ -84,62 +83,306 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "sdk:build"
+            "browserTarget": "cdk:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "sdk:build:production"
+              "browserTarget": "cdk:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "sdk:build"
+            "browserTarget": "cdk:build"
           }
         },
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": [
-              "apps/sdk/src/**/*.ts",
-              "apps/sdk/src/**/*.html"
+              "apps/cdk/src/**/*.ts",
+              "apps/cdk/src/**/*.html"
             ]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/apps/sdk"],
+          "outputs": ["coverage/apps/cdk"],
           "options": {
-            "jestConfig": "apps/sdk/jest.config.js",
+            "jestConfig": "apps/cdk/jest.config.js",
             "passWithNoTests": true
           }
         }
       }
     },
-    "sdk-e2e": {
-      "root": "apps/sdk-e2e",
-      "sourceRoot": "apps/sdk-e2e/src",
+    "cdk-e2e": {
+      "root": "apps/cdk-e2e",
+      "sourceRoot": "apps/cdk-e2e/src",
       "projectType": "application",
       "architect": {
         "e2e": {
           "builder": "@nrwl/cypress:cypress",
           "options": {
-            "cypressConfig": "apps/sdk-e2e/cypress.json",
-            "tsConfig": "apps/sdk-e2e/tsconfig.e2e.json",
-            "devServerTarget": "sdk:serve"
+            "cypressConfig": "apps/cdk-e2e/cypress.json",
+            "tsConfig": "apps/cdk-e2e/tsconfig.e2e.json",
+            "devServerTarget": "cdk:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "sdk:serve:production"
+              "devServerTarget": "cdk:serve:production"
             }
           }
         },
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["apps/sdk-e2e/**/*.{js,ts}"]
+            "lintFilePatterns": ["apps/cdk-e2e/**/*.{js,ts}"]
           }
+        }
+      }
+    },
+    "core": {
+      "projectType": "library",
+      "root": "libs/core",
+      "sourceRoot": "libs/core/src",
+      "architect": {
+        "build": {
+          "builder": "@nrwl/angular:package",
+          "options": {
+            "tsConfig": "libs/core/tsconfig.lib.json",
+            "project": "libs/core/ng-package.json",
+            "buildableProjectDepsInPackageJsonType": "dependencies"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "libs/core/tsconfig.lib.json"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/core/src/**/*.ts",
+              "libs/core/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/core"],
+          "options": {
+            "jestConfig": "libs/core/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "components": {
+      "projectType": "library",
+      "root": "libs/components",
+      "sourceRoot": "libs/components/src",
+      "architect": {
+        "build": {
+          "builder": "@nrwl/angular:package",
+          "options": {
+            "tsConfig": "libs/components/tsconfig.lib.json",
+            "project": "libs/components/ng-package.json",
+            "buildableProjectDepsInPackageJsonType": "dependencies"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "libs/components/tsconfig.lib.json"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/components/src/**/*.ts",
+              "libs/components/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/components"],
+          "options": {
+            "jestConfig": "libs/components/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "custom-asset-builder": {
+      "root": "libs/tools/builders/custom-asset-builder",
+      "sourceRoot": "libs/tools/builders/custom-asset-builder/src",
+      "projectType": "library",
+      "prefix": "intuiface",
+      "schematics": {},
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/tools/builders/custom-asset-builder/tsconfig.builder.json",
+              "libs/tools/builders/custom-asset-builder/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!libs/tools/builders/custom-asset-builder/**"
+            ]
+          }
+        },
+        "build": {
+          "builder": "@nrwl/node:package",
+          "options": {
+            "outputPath": "dist/libs/tools/custom-asset-builder",
+            "tsConfig": "libs/tools/builders/custom-asset-builder/tsconfig.builders.json",
+            "packageJson": "libs/tools/builders/custom-asset-builder/package.json",
+            "main": "libs/tools/builders/custom-asset-builder/src/index.ts",
+            "assets": [
+              "libs/tools/builders/custom-asset-builder/*.md",
+              "libs/tools/builders/custom-asset-builder/builders.json",
+              "libs/tools/builders/custom-asset-builder/schema.json"
+            ]
+          },
+          "outputs": [
+            "{options.outputPath}"
+          ]
+        }
+      }
+    },
+    "interface-asset-builder": {
+      "root": "libs/tools/builders/interface-asset-builder",
+      "sourceRoot": "libs/tools/builders/interface-asset-builder/src",
+      "projectType": "library",
+      "prefix": "intuiface",
+      "schematics": {},
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/tools/builders/interface-asset-builder/tsconfig.builder.json",
+              "libs/tools/builders/interface-asset-builder/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!libs/tools/builders/interface-asset-builder/**"
+            ]
+          }
+        },
+        "build": {
+          "builder": "@nrwl/node:package",
+          "options": {
+            "outputPath": "dist/libs/tools/interface-asset-builder",
+            "tsConfig": "libs/tools/builders/interface-asset-builder/tsconfig.builders.json",
+            "packageJson": "libs/tools/builders/interface-asset-builder/package.json",
+            "main": "libs/tools/builders/interface-asset-builder/src/index.ts",
+            "assets": [
+              "libs/tools/builders/interface-asset-builder/*.md",
+              "libs/tools/builders/interface-asset-builder/builders.json",
+              "libs/tools/builders/interface-asset-builder/schema.json"
+            ]
+          },
+          "outputs": [
+            "{options.outputPath}"
+          ]
+        }
+      }
+    },
+    "interface-asset-schematics": {
+      "root": "libs/tools/schematics/interface-asset-schematics",
+      "sourceRoot": "libs/tools/schematics/interface-asset-schematics/src",
+      "projectType": "library",
+      "prefix": "intuiface",
+      "schematics": {},
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/tools/schematics/interface-asset-schematics/tsconfig.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!libs/tools/schematics/interface-asset-schematics/**",
+              "libs/tools/schematics/interface-asset-schematics/src/create/files/**"
+            ]
+          }
+        },
+        "build": {
+          "builder": "@nrwl/node:package",
+          "options": {
+            "outputPath": "dist/libs/tools/interface-asset-schematics",
+            "tsConfig": "libs/tools/schematics/interface-asset-schematics/tsconfig.json",
+            "packageJson": "libs/tools/schematics/interface-asset-schematics/package.json",
+            "updateBuildableProjectDepsInPackageJson": false,
+            "main": "libs/tools/schematics/interface-asset-schematics/src/create/index.ts",
+            "assets": [
+              "libs/tools/schematics/interface-asset-schematics/*.md",
+              {
+                "glob": "**/*",
+                "input": "libs/tools/schematics/interface-asset-schematics/src/",
+                "output": "/src/",
+                "ignore": [
+                  "**/index.ts"
+                ]
+              }
+            ]
+          },
+          "outputs": [
+            "{options.outputPath}"
+          ]
+        }
+      }
+    },
+    "custom-asset-schematics": {
+      "root": "libs/tools/schematics/custom-asset-schematics",
+      "sourceRoot": "libs/tools/schematics/custom-asset-schematics/src",
+      "projectType": "library",
+      "prefix": "intuiface",
+      "schematics": {},
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/tools/schematics/custom-asset-schematics/tsconfig.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!libs/tools/schematics/custom-asset-schematics/**",
+              "libs/tools/schematics/custom-asset-schematics/src/create/files/**"
+            ]
+          }
+        },
+        "build": {
+          "builder": "@nrwl/node:package",
+          "options": {
+            "outputPath": "dist/libs/tools/custom-asset-schematics",
+            "tsConfig": "libs/tools/schematics/custom-asset-schematics/tsconfig.json",
+            "packageJson": "libs/tools/schematics/custom-asset-schematics/package.json",
+            "updateBuildableProjectDepsInPackageJson": false,
+            "main": "libs/tools/schematics/custom-asset-schematics/src/create/index.ts",
+            "assets": [
+              "libs/tools/schematics/custom-asset-schematics/*.md",
+              {
+                "glob": "**/*",
+                "input": "libs/tools/schematics/custom-asset-schematics/src/",
+                "output": "/src/",
+                "ignore": [
+                  "**/index.ts"
+                ]
+              }
+            ]
+          },
+          "outputs": [
+            "{options.outputPath}"
+          ]
         }
       }
     }

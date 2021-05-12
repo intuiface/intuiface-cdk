@@ -1,3 +1,7 @@
 module.exports = {
-  projects: ['<rootDir>/apps/sdk'],
+  projects: [
+    '<rootDir>/apps/cdk',
+    '<rootDir>/libs/core',
+    '<rootDir>/libs/components',
+  ],
 };

@@ -1,0 +1,9 @@
+<% if(isCollection) { %><div
+    [style.width]="element.container.width + 'px'"
+    [style.height]="element.container.height + 'px'">
+    <intuiface-element-container *ngFor="let item of element.visibleItems; let index = index; trackBy: trackByFn"
+        [element]="item"
+        [parentCollection]="element">
+    </intuiface-element-container>
+</div>
+<% } else %> <p>{{element.propertyExample}}</p>
