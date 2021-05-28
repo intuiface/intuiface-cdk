@@ -100,11 +100,11 @@ function patchWebpackConfig(config: webpack.Configuration, options: CustomAssetO
     const { customAssetName } = options;
 
     // Make sure we are producing a single bundle
-    delete config.entry.polyfills;
+    delete config.entry['polyfills'];
     delete config.entry['polyfills-es5'];
     delete config.optimization.runtimeChunk;
     delete config.optimization.splitChunks;
-    delete config.entry.styles;
+    delete config.entry['styles'];
 
     config.externals = {
         'rxjs': 'rxjs',
@@ -124,12 +124,12 @@ function patchWebpackConfig(config: webpack.Configuration, options: CustomAssetO
     if (ngCompilerPluginInstance)
     {
         // eslint-disable-next-line no-underscore-dangle
-        ngCompilerPluginInstance._entryModule = options.modulePath;
+        ngCompilerPluginInstance['_entryModule'] = options.modulePath;
     }
 
     // preserve path to entry point
     // so that we can clear use it within `run` method to clear that file
-    entryPointPath = config.entry.main[0];
+    entryPointPath = config.entry['main'][0];
 
     const [modulePath, moduleName] = options.modulePath.split('#');
 
