@@ -21,7 +21,7 @@ export function customAsset(_options: any): Rule {
 
         const templateSource = apply(url('./files'), [
             template({ ..._options, ...strings }),
-            move(`src/app/${  dasherize(name)}`)
+            move(`src/app/${dasherize(name)}`)
         ]);
         const merged = mergeWith(templateSource, MergeStrategy.Overwrite);
 
@@ -30,9 +30,10 @@ export function customAsset(_options: any): Rule {
             generateComponent(name),
             merged,
             renameFiles(name, isCollection),
-            modifyBuilder(name),
             addJsonDependencies(name),
-            installPackageJsonDependencies()
+            installPackageJsonDependencies(),
+            addModuleFederation(name),
+            moveWebpack(name)
         ]);
 
         return rule(tree, _context) as Rule;
@@ -47,7 +48,7 @@ export function customAsset(_options: any): Rule {
 function generateAngularRepo(name: string): Rule {
     return externalSchematic('@schematics/angular', 'ng-new', {
         name: name,
-        version: '11.2.9',
+        version: '12.0.2',
         directory: '.',
         routing: false,
         style: 'scss',
@@ -73,6 +74,18 @@ function generateComponent(name: string): Rule {
 }
 
 /**
+ * Add module federation
+ * @param name 
+ * @returns 
+ */
+function addModuleFederation(name: string): Rule {
+    return externalSchematic('@angular-architects/module-federation', 'ng-add', {
+        project: name,
+        port: '3000'
+    });
+}
+
+/**
  * Function to rename component/asset/collection files
  * @param name
  * @param isCollection
@@ -83,43 +96,36 @@ function renameFiles(name: string, isCollection: boolean): Rule{
         // delete the files we want to rename
         if (name !== dasherize(name))
         {
-            tree.delete(`src/app/${  dasherize(name)  }/${  dasherize(name)  }.component.ts`);
-            tree.delete(`src/app/${  dasherize(name)  }/${  dasherize(name)  }.component.html`);
+            tree.delete(`src/app/${dasherize(name)}/${dasherize(name)}.component.ts`);
+            tree.delete(`src/app/${dasherize(name)}/${dasherize(name)}.component.html`);
         }
         // rename files
         // manage type (asset or collection and change the name) => delete asset or collection
         if (isCollection)
         {
-            tree.delete(`src/app/${  dasherize(name)  }/${  name  }.asset.ts`);
-            tree.rename(`src/app/${  dasherize(name)  }/${  name  }.collection.ts`, `src/app/${  dasherize(name)  }/${  dasherize(name)  }.collection.ts`);
+            tree.delete(`src/app/${dasherize(name)}/${name}.asset.ts`);
+            tree.rename(`src/app/${dasherize(name)}/${name}.collection.ts`, `src/app/${dasherize(name)}/${dasherize(name)}.collection.ts`);
         }
         else
         {
-            tree.delete(`src/app/${  dasherize(name)  }/${  name  }.collection.ts`);
-            tree.rename(`src/app/${  dasherize(name)  }/${  name  }.asset.ts`, `src/app/${  dasherize(name)  }/${  dasherize(name)  }.asset.ts`);
+            tree.delete(`src/app/${dasherize(name)}/${name}.collection.ts`);
+            tree.rename(`src/app/${dasherize(name)}/${name}.asset.ts`, `src/app/${dasherize(name)}/${dasherize(name)}.asset.ts`);
         }
 
-        tree.rename(`src/app/${  dasherize(name)  }/${  name  }.component.ts`, `src/app/${  dasherize(name)  }/${  dasherize(name)  }.component.ts`);
-        tree.rename(`src/app/${  dasherize(name)  }/${  name  }.component.html`, `src/app/${  dasherize(name)  }/${  dasherize(name)  }.component.html`);
+        tree.rename(`src/app/${dasherize(name)}/${name}.component.ts`, `src/app/${dasherize(name)}/${dasherize(name)}.component.ts`);
+        tree.rename(`src/app/${dasherize(name)}/${name}.component.html`, `src/app/${dasherize(name)}/${dasherize(name)}.component.html`);
     };
 }
 
 /**
- * Function to replace the angular builder by our custom asset builder
+ * Function to move webpack file
  * @param name
  * @returns
  */
-function modifyBuilder(name: string): Rule{
+function moveWebpack(name: string): Rule {
     return (tree: Tree) => {
-        const path = 'angular.json';
-        const file = tree.read(path);
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
-        const json = JSON.parse(file!.toString());
-
-        json.projects[name].architect.build.builder = '@intuiface/custom-asset-builder:customAssetBuilder';
-
-        tree.overwrite(path, JSON.stringify(json, null, 2));
-        return tree;
+        tree.delete('webpack.config.js');
+        tree.rename(`src/app/${dasherize(name)}/webpack.config.js`, `webpack.config.js`);
     };
 }
 
@@ -135,13 +141,14 @@ function addJsonDependencies(name: string): Rule{
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
         const json = JSON.parse(file!.toString());
 
-        json.dependencies['@intuiface/core'] = 'file:../intuiface-player/dist/libs/core';
-        json.dependencies['@intuiface/components'] =  'file:../intuiface-player/dist/libs/components';
-        json.devDependencies['@intuiface/custom-asset-builder'] =  'file:../intuiface-player/dist/libs/tools/custom-asset-builder';
+        json.dependencies['@intuiface/core'] = 'file:../intuiface-cdk/dist/libs/core';
+        json.dependencies['@intuiface/components'] = 'file:../intuiface-cdk/dist/libs/components';
+        json.devDependencies['@angular-architects/module-federation'] = '^12.1.1';
+        json.devDependencies['@intuiface/custom-asset-schematics'] = 'file:../intuiface-cdk/dist/libs/tools/custom-asset-schematics';
 
         json.scripts = {
             ...json.scripts,
-            build: `ng build --project ${  name  } --aot --modulePath=./app/app.module#AppModule --customAssetName=${  name  } --outputPath=./dist/${  name  }`
+            build: `ng build --project ${name} --aot --outputPath=./dist/${name}`
         };
         tree.overwrite(path, JSON.stringify(json, null, 2));
         return tree;

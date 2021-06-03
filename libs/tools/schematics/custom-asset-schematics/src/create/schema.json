@@ -1,6 +1,6 @@
 {
     "$schema": "http://json-schema.org/schema",
-    "id": "custom-asset",
+    "$id": "custom-asset",
     "title": "ng new options schema",
     "type": "object",
     "description": "Initialise a new project",
