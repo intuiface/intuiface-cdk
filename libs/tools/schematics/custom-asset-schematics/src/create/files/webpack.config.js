@@ -1,7 +1,6 @@
 const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPlugin");
 const mf = require("@angular-architects/module-federation/webpack");
 const path = require("path");
-const webpack = require('webpack');
 
 const sharedMappings = new mf.SharedMappings();
 sharedMappings.register(
@@ -22,19 +21,16 @@ module.exports = {
         }
     },
     plugins: [
-        new webpack.optimize.LimitChunkCountPlugin({
-            maxChunks: 1,
-        }),
         new ModuleFederationPlugin({
 
-            library: {
-                type: "var",
-                name: "<%= classify(customAssetName) %>"
-            },
             name: '<%= classify(customAssetName) %>',
             filename: '<%= classify(customAssetName) %>.js',
             exposes: {
-                './<%= classify(customAssetName) %>': './src/app/<%= dasherize(customAssetName) %>/<%= dasherize(customAssetName) %>.component.ts',
+                './<%= classify(customAssetName) %>': 
+                {
+                    import: './src/app/<%= dasherize(customAssetName) %>/<%= dasherize(customAssetName) %>.component.ts',
+                    name: '<%= dasherize(customAssetName) %>.component'
+                },
             },
 
             shared: {

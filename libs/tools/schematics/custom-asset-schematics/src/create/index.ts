@@ -33,7 +33,8 @@ export function customAsset(_options: any): Rule {
             addJsonDependencies(name),
             installPackageJsonDependencies(),
             addModuleFederation(name),
-            moveWebpack(name)
+            moveWebpack(name),
+            modifyAngularBuildConfig(name)
         ]);
 
         return rule(tree, _context) as Rule;
@@ -148,7 +149,7 @@ function addJsonDependencies(name: string): Rule{
 
         json.scripts = {
             ...json.scripts,
-            build: `ng build --project ${name} --aot --outputPath=./dist/${name}`
+            build: `ng build --project ${name} --outputPath=./dist/${name}`
         };
         tree.overwrite(path, JSON.stringify(json, null, 2));
         return tree;
@@ -164,5 +165,37 @@ function installPackageJsonDependencies(): Rule {
         context.addTask(new NodePackageInstallTask());
         // context.logger.log('info', '🔍 Installing packages...');
         return host;
+    };
+}
+
+
+/**
+ * Function to replace the angular build configuration
+ * @param name
+ * @returns
+ */
+function modifyAngularBuildConfig(name: string): Rule {
+    return (tree: Tree) => {
+        const path = 'angular.json';
+        const file = tree.read(path);
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+        const json = JSON.parse(file!.toString());
+
+        // remove aot and build optimizer
+        json.projects[name].architect.build.configurations.production.aot = false;
+        json.projects[name].architect.build.configurations.production.buildOptimizer = false;
+        // add optimization
+        json.projects[name].architect.build.configurations.production.optimization = true;
+        // remove vendor chunk and common chunk
+        json.projects[name].architect.build.configurations.production.vendorChunk = false;
+        json.projects[name].architect.build.configurations.production.commonChunk = false;
+        // name the chunk
+        json.projects[name].architect.build.configurations.production.namedChunks = true;
+
+        // no output hashing
+        json.projects[name].architect.build.configurations.production.outputHashing = 'none';
+
+        tree.overwrite(path, JSON.stringify(json, null, 2));
+        return tree;
     };
 }

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Component, ElementRef } from '@angular/core';
+import { Component, ElementRef, Input } from '@angular/core';
 import { IntuifaceElement } from '@intuiface/core';
 
 /**
@@ -12,6 +12,7 @@ import { IntuifaceElement } from '@intuiface/core';
 })
 export class ElementComponent<T extends IntuifaceElement>
 {
+    @Input()
     public element: T;
 
     public constructor(protected elementReference: ElementRef)
