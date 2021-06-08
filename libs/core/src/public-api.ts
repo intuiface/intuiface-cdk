@@ -1,5 +1,3 @@
-export * from './lib/core.module';
-
 export { Property } from './lib/decorators/property';
 export { Trigger } from './lib/decorators/trigger';
 export { Action } from './lib/decorators/action';
