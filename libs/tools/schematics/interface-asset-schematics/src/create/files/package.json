@@ -15,10 +15,10 @@
     "ts-loader": "^8.1.0",
     "typescript": "^4.2.4",
     "webpack": "^5.31.2",
-    "webpack-cli": "^4.6.0",
-    "@intuiface/interface-asset-builder": "file:../intuiface-player/dist/libs/tools/interface-asset-builder"
+    "webpack-cli": "^4.6.0"
   },
   "dependencies": {
-    "@intuiface/core": "file:../intuiface-player/dist/libs/core"
+    "@intuiface/core": "file:../intuiface-player/dist/libs/core",
+    "tslib": "^2.2.0"
   }
 }
