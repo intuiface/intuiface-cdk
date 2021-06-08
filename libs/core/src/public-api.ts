@@ -7,4 +7,4 @@ export { Parameter } from './lib/decorators/parameter';
 export { Asset, Collection } from './lib/decorators/element.decorator';
 export { IntuifaceElement } from './lib/elements/element';
 export { ElementContainer } from './lib/elements/container';
-export { IntuifaceCollection } from './lib/elements/collection';
+export { IntuifaceCollection, ICollectionConfiguration } from './lib/elements/collection';

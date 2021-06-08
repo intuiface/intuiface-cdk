@@ -6,4 +6,7 @@ import { ElementContainer } from "./container";
 export class IntuifaceElement
 {
     public container: ElementContainer;
+
+    public initialize(configuration?: any): void {
+    }
 }

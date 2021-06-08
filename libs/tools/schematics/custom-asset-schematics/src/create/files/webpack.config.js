@@ -28,27 +28,31 @@ module.exports = {
             exposes: {
                 './<%= classify(customAssetName) %>': 
                 {
-                    import: './src/app/<%= dasherize(customAssetName) %>/<%= dasherize(customAssetName) %>.component.ts',
-                    name: '<%= dasherize(customAssetName) %>.component'
+                    import: './src/app/<%= dasherize(customAssetName) %>/<%= dasherize(customAssetName) %>.module.ts',
+                    name: '<%= dasherize(customAssetName) %>.module'
                 },
             },
 
             shared: {
                 "@angular/core": {
                     singleton: true,
-                    strictVersion: true
+                    strictVersion: false
                 },
                 "@angular/common": {
                     singleton: true,
-                    strictVersion: true
+                    strictVersion: false
                 },
                 "@angular/common/http": {
                     singleton: true,
-                    strictVersion: true
+                    strictVersion: false
                 },
                 "@angular/router": {
                     singleton: true,
-                    strictVersion: true
+                    strictVersion: false
+                },
+                "ngxd/core": {
+                    singleton: true,
+                    strictVersion: false
                 },
                 "@intuiface/core": {
                     singleton: true,

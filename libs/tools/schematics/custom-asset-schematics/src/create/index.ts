@@ -28,6 +28,7 @@ export function customAsset(_options: any): Rule {
         const rule = chain([
             generateAngularRepo(name),
             generateComponent(name),
+            generateModule(name),
             merged,
             renameFiles(name, isCollection),
             addJsonDependencies(name),
@@ -69,8 +70,15 @@ function generateComponent(name: string): Rule {
     return externalSchematic('@schematics/angular', 'component', {
         name: name,
         project: name,
-        module: 'app.module.ts',
         style: 'scss'
+    });
+}
+
+function generateModule(name: string): Rule {
+    return externalSchematic('@schematics/angular', 'module', {
+        name: name,
+        project: name,
+        module: 'app.module'
     });
 }
 
@@ -99,6 +107,7 @@ function renameFiles(name: string, isCollection: boolean): Rule{
         {
             tree.delete(`src/app/${dasherize(name)}/${dasherize(name)}.component.ts`);
             tree.delete(`src/app/${dasherize(name)}/${dasherize(name)}.component.html`);
+            tree.delete(`src/app/${dasherize(name)}/${dasherize(name)}.module.ts`);
         }
         // rename files
         // manage type (asset or collection and change the name) => delete asset or collection
@@ -115,6 +124,8 @@ function renameFiles(name: string, isCollection: boolean): Rule{
 
         tree.rename(`src/app/${dasherize(name)}/${name}.component.ts`, `src/app/${dasherize(name)}/${dasherize(name)}.component.ts`);
         tree.rename(`src/app/${dasherize(name)}/${name}.component.html`, `src/app/${dasherize(name)}/${dasherize(name)}.component.html`);
+
+        tree.rename(`src/app/${dasherize(name)}/${name}.module.ts`, `src/app/${dasherize(name)}/${dasherize(name)}.module.ts`);
     };
 }
 
@@ -181,6 +192,8 @@ function modifyAngularBuildConfig(name: string): Rule {
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
         const json = JSON.parse(file!.toString());
 
+
+        // PRODUCTION CONFIGURATION : 
         // remove aot and build optimizer
         json.projects[name].architect.build.configurations.production.aot = false;
         json.projects[name].architect.build.configurations.production.buildOptimizer = false;
@@ -191,9 +204,22 @@ function modifyAngularBuildConfig(name: string): Rule {
         json.projects[name].architect.build.configurations.production.commonChunk = false;
         // name the chunk
         json.projects[name].architect.build.configurations.production.namedChunks = true;
-
         // no output hashing
         json.projects[name].architect.build.configurations.production.outputHashing = 'none';
+
+
+        // DEV CONFIGURATION (serve)
+        // remove aot and build optimizer
+        json.projects[name].architect.build.configurations.development.aot = false;
+        json.projects[name].architect.build.configurations.development.buildOptimizer = false;
+        // add optimization
+        json.projects[name].architect.build.configurations.development.optimization = true;
+        // remove vendor chunk and common chunk
+        json.projects[name].architect.build.configurations.development.vendorChunk = false;
+        json.projects[name].architect.build.configurations.development.commonChunk = false;
+        // name the chunk
+        json.projects[name].architect.build.configurations.development.namedChunks = true;
+
 
         tree.overwrite(path, JSON.stringify(json, null, 2));
         return tree;
