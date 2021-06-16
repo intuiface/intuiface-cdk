@@ -56,7 +56,7 @@ export class <%= IAName %> extends IntuifaceElement {
     @Action({ displayName: 'Action Example' })
     public actionExample(
         @Parameter({
-        name: 'action parameter',
+        name: 'actionParam',
         displayName: 'Action parameter',
         description: 'An action parameter example.',
         type: Number

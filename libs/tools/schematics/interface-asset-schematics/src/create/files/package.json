@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "npx webpack --config webpack.config.js"
+    "build": "npx tsc --project tsconfig.ifd.json && node dist/index_ifd.js && npx webpack --config webpack.config.js"
   },
   "keywords": [],
   "author": "",
@@ -18,7 +18,7 @@
     "webpack-cli": "^4.6.0"
   },
   "dependencies": {
-    "@intuiface/core": "file:../intuiface-player/dist/libs/core",
+    "@intuiface/core": "file:../intuiface-cdk/dist/libs/core",
     "tslib": "^2.2.0"
   }
 }

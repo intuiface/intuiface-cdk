@@ -51,5 +51,12 @@ export interface IPropertyOptions
 export function Property(options?: IPropertyOptions)
 {
     return (target: any, propertyKey: string): void =>
-    {};
+    {
+        globalThis.intuiface_ifd_properties[propertyKey] = {
+            type: options.type,
+            description: options.description,
+            default: options.defaultValue,
+            readonly: options.readOnly
+        }
+    };
 }

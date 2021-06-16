@@ -56,5 +56,15 @@ export function Parameter(options?: IParameterOptions): Function
         propertyKey: string | symbol,
         parameterIndex: number
     ): void =>
-    {};
+    {
+        if (!globalThis.intuiface_ifd_params[propertyKey])
+        {
+            globalThis.intuiface_ifd_params[propertyKey] = {};
+        }
+        globalThis.intuiface_ifd_params[propertyKey][options.name] = {
+            type: options.type,
+            title: options.displayName
+        };
+
+    };
 }

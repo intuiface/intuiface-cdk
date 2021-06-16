@@ -45,5 +45,15 @@ export function Trigger(options?: ITriggerOptions)
         propertyKey: string | symbol,
         descriptor: PropertyDescriptor
     ): void =>
-    {};
+    {
+        let properties = {};
+        if (globalThis.intuiface_ifd_params[propertyKey]) {
+            properties = globalThis.intuiface_ifd_params[propertyKey];
+        }
+        globalThis.intuiface_ifd_triggers[propertyKey] = {
+            id: propertyKey,
+            title: options.displayName,
+            properties: properties
+        }
+    };
 }

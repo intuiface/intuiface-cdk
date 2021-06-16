@@ -34,5 +34,17 @@ export function Action(options?: IActionOptions)
         propertyKey: string | symbol,
         descriptor: PropertyDescriptor
     ): void =>
-    { };
+    {
+        let parameters = {};
+        if (globalThis.intuiface_ifd_params[propertyKey])
+        {
+            parameters = globalThis.intuiface_ifd_params[propertyKey];
+        }
+        globalThis.intuiface_ifd_actions[propertyKey] = {
+            id: globalThis.intuiface_ifd_name + '.' + propertyKey.toString(),
+            path: propertyKey,
+            description: options.description,
+            parameters: parameters
+        }
+    };
 }
