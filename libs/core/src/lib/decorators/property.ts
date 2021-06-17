@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import 'reflect-metadata';
+import { getTypeAndFormat } from '../types/convertible.type';
 
 /**
  * Options when use property decorator.
@@ -51,12 +52,17 @@ export interface IPropertyOptions
 export function Property(options?: IPropertyOptions)
 {
     return (target: any, propertyKey: string): void =>
-    {
+    {        
+        const typeAndFormat = getTypeAndFormat(options.type);
         globalThis.intuiface_ifd_properties[propertyKey] = {
-            type: options.type,
+            type: typeAndFormat.type,
             description: options.description,
             default: options.defaultValue,
             readonly: options.readOnly
+        }
+
+        if (typeAndFormat.format) {
+            globalThis.intuiface_ifd_properties[propertyKey].format = typeAndFormat.format;
         }
     };
 }

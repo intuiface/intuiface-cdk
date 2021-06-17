@@ -15,6 +15,7 @@ const ia = new <%= IAName %>();
 // create the ifd as json object 
 // and add metadatas filled from decorators
 globalThisAny.intuiface_ifd_file = {
+    version: "v1.0",
     name: '<%= IAName %>',
     protocol: 'ts',
     basePath: '<%= IAName %>',
@@ -31,13 +32,15 @@ globalThisAny.intuiface_ifd_file = {
         }
     },
     resources: {
+        'if.interfaceAsset': true,
         '<%= IAName %>': {
             id: '<%= IAName %>',
             "if.interfaceAsset": true,
-            methods: globalThisAny.intuiface_ifd_actions
+            methods: globalThisAny.intuiface_ifd_actions,
+            events: globalThisAny.intuiface_ifd_triggers
         }
     },
-    events: globalThisAny.intuiface_ifd_triggers
+    
 };
 
 
