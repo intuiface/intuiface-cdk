@@ -5,7 +5,8 @@
   "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "npx tsc --project tsconfig.ifd.json && node dist/index_ifd.js && npx webpack --config webpack.config.js"
+    "build": "npx tsc --project tsconfig.ifd.json && node tmp/index_ifd.js && npm run cleanTmp && npx webpack --config webpack.config.js",
+    "cleanTmp": "node -e \"require('fs-extra').remove('tmp/');\""
   },
   "keywords": [],
   "author": "",
@@ -15,7 +16,8 @@
     "ts-loader": "^8.1.0",
     "typescript": "^4.2.4",
     "webpack": "^5.31.2",
-    "webpack-cli": "^4.6.0"
+    "webpack-cli": "^4.6.0",
+    "fs-extra": "^10.0.0"
   },
   "dependencies": {
     "@intuiface/core": "file:../intuiface-cdk/dist/libs/core",

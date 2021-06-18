@@ -1,8 +1,9 @@
-const fs = require('fs');
+const fs = require('fs-extra');
 
 // create object to store metadatas
 const globalThisAny = globalThis as any;
 globalThisAny.intuiface_ifd_name = '<%= IAName %>';
+globalThisAny.intuiface_ifd_classes = [];
 globalThisAny.intuiface_ifd_properties = {};
 globalThisAny.intuiface_ifd_actions = {};
 globalThisAny.intuiface_ifd_params = {};
@@ -11,6 +12,26 @@ globalThisAny.intuiface_ifd_triggers = {};
 // import the IA
 import { <%= IAName %> } from './<%= IAName %>';
 const ia = new <%= IAName %>();
+
+
+let schemas: any = {};
+let resources: any = {};
+for(const name of globalThisAny.intuiface_ifd_classes)
+{
+    schemas[name] =  {
+            id: name,
+            type: 'object',
+            description: name,
+            properties: globalThisAny.intuiface_ifd_properties[name]
+        };
+
+    resources[name] = {
+            id: name,
+            "if.interfaceAsset": true,
+            methods: globalThisAny.intuiface_ifd_actions[name],
+            events: globalThisAny.intuiface_ifd_triggers[name]
+    }
+}
 
 // create the ifd as json object 
 // and add metadatas filled from decorators
@@ -23,29 +44,13 @@ globalThisAny.intuiface_ifd_file = {
         '<%= IAName %>.js',
         '<%= IAName %>.module.js'
     ],
-    schemas: {
-        '<%= IAName %>': {
-            id: '<%= IAName %>',
-            type: 'object',
-            description: '<%= IAName %>',
-            properties: globalThisAny.intuiface_ifd_properties
-        }
-    },
-    resources: {
-        'if.interfaceAsset': true,
-        '<%= IAName %>': {
-            id: '<%= IAName %>',
-            "if.interfaceAsset": true,
-            methods: globalThisAny.intuiface_ifd_actions,
-            events: globalThisAny.intuiface_ifd_triggers
-        }
-    },
-    
+    schemas: schemas,
+    resources: resources
 };
 
 
 // write the ifd file
-fs.writeFile("dist/<%= IAName %>.ifd", JSON.stringify(globalThisAny.intuiface_ifd_file), 'utf8', (err: any) => {
+fs.outputFile("dist/<%= IAName %>.ifd", JSON.stringify(globalThisAny.intuiface_ifd_file), 'utf8', (err: any) => {
     if (err) {
         console.log("An error occured while writing JSON Object to File.");
         return console.log(err);

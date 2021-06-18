@@ -35,12 +35,23 @@ export function Action(options?: IActionOptions)
         descriptor: PropertyDescriptor
     ): void =>
     {
+        // get target name
+        const targetName = target.constructor.name;
         let parameters = {};
-        if (globalThis.intuiface_ifd_params[propertyKey])
+        // check if some parameters are defined
+        if (globalThis.intuiface_ifd_params[targetName] && globalThis.intuiface_ifd_params[targetName][propertyKey])
         {
-            parameters = globalThis.intuiface_ifd_params[propertyKey];
+            // get them
+            parameters = globalThis.intuiface_ifd_params[targetName][propertyKey];
         }
-        globalThis.intuiface_ifd_actions[propertyKey] = {
+
+        if (!globalThis.intuiface_ifd_actions[targetName])
+        {
+            globalThis.intuiface_ifd_actions[targetName] ={};
+        }
+
+        // store all informations in object
+        globalThis.intuiface_ifd_actions[targetName][propertyKey] = {
             id: globalThis.intuiface_ifd_name + '.' + propertyKey.toString(),
             path: propertyKey,
             description: options.description,

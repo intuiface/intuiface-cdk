@@ -43,6 +43,11 @@ export interface IPropertyOptions
      * The type of the property
      */
     type?: any;
+
+    /**
+     * The item type in case the type is array
+     */
+    itemType?: any;
 }
 
 /**
@@ -53,16 +58,36 @@ export function Property(options?: IPropertyOptions)
 {
     return (target: any, propertyKey: string): void =>
     {        
+        // get target name
+        const targetName = target.constructor.name;
+
+        // get type and format to store in ifd
         const typeAndFormat = getTypeAndFormat(options.type);
-        globalThis.intuiface_ifd_properties[propertyKey] = {
+
+        if (!globalThis.intuiface_ifd_properties[targetName]) {
+            globalThis.intuiface_ifd_properties[targetName] = {};
+        }
+
+        // store values 
+        globalThis.intuiface_ifd_properties[targetName][propertyKey] = {
             type: typeAndFormat.type,
             description: options.description,
             default: options.defaultValue,
             readonly: options.readOnly
         }
 
+        // special case for array
+        if(typeAndFormat.type === "array" && options.itemType)
+        {
+            // store the item type
+            globalThis.intuiface_ifd_properties[targetName][propertyKey]["items"] = {
+                $ref: options.itemType.name
+            }
+        }
+
+        // add format if it's defined
         if (typeAndFormat.format) {
-            globalThis.intuiface_ifd_properties[propertyKey].format = typeAndFormat.format;
+            globalThis.intuiface_ifd_properties[targetName][propertyKey].format = typeAndFormat.format;
         }
     };
 }

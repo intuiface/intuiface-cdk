@@ -8,18 +8,7 @@ export class Path implements IConvertibleType {
 
     public constructor(value: string)
     {
-        // test if the value starts with http:// or file:// or ftp://
-        const regexPath = new RegExp(/^(https?|file|ftps?):\/\//i);
-        if (regexPath.test(value))
-        {
-            // create an url
-            this.url = new URL(value);
-        }
-        else
-        {
-            // create an url with the current location
-            this.url = new URL(value, window.location.href);
-        }
+        this.url = new URL(value, "https://intuiface-cdk.com");
     }
 
     /**

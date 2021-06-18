@@ -1,5 +1,4 @@
 const ModuleFederationPlugin = require("webpack").container.ModuleFederationPlugin;
-const path = require('path');
 
 module.exports = {
     module: {
