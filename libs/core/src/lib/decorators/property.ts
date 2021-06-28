@@ -83,6 +83,9 @@ export function Property(options?: IPropertyOptions)
             globalThis.intuiface_ifd_properties[targetName][propertyKey]["items"] = {
                 $ref: options.itemType.name
             }
+            // force array to be readOnly and delete default value
+            globalThis.intuiface_ifd_properties[targetName][propertyKey].readonly = true;
+            delete globalThis.intuiface_ifd_properties[targetName][propertyKey].default;
         }
 
         // add format if it's defined
