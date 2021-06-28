@@ -3,6 +3,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import 'reflect-metadata';
+import { getTypeAndFormat } from '../types/convertible.type';
 
 /**
  * Options when use parameter decorator.
@@ -56,5 +57,34 @@ export function Parameter(options?: IParameterOptions): Function
         propertyKey: string | symbol,
         parameterIndex: number
     ): void =>
-    {};
+    {
+        // get target name
+        let targetName = target.constructor.name;
+
+        if (!globalThis.intuiface_ifd_params[targetName]) {
+            globalThis.intuiface_ifd_params[targetName] = {};
+        }
+
+        // create the object if it doesn't exist
+        if (!globalThis.intuiface_ifd_params[targetName][propertyKey])
+        {
+            globalThis.intuiface_ifd_params[targetName][propertyKey] = {};
+        }
+
+        // get type and format to store in ifd
+        const typeAndFormat = getTypeAndFormat(options.type);
+
+        // store datas 
+        globalThis.intuiface_ifd_params[targetName][propertyKey][options.name] = {
+            type: typeAndFormat.type,
+            title: options.displayName
+        };
+
+        // add the format if defined
+        if(typeAndFormat.format)
+        {
+            globalThis.intuiface_ifd_params[targetName][propertyKey][options.name].format = typeAndFormat.format;
+        }
+
+    };
 }

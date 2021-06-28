@@ -1,7 +1,4 @@
-const path = require('path');
-const {
-    InterfaceAssetPluginBuilder
-} = require('@intuiface/interface-asset-builder');
+const ModuleFederationPlugin = require("webpack").container.ModuleFederationPlugin;
 
 module.exports = {
     module: {
@@ -11,19 +8,29 @@ module.exports = {
             exclude: /node_modules/
         }]
     },
+    output: {
+        publicPath: "auto",
+    },
     resolve: {
         extensions: ['.tsx', '.ts', '.js'],
     },
     plugins: [
-        // Adding the plugin with the default options
-        new InterfaceAssetPluginBuilder({
-            IAPath: './<%= IAName %>.ts#<%= IAName %>',
-            IAName: '<%= IAName %>'
+        new ModuleFederationPlugin({
+            name: "<%= IAName %>",
+            filename: "<%= IAName %>.js",
+            exposes: {
+                "./<%= IAName %>": {
+                    import : "./src/<%= IAName %>.ts",
+                    name: '<%= IAName %>.module'
+                }
+            },
+            shared: {
+                "@intuiface/core": {
+                    singleton: true,
+                    strictVersion: false
+                }
+            }
         })
     ],
-    entry: './src/index.js',
-    output: {
-        filename: '<%= IAName %>.js',
-        path: path.resolve(__dirname, 'dist')
-    },
+    entry: './src/index.js'
 };

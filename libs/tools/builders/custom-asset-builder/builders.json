@@ -1,9 +1,0 @@
-{
-  "builders": {
-    "customAssetBuilder": {
-      "implementation": ".",
-      "schema": "./schema.json",
-      "description": "Custom Asset Builder"
-    }
-  }
-}

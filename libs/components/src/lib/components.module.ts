@@ -1,8 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CoreModule } from '@intuiface/core';
+import { ElementContainerComponent } from './base/element-container.component';
 
 @NgModule({
-  imports: [CommonModule, CoreModule]
+  declarations: [ElementContainerComponent],
+  imports: [
+    CommonModule
+  ],
+  exports: [ElementContainerComponent]
 })
 export class ComponentsModule {}

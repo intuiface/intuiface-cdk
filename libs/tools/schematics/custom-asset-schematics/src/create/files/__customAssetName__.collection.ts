@@ -1,5 +1,5 @@
 import { TapBehavior, HomogeneousBehavior, CollectionBehavior } from '@intuiface/components';
-import { IntuifaceCollection, Collection, ElementContainer, Property, Parameter, Action, Trigger } from '@intuiface/core';
+import { IntuifaceCollection, Collection, ElementContainer, Property, Parameter, Action, Trigger, ICollectionConfiguration } from '@intuiface/core';
 /**
  * ExternalCollection
  */
@@ -64,6 +64,17 @@ export class <%= classify(customAssetName) %> extends IntuifaceCollection<Elemen
 
     //#endregion Triggers
 
+
+    /**
+     * Initialize default value of each property.
+     * @param configuration : configuration
+     */
+    public initialize(configuration?: ICollectionConfiguration): void {
+        super.initialize(configuration);
+
+        this._requestedStartIndex = 0;
+        this._requestedItemsCount = -1;
+    }
 }
 export interface <%= classify(customAssetName) %>
     extends IntuifaceCollection<ElementContainer>,

@@ -45,5 +45,26 @@ export function Trigger(options?: ITriggerOptions)
         propertyKey: string | symbol,
         descriptor: PropertyDescriptor
     ): void =>
-    {};
+    {
+        // get the target name
+        const targetName = target.constructor.name;
+        let properties = {};
+
+
+        if (!globalThis.intuiface_ifd_triggers[targetName]) {
+            globalThis.intuiface_ifd_triggers[targetName] = {};
+        }
+
+        // if there are some parameters already stored
+        if (globalThis.intuiface_ifd_params[targetName] && globalThis.intuiface_ifd_params[targetName][propertyKey]) {
+            // get them to store in trigger
+            properties = globalThis.intuiface_ifd_params[targetName][propertyKey];
+        }
+        // store trigger
+        globalThis.intuiface_ifd_triggers[targetName][options.name] = {
+            id: propertyKey,
+            title: options.displayName,
+            properties: properties
+        }
+    };
 }

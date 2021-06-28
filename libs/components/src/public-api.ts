@@ -7,3 +7,4 @@ export { TapBehavior } from './lib/behaviors/tap.behavior';
 export { CollectionBehavior } from './lib/behaviors/collectionBehaviors/collection.behavior';
 export { HomogeneousBehavior } from './lib/behaviors/collectionBehaviors/homogeneous.behavior';
 export { SelectionService } from './lib/services/selection.service';
+export { ElementContainerComponent } from './lib/base/element-container.component';

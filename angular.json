@@ -45,10 +45,15 @@
             "main": "apps/cdk/src/main.ts",
             "polyfills": "apps/cdk/src/polyfills.ts",
             "tsConfig": "apps/cdk/tsconfig.app.json",
-            "aot": true,
             "assets": ["apps/cdk/src/favicon.ico", "apps/cdk/src/assets"],
             "styles": ["apps/cdk/src/styles.scss"],
-            "scripts": []
+            "scripts": [],
+            "vendorChunk": true,
+            "extractLicenses": false,
+            "buildOptimizer": false,
+            "sourceMap": true,
+            "optimization": false,
+            "namedChunks": true
           },
           "configurations": {
             "production": {

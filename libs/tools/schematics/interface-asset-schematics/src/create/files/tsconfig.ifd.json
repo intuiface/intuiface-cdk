@@ -2,10 +2,10 @@
   "compileOnSave": false,
   "compilerOptions": {
     "experimentalDecorators": true,
-    "outDir": "./dist/",
+    "outDir": "./tmp/",
     "noImplicitAny": true,
     "target": "es2017",
-    "module": "es2020",
+    "module": "umd",
     "lib": [
       "es2018",
       "dom"
@@ -17,5 +17,8 @@
     "downlevelIteration": true,
     "moduleResolution": "node",
     "importHelpers": true,
-  }
+  },
+  "include": [
+    "src/*"
+  ]
 }

@@ -67,7 +67,30 @@ export interface ICollectionOptions extends IInjectOptions
 export function Asset(options?: IElementOptions): (cls: any) => any
 {
     return (ctor: Function) =>
-    {};
+    {
+        const targetName = options.name;
+        if(globalThis.intuiface_ifd_classes.indexOf(targetName) == -1)
+        {
+            globalThis.intuiface_ifd_classes.push(targetName);
+        }
+
+        if (!globalThis.intuiface_ifd_properties[targetName]) {
+            globalThis.intuiface_ifd_properties[targetName] = {};
+        }
+
+        if (!globalThis.intuiface_ifd_params[targetName]) {
+            globalThis.intuiface_ifd_params[targetName] = {};
+        }
+
+        if (!globalThis.intuiface_ifd_triggers[targetName]){
+            globalThis.intuiface_ifd_triggers[targetName] = {};
+        }
+
+        if (!globalThis.intuiface_ifd_actions[targetName]){
+            globalThis.intuiface_ifd_actions[targetName] = {};
+        }
+
+    };
 }
 
 /**
