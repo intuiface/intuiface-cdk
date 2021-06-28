@@ -27,11 +27,13 @@ for(const name of globalThisAny.intuiface_ifd_classes)
 
     resources[name] = {
             id: name,
-            "if.interfaceAsset": true,
             methods: globalThisAny.intuiface_ifd_actions[name],
             events: globalThisAny.intuiface_ifd_triggers[name]
     }
 }
+
+// set interface asset to import in composer
+resources['<%= IAName %>']['if.interfaceAsset'] = true;
 
 // create the ifd as json object 
 // and add metadatas filled from decorators
