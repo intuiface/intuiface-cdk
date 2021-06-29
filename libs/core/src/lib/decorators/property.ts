@@ -71,6 +71,7 @@ export function Property(options?: IPropertyOptions)
         // store values 
         globalThis.intuiface_ifd_properties[targetName][propertyKey] = {
             type: typeAndFormat.type,
+            title: options.displayName,
             description: options.description,
             default: options.defaultValue,
             readonly: options.readOnly
