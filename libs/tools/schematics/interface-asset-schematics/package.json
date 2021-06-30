@@ -17,7 +17,6 @@
     "@types/node": "*",
     "typescript": "*"
   },
-  "private": true,
   "publishConfig": {
     "@intuiface:registry": "https://npm.pkg.github.com"
   }
