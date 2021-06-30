@@ -20,10 +20,14 @@ jobs:
       packages: write
       contents: read
     steps:
+      - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
           node-version: 14
           registry-url: https://npm.pkg.github.com/
+
+      - run: npm ci
+      - run: npm run build
 
       - name: Publish core to GitHub Packages
         run: npm publish dist/libs/core
