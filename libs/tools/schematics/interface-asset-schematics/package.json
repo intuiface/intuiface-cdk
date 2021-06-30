@@ -20,5 +20,11 @@
   "publishConfig": {
     "@intuiface:registry": "https://npm.pkg.github.com"
   },
-  "repository": "https://github.com/intuiface/intuiface-cdk"
+  "repository": "https://github.com/intuiface/intuiface-cdk",
+  "dependencies": {
+    "@angular-devkit/core": "^12.1.0",
+    "@angular-devkit/schematics": "^12.1.0",
+    "@types/node": "^15.12.5",
+    "typescript": "^4.3.4"
+  }
 }
