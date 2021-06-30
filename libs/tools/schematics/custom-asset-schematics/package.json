@@ -11,12 +11,9 @@
   "author": "",
   "license": "MIT",
   "schematics": "./src/collection.json",
-  "peerDependencies": {
-    "@angular-devkit/core": "*",
-    "@angular-devkit/schematics": "*",
-    "@schematics/angular": "*",
-    "@types/node": "*",
-    "typescript": "*"
+  "dependencies": {
+    "@angular-devkit/core": "^12.1.0",
+    "@angular-devkit/schematics": "^12.1.0"
   },
   "publishConfig": {
     "@intuiface:registry": "https://npm.pkg.github.com"

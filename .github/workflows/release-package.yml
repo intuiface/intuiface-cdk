@@ -3,18 +3,7 @@ name: Intuiface-CDK Package
 on: [push]
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
-        with:
-          node-version: 14
-      - run: npm ci
-      - run: npm run build
-
   publish-gpr:
-    needs: build
     runs-on: ubuntu-latest
     permissions:
       packages: write
@@ -27,8 +16,11 @@ jobs:
           registry-url: https://npm.pkg.github.com/
           scope: '@intuiface'
 
-      - run: npm ci
-      - run: npm run build
+      - name : Install dependencies
+        run: npm ci
+        
+      - name : Build packages
+        run: npm run build
 
       - name: Publish core to GitHub Packages
         run: npm publish dist/libs/core
