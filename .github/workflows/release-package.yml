@@ -28,58 +28,22 @@ jobs:
           node-version: 14
           registry-url: https://npm.pkg.github.com/
 
-      - name: Check if @intuiface/core version has been updated
-        id: core
-        uses: EndBug/version-check@v1
-        with:
-          diff-search: true
-          file-name: libs/core/package.json
-          token: ${{secrets.GITHUB_TOKEN}}
-
       - name: Publish core to GitHub Packages
-        if: steps.core.outputs.changed == 'true'
         run: npm publish dist/libs/core
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
-      - name: Check if @intuiface/components version has been updated
-        id: components
-        uses: EndBug/version-check@v1
-        with:
-          diff-search: true
-          file-name: libs/components/package.json
-          token: ${{secrets.GITHUB_TOKEN}}
-
       - name: Publish components to GitHub Packages
-        if: steps.components.outputs.changed == 'true'
         run: npm publish dist/libs/components
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN }}
 
-      - name: Check if @intuiface/custom-asset version has been updated
-        id: custom-asset
-        uses: EndBug/version-check@v1
-        with:
-          diff-search: true
-          file-name: libs/tools/schematics/custom-asset-schematics/package.json
-          token: ${{secrets.GITHUB_TOKEN}}
-
       - name: Publish custom-asset to GitHub Packages
-        if: steps.custom-asset.outputs.changed == 'true'
         run: npm publish dist/libs/tools/custom-asset-schematics
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
-      - name: Check if @intuiface/interface-asset version has been updated
-        id: interface-asset
-        uses: EndBug/version-check@v1
-        with:
-          diff-search: true
-          file-name: libs/tools/schematics/interface-asset-schematics/package.json
-          token: ${{secrets.GITHUB_TOKEN}}
-
       - name: Publish interface-asset to GitHub Packages
-        if: steps.interface-asset.outputs.changed == 'true'
         run: npm publish dist/libs/tools/interface-asset-schematics
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN }}
