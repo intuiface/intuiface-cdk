@@ -25,6 +25,7 @@ jobs:
         with:
           node-version: 14
           registry-url: https://npm.pkg.github.com/
+          scope: '@intuiface'
 
       - run: npm ci
       - run: npm run build
