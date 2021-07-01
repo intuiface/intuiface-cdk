@@ -12,8 +12,10 @@
   "license": "MIT",
   "schematics": "./src/collection.json",
   "dependencies": {
+    "@angular-architects/module-federation": "^12.2.1",
     "@angular-devkit/core": "^12.1.0",
-    "@angular-devkit/schematics": "^12.1.0"
+    "@angular-devkit/schematics": "^12.1.0",
+    "@schematics/angular": "^12.1.0"
   },
   "publishConfig": {
     "@intuiface:registry": "https://npm.pkg.github.com"
