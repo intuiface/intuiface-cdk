@@ -20,7 +20,7 @@
     "fs-extra": "^10.0.0"
   },
   "dependencies": {
-    "@intuiface/core": "^0.0.1",
+    "@intuiface/core": "^0.0.2",
     "tslib": "^2.2.0"
   }
 }
