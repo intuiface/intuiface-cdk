@@ -15,5 +15,3 @@ Use it with : `schematics @intuiface/interface-asset:create`
 Develop your interface asset using the squeleton or read the documentation of `@intuiface/core`
 
 Then run `npm run build`
-
-
