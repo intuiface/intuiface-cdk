@@ -1,41 +1,43 @@
 name: Intuiface-CDK Package
 
-on:
-  release:
-    types: [created]
+# on:
+#   release:
+#     types: [created]
+
+on: [push]
 
 jobs:
 
-  bump-versions:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
-        with:
-          node-version: 14
+  # bump-versions:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - uses: actions/setup-node@v1
+  #       with:
+  #         node-version: 14
 
-      - name:  'Automated Version Bump For Core'
-        uses:  'rimonhanna/gh-action-bump-version@master'
-        env:
-          PACKAGEJSON_DIR:  'libs/core'
+  #     - name:  'Automated Version Bump For Core'
+  #       uses:  'rimonhanna/gh-action-bump-version@master'
+  #       env:
+  #         PACKAGEJSON_DIR:  'libs/core'
 
-      - name:  'Automated Version Bump For Components'
-        uses:  'rimonhanna/gh-action-bump-version@master'
-        env:
-          PACKAGEJSON_DIR:  'libs/components'
+  #     - name:  'Automated Version Bump For Components'
+  #       uses:  'rimonhanna/gh-action-bump-version@master'
+  #       env:
+  #         PACKAGEJSON_DIR:  'libs/components'
 
-      - name:  'Automated Version Bump For Custom-Asset'
-        uses:  'rimonhanna/gh-action-bump-version@master'
-        env:
-          PACKAGEJSON_DIR:  'libs/tools/custom-asset-schematics'
+  #     - name:  'Automated Version Bump For Custom-Asset'
+  #       uses:  'rimonhanna/gh-action-bump-version@master'
+  #       env:
+  #         PACKAGEJSON_DIR:  'libs/tools/custom-asset-schematics'
 
-      - name:  'Automated Version Bump For Interface-Asset'
-        uses:  'rimonhanna/gh-action-bump-version@master'
-        env:
-          PACKAGEJSON_DIR:  'libs/tools/interface-asset-schematics'
+  #     - name:  'Automated Version Bump For Interface-Asset'
+  #       uses:  'rimonhanna/gh-action-bump-version@master'
+  #       env:
+  #         PACKAGEJSON_DIR:  'libs/tools/interface-asset-schematics'
 
   publish-gpr:
-    needs: bump-versions
+    # needs: bump-versions
     runs-on: ubuntu-latest
     permissions:
       packages: write
