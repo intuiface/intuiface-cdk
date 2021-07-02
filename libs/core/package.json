@@ -1,6 +1,6 @@
 {
   "name": "@intuiface/core",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "publishConfig": {
     "@intuiface:registry": "https://npm.pkg.github.com"
   },
