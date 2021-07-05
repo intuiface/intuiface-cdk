@@ -8,6 +8,9 @@ export { IntuifaceElement } from './lib/elements/element';
 export { ElementContainer } from './lib/elements/container';
 export { IntuifaceCollection, ICollectionConfiguration } from './lib/elements/collection';
 
+// Services
+export { EnvironmentService } from './lib/services/environment.service';
+
 // types
 export { Path } from './lib/types/path.type';
 export { Color } from './lib/types/color.type';
