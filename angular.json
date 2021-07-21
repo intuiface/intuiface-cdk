@@ -147,43 +147,6 @@
         }
       }
     },
-    "core": {
-      "projectType": "library",
-      "root": "libs/core",
-      "sourceRoot": "libs/core/src",
-      "architect": {
-        "build": {
-          "builder": "@nrwl/angular:package",
-          "options": {
-            "tsConfig": "libs/core/tsconfig.lib.json",
-            "project": "libs/core/ng-package.json",
-            "buildableProjectDepsInPackageJsonType": "dependencies"
-          },
-          "configurations": {
-            "production": {
-              "tsConfig": "libs/core/tsconfig.lib.json"
-            }
-          }
-        },
-        "lint": {
-          "builder": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": [
-              "libs/core/src/**/*.ts",
-              "libs/core/src/**/*.html"
-            ]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/core"],
-          "options": {
-            "jestConfig": "libs/core/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      }
-    },
     "components": {
       "projectType": "library",
       "root": "libs/components",
@@ -198,7 +161,7 @@
           },
           "configurations": {
             "production": {
-              "tsConfig": "libs/components/tsconfig.lib.json"
+              "tsConfig": "libs/components/tsconfig.lib.prod.json"
             }
           }
         },
@@ -221,127 +184,40 @@
         }
       }
     },
-    "custom-asset-builder": {
-      "root": "libs/tools/builders/custom-asset-builder",
-      "sourceRoot": "libs/tools/builders/custom-asset-builder/src",
+    "core": {
       "projectType": "library",
-      "prefix": "intuiface",
-      "schematics": {},
+      "root": "libs/core",
+      "sourceRoot": "libs/core/src",
       "architect": {
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+        "build": {
+          "builder": "@nrwl/angular:package",
           "options": {
-            "tsConfig": [
-              "libs/tools/builders/custom-asset-builder/tsconfig.builder.json",
-              "libs/tools/builders/custom-asset-builder/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**",
-              "!libs/tools/builders/custom-asset-builder/**"
+            "tsConfig": "libs/core/tsconfig.lib.json",
+            "project": "libs/core/ng-package.json",
+            "buildableProjectDepsInPackageJsonType": "dependencies"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "libs/core/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/core/src/**/*.ts",
+              "libs/core/src/**/*.html"
             ]
           }
         },
-        "build": {
-          "builder": "@nrwl/node:package",
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/core"],
           "options": {
-            "outputPath": "dist/libs/tools/custom-asset-builder",
-            "tsConfig": "libs/tools/builders/custom-asset-builder/tsconfig.builders.json",
-            "packageJson": "libs/tools/builders/custom-asset-builder/package.json",
-            "main": "libs/tools/builders/custom-asset-builder/src/index.ts",
-            "assets": [
-              "libs/tools/builders/custom-asset-builder/*.md",
-              "libs/tools/builders/custom-asset-builder/builders.json",
-              "libs/tools/builders/custom-asset-builder/schema.json"
-            ]
-          },
-          "outputs": [
-            "{options.outputPath}"
-          ]
-        }
-      }
-    },
-    "interface-asset-builder": {
-      "root": "libs/tools/builders/interface-asset-builder",
-      "sourceRoot": "libs/tools/builders/interface-asset-builder/src",
-      "projectType": "library",
-      "prefix": "intuiface",
-      "schematics": {},
-      "architect": {
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "libs/tools/builders/interface-asset-builder/tsconfig.builder.json",
-              "libs/tools/builders/interface-asset-builder/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**",
-              "!libs/tools/builders/interface-asset-builder/**"
-            ]
+            "jestConfig": "libs/core/jest.config.js",
+            "passWithNoTests": true
           }
-        },
-        "build": {
-          "builder": "@nrwl/node:package",
-          "options": {
-            "outputPath": "dist/libs/tools/interface-asset-builder",
-            "tsConfig": "libs/tools/builders/interface-asset-builder/tsconfig.builders.json",
-            "packageJson": "libs/tools/builders/interface-asset-builder/package.json",
-            "main": "libs/tools/builders/interface-asset-builder/src/index.ts",
-            "assets": [
-              "libs/tools/builders/interface-asset-builder/*.md",
-              "libs/tools/builders/interface-asset-builder/builders.json",
-              "libs/tools/builders/interface-asset-builder/schema.json"
-            ]
-          },
-          "outputs": [
-            "{options.outputPath}"
-          ]
-        }
-      }
-    },
-    "interface-asset-schematics": {
-      "root": "libs/tools/schematics/interface-asset-schematics",
-      "sourceRoot": "libs/tools/schematics/interface-asset-schematics/src",
-      "projectType": "library",
-      "prefix": "intuiface",
-      "schematics": {},
-      "architect": {
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "libs/tools/schematics/interface-asset-schematics/tsconfig.json"
-            ],
-            "exclude": [
-              "**/node_modules/**",
-              "!libs/tools/schematics/interface-asset-schematics/**",
-              "libs/tools/schematics/interface-asset-schematics/src/create/files/**"
-            ]
-          }
-        },
-        "build": {
-          "builder": "@nrwl/node:package",
-          "options": {
-            "outputPath": "dist/libs/tools/interface-asset-schematics",
-            "tsConfig": "libs/tools/schematics/interface-asset-schematics/tsconfig.json",
-            "packageJson": "libs/tools/schematics/interface-asset-schematics/package.json",
-            "updateBuildableProjectDepsInPackageJson": false,
-            "main": "libs/tools/schematics/interface-asset-schematics/src/create/index.ts",
-            "assets": [
-              "libs/tools/schematics/interface-asset-schematics/*.md",
-              {
-                "glob": "**/*",
-                "input": "libs/tools/schematics/interface-asset-schematics/src/",
-                "output": "/src/",
-                "ignore": [
-                  "**/index.ts"
-                ]
-              }
-            ]
-          },
-          "outputs": [
-            "{options.outputPath}"
-          ]
         }
       }
     },
@@ -379,15 +255,63 @@
                 "glob": "**/*",
                 "input": "libs/tools/schematics/custom-asset-schematics/src/",
                 "output": "/src/",
-                "ignore": [
-                  "**/index.ts"
-                ]
+                "ignore": ["**/index.ts"]
               }
             ]
           },
-          "outputs": [
-            "{options.outputPath}"
-          ]
+          "configurations": {
+            "production": {
+              "tsConfig": "libs/tools/schematics/custom-asset-schematics/tsconfig.json"
+            }
+          },
+          "outputs": ["{options.outputPath}"]
+        }
+      }
+    },
+    "interface-asset-schematics": {
+      "root": "libs/tools/schematics/interface-asset-schematics",
+      "sourceRoot": "libs/tools/schematics/interface-asset-schematics/src",
+      "projectType": "library",
+      "prefix": "intuiface",
+      "schematics": {},
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/tools/schematics/interface-asset-schematics/tsconfig.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!libs/tools/schematics/interface-asset-schematics/**",
+              "libs/tools/schematics/interface-asset-schematics/src/create/files/**"
+            ]
+          }
+        },
+        "build": {
+          "builder": "@nrwl/node:package",
+          "options": {
+            "outputPath": "dist/libs/tools/interface-asset-schematics",
+            "tsConfig": "libs/tools/schematics/interface-asset-schematics/tsconfig.json",
+            "packageJson": "libs/tools/schematics/interface-asset-schematics/package.json",
+            "updateBuildableProjectDepsInPackageJson": false,
+            "main": "libs/tools/schematics/interface-asset-schematics/src/create/index.ts",
+            "assets": [
+              "libs/tools/schematics/interface-asset-schematics/*.md",
+              {
+                "glob": "**/*",
+                "input": "libs/tools/schematics/interface-asset-schematics/src/",
+                "output": "/src/",
+                "ignore": ["**/index.ts"]
+              }
+            ]
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "libs/tools/schematics/interface-asset-schematics/tsconfig.json"
+            }
+          },
+          "outputs": ["{options.outputPath}"]
         }
       }
     }

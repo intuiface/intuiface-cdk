@@ -1,28 +1,18 @@
-# Getting Started With Schematics
+# External Asset Schematics
 
-This repository is a basic Schematic implementation that serves as a starting point to create and publish Schematics to NPM.
+Allows you to create an asset or a collection, build it and get ready to use it in Composer
 
-### Testing
+## Install
+Install the custom asset schematics : `npm install @intuiface/custom-asset`
+    
+## Prerequisite
+Install `@angular-devkit/schematics-cli` with `npm install -g @angular-devkit/schematics-cli`
 
-To test locally, install `@angular-devkit/schematics-cli` globally and use the `schematics` command line tool. That tool acts the same as the `generate` command of the Angular CLI, but also has a debug mode.
+## Usage
 
-Check the documentation with
-```bash
-schematics --help
-```
+Use it with : `schematics @intuiface/custom-asset:create`
+    it will prompt you about the custom asset name, if it's a collection and create all files
 
-### Unit Testing
+Develop your asset / collection using the squeleton or read the documentation of `@intuiface/core` and `@intuiface/components`
 
-`npm run test` will run the unit tests, using Jasmine as a runner and test framework.
-
-### Publishing
-
-To publish, simply do:
-
-```bash
-npm run build
-npm publish
-```
-
-That's it!
- 
+Then run `npm run build`
