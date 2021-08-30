@@ -7,6 +7,7 @@ export { Computor } from './lib/decorators/computor';
 export { IntuifaceElement } from './lib/elements/element';
 export { ElementContainer } from './lib/elements/container';
 export { IntuifaceCollection, ICollectionConfiguration } from './lib/elements/collection';
+export { Watchable } from './lib/base/watchable';
 
 // Services
 export { EnvironmentService } from './lib/services/environment.service';
