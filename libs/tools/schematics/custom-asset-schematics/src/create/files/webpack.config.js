@@ -8,6 +8,9 @@ sharedMappings.register(
     [ /* mapped paths to share */ ]);
 
 module.exports = {
+    library: {
+        type: "module"
+    },
     output: {
         uniqueName: "<%= classify(customAssetName) %>",
         publicPath: "auto"
@@ -69,4 +72,7 @@ module.exports = {
         }),
         sharedMappings.getPlugin()
     ],
+    experiments: {
+        outputModule: true
+    }
 };
