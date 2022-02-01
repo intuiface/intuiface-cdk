@@ -16,30 +16,14 @@
     "default": {
       "runner": "@nrwl/workspace/tasks-runners/default",
       "options": {
-        "cacheableOperations": ["build", "lint", "test", "e2e"]
+        "cacheableOperations": [
+          "build",
+          "lint",
+          "test",
+          "e2e"
+        ],
+        "parallel": 1
       }
-    }
-  },
-  "projects": {
-    "cdk": {
-      "tags": []
-    },
-    "cdk-e2e": {
-      "tags": [],
-      "implicitDependencies": ["cdk"]
-    },
-    "components": {
-      "tags": [],
-      "implicitDependencies": ["core"]
-    },
-    "core": {
-      "tags": []
-    },
-    "custom-asset-schematics": {
-      "tags": []
-    },
-    "interface-asset-schematics": {
-      "tags": []
     }
   },
   "targetDependencies": {
@@ -49,5 +33,35 @@
         "projects": "dependencies"
       }
     ]
+  },
+  "cli": {
+    "defaultCollection": "@nrwl/angular"
+  },
+  "defaultProject": "cdk",
+  "generators": {
+    "@nrwl/angular": {
+      "application": {
+        "linter": "eslint"
+      },
+      "library": {
+        "linter": "eslint"
+      },
+      "storybook-configuration": {
+        "linter": "eslint"
+      }
+    },
+    "@nrwl/angular:application": {
+      "style": "scss",
+      "linter": "eslint",
+      "unitTestRunner": "jest",
+      "e2eTestRunner": "cypress"
+    },
+    "@nrwl/angular:library": {
+      "linter": "eslint",
+      "unitTestRunner": "jest"
+    },
+    "@nrwl/angular:component": {
+      "style": "scss"
+    }
   }
 }

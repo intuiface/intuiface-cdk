@@ -153,10 +153,10 @@ function addJsonDependencies(name: string): Rule{
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
         const json = JSON.parse(file!.toString());
 
-        json.dependencies['@intuiface/core'] = '^0.0.2';
-        json.dependencies['@intuiface/components'] = '^0.0.2';
-        json.devDependencies['@angular-architects/module-federation'] = '^12.1.1';
-        json.devDependencies['@intuiface/custom-asset'] = '^0.0.2';
+        json.dependencies['@intuiface/core'] = '^0.0.7';
+        json.dependencies['@intuiface/components'] = '^0.0.7';
+        json.devDependencies['@angular-architects/module-federation'] = '^14.0.1';
+        json.devDependencies['@intuiface/custom-asset'] = '^0.0.7';
 
         json.scripts = {
             ...json.scripts,
