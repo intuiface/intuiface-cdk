@@ -1,6 +1,6 @@
 {
   "name": "@intuiface/custom-asset",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Schematic to create a custom asset/collection",
   "scripts": {
     "build": "tsc -p tsconfig.json"
@@ -12,10 +12,10 @@
   "license": "MIT",
   "schematics": "./src/collection.json",
   "dependencies": {
-    "@angular-architects/module-federation": "^12.2.1",
-    "@angular-devkit/core": "^12.1.0",
-    "@angular-devkit/schematics": "^12.1.0",
-    "@schematics/angular": "^12.1.0"
+    "@angular-architects/module-federation": "^14.0.1",
+    "@angular-devkit/core": "^13.2.0",
+    "@angular-devkit/schematics": "^13.2.0",
+    "@schematics/angular": "^13.2.0"
   },
   "publishConfig": {
     "@intuiface:registry": "https://npm.pkg.github.com"

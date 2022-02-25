@@ -1,319 +1,277 @@
 {
-  "version": 1,
-  "cli": {
-    "defaultCollection": "@nrwl/angular"
-  },
-  "defaultProject": "cdk",
-  "schematics": {
-    "@nrwl/angular": {
-      "application": {
-        "linter": "eslint"
-      },
-      "library": {
-        "linter": "eslint"
-      },
-      "storybook-configuration": {
-        "linter": "eslint"
-      }
-    },
-    "@nrwl/angular:application": {
-      "style": "scss",
-      "linter": "eslint",
-      "unitTestRunner": "jest",
-      "e2eTestRunner": "cypress"
-    },
-    "@nrwl/angular:library": {
-      "style": "scss",
-      "linter": "eslint",
-      "unitTestRunner": "jest"
-    },
-    "@nrwl/angular:component": {
-      "style": "scss"
-    }
-  },
-  "projects": {
-    "cdk": {
-      "projectType": "application",
-      "root": "apps/cdk",
-      "sourceRoot": "apps/cdk/src",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:browser",
-          "options": {
-            "outputPath": "dist/apps/cdk",
-            "index": "apps/cdk/src/index.html",
-            "main": "apps/cdk/src/main.ts",
-            "polyfills": "apps/cdk/src/polyfills.ts",
-            "tsConfig": "apps/cdk/tsconfig.app.json",
-            "assets": ["apps/cdk/src/favicon.ico", "apps/cdk/src/assets"],
-            "styles": ["apps/cdk/src/styles.scss"],
-            "scripts": [],
-            "vendorChunk": true,
-            "extractLicenses": false,
-            "buildOptimizer": false,
-            "sourceMap": true,
-            "optimization": false,
-            "namedChunks": true
-          },
-          "configurations": {
-            "production": {
-              "fileReplacements": [
-                {
-                  "replace": "apps/cdk/src/environments/environment.ts",
-                  "with": "apps/cdk/src/environments/environment.prod.ts"
-                }
-              ],
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": false,
-              "namedChunks": false,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "5mb"
+    "version": 1,
+    "projects": {
+        "cdk": {
+            "projectType": "application",
+            "root": "apps/cdk",
+            "sourceRoot": "apps/cdk/src",
+            "architect": {
+                "build": {
+                    "builder": "@angular-devkit/build-angular:browser",
+                    "options": {
+                        "outputPath": "dist/apps/cdk",
+                        "index": "apps/cdk/src/index.html",
+                        "main": "apps/cdk/src/main.ts",
+                        "polyfills": "apps/cdk/src/polyfills.ts",
+                        "tsConfig": "apps/cdk/tsconfig.app.json",
+                        "assets": [
+                            "apps/cdk/src/favicon.ico",
+                            "apps/cdk/src/assets"
+                        ],
+                        "styles": ["apps/cdk/src/styles.scss"],
+                        "scripts": [],
+                        "vendorChunk": true,
+                        "extractLicenses": false,
+                        "buildOptimizer": false,
+                        "sourceMap": true,
+                        "optimization": false,
+                        "namedChunks": true
+                    },
+                    "configurations": {
+                        "production": {
+                            "fileReplacements": [
+                                {
+                                    "replace": "apps/cdk/src/environments/environment.ts",
+                                    "with": "apps/cdk/src/environments/environment.prod.ts"
+                                }
+                            ],
+                            "optimization": true,
+                            "outputHashing": "all",
+                            "sourceMap": false,
+                            "namedChunks": false,
+                            "extractLicenses": true,
+                            "vendorChunk": false,
+                            "buildOptimizer": true,
+                            "budgets": [
+                                {
+                                    "type": "initial",
+                                    "maximumWarning": "2mb",
+                                    "maximumError": "5mb"
+                                },
+                                {
+                                    "type": "anyComponentStyle",
+                                    "maximumWarning": "6kb",
+                                    "maximumError": "10kb"
+                                }
+                            ]
+                        }
+                    }
                 },
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "6kb",
-                  "maximumError": "10kb"
+                "serve": {
+                    "builder": "@angular-devkit/build-angular:dev-server",
+                    "options": {
+                        "browserTarget": "cdk:build"
+                    },
+                    "configurations": {
+                        "production": {
+                            "browserTarget": "cdk:build:production"
+                        }
+                    }
+                },
+                "extract-i18n": {
+                    "builder": "@angular-devkit/build-angular:extract-i18n",
+                    "options": {
+                        "browserTarget": "cdk:build"
+                    }
+                },
+                "lint": {
+                    "builder": "@nrwl/linter:eslint",
+                    "options": {
+                        "lintFilePatterns": [
+                            "apps/cdk/src/**/*.ts",
+                            "apps/cdk/src/**/*.html"
+                        ]
+                    },
+                    "outputs": ["{options.outputFile}"]
+                },
+                "test": {
+                    "builder": "@nrwl/jest:jest",
+                    "outputs": ["coverage/apps/cdk"],
+                    "options": {
+                        "jestConfig": "apps/cdk/jest.config.js",
+                        "passWithNoTests": true
+                    }
                 }
-              ]
-            }
-          }
+            },
+            "tags": []
         },
-        "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
-          "options": {
-            "browserTarget": "cdk:build"
-          },
-          "configurations": {
-            "production": {
-              "browserTarget": "cdk:build:production"
-            }
-          }
+        "cdk-e2e": {
+            "root": "apps/cdk-e2e",
+            "sourceRoot": "apps/cdk-e2e/src",
+            "projectType": "application",
+            "architect": {
+                "e2e": {
+                    "builder": "@nrwl/cypress:cypress",
+                    "options": {
+                        "cypressConfig": "apps/cdk-e2e/cypress.json",
+                        "tsConfig": "apps/cdk-e2e/tsconfig.e2e.json",
+                        "devServerTarget": "cdk:serve"
+                    },
+                    "configurations": {
+                        "production": {
+                            "devServerTarget": "cdk:serve:production"
+                        }
+                    }
+                },
+                "lint": {
+                    "builder": "@nrwl/linter:eslint",
+                    "options": {
+                        "lintFilePatterns": ["apps/cdk-e2e/**/*.{js,ts}"]
+                    },
+                    "outputs": ["{options.outputFile}"]
+                }
+            },
+            "tags": [],
+            "implicitDependencies": ["cdk"]
         },
-        "extract-i18n": {
-          "builder": "@angular-devkit/build-angular:extract-i18n",
-          "options": {
-            "browserTarget": "cdk:build"
-          }
+        "components": {
+            "projectType": "library",
+            "root": "libs/components",
+            "sourceRoot": "libs/components/src",
+            "architect": {
+                "build": {
+                    "builder": "@nrwl/angular:package",
+                    "options": {
+                        "tsConfig": "libs/components/tsconfig.lib.json",
+                        "project": "libs/components/ng-package.json",
+                        "buildableProjectDepsInPackageJsonType": "dependencies"
+                    },
+                    "configurations": {
+                        "production": {
+                            "tsConfig": "libs/components/tsconfig.lib.prod.json"
+                        }
+                    }
+                },
+                "lint": {
+                    "builder": "@nrwl/linter:eslint",
+                    "options": {
+                        "lintFilePatterns": [
+                            "libs/components/src/**/*.ts",
+                            "libs/components/src/**/*.html"
+                        ]
+                    },
+                    "outputs": ["{options.outputFile}"]
+                },
+                "test": {
+                    "builder": "@nrwl/jest:jest",
+                    "outputs": ["coverage/libs/components"],
+                    "options": {
+                        "jestConfig": "libs/components/jest.config.js",
+                        "passWithNoTests": true
+                    }
+                }
+            },
+            "tags": [],
+            "implicitDependencies": ["core"]
         },
-        "lint": {
-          "builder": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": [
-              "apps/cdk/src/**/*.ts",
-              "apps/cdk/src/**/*.html"
-            ]
-          }
+        "core": {
+            "projectType": "library",
+            "root": "libs/core",
+            "sourceRoot": "libs/core/src",
+            "architect": {
+                "build": {
+                    "builder": "@nrwl/angular:package",
+                    "options": {
+                        "tsConfig": "libs/core/tsconfig.lib.json",
+                        "project": "libs/core/ng-package.json",
+                        "buildableProjectDepsInPackageJsonType": "dependencies"
+                    },
+                    "configurations": {
+                        "production": {
+                            "tsConfig": "libs/core/tsconfig.lib.prod.json"
+                        }
+                    }
+                },
+                "lint": {
+                    "builder": "@nrwl/linter:eslint",
+                    "options": {
+                        "lintFilePatterns": [
+                            "libs/core/src/**/*.ts",
+                            "libs/core/src/**/*.html"
+                        ]
+                    },
+                    "outputs": ["{options.outputFile}"]
+                },
+                "test": {
+                    "builder": "@nrwl/jest:jest",
+                    "outputs": ["coverage/libs/core"],
+                    "options": {
+                        "jestConfig": "libs/core/jest.config.js",
+                        "passWithNoTests": true
+                    }
+                }
+            },
+            "tags": []
         },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/apps/cdk"],
-          "options": {
-            "jestConfig": "apps/cdk/jest.config.js",
-            "passWithNoTests": true
-          }
+        "custom-asset-schematics": {
+            "root": "libs/tools/schematics/custom-asset-schematics",
+            "sourceRoot": "libs/tools/schematics/custom-asset-schematics/src",
+            "projectType": "library",
+            "prefix": "intuiface",
+            "schematics": {},
+            "architect": {
+                "build": {
+                    "builder": "@nrwl/node:package",
+                    "options": {
+                        "outputPath": "dist/libs/tools/custom-asset-schematics",
+                        "tsConfig": "libs/tools/schematics/custom-asset-schematics/tsconfig.json",
+                        "packageJson": "libs/tools/schematics/custom-asset-schematics/package.json",
+                        "updateBuildableProjectDepsInPackageJson": false,
+                        "main": "libs/tools/schematics/custom-asset-schematics/src/create/index.ts",
+                        "assets": [
+                            "libs/tools/schematics/custom-asset-schematics/*.md",
+                            {
+                                "glob": "**/*",
+                                "input": "libs/tools/schematics/custom-asset-schematics/src/",
+                                "output": "/src/",
+                                "ignore": ["**/index.ts"]
+                            }
+                        ]
+                    },
+                    "configurations": {
+                        "production": {
+                            "tsConfig": "libs/tools/schematics/custom-asset-schematics/tsconfig.json"
+                        }
+                    },
+                    "outputs": ["{options.outputPath}"]
+                }
+            },
+            "tags": []
+        },
+        "interface-asset-schematics": {
+            "root": "libs/tools/schematics/interface-asset-schematics",
+            "sourceRoot": "libs/tools/schematics/interface-asset-schematics/src",
+            "projectType": "library",
+            "prefix": "intuiface",
+            "schematics": {},
+            "architect": {
+                "build": {
+                    "builder": "@nrwl/node:package",
+                    "options": {
+                        "outputPath": "dist/libs/tools/interface-asset-schematics",
+                        "tsConfig": "libs/tools/schematics/interface-asset-schematics/tsconfig.json",
+                        "packageJson": "libs/tools/schematics/interface-asset-schematics/package.json",
+                        "updateBuildableProjectDepsInPackageJson": false,
+                        "main": "libs/tools/schematics/interface-asset-schematics/src/create/index.ts",
+                        "assets": [
+                            "libs/tools/schematics/interface-asset-schematics/*.md",
+                            {
+                                "glob": "**/*",
+                                "input": "libs/tools/schematics/interface-asset-schematics/src/",
+                                "output": "/src/",
+                                "ignore": ["**/index.ts"]
+                            }
+                        ]
+                    },
+                    "configurations": {
+                        "production": {
+                            "tsConfig": "libs/tools/schematics/interface-asset-schematics/tsconfig.json"
+                        }
+                    },
+                    "outputs": ["{options.outputPath}"]
+                }
+            },
+            "tags": []
         }
-      }
-    },
-    "cdk-e2e": {
-      "root": "apps/cdk-e2e",
-      "sourceRoot": "apps/cdk-e2e/src",
-      "projectType": "application",
-      "architect": {
-        "e2e": {
-          "builder": "@nrwl/cypress:cypress",
-          "options": {
-            "cypressConfig": "apps/cdk-e2e/cypress.json",
-            "tsConfig": "apps/cdk-e2e/tsconfig.e2e.json",
-            "devServerTarget": "cdk:serve"
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "cdk:serve:production"
-            }
-          }
-        },
-        "lint": {
-          "builder": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": ["apps/cdk-e2e/**/*.{js,ts}"]
-          }
-        }
-      }
-    },
-    "components": {
-      "projectType": "library",
-      "root": "libs/components",
-      "sourceRoot": "libs/components/src",
-      "architect": {
-        "build": {
-          "builder": "@nrwl/angular:package",
-          "options": {
-            "tsConfig": "libs/components/tsconfig.lib.json",
-            "project": "libs/components/ng-package.json",
-            "buildableProjectDepsInPackageJsonType": "dependencies"
-          },
-          "configurations": {
-            "production": {
-              "tsConfig": "libs/components/tsconfig.lib.prod.json"
-            }
-          }
-        },
-        "lint": {
-          "builder": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": [
-              "libs/components/src/**/*.ts",
-              "libs/components/src/**/*.html"
-            ]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/components"],
-          "options": {
-            "jestConfig": "libs/components/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      }
-    },
-    "core": {
-      "projectType": "library",
-      "root": "libs/core",
-      "sourceRoot": "libs/core/src",
-      "architect": {
-        "build": {
-          "builder": "@nrwl/angular:package",
-          "options": {
-            "tsConfig": "libs/core/tsconfig.lib.json",
-            "project": "libs/core/ng-package.json",
-            "buildableProjectDepsInPackageJsonType": "dependencies"
-          },
-          "configurations": {
-            "production": {
-              "tsConfig": "libs/core/tsconfig.lib.prod.json"
-            }
-          }
-        },
-        "lint": {
-          "builder": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": [
-              "libs/core/src/**/*.ts",
-              "libs/core/src/**/*.html"
-            ]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/core"],
-          "options": {
-            "jestConfig": "libs/core/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      }
-    },
-    "custom-asset-schematics": {
-      "root": "libs/tools/schematics/custom-asset-schematics",
-      "sourceRoot": "libs/tools/schematics/custom-asset-schematics/src",
-      "projectType": "library",
-      "prefix": "intuiface",
-      "schematics": {},
-      "architect": {
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "libs/tools/schematics/custom-asset-schematics/tsconfig.json"
-            ],
-            "exclude": [
-              "**/node_modules/**",
-              "!libs/tools/schematics/custom-asset-schematics/**",
-              "libs/tools/schematics/custom-asset-schematics/src/create/files/**"
-            ]
-          }
-        },
-        "build": {
-          "builder": "@nrwl/node:package",
-          "options": {
-            "outputPath": "dist/libs/tools/custom-asset-schematics",
-            "tsConfig": "libs/tools/schematics/custom-asset-schematics/tsconfig.json",
-            "packageJson": "libs/tools/schematics/custom-asset-schematics/package.json",
-            "updateBuildableProjectDepsInPackageJson": false,
-            "main": "libs/tools/schematics/custom-asset-schematics/src/create/index.ts",
-            "assets": [
-              "libs/tools/schematics/custom-asset-schematics/*.md",
-              {
-                "glob": "**/*",
-                "input": "libs/tools/schematics/custom-asset-schematics/src/",
-                "output": "/src/",
-                "ignore": ["**/index.ts"]
-              }
-            ]
-          },
-          "configurations": {
-            "production": {
-              "tsConfig": "libs/tools/schematics/custom-asset-schematics/tsconfig.json"
-            }
-          },
-          "outputs": ["{options.outputPath}"]
-        }
-      }
-    },
-    "interface-asset-schematics": {
-      "root": "libs/tools/schematics/interface-asset-schematics",
-      "sourceRoot": "libs/tools/schematics/interface-asset-schematics/src",
-      "projectType": "library",
-      "prefix": "intuiface",
-      "schematics": {},
-      "architect": {
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "libs/tools/schematics/interface-asset-schematics/tsconfig.json"
-            ],
-            "exclude": [
-              "**/node_modules/**",
-              "!libs/tools/schematics/interface-asset-schematics/**",
-              "libs/tools/schematics/interface-asset-schematics/src/create/files/**"
-            ]
-          }
-        },
-        "build": {
-          "builder": "@nrwl/node:package",
-          "options": {
-            "outputPath": "dist/libs/tools/interface-asset-schematics",
-            "tsConfig": "libs/tools/schematics/interface-asset-schematics/tsconfig.json",
-            "packageJson": "libs/tools/schematics/interface-asset-schematics/package.json",
-            "updateBuildableProjectDepsInPackageJson": false,
-            "main": "libs/tools/schematics/interface-asset-schematics/src/create/index.ts",
-            "assets": [
-              "libs/tools/schematics/interface-asset-schematics/*.md",
-              {
-                "glob": "**/*",
-                "input": "libs/tools/schematics/interface-asset-schematics/src/",
-                "output": "/src/",
-                "ignore": ["**/index.ts"]
-              }
-            ]
-          },
-          "configurations": {
-            "production": {
-              "tsConfig": "libs/tools/schematics/interface-asset-schematics/tsconfig.json"
-            }
-          },
-          "outputs": ["{options.outputPath}"]
-        }
-      }
     }
-  }
 }

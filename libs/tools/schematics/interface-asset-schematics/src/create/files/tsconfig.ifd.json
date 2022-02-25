@@ -4,10 +4,10 @@
     "experimentalDecorators": true,
     "outDir": "./tmp/",
     "noImplicitAny": true,
-    "target": "es2017",
-    "module": "umd",
+    "target": "es2020",
+    "module": "es2020",
     "lib": [
-      "es2018",
+      "es2020",
       "dom"
     ],
     "allowJs": true,
