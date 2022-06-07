@@ -50,7 +50,7 @@ export function customAsset(_options: any): Rule {
 function generateAngularRepo(name: string): Rule {
     return externalSchematic('@schematics/angular', 'ng-new', {
         name: name,
-        version: '12.0.2',
+        version: '13.2.0',
         directory: '.',
         routing: false,
         style: 'scss',
@@ -90,7 +90,7 @@ function generateModule(name: string): Rule {
 function addModuleFederation(name: string): Rule {
     return externalSchematic('@angular-architects/module-federation', 'ng-add', {
         project: name,
-        port: '3000'
+        port: 3000
     });
 }
 

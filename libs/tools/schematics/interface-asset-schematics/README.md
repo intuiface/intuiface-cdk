@@ -14,4 +14,4 @@ Use it with : `schematics @intuiface/interface-asset:create`
 
 Develop your interface asset using the squeleton or read the documentation of `@intuiface/core`
 
-Then run `npm run build`
+Then run `npm run build` to build in production or `npm run build:debug` to be able to debug your interface asset.
