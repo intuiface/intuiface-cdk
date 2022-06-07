@@ -61,6 +61,29 @@ export interface ICollectionOptions extends IInjectOptions
 }
 
 /**
+ * Injection method of behaviors in an element.
+ * @param options options of the injection
+ */
+export function Inject(options?: IInjectOptions) {
+    return (ctor: Function): void => {
+        
+    };
+}
+
+/**
+ * Avoid to inject method.
+ */
+export function DoNotInjectMethod() {
+    return (
+        target: unknown,
+        propertyKey: string | symbol,
+        // descriptor: PropertyDescriptor
+    ): void => {
+        
+    };
+}
+
+/**
  * Asset decorator to add metadatas to asset.
  * @param options of the asset (display name, description, ...)
  */
@@ -99,6 +122,27 @@ export function Asset(options?: IElementOptions): (cls: any) => any
  */
 export function Collection(options?: ICollectionOptions): (cls: any) => any
 {
-    return (ctor: Function) =>
-    {};
+    return (ctor: Function) => {
+        const targetName = options.name;
+        if (globalThis.intuiface_ifd_classes.indexOf(targetName) == -1) {
+            globalThis.intuiface_ifd_classes.push(targetName);
+        }
+
+        if (!globalThis.intuiface_ifd_properties[targetName]) {
+            globalThis.intuiface_ifd_properties[targetName] = {};
+        }
+
+        if (!globalThis.intuiface_ifd_params[targetName]) {
+            globalThis.intuiface_ifd_params[targetName] = {};
+        }
+
+        if (!globalThis.intuiface_ifd_triggers[targetName]) {
+            globalThis.intuiface_ifd_triggers[targetName] = {};
+        }
+
+        if (!globalThis.intuiface_ifd_actions[targetName]) {
+            globalThis.intuiface_ifd_actions[targetName] = {};
+        }
+
+    };
 }

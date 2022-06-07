@@ -32,6 +32,6 @@ export class CollectionComponent<T extends IntuifaceCollection<ElementContainer>
 
     public trackByFn(index: number, item: IntuifaceElement): number
     {
-        return (item as any)?.id;
+        return (item as any)?.intuifaceId;
     }
 }

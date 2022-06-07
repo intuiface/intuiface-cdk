@@ -45,6 +45,13 @@ export class Watchable
      public unsubscribeFromPropertyChanged(property: string, listener: PropertyListener): void
      {
      }
+
+    /**
+     * Dispose watchable.
+     */
+    public dispose(): void 
+    {
+    }
 }
 
 export type PropertiesListener = (propertyKey: string, value: any) => void;
