@@ -4,8 +4,6 @@
   </a>
 </p>
 
-<h3 align="center">Intuiface CDK</h3>
-
 # Intuiface CDK
 
 ## Table of contents
