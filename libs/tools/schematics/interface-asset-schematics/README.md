@@ -13,6 +13,7 @@ Allows you to create an interface asset, build it and generate an IFD to get rea
 - [Prerequisite](#prerequisite)
 - [Usage](#usage)
 - [Development](#development)
+- [Help](#help)
 
 ## Install
 Install the interface asset schematics : 
@@ -32,3 +33,8 @@ Then run `npm run build` to build in production or `npm run build:debug` to be a
 ## Development
 
 About decorators or types please read the [Intuiface Core Documentation](../../../core/README.md)
+
+## Help
+
+Found a problem, a bug ? Or need some help ? 
+Please do not create an issue in Github, ask us on our support page : https://support.intuiface.com/

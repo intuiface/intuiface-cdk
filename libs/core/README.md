@@ -16,6 +16,7 @@ The core library to use when creating a custom asset or collection or an interfa
     - [Action](#action)
     - [Parameter](#parameter)
 - [Types](#types)
+- [Help](#help)
 ## Decorators
 In Intuiface Core, we use [typescript decorators](https://www.typescriptlang.org/docs/handbook/decorators.html) to manage Properties, Triggers and Actions into Intuiface Composer.
 
@@ -302,3 +303,8 @@ We included different types for properties and parameters :
 - Path
 - Resource
 - Time
+
+## Help
+
+Found a problem, a bug ? Or need some help ? 
+Please do not create an issue in Github, ask us on our support page : https://support.intuiface.com/

@@ -18,6 +18,8 @@ export class <%= IAName %> extends IntuifaceElement {
         displayName: 'propertyExample',
         description: 'A property declaration example.',
         defaultValue: 0,
+        minValue: 0,
+        maxValue: 10,
         type: Number
     })
     public propertyExample: number = 0;
@@ -42,7 +44,8 @@ export class <%= IAName %> extends IntuifaceElement {
      */
     @Trigger({
         name: 'exampleTrigger',
-        displayName: 'A Trigger Example'
+        displayName: 'A Trigger Example',
+        description: 'Raised when the property example changed'
     })
     public exampleTrigger(): void {}
 
@@ -53,17 +56,25 @@ export class <%= IAName %> extends IntuifaceElement {
     /**
      * Action Example
      */
-    @Action({ displayName: 'Action Example' })
+    @Action({ 
+        displayName: 'Action Example',
+        description: 'An Action example with a parameter and validation',
+        validate: true
+    })
     public actionExample(
         @Parameter({
-        name: 'actionParam',
-        displayName: 'Action parameter',
-        description: 'An action parameter example.',
-        type: Number
-    }) actionParam: number): void
+            name: 'actionParam',
+            displayName: 'Action parameter',
+            description: 'An action parameter example.',
+            defaultValue: 1,
+            minValue: 0,
+            maxValue: 10,
+            type: Number
+        }) actionParam: number): void
     {
         if(this.propertyExample !== actionParam) {
             this.propertyExample = actionParam;
+            // raise the trigger
             this.exampleTrigger();
         }
     }

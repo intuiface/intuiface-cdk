@@ -13,6 +13,7 @@
 - [Intuiface Components](./libs/components/README.md)
 - [Create an Interface Asset](./libs/tools/schematics/interface-asset-schematics/README.md)
 - [Create a Custom Asset](./libs/tools/schematics/custom-asset-schematics/README.md)
+- [Help](#help)
 - [Copyright and license](#copyright-and-license)
 
 ## Quickstart
@@ -32,5 +33,10 @@ To build the CDK, just run:
 ```bash
 npm run build
 ```
+
+## Help
+
+Found a problem, a bug ? Or need some help ? 
+Please do not create an issue in Github, ask us on our support page : https://support.intuiface.com/
 
 ## Copyright And License
