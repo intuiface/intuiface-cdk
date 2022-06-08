@@ -1,6 +1,4 @@
-/* eslint-disable @typescript-eslint/no-empty-function */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable prefer-arrow/prefer-arrow-functions */
 /**
  * Decorator to link Component (Angular Component) to a Model
  * This is usefell for dynamic component creation from a Model

@@ -1,4 +1,4 @@
-import { Watchable } from "../base/watchable";
+import { Watchable } from '../base/watchable';
 
 /**
  * Css units

@@ -101,7 +101,7 @@ export class TransformBehavior {
      * @param factor scale factor to apply
      * @param configuration configuration of the animation
      */
-    public scaleBy( factor: number, configuration: unknown): void
+    public scaleBy(factor: number, configuration: unknown): void
     {
     }
 
@@ -123,7 +123,12 @@ export class TransformBehavior {
      * @param orientation new orientation
      * @param configuration configuration of the animation
      */
-    public translateRotateResizeTo(x: number, y: number, width: number, height: number, orientation: number, configuration: unknown): void
+    public translateRotateResizeTo(x: number,
+                                   y: number,
+                                   width: number,
+                                   height: number,
+                                   orientation: number,
+                                   configuration: unknown): void
     {
     }
 

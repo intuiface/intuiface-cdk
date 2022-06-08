@@ -1,3 +1,6 @@
+/**
+ * Usb serial service to access to usb port, open it and write to it
+ */
 export class UsbSerialService {
 
     protected static instance;

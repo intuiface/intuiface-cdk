@@ -1,4 +1,4 @@
-import { PlayableMediaFacade } from "./playable-media.facade";
+import { PlayableMediaFacade } from './playable-media.facade';
 
 /**
  * Behavior to manage the media volume (audio, video, ...).
@@ -8,7 +8,7 @@ export class MediaVolumeBehavior
     //#region Fields
 
     /**
-     * Media with volume element 
+     * Media with volume element
      */
     public mediaVolumeElement: PlayableMediaFacade | undefined = undefined;
 

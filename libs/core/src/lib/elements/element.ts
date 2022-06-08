@@ -1,5 +1,5 @@
-import { Watchable } from "../base/watchable";
-import { ElementContainer } from "./container";
+import { Watchable } from '../base/watchable';
+import { ElementContainer } from './container';
 
 /**
  * Element
@@ -12,8 +12,8 @@ export class IntuifaceElement extends Watchable
     public container: ElementContainer;
 
     /**
-    * Parent of this element.
-    */
+     * Parent of this element.
+     */
     public parent: IntuifaceElement | null;
 
     /**
@@ -22,9 +22,9 @@ export class IntuifaceElement extends Watchable
     public name = '';
 
     /**
-    * Initialize default value of each property.
-    * @param configuration : configuration
-    */
+     * Initialize default value of each property.
+     * @param configuration : configuration
+     */
     public initialize(configuration?: any): void {
     }
 

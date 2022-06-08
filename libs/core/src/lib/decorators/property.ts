@@ -1,6 +1,4 @@
-/* eslint-disable @typescript-eslint/no-empty-function */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable prefer-arrow/prefer-arrow-functions */
 import { getTypeAndFormat } from '../types/convertible.type';
 
 /**
@@ -56,7 +54,7 @@ export interface IPropertyOptions
 export function Property(options?: IPropertyOptions)
 {
     return (target: any, propertyKey: string): void =>
-    {        
+    {
         // get target name
         const targetName = target.constructor.name;
 
@@ -67,22 +65,22 @@ export function Property(options?: IPropertyOptions)
             globalThis.intuiface_ifd_properties[targetName] = {};
         }
 
-        // store values 
+        // store values
         globalThis.intuiface_ifd_properties[targetName][propertyKey] = {
             type: typeAndFormat.type,
             title: options.displayName,
             description: options.description,
             default: options.defaultValue,
             readonly: options.readOnly
-        }
+        };
 
         // special case for array
-        if(typeAndFormat.type === "array" && options.itemType)
+        if (typeAndFormat.type === 'array' && options.itemType)
         {
             // store the item type
-            globalThis.intuiface_ifd_properties[targetName][propertyKey]["items"] = {
+            globalThis.intuiface_ifd_properties[targetName][propertyKey].items = {
                 $ref: options.itemType.name
-            }
+            };
             // force array to be readOnly and delete default value
             globalThis.intuiface_ifd_properties[targetName][propertyKey].readonly = true;
             delete globalThis.intuiface_ifd_properties[targetName][propertyKey].default;

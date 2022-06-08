@@ -8,7 +8,7 @@ export class Path implements IConvertibleType {
 
     public constructor(value: string)
     {
-        this.url = new URL(value, "https://intuiface-cdk.com");
+        this.url = new URL(value, 'https://intuiface-cdk.com');
     }
 
     /**

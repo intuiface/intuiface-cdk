@@ -71,28 +71,28 @@ export class Color implements IConvertibleType{
         if (value && typeof (value) == 'string' && value.startsWith('#')) {
             switch (value.length) {
                 case 9:
-                    {
-                        // convert string color to rgba
-                        red = value.substring(1, 3);
-                        green = value.substring(3, 5);
-                        blue = value.substring(5, 7);
-                        alpha = value.substring(7, 9);
-                        break;
-                    }
+                {
+                    // convert string color to rgba
+                    red = value.substring(1, 3);
+                    green = value.substring(3, 5);
+                    blue = value.substring(5, 7);
+                    alpha = value.substring(7, 9);
+                    break;
+                }
                 case 7:
-                    {
-                        red = value.substring(1, 3);
-                        green = value.substring(3, 5);
-                        blue = value.substring(5, 7);
-                        break;
-                    }
+                {
+                    red = value.substring(1, 3);
+                    green = value.substring(3, 5);
+                    blue = value.substring(5, 7);
+                    break;
+                }
                 case 4:
-                    {
-                        red = value.substring(1, 2) + value.substring(1, 2);
-                        green = value.substring(2, 3) + value.substring(2, 3);
-                        blue = value.substring(3, 4) + value.substring(3, 4);
-                        break;
-                    }
+                {
+                    red = value.substring(1, 2) + value.substring(1, 2);
+                    green = value.substring(2, 3) + value.substring(2, 3);
+                    blue = value.substring(3, 4) + value.substring(3, 4);
+                    break;
+                }
             }
         }
         return new Color(alpha, red, green, blue);

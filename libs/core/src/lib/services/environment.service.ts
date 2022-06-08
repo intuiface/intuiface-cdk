@@ -2,7 +2,7 @@
 /**
  * Service to expose information about the environment context in which Player is running
  */
- export class EnvironmentService {
+export class EnvironmentService {
 
     /**
      * Indicates if browser is ready to prompt install app

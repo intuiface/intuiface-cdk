@@ -26,6 +26,7 @@ export interface IActionOptions
  * Action decorator to add metadatas to action.
  * @param options options of the action (display name, description, ...)
  */
+// eslint-disable-next-line prefer-arrow/prefer-arrow-functions
 export function Action(options?: IActionOptions)
 {
     return (
@@ -46,15 +47,16 @@ export function Action(options?: IActionOptions)
 
         if (!globalThis.intuiface_ifd_actions[targetName])
         {
-            globalThis.intuiface_ifd_actions[targetName] ={};
+            globalThis.intuiface_ifd_actions[targetName] = {};
         }
 
         // store all informations in object
         globalThis.intuiface_ifd_actions[targetName][propertyKey] = {
-            id: globalThis.intuiface_ifd_name + '.' + propertyKey.toString(),
+            // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+            id: `${globalThis.intuiface_ifd_name}.${propertyKey.toString()}`,
             path: propertyKey,
             description: options.description,
             parameters: parameters
-        }
+        };
     };
 }

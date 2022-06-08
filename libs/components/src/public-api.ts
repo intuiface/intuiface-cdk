@@ -37,6 +37,3 @@ export { ScrollableBehavior } from './lib/behaviors/collectionBehaviors/scrollab
 
 // Service
 export { SelectionService } from './lib/services/selection.service';
-
-
-

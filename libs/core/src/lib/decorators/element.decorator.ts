@@ -1,7 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-empty-function */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/ban-types */
+/* eslint-disable prefer-arrow/prefer-arrow-functions */
 /**
  * Options when use inject decorator.
  */
@@ -66,7 +63,7 @@ export interface ICollectionOptions extends IInjectOptions
  */
 export function Inject(options?: IInjectOptions) {
     return (ctor: Function): void => {
-        
+
     };
 }
 
@@ -79,7 +76,7 @@ export function DoNotInjectMethod() {
         propertyKey: string | symbol,
         // descriptor: PropertyDescriptor
     ): void => {
-        
+
     };
 }
 
@@ -92,7 +89,7 @@ export function Asset(options?: IElementOptions): (cls: any) => any
     return (ctor: Function) =>
     {
         const targetName = options.name;
-        if(globalThis.intuiface_ifd_classes.indexOf(targetName) == -1)
+        if (globalThis.intuiface_ifd_classes.indexOf(targetName) === -1)
         {
             globalThis.intuiface_ifd_classes.push(targetName);
         }
@@ -124,7 +121,7 @@ export function Collection(options?: ICollectionOptions): (cls: any) => any
 {
     return (ctor: Function) => {
         const targetName = options.name;
-        if (globalThis.intuiface_ifd_classes.indexOf(targetName) == -1) {
+        if (globalThis.intuiface_ifd_classes.indexOf(targetName) === -1) {
             globalThis.intuiface_ifd_classes.push(targetName);
         }
 

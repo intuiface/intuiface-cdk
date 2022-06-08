@@ -1,4 +1,4 @@
-import { PlayableFacade } from "./playable.facade";
+import { PlayableFacade } from './playable.facade';
 
 /**
  * Facade to use audio API.

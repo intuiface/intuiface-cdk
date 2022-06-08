@@ -75,5 +75,5 @@ export class Resource implements IConvertibleType
     }
 
     //#endregion Static Operations
-   
+
 }

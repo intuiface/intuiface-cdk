@@ -1,4 +1,4 @@
-import { PlayableMediaFacade } from "./playable-media.facade";
+import { PlayableMediaFacade } from './playable-media.facade';
 
 /**
  * Behavior to manage the timeline on media element (audio, video, ...).

@@ -14,8 +14,8 @@ export class IntuifaceCollection<T extends ElementContainer> extends IntuifaceEl
     public visibleItems: IntuifaceElement[] = [];
 
     /**
-    * Indicates the start index of the current items requested from collection sources
-    */
+     * Indicates the start index of the current items requested from collection sources
+     */
     public visibleItemsStartIndex: number = 0;
 
     /**
@@ -55,12 +55,12 @@ export class IntuifaceCollection<T extends ElementContainer> extends IntuifaceEl
     //#region Public methods
 
     /**
-    * Requests items of the collection
-    * @param start start index of the requested items
-    * @param count number of requested items
-    */
+     * Requests items of the collection
+     * @param start start index of the requested items
+     * @param count number of requested items
+     */
     public async requestItems(start: number, count: number): Promise<void> {
-        return;
+
     }
 
     /**

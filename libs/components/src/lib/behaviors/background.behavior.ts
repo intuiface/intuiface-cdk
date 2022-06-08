@@ -74,7 +74,7 @@ export class BackgroundBehavior {
      * Action to change the outline color.
      * @param color new outline color to set
      */
-    public changeOutlineColor( color: ColorType): void
+    public changeOutlineColor(color: ColorType): void
     {
     }
 

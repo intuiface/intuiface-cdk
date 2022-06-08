@@ -74,16 +74,6 @@
                         "browserTarget": "cdk:build"
                     }
                 },
-                "lint": {
-                    "builder": "@nrwl/linter:eslint",
-                    "options": {
-                        "lintFilePatterns": [
-                            "apps/cdk/src/**/*.ts",
-                            "apps/cdk/src/**/*.html"
-                        ]
-                    },
-                    "outputs": ["{options.outputFile}"]
-                },
                 "test": {
                     "builder": "@nrwl/jest:jest",
                     "outputs": ["coverage/apps/cdk"],

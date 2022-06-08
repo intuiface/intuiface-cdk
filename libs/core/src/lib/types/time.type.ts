@@ -49,7 +49,10 @@ export class Time implements IConvertibleType {
      * @param minutes minutes of the time
      * @param seconds seconds of the time
      */
-    public constructor(public readonly hours: number, public readonly minutes: number, public readonly seconds: number) {
+    public constructor(public readonly hours: number,
+                       public readonly minutes: number,
+                       public readonly seconds: number)
+    {
         this.totalSeconds = hours * 3600 + minutes * 60 + seconds;
         this.totalMilliseconds = this.totalSeconds * 1000;
         this.totalIntegerSeconds = Math.floor(hours * 3600 + minutes * 60 + seconds);
@@ -92,9 +95,9 @@ export class Time implements IConvertibleType {
         switch (type) {
 
             case String:
-                {
-                    return this.toString();
-                }
+            {
+                return this.toString();
+            }
             case Number:
                 return this.totalSeconds;
         }

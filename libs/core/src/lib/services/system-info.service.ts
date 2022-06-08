@@ -3,14 +3,14 @@
  */
 export class SystemInfoService
 {
-     //#region Device info
+    //#region Device info
 
     /**
-    * Get the unique ID of the device
-    * @returns Device ID
-    */
+     * Get the unique ID of the device
+     * @returns Device ID
+     */
     public async getDeviceId(): Promise<string> {
-        return '';
+        return await new Promise(r => { r(''); });
     }
 
     /**
@@ -18,7 +18,7 @@ export class SystemInfoService
      * @returns the device name
      */
     public async getDeviceName(): Promise<string> {
-        return '';
+        return await new Promise(r => { r(''); });
     }
 
     /**
@@ -34,7 +34,7 @@ export class SystemInfoService
      * @returns Operating system and os version in same string
      */
     public async getOS(): Promise<string> {
-        return '';
+        return await new Promise(r => { r(''); });
     }
 
     //#endregion Device info
