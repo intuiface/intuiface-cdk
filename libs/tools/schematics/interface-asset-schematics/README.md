@@ -1,6 +1,13 @@
 # Interface Asset Schematics 
 Allows you to create an interface asset, build it and generate an IFD to get ready to use it in Composer
 
+## Table of contents
+
+- [Install](#install)
+- [Prerequisite](#prerequisite)
+- [Usage](#usage)
+- [Development](#development)
+
 ## Install
 Install the interface asset schematics : 
     `npm install @intuiface/interface-asset`
@@ -15,3 +22,7 @@ Use it with : `schematics @intuiface/interface-asset:create`
 Develop your interface asset using the squeleton or read the documentation of `@intuiface/core`
 
 Then run `npm run build` to build in production or `npm run build:debug` to be able to debug your interface asset.
+
+## Development
+
+About decorators or types please read the [Intuiface Core Documentation](../../../core/README.md)

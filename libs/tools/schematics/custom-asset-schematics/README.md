@@ -1,4 +1,6 @@
-# External Asset Schematics
+# WORK IN PROGESS : NOT AVAILABLE RIGHT NOW
+
+# Custom Asset Schematics
 
 Allows you to create an asset or a collection, build it and get ready to use it in Composer
 
