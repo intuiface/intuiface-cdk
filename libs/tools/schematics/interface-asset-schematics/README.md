@@ -12,7 +12,6 @@ Allows you to create an interface asset, build it and generate an IFD to get rea
 - [Install](#install)
 - [Prerequisite](#prerequisite)
 - [Usage](#usage)
-- [Development](#development)
 - [Help](#help)
 
 ## Install
@@ -28,13 +27,9 @@ Use it with : `schematics @intuiface/interface-asset:create`
 
 After installation done, please restart VSCode if you want the code analyzer running.
 
-Develop your interface asset using the squeleton or read the documentation of `@intuiface/core`
+Develop your interface asset using the squeleton or read the documentation of [@intuiface/core](https://github.com/intuiface/intuiface-cdk/blob/master/libs/core/README.md)
 
 Then run `npm run build` to build in production or `npm run build:debug` to be able to debug your interface asset.
-
-## Development
-
-About decorators or types please read the [Intuiface Core Documentation](https://github.com/intuiface/intuiface-cdk/blob/master/libs/core/README.md)
 
 ## Help
 
