@@ -25,7 +25,7 @@ Install `@angular-devkit/schematics-cli` with `npm install -g @angular-devkit/sc
 Use it with : `schematics @intuiface/interface-asset:create`
     it will prompt you about the interface-asset name and create all files
 
-After installation done, please restart VSCode if you want the code analyzer running.
+After installation done, please restart VSCode if you want the code analyzer running. You can use the command `npm run lint` if you want to run the code analyzer manually. We provide automatic linting (code analyzing) in VSCode through the `settings.json` file in the `.vscode` folder.
 
 Develop your interface asset using the squeleton or read the documentation of [@intuiface/core](https://github.com/intuiface/intuiface-cdk/blob/master/libs/core/README.md)
 

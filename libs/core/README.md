@@ -55,7 +55,7 @@ minValue?: number;
 maxValue?: number;
 
 /**
- * True if property is read only.
+ * True if property is read only in Intuiface Composer.
  * Optional
  */
 readOnly?: boolean;
@@ -98,6 +98,33 @@ Here an example :
 })
 public volume: number = 0; // declaration of the property
 ```
+
+❗⚠️❗ For property type `Array` there is a limitation : if you modify the array with methods like `push`, `pop`, `reduce`, `reverse`, `shift`, `sort`, `slice`, `splice`... without calling a setter (ie. `myArray = [...]`) bindings will not be updated. To fix that, you can use the method `notifyPropertyChanged`.
+
+Example, I have an item list declared like this : 
+```ts
+/**
+ * Item List
+ */
+@Property({
+    displayName: 'List Items',
+    defaultValue: [],
+    type: Array,
+    itemType: ListItem
+})
+public listItems: ListItem[] = [];
+```
+
+I have an action which adds an item to list with the `push` method. I have to make this code to be sure all my bindings will be resolved when I add a new item : 
+```ts
+// add my new item to the list
+this.listItems.push(newItem);
+// call the notify property changed
+this.notifyPropertyChanged('listItems', this.listItems);
+```
+
+
+
 
 ### Trigger
 The `@Trigger` decorator allows you to declare a new trigger with :
