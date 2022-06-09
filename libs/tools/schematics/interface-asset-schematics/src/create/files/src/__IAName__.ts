@@ -1,7 +1,7 @@
 import { Action, Asset, IntuifaceElement, Parameter, Property, Trigger } from '@intuiface/core';
 
 /**
- * Custom Interface Asset <%= IAName %> 
+ * Custom Interface Asset <%= IAName %>
  */
 @Asset({
     name: '<%= IAName %>',
@@ -56,7 +56,7 @@ export class <%= IAName %> extends IntuifaceElement {
     /**
      * Action Example
      */
-    @Action({ 
+    @Action({
         displayName: 'Action Example',
         description: 'An Action example with a parameter and validation',
         validate: true
@@ -72,7 +72,7 @@ export class <%= IAName %> extends IntuifaceElement {
             type: Number
         }) actionParam: number): void
     {
-        if(this.propertyExample !== actionParam) {
+        if (this.propertyExample !== actionParam) {
             this.propertyExample = actionParam;
             // raise the trigger
             this.exampleTrigger();

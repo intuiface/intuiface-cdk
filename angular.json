@@ -250,6 +250,21 @@
                                 "input": "libs/tools/schematics/interface-asset-schematics/src/",
                                 "output": "/src/",
                                 "ignore": ["**/index.ts"]
+                            },
+                            {
+                                "glob": ".eslintrc.js",
+                                "input": "libs/tools/schematics/interface-asset-schematics/src/",
+                                "output": "/src/"
+                            },
+                            {
+                                "glob": ".vscode/*",
+                                "input": "libs/tools/schematics/interface-asset-schematics/src/",
+                                "output": "/src/"
+                            },
+                            {
+                                "glob": ".gitignore",
+                                "input": "libs/tools/schematics/interface-asset-schematics/src/",
+                                "output": "/src/"
                             }
                         ]
                     },

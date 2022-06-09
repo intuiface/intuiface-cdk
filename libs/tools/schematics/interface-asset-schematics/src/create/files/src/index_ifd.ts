@@ -1,3 +1,5 @@
+/* eslint-disable camelcase */
+/* eslint-disable dot-notation */
 // const fs = require('fs-extra');
 import fs from 'fs-extra';
 
@@ -10,57 +12,61 @@ globalThisAny.intuiface_ifd_actions = {};
 globalThisAny.intuiface_ifd_params = {};
 globalThisAny.intuiface_ifd_triggers = {};
 
-// import the IA
-async function loadIA() 
+/**
+ * import the IA
+ */
+// eslint-disable-next-line prefer-arrow/prefer-arrow-functions
+async function loadIA()
 {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const ia = await import('./<%= IAName %>.js');
 
-    let schemas: any = {};
-    let resources: any = {};
-    for(const name of globalThisAny.intuiface_ifd_classes)
+    const schemas: any = {};
+    const resources: any = {};
+    for (const name of globalThisAny.intuiface_ifd_classes)
     {
         schemas[name] =  {
-                id: name,
-                type: 'object',
-                description: name,
-                properties: globalThisAny.intuiface_ifd_properties[name]
-            };
+            id: name,
+            type: 'object',
+            description: name,
+            properties: globalThisAny.intuiface_ifd_properties[name]
+        };
 
         resources[name] = {
-                id: name,
-                methods: globalThisAny.intuiface_ifd_actions[name],
-                events: globalThisAny.intuiface_ifd_triggers[name]
-        }
+            id: name,
+            methods: globalThisAny.intuiface_ifd_actions[name],
+            events: globalThisAny.intuiface_ifd_triggers[name]
+        };
     }
 
     // set interface asset to import in composer
     resources['<%= IAName %>']['if.interfaceAsset'] = true;
 
-    // create the ifd as json object 
+    // create the ifd as json object
     // and add metadatas filled from decorators
     globalThisAny.intuiface_ifd_file = {
-        version: "v1.0",
-        name: '<%= IAName %>',
-        protocol: 'ts',
-        basePath: '<%= IAName %>',
+        'version': 'v1.0',
+        'name': '<%= IAName %>',
+        'protocol': 'ts',
+        'basePath': '<%= IAName %>',
         'if.dependencies': [
             '<%= IAName %>.js',
             '<%= IAName %>.module.js'
         ],
-        schemas: schemas,
-        resources: resources
+        'schemas': schemas,
+        'resources': resources
     };
 
 
     // write the ifd file
-    fs.outputFile("dist/<%= IAName %>.ifd", JSON.stringify(globalThisAny.intuiface_ifd_file), 'utf8', (err: any) => {
+    fs.outputFile('dist/<%= IAName %>.ifd', JSON.stringify(globalThisAny.intuiface_ifd_file), 'utf8', (err: any) => {
         if (err) {
-            console.log("An error occured while writing JSON Object to File.");
+            console.log('An error occured while writing JSON Object to File.');
             return console.log(err);
         }
 
-        console.log("IFD file has been saved.");
+        console.log('IFD file has been saved.');
     });
 }
 
-loadIA();
+void loadIA();
