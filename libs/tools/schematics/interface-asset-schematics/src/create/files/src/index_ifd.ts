@@ -47,6 +47,7 @@ async function loadIA()
     globalThisAny.intuiface_ifd_file = {
         'version': 'v1.0',
         'name': '<%= IAName %>',
+        'title': globalThisAny.iaTitle,
         'protocol': 'ts',
         'basePath': '<%= IAName %>',
         'if.dependencies': [

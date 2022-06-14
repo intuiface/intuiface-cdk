@@ -5,8 +5,8 @@
   "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "npm run cleanDist && npx tsc --project tsconfig.ifd.json && shx cp ./src/package.json ./tmp/ && node tmp/index_ifd.js && npm run cleanTmp && npx webpack --config webpack.config.js",
-    "build:debug": "npm run cleanDist && npx tsc --project tsconfig.ifd.json && shx cp ./src/package.json ./tmp/ && node tmp/index_ifd.js && npm run cleanTmp && npx webpack --config webpack-debug.config.js",
+    "build": "npm run cleanDist && npx tsc --project tsconfig.ifd.json && shx cp ./src/package.json ./tmp/ && node --experimental-modules --es-module-specifier-resolution=node tmp/index_ifd.js && npm run cleanTmp && npx webpack --config webpack.config.js",
+    "build:debug": "npm run cleanDist && npx tsc --project tsconfig.ifd.json && shx cp ./src/package.json ./tmp/ && node --experimental-modules --es-module-specifier-resolution=node tmp/index_ifd.js && npm run cleanTmp && npx webpack --config webpack-debug.config.js",
     "lint": "npx eslint -c .eslintrc.js --ext .ts .",
     "cleanDist": "node -e \"require('fs-extra').remove('dist/');\"",
     "cleanTmp": "node -e \"require('fs-extra').remove('tmp/');\""

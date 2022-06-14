@@ -89,6 +89,7 @@ export function Asset(options?: IElementOptions): (cls: any) => any
     return (ctor: Function) =>
     {
         const targetName = options.name;
+        globalThis.iaTitle = options.displayName;
         if (globalThis.intuiface_ifd_classes.indexOf(targetName) === -1)
         {
             globalThis.intuiface_ifd_classes.push(targetName);

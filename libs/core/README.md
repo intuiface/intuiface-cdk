@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://www.intuiface.com//">
+  <a href="https://www.intuiface.com">
     <img src="https://assets-global.website-files.com/6090f790a8effe00c12b39d0/6090f790a8effef0002b3c56_Intuiface%20logo%20animated.gif" alt="Intuiface logo" width="200" height="86">
   </a>
 </p>
@@ -99,7 +99,7 @@ Here an example :
 public volume: number = 0; // declaration of the property
 ```
 
-❗⚠️❗ For property type `Array` there is a limitation : if you modify the array with methods like `push`, `pop`, `reduce`, `reverse`, `shift`, `sort`, `slice`, `splice`... without calling a setter (ie. `myArray = [...]`) bindings will not be updated. To fix that, you can use the method `notifyPropertyChanged`.
+❗⚠️⚠️⚠️⚠️❗ For property type `Array` there is a limitation : if you modify the array with methods like `push`, `pop`, `reduce`, `reverse`, `shift`, `sort`, `slice`, `splice`... without calling a setter (ie. `myArray = [...]`) bindings will not be updated. To fix that, you can use the method `notifyPropertyChanged`.
 
 Example, I have an item list declared like this : 
 ```ts
