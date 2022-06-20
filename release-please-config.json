@@ -3,8 +3,8 @@
         ".": {},
         "libs/core": {},
         "libs/components": {},
-        "libs/tools/custom-asset-schematics": {},
-        "libs/tools/interface-asset-schematics": {}
+        "libs/tools/schematics/custom-asset-schematics": {},
+        "libs/tools/schematics/interface-asset-schematics": {}
     },
     "draft": true
 }
