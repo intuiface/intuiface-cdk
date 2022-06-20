@@ -1,0 +1,10 @@
+{
+    "packages": {
+        ".": {},
+        "libs/core": {},
+        "libs/components": {},
+        "libs/tools/custom-asset-schematics": {},
+        "libs/tools/interface-asset-schematics": {}
+    },
+    "draft": true
+}
