@@ -3,7 +3,6 @@ name: Bump Version and generate release
 on:
   push:
     branches:
-      - master
       - feature/PN-933_PreReleaseCDK
 
 jobs:
@@ -13,6 +12,7 @@ jobs:
       - uses: google-github-actions/release-please-action@v3
         with:
           release-type: node
-          package-name: release-please-action
           command: manifest
+          default-branch: feature/PN-933_PreReleaseCDK
+          package-name: release-please-action
           token: ${{secrets.GITHUB_TOKEN}}
