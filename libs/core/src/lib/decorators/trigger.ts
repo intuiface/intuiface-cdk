@@ -49,7 +49,6 @@ export function Trigger(options?: ITriggerOptions)
         const targetName = target.constructor.name;
         let properties = {};
 
-
         if (!globalThis.intuiface_ifd_triggers[targetName]) {
             globalThis.intuiface_ifd_triggers[targetName] = {};
         }
