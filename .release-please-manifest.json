@@ -3,5 +3,13 @@
     "libs/core": "0.0.7",
     "libs/components": "0.0.7",
     "libs/tools/custom-asset-schematics": "0.0.7",
-    "libs/tools/interface-asset-schematics": "0.0.7"
+    "libs/tools/interface-asset-schematics": "0.0.7",
+
+    "extra-files": [
+        {
+            "type": "json",
+            "path": "libs/tools/schematics/interface-asset-schematics/src/create/files/package.json",
+            "jsonpath": "$.dependencies['@intuiface/core']"
+        }
+    ]
 }

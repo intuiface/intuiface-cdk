@@ -1,10 +1,16 @@
 {
     "packages": {
-        ".": {},
-        "libs/core": {},
-        "libs/components": {},
-        "libs/tools/schematics/custom-asset-schematics": {},
-        "libs/tools/schematics/interface-asset-schematics": {}
-    },
-    "draft": true
+        "libs/core": {
+            "draft": true
+        },
+        "libs/components": {
+            "draft": true
+        },
+        "libs/tools/schematics/custom-asset-schematics": {
+            "draft": true
+        },
+        "libs/tools/schematics/interface-asset-schematics": {
+            "draft": true
+        }
+    }
 }
