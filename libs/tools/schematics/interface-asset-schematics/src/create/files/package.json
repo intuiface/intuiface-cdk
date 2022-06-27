@@ -32,7 +32,7 @@
     "tslint": "6.1.3"
   },
   "dependencies": {
-    "@intuiface/core": "0.0.7",
+    "@intuiface/core": "^0.0.7",
     "tslib": "^2.3.1"
   }
 }
