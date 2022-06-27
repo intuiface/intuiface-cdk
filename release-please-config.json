@@ -1,28 +1,26 @@
 {
+    "last-release-sha": "55433b60fc2fbc514afb5532c15e3f89ec370dad",
     "packages": {
         "libs/core": {
             "draft": true,
             "plugins": [
                 "node-workspace",
                 "cargo-workspace"
-            ],
-            "last-release-sha": "55433b60fc2fbc514afb5532c15e3f89ec370dad"
+            ]
         },
         "libs/components": {
             "draft": true,
             "plugins": [
                 "node-workspace",
                 "cargo-workspace"
-            ],
-            "last-release-sha": "55433b60fc2fbc514afb5532c15e3f89ec370dad"
+            ]
         },
         "libs/tools/schematics/custom-asset-schematics": {
             "draft": true,
             "plugins": [
                 "node-workspace",
                 "cargo-workspace"
-            ],
-            "last-release-sha": "55433b60fc2fbc514afb5532c15e3f89ec370dad"
+            ]
         },
         "libs/tools/schematics/interface-asset-schematics": {
             "draft": true,
@@ -30,7 +28,6 @@
                 "node-workspace",
                 "cargo-workspace"
             ],
-            "last-release-sha": "55433b60fc2fbc514afb5532c15e3f89ec370dad",
             "extra-files": [
                 {
                     "type": "json",
