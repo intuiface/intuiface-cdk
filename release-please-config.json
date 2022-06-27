@@ -10,7 +10,14 @@
             "draft": true
         },
         "libs/tools/schematics/interface-asset-schematics": {
-            "draft": true
+            "draft": true,
+            "extra-files": [
+                {
+                    "type": "json",
+                    "path": "libs/tools/schematics/interface-asset-schematics/src/create/files/package.json",
+                    "jsonpath": "$.dependencies['@intuiface/core']"
+                }
+            ]
         }
     }
 }
