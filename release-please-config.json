@@ -14,7 +14,7 @@
             "extra-files": [
                 {
                     "type": "json",
-                    "path": "libs/tools/schematics/interface-asset-schematics/src/create/files/package.json",
+                    "path": "/src/create/files/package.json",
                     "jsonpath": "$.dependencies['@intuiface/core']"
                 }
             ]
