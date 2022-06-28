@@ -1,29 +1,26 @@
 {
     "last-release-sha": "55433b60fc2fbc514afb5532c15e3f89ec370dad",
+    "draft": true,
     "packages": {
         "libs/core": {
-            "draft": true,
             "plugins": [
                 "node-workspace",
                 "cargo-workspace"
             ]
         },
         "libs/components": {
-            "draft": true,
             "plugins": [
                 "node-workspace",
                 "cargo-workspace"
             ]
         },
         "libs/tools/schematics/custom-asset-schematics": {
-            "draft": true,
             "plugins": [
                 "node-workspace",
                 "cargo-workspace"
             ]
         },
         "libs/tools/schematics/interface-asset-schematics": {
-            "draft": true,
             "plugins": [
                 "node-workspace",
                 "cargo-workspace"
