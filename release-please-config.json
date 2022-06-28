@@ -28,7 +28,7 @@
             "extra-files": [
                 {
                     "type": "json",
-                    "path": "./src/create/files/package.json",
+                    "path": "src/create/files/package.json",
                     "jsonpath": "$.dependencies['@intuiface/core']"
                 }
             ]
