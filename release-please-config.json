@@ -12,6 +12,11 @@
                     "type": "json",
                     "path": "/libs/tools/schematics/interface-asset-schematics/src/create/files/package.json",
                     "jsonpath": "$.dependencies['@intuiface/core']"
+                },
+                {
+                    "type": "json",
+                    "path": "/libs/tools/schematics/custom-asset-schematics/src/create/files/packageVersions.json",
+                    "jsonpath": "$['@intuiface/core']"
                 }
             ]
         },
@@ -19,12 +24,26 @@
             "plugins": [
                 "node-workspace",
                 "cargo-workspace"
+            ],
+            "extra-files": [
+                {
+                    "type": "json",
+                    "path": "/libs/tools/schematics/custom-asset-schematics/src/create/files/packageVersions.json",
+                    "jsonpath": "$['@intuiface/components']"
+                }
             ]
         },
         "libs/tools/schematics/custom-asset-schematics": {
             "plugins": [
                 "node-workspace",
                 "cargo-workspace"
+            ],
+            "extra-files": [
+                {
+                    "type": "json",
+                    "path": "/libs/tools/schematics/custom-asset-schematics/src/create/files/packageVersions.json",
+                    "jsonpath": "$['@intuiface/custom-asset']"
+                }
             ]
         },
         "libs/tools/schematics/interface-asset-schematics": {
