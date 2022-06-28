@@ -1,6 +1,8 @@
 {
     "bootstrap-sha": "55433b60fc2fbc514afb5532c15e3f89ec370dad",
     "draft": true,
+    "bump-minor-pre-major": true,
+    "bump-patch-for-minor-pre-major": true,
     "packages": {
         "libs/core": {
             "plugins": [
