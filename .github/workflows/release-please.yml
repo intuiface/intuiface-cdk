@@ -16,3 +16,4 @@ jobs:
           default-branch: feature/PN-933_PreReleaseCDK
           package-name: release-please-action
           token: ${{secrets.GITHUB_TOKEN}}
+          monorepo-tags: true
