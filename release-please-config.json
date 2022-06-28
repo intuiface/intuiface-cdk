@@ -1,5 +1,5 @@
 {
-    "bootstrap-sha": "91edc2da86ca3a477911e0c2570af1faceb99f38",
+    "last-release-sha": "91edc2da86ca3a477911e0c2570af1faceb99f38",
     "draft": true,
     "bump-minor-pre-major": true,
     "bump-patch-for-minor-pre-major": true,
