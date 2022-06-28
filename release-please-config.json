@@ -6,6 +6,13 @@
             "plugins": [
                 "node-workspace",
                 "cargo-workspace"
+            ],
+            "extra-files": [
+                {
+                    "type": "json",
+                    "path": "/libs/tools/schematics/interface-asset-schematics/src/create/files/package.json",
+                    "jsonpath": "$.dependencies['@intuiface/core']"
+                }
             ]
         },
         "libs/components": {
@@ -24,13 +31,6 @@
             "plugins": [
                 "node-workspace",
                 "cargo-workspace"
-            ],
-            "extra-files": [
-                {
-                    "type": "json",
-                    "path": "src/create/files/package.json",
-                    "jsonpath": "$.dependencies['@intuiface/core']"
-                }
             ]
         }
     }
