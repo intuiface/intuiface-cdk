@@ -9,8 +9,7 @@
         "libs/core": {
             "draft": true,
             "plugins": [
-                "node-workspace",
-                "cargo-workspace"
+                "node-workspace"
             ],
             "extra-files": [
                 {
@@ -28,8 +27,7 @@
         "libs/components": {
             "draft": true,
             "plugins": [
-                "node-workspace",
-                "cargo-workspace"
+                "node-workspace"
             ],
             "extra-files": [
                 {
@@ -42,8 +40,7 @@
         "libs/tools/schematics/custom-asset-schematics": {
             "draft": true,
             "plugins": [
-                "node-workspace",
-                "cargo-workspace"
+                "node-workspace"
             ],
             "extra-files": [
                 {
@@ -56,8 +53,7 @@
         "libs/tools/schematics/interface-asset-schematics": {
             "draft": true,
             "plugins": [
-                "node-workspace",
-                "cargo-workspace"
+                "node-workspace"
             ]
         }
     }
