@@ -7,5 +7,6 @@ export function InternalProperty()
     return (target: unknown, propertyKey: string): void =>
     {
         // test comment
+        // test comment 2 for release
     };
 }
