@@ -1,0 +1,60 @@
+{
+    "group-pull-request-title-pattern": "chore: release ${scope} ${component} ${version}",
+    "bump-minor-pre-major": true,
+    "bump-patch-for-minor-pre-major": true,
+    "packages": {
+        ".": {
+            "draft": true
+        },
+        "libs/core": {
+            "draft": true,
+            "plugins": [
+                "node-workspace"
+            ],
+            "extra-files": [
+                {
+                    "type": "json",
+                    "path": "/libs/tools/schematics/interface-asset-schematics/src/create/files/package.json",
+                    "jsonpath": "$.dependencies['@intuiface/core']"
+                },
+                {
+                    "type": "json",
+                    "path": "/libs/tools/schematics/custom-asset-schematics/src/create/files/packageVersions.json",
+                    "jsonpath": "$['@intuiface/core']"
+                }
+            ]
+        },
+        "libs/components": {
+            "draft": true,
+            "plugins": [
+                "node-workspace"
+            ],
+            "extra-files": [
+                {
+                    "type": "json",
+                    "path": "/libs/tools/schematics/custom-asset-schematics/src/create/files/packageVersions.json",
+                    "jsonpath": "$['@intuiface/components']"
+                }
+            ]
+        },
+        "libs/tools/schematics/custom-asset-schematics": {
+            "draft": true,
+            "plugins": [
+                "node-workspace"
+            ],
+            "extra-files": [
+                {
+                    "type": "json",
+                    "path": "/libs/tools/schematics/custom-asset-schematics/src/create/files/packageVersions.json",
+                    "jsonpath": "$['@intuiface/custom-asset']"
+                }
+            ]
+        },
+        "libs/tools/schematics/interface-asset-schematics": {
+            "draft": true,
+            "plugins": [
+                "node-workspace"
+            ]
+        }
+    }
+}
