@@ -3,7 +3,7 @@ name: Bump Version and generate release
 on:
   push:
     branches:
-      - feature/PN-933_PreReleaseCDK
+      - master
 
 jobs:
   release-please:
@@ -13,7 +13,7 @@ jobs:
         with:
           release-type: node
           command: manifest
-          default-branch: feature/PN-933_PreReleaseCDK
+          default-branch: master
           package-name: release-please-action
           token: ${{secrets.GITHUB_TOKEN}}
           monorepo-tags: true
