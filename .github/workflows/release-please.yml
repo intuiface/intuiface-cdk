@@ -12,6 +12,7 @@ jobs:
       - uses: google-github-actions/release-please-action@v3
         with:
           release-type: node
+          command: manifest
           default-branch: master
           package-name: release-please-action
           token: ${{secrets.GITHUB_TOKEN}}
