@@ -1,5 +1,5 @@
 {
-    "group-pull-request-title-pattern": "chore: release ${scope} ${component} ${version}",
+    "group-pull-request-title-pattern": "chore: release ${component} ${version}",
     "bump-minor-pre-major": true,
     "bump-patch-for-minor-pre-major": true,
     "packages": {
