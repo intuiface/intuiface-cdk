@@ -29,6 +29,7 @@ export class CollectionComponent<T extends IntuifaceCollection<ElementContainer>
     protected onCollectionVisibleItemsChanged(): void
     {
     }
+    
 
     public trackByFn(index: number, item: IntuifaceElement): number
     {
