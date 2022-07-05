@@ -10,10 +10,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: google-github-actions/release-please-action@v3
+        id: release
         with:
           release-type: node
           command: manifest
           default-branch: master
-          package-name: release-please-action
           token: ${{secrets.GITHUB_TOKEN}}
           monorepo-tags: true
+
+      - run: echo "A release was created."
+        if: ${{ steps.release.outputs.releases_created }}

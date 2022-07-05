@@ -4,10 +4,12 @@
     "bump-patch-for-minor-pre-major": true,
     "packages": {
         ".": {
-            "draft": true
+            "draft": true,
+            "release-type": "node"
         },
         "libs/core": {
             "draft": true,
+            "release-type": "node",
             "plugins": [
                 "node-workspace"
             ],
@@ -26,6 +28,7 @@
         },
         "libs/components": {
             "draft": true,
+            "release-type": "node",
             "plugins": [
                 "node-workspace"
             ],
@@ -39,6 +42,7 @@
         },
         "libs/tools/schematics/custom-asset-schematics": {
             "draft": true,
+            "release-type": "node",
             "plugins": [
                 "node-workspace"
             ],
@@ -52,6 +56,7 @@
         },
         "libs/tools/schematics/interface-asset-schematics": {
             "draft": true,
+            "release-type": "node",
             "plugins": [
                 "node-workspace"
             ]
