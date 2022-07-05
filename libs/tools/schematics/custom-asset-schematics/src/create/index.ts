@@ -168,10 +168,10 @@ function addJsonDependencies(name: string): Rule{
         else
         {
             // default values
-            json.dependencies['@intuiface/core'] = '^0.0.8';
-            json.dependencies['@intuiface/components'] = '^0.0.8';
+            json.dependencies['@intuiface/core'] = '^0.0.9';
+            json.dependencies['@intuiface/components'] = '^0.0.9';
             json.devDependencies['@angular-architects/module-federation'] = '^14.0.1';
-            json.devDependencies['@intuiface/custom-asset'] = '^0.0.8';
+            json.devDependencies['@intuiface/custom-asset'] = '^0.0.9';
         }
         // delete the package versions
         tree.delete(pathToPackageVersions);
