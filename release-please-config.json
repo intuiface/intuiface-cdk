@@ -1,14 +1,9 @@
 {
-    "group-pull-request-title-pattern": "chore: release ${component} ${version}",
-    "bump-minor-pre-major": true,
-    "bump-patch-for-minor-pre-major": true,
     "packages": {
         ".": {
-            "draft": true,
             "release-type": "node"
         },
         "libs/core": {
-            "draft": true,
             "release-type": "node",
             "plugins": [
                 "node-workspace"
@@ -27,7 +22,6 @@
             ]
         },
         "libs/components": {
-            "draft": true,
             "release-type": "node",
             "plugins": [
                 "node-workspace"
@@ -41,7 +35,6 @@
             ]
         },
         "libs/tools/schematics/custom-asset-schematics": {
-            "draft": true,
             "release-type": "node",
             "plugins": [
                 "node-workspace"
@@ -55,7 +48,6 @@
             ]
         },
         "libs/tools/schematics/interface-asset-schematics": {
-            "draft": true,
             "release-type": "node",
             "plugins": [
                 "node-workspace"
