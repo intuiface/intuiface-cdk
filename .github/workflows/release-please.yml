@@ -18,5 +18,5 @@ jobs:
           token: ${{secrets.GITHUB_TOKEN}}
           monorepo-tags: true
 
-       - run: echo "A release was created."
+      - run: echo "A release was created."
         if: ${{ steps.release.outputs.releases_created }}
