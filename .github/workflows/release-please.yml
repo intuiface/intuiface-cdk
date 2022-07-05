@@ -17,3 +17,4 @@ jobs:
           package-name: release-please-action
           token: ${{secrets.GITHUB_TOKEN}}
           monorepo-tags: true
+          draft: true
