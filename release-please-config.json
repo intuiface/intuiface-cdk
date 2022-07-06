@@ -1,4 +1,5 @@
 {
+    "bootstrap-sha": "50d42816aacb93bc6360b2d05f06582c88758a93",
     "group-pull-request-title-pattern": "chore: release ${scope} ${component} ${version}",
     "packages": {
         ".": {
