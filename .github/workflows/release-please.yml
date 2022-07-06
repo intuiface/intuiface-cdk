@@ -13,7 +13,7 @@ jobs:
         id: release
         with:
           release-type: node
-          command: manifest
+          command: manifest-pr
           default-branch: hotfix/TestRelease
           package-name: intuiface-cdk
           token: ${{secrets.GITHUB_TOKEN}}
