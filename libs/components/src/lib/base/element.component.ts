@@ -12,6 +12,7 @@ import { IntuifaceElement } from '@intuiface/core';
 })
 export class ElementComponent<T extends IntuifaceElement>
 {
+    
     @Input()
     public element: T;
 
