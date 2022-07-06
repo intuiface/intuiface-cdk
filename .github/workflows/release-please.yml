@@ -23,4 +23,7 @@ jobs:
           pull-request-title-pattern: "chore: release ${scope} ${component} ${version}"
 
       - run: echo "A release was created."
+        if: ${{ steps.release.outputs.release_created }}
+
+      - run: echo "Multiple releases were created."
         if: ${{ steps.release.outputs.releases_created }}
