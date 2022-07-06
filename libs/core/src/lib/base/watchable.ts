@@ -3,6 +3,7 @@
  */
 export class Watchable
 {
+    
     /**
      * Function to call when a property in the element changed to notify listeners
      * @param propertyKey

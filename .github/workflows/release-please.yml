@@ -3,7 +3,7 @@ name: Bump Version and generate release
 on:
   push:
     branches:
-      - master
+      - hotfix/TestRelease
 
 jobs:
   release-please:
@@ -14,7 +14,7 @@ jobs:
         with:
           release-type: node
           command: manifest
-          default-branch: master
+          default-branch: hotfix/TestRelease
           package-name: intuiface-cdk
           token: ${{secrets.GITHUB_TOKEN}}
           bump-minor-pre-major: true

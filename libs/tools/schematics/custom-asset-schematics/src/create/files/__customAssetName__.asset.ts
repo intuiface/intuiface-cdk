@@ -12,6 +12,7 @@ import { IntuifaceElement, Asset, Property, Parameter, Action, Trigger } from '@
 })
 export class <%= classify(customAssetName) %> extends IntuifaceElement {
 
+    
     //#region Properties
 
     /**

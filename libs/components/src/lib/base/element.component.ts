@@ -4,6 +4,7 @@ import { IntuifaceElement } from '@intuiface/core';
 
 /**
  * Base element view component
+ * 
  */
 @Component({
     selector: 'intuiface-cdk',

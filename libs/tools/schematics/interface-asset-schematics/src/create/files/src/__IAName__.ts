@@ -9,6 +9,7 @@ import { Action, Asset, IntuifaceElement, Parameter, Property, Trigger } from '@
 })
 export class <%= IAName %> extends IntuifaceElement {
 
+    
     //#region Public Properties
 
     /**
