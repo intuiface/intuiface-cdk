@@ -1,5 +1,5 @@
 {
-    "group-pull-request-title-pattern": "chore: release ${component} ${version}",
+    "group-pull-request-title-pattern": "chore: release ${scope} ${component} ${version}",
     "packages": {
         ".": {
             "release-type": "node"
