@@ -1,0 +1,3 @@
+primaryBranch: "hotfix/TestRelease"
+handleGHRelease: true
+manifest: true
