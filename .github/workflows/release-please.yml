@@ -17,7 +17,6 @@ jobs:
           default-branch: master
           package-name: intuiface-cdk
           token: ${{secrets.GITHUB_TOKEN}}
-          monorepo-tags: true
           bump-minor-pre-major: true
           bump-patch-for-minor-pre-major: true
           draft: true
