@@ -1,15 +1,17 @@
 {
     "bump-minor-pre-major": true,
     "bump-patch-for-minor-pre-major": true,
+    "plugins": [
+        "node-workspace"
+    ],
     "packages": {
         ".": {
-            "draft": true
+            "draft": true,
+            "release-as": ""
         },
         "libs/core": {
             "draft": true,
-            "plugins": [
-                "node-workspace"
-            ],
+            "release-as": "",
             "extra-files": [
                 {
                     "type": "json",
@@ -25,9 +27,7 @@
         },
         "libs/components": {
             "draft": true,
-            "plugins": [
-                "node-workspace"
-            ],
+            "release-as": "",
             "extra-files": [
                 {
                     "type": "json",
@@ -38,9 +38,7 @@
         },
         "libs/tools/schematics/custom-asset-schematics": {
             "draft": true,
-            "plugins": [
-                "node-workspace"
-            ],
+            "release-as": "",
             "extra-files": [
                 {
                     "type": "json",
@@ -51,9 +49,7 @@
         },
         "libs/tools/schematics/interface-asset-schematics": {
             "draft": true,
-            "plugins": [
-                "node-workspace"
-            ]
+            "release-as": ""
         }
     }
 }
