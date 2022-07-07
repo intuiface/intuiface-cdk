@@ -1,10 +1,13 @@
 {
-    "group-pull-request-title-pattern": "chore: release ${scope}${version}",
+    "group-pull-request-title-pattern": "chore: release ${version}",
     "bump-minor-pre-major": true,
     "bump-patch-for-minor-pre-major": true,
     "last-release-sha": "50d42816aacb93bc6360b2d05f06582c88758a93",
     "bootstrap-sha": "50d42816aacb93bc6360b2d05f06582c88758a93",
     "packages": {
+        ".":{
+            "draft": true
+        },
         "libs/core": {
             "draft": true,
             "plugins": [
