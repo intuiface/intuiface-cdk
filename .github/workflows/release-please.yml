@@ -16,4 +16,3 @@ jobs:
           default-branch: master
           package-name: release-please-action
           token: ${{secrets.GITHUB_TOKEN}}
-          pull-request-title-pattern: "chore: release ${version}"
