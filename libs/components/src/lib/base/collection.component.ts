@@ -32,6 +32,9 @@ export class CollectionComponent<T extends IntuifaceCollection<ElementContainer>
         super(elementReference);
     }
 
+    /**
+     * On collection visible items changed
+     */
     protected onCollectionVisibleItemsChanged(): void
     {
     }
