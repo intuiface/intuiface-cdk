@@ -5,15 +5,30 @@
     "last-release-sha": "50d42816aacb93bc6360b2d05f06582c88758a93",
     "bootstrap-sha": "50d42816aacb93bc6360b2d05f06582c88758a93",
     "packages": {
-        ".":{
-            "draft": true
-        },
-        "libs/core": {
+        ".":
+        {
             "draft": true,
-            "plugins": [
-                "node-workspace"
-            ],
             "extra-files": [
+                {
+                    "type": "json",
+                    "path": "/libs/core/package.json",
+                    "jsonpath": "$.version"
+                },
+                {
+                    "type": "json",
+                    "path": "/libs/components/package.json",
+                    "jsonpath": "$.version"
+                },
+                {
+                    "type": "json",
+                    "path": "/libs/tools/schematics/custom-asset-schematics/package.json",
+                    "jsonpath": "$.version"
+                },
+                {
+                    "type": "json",
+                    "path": "/libs/tools/schematics/interface-asset-schematics/package.json",
+                    "jsonpath": "$.version"
+                },
                 {
                     "type": "json",
                     "path": "/libs/tools/schematics/interface-asset-schematics/src/create/files/package.json",
@@ -23,39 +38,18 @@
                     "type": "json",
                     "path": "/libs/tools/schematics/custom-asset-schematics/src/create/files/packageVersions.json",
                     "jsonpath": "$['@intuiface/core']"
-                }
-            ]
-        },
-        "libs/components": {
-            "draft": true,
-            "plugins": [
-                "node-workspace"
-            ],
-            "extra-files": [
+                },
+                
                 {
                     "type": "json",
                     "path": "/libs/tools/schematics/custom-asset-schematics/src/create/files/packageVersions.json",
                     "jsonpath": "$['@intuiface/components']"
-                }
-            ]
-        },
-        "libs/tools/schematics/custom-asset-schematics": {
-            "draft": true,
-            "plugins": [
-                "node-workspace"
-            ],
-            "extra-files": [
+                },
                 {
                     "type": "json",
                     "path": "/libs/tools/schematics/custom-asset-schematics/src/create/files/packageVersions.json",
                     "jsonpath": "$['@intuiface/custom-asset']"
                 }
-            ]
-        },
-        "libs/tools/schematics/interface-asset-schematics": {
-            "draft": true,
-            "plugins": [
-                "node-workspace"
             ]
         }
     }

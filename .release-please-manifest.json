@@ -1,7 +1,3 @@
 {
-    ".": "0.0.10",
-    "libs/core": "0.0.11",
-    "libs/components": "0.0.8",
-    "libs/tools/schematics/custom-asset-schematics": "0.0.8",
-    "libs/tools/schematics/interface-asset-schematics": "0.0.9"
+    ".": "0.0.10"
 }
