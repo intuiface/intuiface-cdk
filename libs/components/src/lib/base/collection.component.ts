@@ -39,6 +39,12 @@ export class CollectionComponent<T extends IntuifaceCollection<ElementContainer>
     {
     }
 
+    /**
+     * Track by fn
+     * @param index 
+     * @param item 
+     * @returns 
+     */
     public trackByFn(index: number, item: IntuifaceElement): number
     {
         return (item as any)?.id;
