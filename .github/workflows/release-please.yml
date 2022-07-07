@@ -16,4 +16,5 @@ jobs:
           default-branch: master
           package-name: release-please-action
           token: ${{secrets.GITHUB_TOKEN}}
+          monorepo-tags: true
           pull-request-title-pattern: "chore: release ${version}"

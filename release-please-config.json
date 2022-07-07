@@ -9,7 +9,7 @@
         "node-workspace"
     ],
     "packages": {
-        ".": {},
+        ".": { },
         "libs/core": {
             "extra-files": [
                 {
