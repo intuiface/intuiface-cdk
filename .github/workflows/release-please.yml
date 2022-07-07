@@ -17,4 +17,4 @@ jobs:
           package-name: release-please-action
           token: ${{secrets.GITHUB_TOKEN}}
           monorepo-tags: true
-          pull-request-title-pattern: "chore: release ${scope}${component}${version}"
+          pull-request-title-pattern: "chore: release ${scope}${version}"
