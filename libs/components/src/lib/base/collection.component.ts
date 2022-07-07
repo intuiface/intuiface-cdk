@@ -17,6 +17,12 @@ import { DomSanitizer } from '@angular/platform-browser';
 export class CollectionComponent<T extends IntuifaceCollection<ElementContainer>>
     extends ElementComponent<T>
 {
+    /**
+     * Constructor
+     * @param selectionService 
+     * @param domSanitizer 
+     * @param elementReference 
+     */
     public constructor(
         protected selectionService: SelectionService,
         protected domSanitizer: DomSanitizer,
