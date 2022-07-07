@@ -1,5 +1,24 @@
 # Changelog
 
+## [0.0.11](https://github.com/intuiface/intuiface-cdk/compare/intuiface-cdk-v0.0.10...intuiface-cdk-v0.0.11) (2022-07-07)
+
+
+### Bug Fixes
+
+* add a modification in core ([e38e943](https://github.com/intuiface/intuiface-cdk/commit/e38e94397424cdd6b6aec27435011eb61d1dd67a))
+* change the pull-request-title-pattern ([dd7c661](https://github.com/intuiface/intuiface-cdk/commit/dd7c661b28de699872d1f70972e5a6526554f1c5))
+* **components:** test commit ([072841c](https://github.com/intuiface/intuiface-cdk/commit/072841c513c1643f0d57efb26b05e4c12b7a5917))
+* **components:** test conventional commit with scope ([2945ee5](https://github.com/intuiface/intuiface-cdk/commit/2945ee506e030b70292f0bbe1a0008126f84a401))
+* re-add root folder and remove scope from pull request title ([2965c80](https://github.com/intuiface/intuiface-cdk/commit/2965c80502b9ba198feee28d6e2ca06e7ec02661))
+* release only 1 package ([d7ad54b](https://github.com/intuiface/intuiface-cdk/commit/d7ad54bbe3d5116cb9c399fa4a8b7b08604f2270))
+* remove component in pull request title ([34377f5](https://github.com/intuiface/intuiface-cdk/commit/34377f5dc3447c0b5cbe70884465b7d471c56cd8))
+* remove group-pull-request-title-pattern property ([42b495d](https://github.com/intuiface/intuiface-cdk/commit/42b495dd0f6a5b63b4e7ef07deee09fcd8a0c389))
+* remove monorepo tags + mini modif to force version change ([a168b19](https://github.com/intuiface/intuiface-cdk/commit/a168b193b97bd917f337fc0f9e9829dda594b8a6))
+* remove root package ([4b3e3e2](https://github.com/intuiface/intuiface-cdk/commit/4b3e3e22265a5ee9381096a0a3fbe25af37e21ad))
+* set the last-release-sha and the bootstrap-sha to fix release please ([0975f22](https://github.com/intuiface/intuiface-cdk/commit/0975f22e0ff7dc4543566bfd4f93b4f9ad5bb010))
+* test changing name PR ([26a8d4c](https://github.com/intuiface/intuiface-cdk/commit/26a8d4ccc31dcc560b3a1a6bbbbf69791c0b350b))
+* try to change the pull request title ([4bd4ef1](https://github.com/intuiface/intuiface-cdk/commit/4bd4ef1f68ae5e04e18c415833b5465ab477e52b))
+
 ## [0.0.10](https://github.com/intuiface/intuiface-cdk/compare/intuiface-cdk-v0.0.9...intuiface-cdk-v0.0.10) (2022-07-07)
 
 
