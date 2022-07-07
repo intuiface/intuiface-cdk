@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.0.9](https://github.com/intuiface/intuiface-cdk/compare/intuiface-cdk-v0.0.8...intuiface-cdk-v0.0.9) (2022-07-07)
+
+
+### Bug Fixes
+
+* add a modification in core ([e38e943](https://github.com/intuiface/intuiface-cdk/commit/e38e94397424cdd6b6aec27435011eb61d1dd67a))
+* set the last-release-sha and the bootstrap-sha to fix release please ([0975f22](https://github.com/intuiface/intuiface-cdk/commit/0975f22e0ff7dc4543566bfd4f93b4f9ad5bb010))
+
 ## [0.0.8](https://github.com/intuiface/intuiface-cdk/compare/intuiface-cdk-v0.0.7...intuiface-cdk-v0.0.8) (2022-06-29)
 
 
