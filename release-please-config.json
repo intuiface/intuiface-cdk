@@ -4,15 +4,13 @@
     "bump-patch-for-minor-pre-major": true,
     "last-release-sha": "50d42816aacb93bc6360b2d05f06582c88758a93",
     "bootstrap-sha": "50d42816aacb93bc6360b2d05f06582c88758a93",
+    "draft": true,
+    "plugins": [
+        "node-workspace"
+    ],
     "packages": {
-        ".":{
-            "draft": true
-        },
+        ".": {},
         "libs/core": {
-            "draft": true,
-            "plugins": [
-                "node-workspace"
-            ],
             "extra-files": [
                 {
                     "type": "json",
@@ -27,10 +25,6 @@
             ]
         },
         "libs/components": {
-            "draft": true,
-            "plugins": [
-                "node-workspace"
-            ],
             "extra-files": [
                 {
                     "type": "json",
@@ -40,10 +34,6 @@
             ]
         },
         "libs/tools/schematics/custom-asset-schematics": {
-            "draft": true,
-            "plugins": [
-                "node-workspace"
-            ],
             "extra-files": [
                 {
                     "type": "json",
@@ -52,11 +42,6 @@
                 }
             ]
         },
-        "libs/tools/schematics/interface-asset-schematics": {
-            "draft": true,
-            "plugins": [
-                "node-workspace"
-            ]
-        }
+        "libs/tools/schematics/interface-asset-schematics": { }
     }
 }
