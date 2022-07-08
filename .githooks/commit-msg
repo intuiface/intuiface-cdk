@@ -4,21 +4,22 @@
 
 
 const examples = "Valid message pattern: <TYPE>[(<SCOPE>)]!?: <SUBJECT> \n" +
-  "Valid types : 'feat', 'feature', 'fix', 'perf', 'refactor', 'style', 'test', 'build', 'docs', 'chore', 'ci', 'revert' \n" +
+  "Valid types : 'feat', 'feature', 'fix', 'perf', 'refactor', 'style', 'test', 'build', 'docs', 'chore', 'ci', 'revert', 'Merge' \n" +
   "Valid scopes: 'core', 'components', 'interface-asset', 'custom-asset', 'intuiface-cdk', '*' \n" +
   "For more information, go to https://www.conventionalcommits.org/ \n" + 
   "-                                 \n";
 
 const fs = require('fs');
 
-const regex = /(feat|feature|fix|perf|refactor|style|test|build|docs|chore|ci|revert)!?(\((core|components|interface-asset|custom-asset|intuiface-cdk|\*)\))!?\s?:\s.*/gm;
+const regex = /(feat|feature|fix|perf|refactor|style|test|build|docs|chore|ci|revert)(\((core|components|interface-asset|custom-asset|intuiface-cdk|\*)\))!?\s?:\s.*/gm;
+const regexMerge = /^(merge branch)\s.*/gm;
 
 // Alternative syntax using RegExp constructor
-// const regex = new RegExp('(feat|feature|fix|perf|refactor|style|test|build|docs|chore|ci|revert)(\\((core|components|interface-asset|custom-asset|intuiface-cdk|\\*)\\))!?\\s?:\\s.*', 'gm')
+// const regex = new RegExp('(feat|feature|fix|perf|refactor|style|test|build|docs|chore|ci|revert|Merge)(\\((core|components|interface-asset|custom-asset|intuiface-cdk|\\*)\\))!?\\s?:\\s.*', 'gm')
 
-const commitMsg = fs.readFileSync(process.argv[2], 'utf8').trim();
+const commitMsg = fs.readFileSync(process.argv[2], 'utf8').trim().toLowerCase();
 
-if(commitMsg.match(regex))
+if(commitMsg.match(regex) || commitMsg.match(regexMerge))
 {
     console.log("ok valid");
     process.exit(0);
