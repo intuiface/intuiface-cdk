@@ -3,7 +3,7 @@
 // Extended with BREAKING CHANGE, exclamation mark support (!) and space before " : " for French people
 
 
-const examples = "Valid message pattern: <TYPE>[(<SCOPE>)]: <SUBJECT> \n" +
+const examples = "Valid message pattern: <TYPE>[(<SCOPE>)]!?: <SUBJECT> \n" +
   "Valid types : 'feat', 'feature', 'fix', 'perf', 'refactor', 'style', 'test', 'build', 'docs', 'chore', 'ci', 'revert' \n" +
   "Valid scopes: 'core', 'components', 'interface-asset', 'custom-asset', 'intuiface-cdk', '*' \n" +
   "For more information, go to https://www.conventionalcommits.org/ \n" + 
@@ -14,7 +14,7 @@ const fs = require('fs');
 const regex = /(feat|feature|fix|perf|refactor|style|test|build|docs|chore|ci|revert)!?(\((core|components|interface-asset|custom-asset|intuiface-cdk|\*)\))!?\s?:\s.*/gm;
 
 // Alternative syntax using RegExp constructor
-// const regex = new RegExp('(feat|feature|fix|perf|refactor|style|test|build|docs|chore|ci|revert)!?(\\((core|components|interface-asset|custom-asset|intuiface-cdk|\\*)\\))!?\\s?:\\s.*', 'gm')
+// const regex = new RegExp('(feat|feature|fix|perf|refactor|style|test|build|docs|chore|ci|revert)(\\((core|components|interface-asset|custom-asset|intuiface-cdk|\\*)\\))!?\\s?:\\s.*', 'gm')
 
 const commitMsg = fs.readFileSync(process.argv[2], 'utf8').trim();
 

@@ -8,6 +8,10 @@ export class IntuifaceElement extends Watchable
 {
     public container: ElementContainer;
 
+    /**
+     * Init
+     * @param configuration 
+     */
     public initialize(configuration?: any): void {
     }
 }
