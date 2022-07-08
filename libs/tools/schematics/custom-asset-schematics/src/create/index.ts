@@ -178,7 +178,6 @@ function addJsonDependencies(name: string): Rule{
             json.devDependencies['@angular-architects/module-federation'] = '^14.0.1';
             json.devDependencies['@intuiface/custom-asset'] = '^0.0.7';
         }
-
         // delete the package versions
         tree.delete(pathToPackageVersions);
 

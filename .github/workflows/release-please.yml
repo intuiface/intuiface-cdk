@@ -3,21 +3,18 @@ name: Bump Version and generate release
 on:
   push:
     branches:
-      - feature/PN-933_PreReleaseCDK
+      - master
 
 jobs:
   release-please:
     runs-on: ubuntu-latest
     steps:
       - uses: google-github-actions/release-please-action@v3
-        id: release
         with:
           release-type: node
           command: manifest
-          default-branch: feature/PN-933_PreReleaseCDK
+          default-branch: master
+          monorepo-tags: false
+          package-name: release-please-action
           token: ${{secrets.GITHUB_TOKEN}}
-          monorepo-tags: true
-          draft: true
-
-      - run: echo "A release was created."
-        if: ${{ steps.release.outputs.release_created }}
+          pull-request-title-pattern: "chore: release ${version}"

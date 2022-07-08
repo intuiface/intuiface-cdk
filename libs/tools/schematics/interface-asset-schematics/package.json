@@ -1,6 +1,6 @@
 {
   "name": "@intuiface/interface-asset",
-  "version": "0.0.7",
+  "version": "0.0.12",
   "description": "Schematic to create an interface asset.",
   "scripts": {
     "build": "tsc -p tsconfig.json"

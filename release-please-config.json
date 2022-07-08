@@ -1,18 +1,33 @@
 {
+    "group-pull-request-title-pattern": "chore: release ${version}",
     "bump-minor-pre-major": true,
     "bump-patch-for-minor-pre-major": true,
-    "plugins": [
-        "node-workspace"
-    ],
+    "include-component-in-tag": false,
     "packages": {
-        ".": {
+        ".":
+        {
             "draft": true,
-            "release-as": ""
-        },
-        "libs/core": {
-            "draft": true,
-            "release-as": "",
             "extra-files": [
+                {
+                    "type": "json",
+                    "path": "/libs/core/package.json",
+                    "jsonpath": "$.version"
+                },
+                {
+                    "type": "json",
+                    "path": "/libs/components/package.json",
+                    "jsonpath": "$.version"
+                },
+                {
+                    "type": "json",
+                    "path": "/libs/tools/schematics/custom-asset-schematics/package.json",
+                    "jsonpath": "$.version"
+                },
+                {
+                    "type": "json",
+                    "path": "/libs/tools/schematics/interface-asset-schematics/package.json",
+                    "jsonpath": "$.version"
+                },
                 {
                     "type": "json",
                     "path": "/libs/tools/schematics/interface-asset-schematics/src/create/files/package.json",
@@ -22,34 +37,19 @@
                     "type": "json",
                     "path": "/libs/tools/schematics/custom-asset-schematics/src/create/files/packageVersions.json",
                     "jsonpath": "$['@intuiface/core']"
-                }
-            ]
-        },
-        "libs/components": {
-            "draft": true,
-            "release-as": "",
-            "extra-files": [
+                },
+                
                 {
                     "type": "json",
                     "path": "/libs/tools/schematics/custom-asset-schematics/src/create/files/packageVersions.json",
                     "jsonpath": "$['@intuiface/components']"
-                }
-            ]
-        },
-        "libs/tools/schematics/custom-asset-schematics": {
-            "draft": true,
-            "release-as": "",
-            "extra-files": [
+                },
                 {
                     "type": "json",
                     "path": "/libs/tools/schematics/custom-asset-schematics/src/create/files/packageVersions.json",
                     "jsonpath": "$['@intuiface/custom-asset']"
                 }
             ]
-        },
-        "libs/tools/schematics/interface-asset-schematics": {
-            "draft": true,
-            "release-as": ""
         }
     }
 }
