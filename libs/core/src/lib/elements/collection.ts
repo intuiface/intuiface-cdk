@@ -6,6 +6,9 @@ import { IntuifaceElement } from './element';
  */
 export class IntuifaceCollection<T extends ElementContainer> extends IntuifaceElement
 {
+    /**
+     * Visible items
+     */
     public visibleItems: IntuifaceElement[] = [];
 
     /**
