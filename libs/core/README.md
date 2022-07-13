@@ -6,7 +6,7 @@
 
 # Intuiface Core
 
-The core library to use when creating a custom asset or collection or an interface asset
+The core library to use when creating an interface asset
 
 ## Table of contents
 

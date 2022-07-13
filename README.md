@@ -6,19 +6,32 @@
 
 # Intuiface CDK
 
+This CDK allows you to create customs interface assets for your Intuiface Experiences https://www.intuiface.com/
+
 ## Table of contents
 
 - [Quick start](#quickstart)
-- [Intuiface Core](./libs/core/README.md)
-- [Intuiface Components](./libs/components/README.md)
-- [Create an Interface Asset](./libs/tools/schematics/interface-asset-schematics/README.md)
-- [Create a Custom Asset](./libs/tools/schematics/custom-asset-schematics/README.md)
+- [Documentation](#documentation)
+- [For CDK developers](#for-cdk-developers)
 - [Help](#help)
 - [Copyright and license](#copyright-and-license)
 
 ## Quickstart
 
-Several quick start options are available:
+To be able to develop your own interface asset, please make sure you have :
+- [NodeJS](https://nodejs.org/) installed, to use NPM to manage project’s dependencies
+- [Visual Studio Code](https://code.visualstudio.com/) to code, build an test
+- [Angular Schematics CLI](https://www.npmjs.com/package/@angular-devkit/schematics-cli) you can install it with ```npm install -g @angular-devkit/schematics-cli```
+
+
+Then you can follow the documentation here : [Create an Interface Asset](./libs/tools/schematics/interface-asset-schematics/README.md)
+
+More information about specific development syntax here [Intuiface Core](./libs/core/README.md)
+
+
+## For CDK developers 
+
+Internal developers only : 
 - [Download the latest release](https://github.com/intuiface/intuiface-cdk/releases/latest)
 - Clone the repo: `git clone https://github.com/intuiface/intuiface-cdk.git`
 - Install with [npm](https://www.npmjs.com/): `npm install @intuiface/intuiface-cdk`

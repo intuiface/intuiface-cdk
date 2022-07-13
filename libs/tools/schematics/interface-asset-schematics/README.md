@@ -19,7 +19,10 @@ Install the interface asset schematics :
     `npm install @intuiface/interface-asset`
     
 ## Prerequisite
-Install `@angular-devkit/schematics-cli` with `npm install -g @angular-devkit/schematics-cli`
+
+- [NodeJS](https://nodejs.org/) installed, to use NPM to manage project’s dependencies
+- [Visual Studio Code](https://code.visualstudio.com/) to code, build an test
+- Install `@angular-devkit/schematics-cli` with `npm install -g @angular-devkit/schematics-cli`
 
 ## Usage
 Use it with : `schematics @intuiface/interface-asset:create`
@@ -27,7 +30,7 @@ Use it with : `schematics @intuiface/interface-asset:create`
 
 After installation done, please restart VSCode if you want the code analyzer running. You can use the command `npm run lint` if you want to run the code analyzer manually. We provide automatic linting (code analyzing) in VSCode through the `settings.json` file in the `.vscode` folder.
 
-Develop your interface asset using the squeleton or read the documentation of [@intuiface/core](https://github.com/intuiface/intuiface-cdk/blob/master/libs/core/README.md)
+Develop your interface asset using the squeleton or read the documentation of [Intuiface Core](https://github.com/intuiface/intuiface-cdk/blob/master/libs/core/README.md)
 
 Then run `npm run build` to build in production or `npm run build:debug` to be able to debug your interface asset.
 
