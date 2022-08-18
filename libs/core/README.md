@@ -314,15 +314,6 @@ public countChanged(
     }) count: number): void { } //the parameter
 ```
 
-### Asset
-TODO : will be done when the custom asset creation will be available
-### Collection
-TODO : will be done when the custom asset creation will be available
-### Inject
-TODO : will be done when the custom asset creation will be available
-### DoNotInjectMethod
-TODO : will be done when the custom asset creation will be available
-
 ## Types
 We included different types for properties and parameters :
 - Color
