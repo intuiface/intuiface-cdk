@@ -9,7 +9,7 @@ export class IntuifaceCollection<T extends ElementContainer> extends IntuifaceEl
     //#region Fields
 
     /**
-     * Items.
+     * Visible items
      */
     public visibleItems: IntuifaceElement[] = [];
 

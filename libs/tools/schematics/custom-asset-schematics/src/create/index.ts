@@ -158,10 +158,28 @@ function addJsonDependencies(name: string): Rule{
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
         const json = JSON.parse(file!.toString());
 
-        json.dependencies['@intuiface/core'] = '^0.0.7';
-        json.dependencies['@intuiface/components'] = '^0.0.7';
-        json.devDependencies['@angular-architects/module-federation'] = '^14.0.1';
-        json.devDependencies['@intuiface/custom-asset'] = '^0.0.7';
+        // read package versions
+        const pathToPackageVersions = `src/app/${dasherize(name)}/packageVersions.json`;
+        const packages = tree.read(pathToPackageVersions);
+        // add packages with versions to the package.json file
+        if (packages)
+        {
+            const packageVersions = JSON.parse(packages.toString());
+            json.dependencies['@intuiface/core'] = packageVersions['@intuiface/core'];
+            json.dependencies['@intuiface/components'] = packageVersions['@intuiface/components'];
+            json.devDependencies['@angular-architects/module-federation'] = packageVersions['@angular-architects/module-federation'];
+            json.devDependencies['@intuiface/custom-asset'] = packageVersions['@intuiface/custom-asset'];
+        }
+        else
+        {
+            // default values
+            json.dependencies['@intuiface/core'] = '^0.0.7';
+            json.dependencies['@intuiface/components'] = '^0.0.7';
+            json.devDependencies['@angular-architects/module-federation'] = '^14.0.1';
+            json.devDependencies['@intuiface/custom-asset'] = '^0.0.7';
+        }
+        // delete the package versions
+        tree.delete(pathToPackageVersions);
 
         json.scripts = {
             ...json.scripts,

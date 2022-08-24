@@ -31,7 +31,7 @@ export function createInterfaceAsset(_options: any): Rule
 
 /**
  * Function to install packages
- * @returns
+ * @returns Rule
  */
 function installPackageJsonDependencies(): Rule {
     return (host: Tree, context: SchematicContext) => {
