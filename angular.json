@@ -74,16 +74,6 @@
                         "browserTarget": "cdk:build"
                     }
                 },
-                "lint": {
-                    "builder": "@nrwl/linter:eslint",
-                    "options": {
-                        "lintFilePatterns": [
-                            "apps/cdk/src/**/*.ts",
-                            "apps/cdk/src/**/*.html"
-                        ]
-                    },
-                    "outputs": ["{options.outputFile}"]
-                },
                 "test": {
                     "builder": "@nrwl/jest:jest",
                     "outputs": ["coverage/apps/cdk"],
@@ -260,6 +250,21 @@
                                 "input": "libs/tools/schematics/interface-asset-schematics/src/",
                                 "output": "/src/",
                                 "ignore": ["**/index.ts"]
+                            },
+                            {
+                                "glob": ".eslintrc.js",
+                                "input": "libs/tools/schematics/interface-asset-schematics/src/",
+                                "output": "/src/"
+                            },
+                            {
+                                "glob": ".vscode/*",
+                                "input": "libs/tools/schematics/interface-asset-schematics/src/",
+                                "output": "/src/"
+                            },
+                            {
+                                "glob": ".gitignore",
+                                "input": "libs/tools/schematics/interface-asset-schematics/src/",
+                                "output": "/src/"
                             }
                         ]
                     },

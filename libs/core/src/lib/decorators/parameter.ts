@@ -1,7 +1,4 @@
-/* eslint-disable @typescript-eslint/no-empty-function */
-/* eslint-disable @typescript-eslint/ban-types */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable prefer-arrow/prefer-arrow-functions */
 import { getTypeAndFormat } from '../types/convertible.type';
 
 /**
@@ -58,7 +55,7 @@ export function Parameter(options?: IParameterOptions): Function
     ): void =>
     {
         // get target name
-        let targetName = target.constructor.name;
+        const targetName = target.constructor.name;
 
         if (!globalThis.intuiface_ifd_params[targetName]) {
             globalThis.intuiface_ifd_params[targetName] = {};
@@ -73,14 +70,14 @@ export function Parameter(options?: IParameterOptions): Function
         // get type and format to store in ifd
         const typeAndFormat = getTypeAndFormat(options.type);
 
-        // store datas 
+        // store datas
         globalThis.intuiface_ifd_params[targetName][propertyKey][options.name] = {
             type: typeAndFormat.type,
             title: options.displayName
         };
 
         // add the format if defined
-        if(typeAndFormat.format)
+        if (typeAndFormat.format)
         {
             globalThis.intuiface_ifd_params[targetName][propertyKey][options.name].format = typeAndFormat.format;
         }

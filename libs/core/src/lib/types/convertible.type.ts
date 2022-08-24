@@ -1,41 +1,45 @@
-import { Color } from "./color.type";
-import { Path } from "./path.type";
+/* eslint-disable prefer-arrow/prefer-arrow-functions */
+import { Color } from './color.type';
+import { Path } from './path.type';
 
-export function getTypeAndFormat (type) {
-    let typeAndFormat = { type: "string", format: null };
+/**
+ * Get type and format from a specific type to write the ifd
+ * @param type
+ * @returns
+ */
+export function getTypeAndFormat(type) {
+    const typeAndFormat = { type: 'string', format: null };
     switch (type) {
         case Number:
-            typeAndFormat.type = "number";
+            typeAndFormat.type = 'number';
             break;
         case String:
-            typeAndFormat.type = "string";
+            typeAndFormat.type = 'string';
             break;
         case Date:
-            typeAndFormat.type = "string";
-            typeAndFormat.format = "date";
+            typeAndFormat.type = 'string';
+            typeAndFormat.format = 'date';
             break;
         case Path:
-            typeAndFormat.type = "string";
-            typeAndFormat.format = "uri";
+            typeAndFormat.type = 'string';
+            typeAndFormat.format = 'uri';
             break;
         case Color:
-            typeAndFormat.type = "string";
-            typeAndFormat.format = "color";
+            typeAndFormat.type = 'string';
+            typeAndFormat.format = 'color';
             break;
         case Boolean:
-            typeAndFormat.type = "boolean";
+            typeAndFormat.type = 'boolean';
             break;
         case Object:
-            typeAndFormat.type = "object";
+            typeAndFormat.type = 'object';
             break;
         case Array:
-            typeAndFormat.type = "array";
+            typeAndFormat.type = 'array';
             break;
-
     }
     return typeAndFormat;
 }
-
 
 export interface IConvertibleType{
 

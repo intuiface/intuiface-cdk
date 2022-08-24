@@ -1,3 +1,4 @@
+/* eslint-disable prefer-arrow/prefer-arrow-functions */
 export interface IComputorOptions {
     /**
      * List of properties to watch that will trigger a call to the decorated method
@@ -15,5 +16,5 @@ export function Computor(options: IComputorOptions) {
         propertyKey: string | symbol,
         descriptor: PropertyDescriptor
     ): void => {
-    }
+    };
 }

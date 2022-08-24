@@ -22,6 +22,7 @@ export function createInterfaceAsset(_options: any): Rule
 
         const rule = chain([
             merged,
+            moveConfigFiles,
             installPackageJsonDependencies()
         ]);
         return rule(tree, context) as Rule;
@@ -37,5 +38,20 @@ function installPackageJsonDependencies(): Rule {
         context.addTask(new NodePackageInstallTask());
         // context.logger.log('info', '🔍 Installing packages...');
         return host;
+    };
+}
+
+
+/**
+ * Function to move config files
+ * @returns
+ */
+function moveConfigFiles(): Rule
+{
+    return (tree: Tree) =>
+    {
+        tree.rename('node_modules/@intuiface/interface-asset/src/.eslintrc.js', '.eslintrc.js');
+        tree.rename('node_modules/@intuiface/interface-asset/src/.vscode/settings.json', '.vscode/settings.json');
+        tree.rename('node_modules/@intuiface/interface-asset/src/.gitignore', '.gitignore');
     };
 }

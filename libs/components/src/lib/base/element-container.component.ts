@@ -74,8 +74,8 @@ export class ElementContainerComponent {
     //#region Life Cycle
 
     public constructor(protected selectionService: SelectionService,
-        protected sanitizer: DomSanitizer,
-        protected changeDetector: ChangeDetectorRef) { }
+                       protected sanitizer: DomSanitizer,
+                       protected changeDetector: ChangeDetectorRef) { }
 
-    
+
 }

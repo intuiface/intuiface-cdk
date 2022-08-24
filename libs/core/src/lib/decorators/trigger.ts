@@ -1,7 +1,4 @@
-/* eslint-disable @typescript-eslint/no-empty-function */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-
+/* eslint-disable prefer-arrow/prefer-arrow-functions */
 /**
  * Options when use trigger decorator.
  */
@@ -63,6 +60,6 @@ export function Trigger(options?: ITriggerOptions)
             id: propertyKey,
             title: options.displayName,
             properties: properties
-        }
+        };
     };
 }

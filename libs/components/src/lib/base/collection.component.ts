@@ -19,9 +19,9 @@ export class CollectionComponent<T extends IntuifaceCollection<ElementContainer>
 {
     /**
      * Constructor
-     * @param selectionService 
-     * @param domSanitizer 
-     * @param elementReference 
+     * @param selectionService
+     * @param domSanitizer
+     * @param elementReference
      */
     public constructor(
         protected selectionService: SelectionService,
@@ -41,12 +41,12 @@ export class CollectionComponent<T extends IntuifaceCollection<ElementContainer>
 
     /**
      * Track by fn
-     * @param index 
-     * @param item 
-     * @returns 
+     * @param index
+     * @param item
+     * @returns
      */
     public trackByFn(index: number, item: IntuifaceElement): number
     {
-        return (item as any)?.id;
+        return (item as any)?.intuifaceId;
     }
 }

@@ -3,15 +3,6 @@ import { IConvertibleType } from './convertible.type';
 /**
  * Resource type
  */
-const enum EResourceType {
-    Local,
-    Distant,
-    Experience
-}
-
-/**
- * Resource type
- */
 export class Resource implements IConvertibleType
 {
     //#region Fields
@@ -84,5 +75,5 @@ export class Resource implements IConvertibleType
     }
 
     //#endregion Static Operations
-   
+
 }

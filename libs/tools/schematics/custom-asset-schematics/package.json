@@ -17,8 +17,5 @@
     "@angular-devkit/schematics": "^13.2.0",
     "@schematics/angular": "^13.2.0"
   },
-  "publishConfig": {
-    "@intuiface:registry": "https://npm.pkg.github.com"
-  },
   "repository": "https://github.com/intuiface/intuiface-cdk"
 }

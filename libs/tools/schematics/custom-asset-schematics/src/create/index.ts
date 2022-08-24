@@ -50,7 +50,7 @@ export function customAsset(_options: any): Rule {
 function generateAngularRepo(name: string): Rule {
     return externalSchematic('@schematics/angular', 'ng-new', {
         name: name,
-        version: '12.0.2',
+        version: '13.2.0',
         directory: '.',
         routing: false,
         style: 'scss',
@@ -74,6 +74,11 @@ function generateComponent(name: string): Rule {
     });
 }
 
+/**
+ * Generate the module
+ * @param name
+ * @returns
+ */
 function generateModule(name: string): Rule {
     return externalSchematic('@schematics/angular', 'module', {
         name: name,
@@ -84,13 +89,13 @@ function generateModule(name: string): Rule {
 
 /**
  * Add module federation
- * @param name 
- * @returns 
+ * @param name
+ * @returns
  */
 function addModuleFederation(name: string): Rule {
     return externalSchematic('@angular-architects/module-federation', 'ng-add', {
         project: name,
-        port: '3000'
+        port: 3000
     });
 }
 
@@ -137,7 +142,7 @@ function renameFiles(name: string, isCollection: boolean): Rule{
 function moveWebpack(name: string): Rule {
     return (tree: Tree) => {
         tree.delete('webpack.config.js');
-        tree.rename(`src/app/${dasherize(name)}/webpack.config.js`, `webpack.config.js`);
+        tree.rename(`src/app/${dasherize(name)}/webpack.config.js`, 'webpack.config.js');
     };
 }
 
@@ -211,7 +216,7 @@ function modifyAngularBuildConfig(name: string): Rule {
         const json = JSON.parse(file!.toString());
 
 
-        // PRODUCTION CONFIGURATION : 
+        // PRODUCTION CONFIGURATION :
         // remove aot and build optimizer
         json.projects[name].architect.build.configurations.production.aot = false;
         json.projects[name].architect.build.configurations.production.buildOptimizer = false;

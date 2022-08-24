@@ -3,7 +3,7 @@
     "$id": "interface-asset",
     "title": "ng new options schema",
     "type": "object",
-    "description": "Initialise a new project",
+    "description": "Initialize a new project",
     "properties": {
         "IAName": {
             "type": "string",
