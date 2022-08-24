@@ -2,7 +2,7 @@ name: Intuiface-CDK Package
 
 on:
   release:
-    types: [created]
+    types: [published]
 
 jobs:
 
