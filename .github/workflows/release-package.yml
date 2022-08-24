@@ -26,16 +26,16 @@ jobs:
         run: npm run build
 
       - name: Publish core to npmjs packages
-        run: npm publish dist/libs/core
+        run: npm publish dist/libs/core --access public
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
 
       - name: Publish components to npmjs packages
-        run: npm publish dist/libs/components
+        run: npm publish dist/libs/components --access public
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN }}
 
       - name: Publish interface-asset to npmjs packages
-        run: npm publish dist/libs/tools/interface-asset-schematics
+        run: npm publish dist/libs/tools/interface-asset-schematics --access public
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN }}
