@@ -28,6 +28,8 @@ Install the interface asset schematics :
 Use it with : `schematics @intuiface/interface-asset:create`
     it will prompt you about the interface-asset name and create all files
 
+⚠️ Please use only alphanumeric characters for the name of your interface-asset (no "-" no special characters ...etc). The schematics will accept it but may fail when you will try to build your project.
+
 After installation done, please restart VSCode if you want the code analyzer running. You can use the command `npm run lint` if you want to run the code analyzer manually. We provide automatic linting (code analyzing) in VSCode through the `settings.json` file in the `.vscode` folder.
 
 Develop your interface asset using the squeleton or read the documentation of [Intuiface Core](https://github.com/intuiface/intuiface-cdk/blob/master/libs/core/README.md)
