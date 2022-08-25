@@ -2,5 +2,6 @@
   "name": "@intuiface/components",
   "version": "1.0.0",
   "repository": "https://github.com/intuiface/intuiface-cdk",
-  "description": "The components library of intuiface"
+  "description": "The components library of intuiface",
+  "license": "MIT"
 }
