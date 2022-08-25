@@ -14,7 +14,6 @@ This CDK allows you to create customs interface assets for your Intuiface Experi
 - [Documentation](#documentation)
 - [For CDK developers](#for-cdk-developers)
 - [Help](#help)
-- [Copyright and license](#copyright-and-license)
 
 ## Quickstart
 
