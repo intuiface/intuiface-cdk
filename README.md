@@ -23,8 +23,9 @@ To be able to develop your own interface asset, please make sure you have :
 - [Visual Studio Code](https://code.visualstudio.com/) to code, build an test
 - [Angular Schematics CLI](https://www.npmjs.com/package/@angular-devkit/schematics-cli) you can install it with ```npm install -g @angular-devkit/schematics-cli```
 
+## Documentation
 
-Then you can follow the documentation here : [Create an Interface Asset](./libs/tools/schematics/interface-asset-schematics/README.md)
+You can follow the documentation here : [Create an Interface Asset](./libs/tools/schematics/interface-asset-schematics/README.md)
 
 More information about specific development syntax here [Intuiface Core](./libs/core/README.md)
 
