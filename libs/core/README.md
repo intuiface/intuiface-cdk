@@ -56,7 +56,7 @@ maxValue?: number;
 
 /**
  * True if property is read only in Intuiface Composer.
- * Optional
+ * Optional (default: false)
  */
 readOnly?: boolean;
 
@@ -149,7 +149,7 @@ description?: string;
 
 /**
  * Indicates whether this trigger needs to propagate to other elements
- * Optional
+ * Optional (default: false)
  */
 isPropagating?: boolean;
 
@@ -193,7 +193,7 @@ description?: string;
 
 /**
  * If true, validate range of parameter values.
- * Optional
+ * Optional (default: false)
  */
 validate?: boolean;
 ```
