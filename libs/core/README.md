@@ -155,7 +155,7 @@ propagationMode?: boolean;
 
 /**
  * Propagation direction (BUBBLING | CASCADING)
- * Optional
+ * Optional (default: BUBBLING)
  */
 propagationDirection?: string;
 ```
