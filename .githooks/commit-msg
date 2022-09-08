@@ -26,8 +26,8 @@ if(commitMsg.match(regex) || commitMsg.match(regexMerge))
 }
 else
 {
-    console.log("\n\nCOMMIT FAILED!");
-    console.log("Please enter commit message in the conventional format and try to commit again.");
-    console.log(examples);
+    console.error("\n\nCOMMIT FAILED!");
+    console.error("Please enter commit message in the conventional format and try to commit again.");
+    console.error(examples);
     process.exit(1);
 }
