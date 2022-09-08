@@ -148,16 +148,16 @@ displayName: string;
 description?: string;
 
 /**
- * Indicates whether this trigger needs to propagate to other elements.
- * Optional (default: false)
+ * Propagation mode (None | Standard | UntilUsed)
+ * Optional (default: None)
  */
-isPropagating?: boolean;
+propagationMode?: boolean;
 
 /**
- * Propagation mode (BUBBLING | CASCADING)
- * Optional
+ * Propagation direction (BUBBLING | CASCADING)
+ * Optional (default: BUBBLING)
  */
-mode?: string;
+propagationDirection?: string;
 ```
 
 Here's an example: 
@@ -169,7 +169,7 @@ Here's an example:
     name: 'Released', // name of the trigger
     displayName: 'Is released', // display name in composer
     description: 'Raised when the button is released.', // description of the trigger
-    isPropagating: true, // this trigger will be propagating
+    propagationMode: 'Standard', // this trigger will be propagating
     mode: 'BUBBLING' // the propagation will bubble to parent elements
 })
 public raiseButtonReleased(): void { } // the trigger is an empty function

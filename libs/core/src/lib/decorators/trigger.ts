@@ -20,14 +20,14 @@ export interface ITriggerOptions
     description?: string;
 
     /**
-     * Indicates whether this trigger needs to propagate to other elements
+     * Indicates the mode of propagation (none, standard or until used)
      */
-    isPropagating?: boolean;
+    propagationMode?: string;
 
     /**
-     * Propagation mode
+     * Indicates the direction of propagation (bubbling or cascading)
      */
-    mode?: string;
+    propagationDirection?: string;
 }
 
 /**
