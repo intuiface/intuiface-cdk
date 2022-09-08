@@ -6,7 +6,7 @@
 
 # Intuiface Core
 
-The core library to use when creating an interface asset
+The core library to use when creating an interface asset.
 
 ## Table of contents
 
@@ -18,11 +18,11 @@ The core library to use when creating an interface asset
 - [Types](#types)
 - [Help](#help)
 ## Decorators
-In Intuiface Core, we use [typescript decorators](https://www.typescriptlang.org/docs/handbook/decorators.html) to manage Properties, Triggers and Actions into Intuiface Composer.
+In Intuiface Core, we use [TypeScript decorators](https://www.typescriptlang.org/docs/handbook/decorators.html) to manage Properties, Triggers and Actions in Intuiface Composer.
 
 ### Property
 
-The `@Property` decorator allows you to declare a new property with :
+The `@Property` decorator enables you to declare a new property with:
 ```ts
 /**
  * Name of the property displayed in Composer.
@@ -55,13 +55,14 @@ minValue?: number;
 maxValue?: number;
 
 /**
- * True if property is read only in Intuiface Composer.
+ * True if property is read-only in Intuiface Composer.
  * Optional (default: false)
  */
 readOnly?: boolean;
 
 /**
  * The type of the property.
+ * It's optional but it's better to specify it for Binding conversion.
  * Can  be : 
  * - String
  * - Number
@@ -69,24 +70,23 @@ readOnly?: boolean;
  * - Array
  * - Class name of convertible type (Color, Font, Path, Resource, Time)
  * - Enum type
- * Optional but it's better to specify it for Binding conversion
  */
 type?: any;
 
 /**
- * The item type in case the type is array
- * Can be :
+ * The item type in case the type is array.
+ * It's optional but useful in interface assets to display item properties in Intuiface Composer
+ * Can be:
  * - Class Name
  * - String
  * - Number
  * - Boolean
- * Optional but usefull in interface asset to display properties of the item in Intuiface Composer
  */
 itemType?: any;
 
 ```
 
-Here an example : 
+Here's an example: 
 ```ts
 @Property({
     displayName: 'Volume', // 'Volume' is the name of the property
@@ -99,9 +99,9 @@ Here an example :
 public volume: number = 0; // declaration of the property
 ```
 
-❗⚠️⚠️⚠️⚠️❗ For property type `Array` there is a limitation : if you modify the array with methods like `push`, `pop`, `reduce`, `reverse`, `shift`, `sort`, `slice`, `splice`... without calling a setter (ie. `myArray = [...]`) bindings will not be updated. To fix that, you can use the method `notifyPropertyChanged`.
+❗⚠️⚠️⚠️⚠️❗ For property type `Array` there is a limitation: if you modify the array with methods like `push`, `pop`, `reduce`, `reverse`, `shift`, `sort`, `slice`, `splice`... without calling a setter (e.g. `myArray = [...]`) bindings will not be updated. To fix that, you can use the method `notifyPropertyChanged`.
 
-Example, I have an item list declared like this : 
+Example, I have an item list declared like this: 
 ```ts
 /**
  * Item List
@@ -115,7 +115,7 @@ Example, I have an item list declared like this :
 public listItems: ListItem[] = [];
 ```
 
-I have an action which adds an item to list with the `push` method. I have to make this code to be sure all my bindings will be resolved when I add a new item : 
+I have an action which adds an item to the list using the `push` method. I have to add this code to be sure all my bindings will be resolved when I add a new item: 
 ```ts
 // add my new item to the list
 this.listItems.push(newItem);
@@ -127,10 +127,10 @@ this.notifyPropertyChanged('listItems', this.listItems);
 
 
 ### Trigger
-The `@Trigger` decorator allows you to declare a new trigger with :
+The `@Trigger` decorator enables you to declare a new trigger with:
 ```ts
 /**
- * Name used for serialization and identification
+ * Name used for serialization and identification.
  * Required
  */
 name: string;
@@ -148,7 +148,7 @@ displayName: string;
 description?: string;
 
 /**
- * Indicates whether this trigger needs to propagate to other elements
+ * Indicates whether this trigger needs to propagate to other elements.
  * Optional (default: false)
  */
 isPropagating?: boolean;
@@ -160,7 +160,7 @@ isPropagating?: boolean;
 mode?: string;
 ```
 
-Here an example : 
+Here's an example: 
 ```ts
 /**
  * Trigger when button is pressed
@@ -174,10 +174,10 @@ Here an example :
 })
 public raiseButtonReleased(): void { } // the trigger is an empty function
 ```
-If your trigger has parameter(s), please read the section [Parameter](#parameter) to understand how to make them available in Intuiface Composer.
+If your trigger has parameter(s), please read the section [Parameter](#parameter) to understand how to make them accessible in Intuiface Composer.
 
 ### Action
-The `@Action` decorator allows you to declare a new action with :
+The `@Action` decorator enables you to declare a new action with:
 ```ts
 /**
  * Name displayed in Composer.
@@ -198,7 +198,7 @@ description?: string;
 validate?: boolean;
 ```
 
-Here an example:
+Here's an example:
 ```ts
 /**
  * Turn on autoplay.
@@ -213,10 +213,10 @@ public turnOnAutoplay(): void
 }
 ```
 
-If your action has parameter(s), please read the section [Parameter](#parameter) to understand how to make them available in Intuiface Composer.
+If your action has parameter(s), please read the section [Parameter](#parameter) to understand how to make them accessible in Intuiface Composer.
 
 ### Parameter
-The `@Parameter` decorator allows you to declare a new action parameter or a trigger parameter with :
+The `@Parameter` decorator enables you to declare a new action parameter or a trigger parameter with:
 
 ```ts
 /**
@@ -270,7 +270,7 @@ maxValue?: number;
 type?: any;
 ```
 
-Here an example of action with parameter : 
+Here's an example of an action with parameters: 
 
 ```ts
 /**
@@ -279,11 +279,11 @@ Here an example of action with parameter :
 @Action({
     displayName: 'Set volume', // the display name of the action
     description: 'Set the volume.', // the description of the action
-    validate: true // boolean for parameters validation
+    validate: true // boolean for parameter validation
 })
 public setVolume(
     @Parameter({ // declaration of the parameter
-        name: 'volume', // the name of the parameter (has to match with the parameter)
+        name: 'volume', // the name of the parameter (has to match the parameter)
         displayName: 'Volume', // the display name of the parameter
         description: 'Desired volume of the media', // the description of the parameter
         defaultValue: 1, // the default value of the parameter
@@ -296,7 +296,7 @@ public setVolume(
 }
 ```
 
-And here an exmple of a trigger with parameter : 
+And here's an exmple of a trigger with parameters: 
 ```ts
 /**
  * Count changes event
@@ -307,7 +307,7 @@ And here an exmple of a trigger with parameter :
 })
 public countChanged(
     @Parameter({
-        name: 'count', // the name of the parameter (has to match with the parameter)
+        name: 'count', // the name of the parameter (has to match the parameter)
         displayName: 'count', // the display name of the parameter
         description: 'New count value', // the description of the parameter
         type: Number // the type of the parameter
@@ -324,5 +324,5 @@ We included different types for properties and parameters :
 
 ## Help
 
-Found a problem, a bug ? Or need some help ? 
-Please do not create an issue in Github, ask us on our support page : https://support.intuiface.com/
+Found a problem, a bug? Or need some help? 
+Please do not create an issue in Github! Ask us via our Support page : https://support.intuiface.com/
