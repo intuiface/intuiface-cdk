@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.2](https://github.com/intuiface/intuiface-cdk/compare/v1.0.1...v1.0.2) (2022-09-21)
+
+
+### Bug Fixes
+
+* **interface-asset:** remove .vscode folder from gitignore ([01cc0dc](https://github.com/intuiface/intuiface-cdk/commit/01cc0dcc33292d81ef1245473f1a87270b9aa3f8))
+
 ## [1.0.1](https://github.com/intuiface/intuiface-cdk/compare/v1.0.0...v1.0.1) (2022-09-08)
 
 
