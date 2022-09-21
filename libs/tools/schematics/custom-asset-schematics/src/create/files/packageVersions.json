@@ -1,6 +1,6 @@
 {
-    "@intuiface/core": "1.0.2",
-    "@intuiface/components": "1.0.2",
-    "@intuiface/custom-asset": "1.0.2",
+    "@intuiface/core": "1.0.3",
+    "@intuiface/components": "1.0.3",
+    "@intuiface/custom-asset": "1.0.3",
     "@angular-architects/module-federation": "^14.0.1"
 }

@@ -1,6 +1,6 @@
 {
   "name": "@intuiface/core",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "repository": "https://github.com/intuiface/intuiface-cdk",
   "description": "The core library to use when creating an interface asset",
   "license": "MIT"

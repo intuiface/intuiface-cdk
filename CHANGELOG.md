@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.3](https://github.com/intuiface/intuiface-cdk/compare/v1.0.2...v1.0.3) (2022-09-21)
+
+
+### Bug Fixes
+
+* **interface-asset:** Change initialization of workspace file for schematics ([b728cf8](https://github.com/intuiface/intuiface-cdk/commit/b728cf8343de7ef5e5c8c193cb9b3ab69bfb9421))
+
 ## [1.0.2](https://github.com/intuiface/intuiface-cdk/compare/v1.0.1...v1.0.2) (2022-09-21)
 
 
