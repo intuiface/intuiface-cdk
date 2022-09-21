@@ -50,8 +50,8 @@ function moveConfigFiles(): Rule
 {
     return (tree: Tree) =>
     {
-        tree.rename('node_modules/@intuiface/interface-asset/src/.eslintrc.js', '.eslintrc.js');
-        tree.rename('node_modules/@intuiface/interface-asset/src/.vscode/settings.json', '.vscode/settings.json');
-        tree.rename('node_modules/@intuiface/interface-asset/src/.gitignore', '.gitignore');
+        tree.rename('node_modules/@intuiface/interface-asset/src/workspace-template/eslintrc.js', '.eslintrc.js');
+        tree.rename('node_modules/@intuiface/interface-asset/src/workspace-template/vscode-settings.json', '.vscode/settings.json');
+        tree.rename('node_modules/@intuiface/interface-asset/src/workspace-template/gitignore', '.gitignore');
     };
 }
