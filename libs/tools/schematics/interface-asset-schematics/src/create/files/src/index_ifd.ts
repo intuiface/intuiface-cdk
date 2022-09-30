@@ -45,7 +45,7 @@ async function loadIA()
     // create the ifd as json object
     // and add metadatas filled from decorators
     globalThisAny.intuiface_ifd_file = {
-        'version': 'v1.0',
+        'version': `v1.0.${Date.now()}`,
         'name': '<%= IAName %>',
         'title': globalThisAny.iaTitle,
         'protocol': 'ts',
