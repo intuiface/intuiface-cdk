@@ -7,7 +7,7 @@ import { Path } from './path.type';
  * @param type
  * @returns
  */
-export function getTypeAndFormat(type) {
+export function getTypeAndFormat(type, defaultsToString = true) {
     const typeAndFormat = { type: 'string', format: null };
     switch (type) {
         case Number:
@@ -36,6 +36,12 @@ export function getTypeAndFormat(type) {
             break;
         case Array:
             typeAndFormat.type = 'array';
+            break;
+        default:
+            if (!defaultsToString)
+            {
+                return null;
+            }
             break;
     }
     return typeAndFormat;
