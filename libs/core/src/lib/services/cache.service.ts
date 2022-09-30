@@ -65,15 +65,15 @@ export interface CacheOptions {
     /**
      * Name of the cache
      */
-    cacheName?: string;
+    cacheName: string;
 
     /**
-     * Ignore query parameters. Defaults to false
+     * Ignore query parameters. Defaults to false.
      */
     ignoreSearch?: boolean;
 
     /**
-     * Enable caching an error response
+     * Enable caching an error response. Defaults to false.
      */
     cacheErrorResponse?: boolean;
 
@@ -123,7 +123,7 @@ export class CacheService {
     }
 
     /**
-     * Downloads a file into local cache and return its local uri
+     * Downloads a file into local cache and returns its local uri
      * @param request
      * @param init
      * @param cacheOptions
@@ -140,7 +140,7 @@ export class CacheService {
     }
 
     /**
-     * Get cahe URI for the given url
+     * Get cache URI for the given url
      * @param url
      * @param cacheName
      */
@@ -150,7 +150,7 @@ export class CacheService {
     }
 
     /**
-     * List entries cached in given cached name
+     * List entries cached in given cache
      * @param cacheName
      * @returns
      */
