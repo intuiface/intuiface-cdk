@@ -324,7 +324,7 @@ We included different types for properties and parameters :
 - Resource
 - Time
 
-##Services
+## Services
 `@intuiface/core` exposes services that will help you access low level information (device's id, name, os...), hardware, cache... in an easy and cross-platform way.
 
 - [Cache service](src/lib/services/README.md#cache-service)
