@@ -27,6 +27,11 @@ ___
 
 `CacheService` enhances the [`Fetch API`](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) with caching strategy, allowing you to store locally request's responses and files and access them even offline.
 
+Cached data is stored through [Cache API](https://developer.mozilla.org/en-US/docs/Web/API/Cache) when using [`fetch()`](#fetch) and on file system (only for Player in-venue, not XP as a Webpage) when using [`downloadFile()`](#downloadfile).  
+Cache is fully persistant, which means:
+ - it is shared accross experiences.
+ - it will not be remove when an experience is deleted.
+
 ### fetch()
 `fetch(request, init?, cacheOptions?, progressCallback?): Promise<Response>`
 
@@ -171,26 +176,26 @@ ___
 
 `Enum` of available cache strategy
 - `NetworkOnly`:  
- Only fetch response from network. Response will not be cached.  
+ Only fetch response from network. _*Response will not be cached*_.  
  Use this when you always want the most up-to-date response and disable cache.
 - `CacheOnly`:  
- Only fetch response from cache. No network request will be sent.  
+ Only fetch response from cache. _*No network request will be sent*_.  
  Use this when you know data is already cached and you absolutly don't want to update it.
 - `NetworkFirst`:  
-Make a network request first and fallback with response from cache if it fails.  
+Make a network request first and fallback with response from cache if it fails. Cache will be updated with response from network.  
 Use this when you want up-to-date response but accept cached data as fallback.  
-Cache will be updated with response from network.
 - `CacheFirst`:  
 Get response from cache first. If nothing is found, make a network request and cache response.  
-Use performance and you want to avoid making unecessary network request.
+Use for performance and you want to avoid unecessary network request.
 
 
 ### CacheOptions
 An object configuring cache options for a request.
 - `strategy`: [`CacheStrategy`](#cachestrategy)  
-Strategy to use when requesting a resource
-- `cacheName?:string`  
-Name of the cache
+Strategy to use when requesting a resource.
+- `cacheName: string`  
+Name of the cache.  
+It's a way to segregate data and easily retreive cache entries. It can be considered as a folder and can include `/` to create sub-caches.
 - `ignoreSearch?: boolean`  
 Ignore query parameters. Defaults to `false`.
 - `cacheErrorResponse?: boolean`  
