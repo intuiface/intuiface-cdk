@@ -78,9 +78,18 @@ export function Property(options?: IPropertyOptions)
         if (typeAndFormat.type === 'array' && options.itemType)
         {
             // store the item type
-            globalThis.intuiface_ifd_properties[targetName][propertyKey].items = {
-                $ref: options.itemType.name
-            };
+            let itemType: any = getTypeAndFormat(options.itemType, false);
+            if (itemType == null)
+            {
+                itemType = {
+                    $ref: options.itemType.name
+                };
+            }
+            else if (itemType.format === null)
+            {
+                delete itemType.format;
+            }
+            globalThis.intuiface_ifd_properties[targetName][propertyKey].items = itemType;
             // force array to be readOnly and delete default value
             globalThis.intuiface_ifd_properties[targetName][propertyKey].readonly = true;
             delete globalThis.intuiface_ifd_properties[targetName][propertyKey].default;
