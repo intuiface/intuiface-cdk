@@ -139,7 +139,8 @@ module.exports = {
                 "ignoreStrings": true,
                 "ignoreRegExpLiterals": true,
                 "ignoreTemplateLiterals": true,
-                "ignoreUrls": true
+                "ignoreUrls": true,
+                "ignoreComments": true
             }
         ],
         "max-lines": [

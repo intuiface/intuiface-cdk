@@ -28,9 +28,7 @@ ___
 `CacheService` enhances the [`Fetch API`](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) with caching strategy, allowing you to store locally request's responses and files and access them even offline.
 
 Cached data is stored through [Cache API](https://developer.mozilla.org/en-US/docs/Web/API/Cache) when using [`fetch()`](#fetch) and on file system (only for Player in-venue, not XP as a Webpage) when using [`downloadFile()`](#downloadfile).  
-Cache is fully persistant, which means:
- - it is shared accross experiences.
- - it will not be remove when an experience is deleted.
+Cache is persistant, which means it is kept between player launches. It can also be scoped to be associated to one experience or available accross all. See [CacheScope](#cachescope) for details.
 
 ### fetch()
 `fetch(request, init?, cacheOptions?, progressCallback?): Promise<Response>`
@@ -115,6 +113,7 @@ List entries cached in given cache
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `cacheName` | `string` | Name of the cache |
+| `cacheScope` | [`CacheScope`](#cachescope) | Scope of the cache entries to list |
 
 
 #### Returns
@@ -135,6 +134,7 @@ Delete given cache
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `cacheName` | `string` | Name of the cache |
+| `cacheScope` | [`CacheScope`](#cachescope) | Scope of the cache to delete |
 | `failOnError?` | `boolean` | If `true`, throws `Error` when deletion fails. Otherwise catch error silently. Defaults to `false`. |
 
 #### Returns
@@ -151,6 +151,7 @@ Remove cached data for the given url
 | :------ | :------ | :------ |
 | `url` | `string` | URL of the resource to remove |
 | `cacheName` | `string` | Name of the cache |
+| `cacheScope` | [`CacheScope`](#cachescope) | Scope of this cached data to remove |
 
 #### Returns
 `Promise<void>`: a [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) that resolve when data has been removed from cache.
@@ -165,6 +166,7 @@ Get cache URI for the given url
 | :------ | :------ | :------ |
 | `url` | `string` | URL of the resource to remove |
 | `cacheName` | `string` | Name of the cache |
+| `cacheScope` | [`CacheScope`](#cachescope) | Scope of the cached resource |
 
 #### Returns
 
@@ -188,6 +190,14 @@ Use this when you want up-to-date response but accept cached data as fallback.
 Get response from cache first. If nothing is found, make a network request and cache response.  
 Use for performance and you want to avoid unecessary network request.
 
+### CacheScope
+
+`Enum` that defines if a cache is available across all experiences or only the current one.
+- `Player`:  
+Player scope means cache will be shared between all experiences.
+- `Experience`:  
+Experience scope means cache will be available only for current experience.  
+_*Note*_: When deleting experience, Player will delete all cache associated with this experience.
 
 ### CacheOptions
 An object configuring cache options for a request.
@@ -196,6 +206,10 @@ Strategy to use when requesting a resource.
 - `cacheName: string`  
 Name of the cache.  
 It's a way to segregate data and easily retreive cache entries. It can be considered as a folder and can include `/` to create sub-caches.
+- `cacheScope?`: [`CacheScope`](#cachescope)  
+Indicates if cache is shared between experiences or only available for the current running experience. Defaults to `Experience`.  
+`Player` means cache is shared between experiences  
+`Experience` means it will be available only for current experience and deleted if experience is removed from devices
 - `ignoreSearch?: boolean`  
 Ignore query parameters. Defaults to `false`.
 - `cacheErrorResponse?: boolean`  

@@ -54,6 +54,22 @@ export const enum CacheStrategy {
 }
 
 /**
+ * Cache scope defines if a cache is available across all experiences or only the current one.
+ */
+export const enum CacheScope {
+    /**
+     * Player scope means cache will be shared between all experiences.
+     */
+    Player = 'player',
+
+    /**
+     * Experience scope means cache will be available only for current experience.
+     * @remarks When deleting experience, Player will delete all cache associated with this experience.
+     */
+    Experience = 'experience'
+}
+
+/**
  * Cache options
  */
 export interface CacheOptions {
@@ -66,6 +82,13 @@ export interface CacheOptions {
      * Name of the cache
      */
     cacheName: string;
+
+    /**
+     * Indicates if cache is shared between experiences or only available for the current running experience.
+     * `player` means cache is shared between experiences
+     * `experience` means it will be available only for current experience and deleted if experience is removed from devices
+     */
+    cacheScope?: CacheScope;
 
     /**
      * Ignore query parameters. Defaults to false.
@@ -143,8 +166,9 @@ export class CacheService {
      * Get cache URI for the given url
      * @param url
      * @param cacheName
+     * @param cacheScope
      */
-    public static async getCacheURI(url: string, cacheName: string): Promise<string>
+    public static async getCacheURI(url: string, cacheName: string, cacheScope: CacheScope): Promise<string>
     {
         return new Promise(r => r(''));
     }
@@ -152,9 +176,10 @@ export class CacheService {
     /**
      * List entries cached in given cache
      * @param cacheName
+     * @param cacheScope
      * @returns
      */
-    public static async listCacheEntries(cacheName: string): Promise<CacheEntry[]>
+    public static async listCacheEntries(cacheName: string, cacheScope: CacheScope): Promise<CacheEntry[]>
     {
         return new Promise(r => r([]));
 
@@ -164,8 +189,9 @@ export class CacheService {
      * Remove cached data for the given url
      * @param url
      * @param cacheName
+     * @param cacheScope
      */
-    public static async removeFromCache(url: string, cacheName: string): Promise<void>
+    public static async removeFromCache(url: string, cacheName: string, cacheScope: CacheScope): Promise<void>
     {
         return new Promise(r => r());
     }
@@ -173,9 +199,11 @@ export class CacheService {
     /**
      * Delete given cache
      * @param cacheName
+     * @param cacheScope
      * @param failOnError if true, throw PlayerError when delete fails.
      */
     public static async deleteCache(cacheName: string,
+                                    cacheScope: CacheScope,
                                     failOnError: boolean = true): Promise<void>
     {
         return new Promise(r => r());
