@@ -78,7 +78,7 @@
                     "builder": "@nrwl/jest:jest",
                     "outputs": ["coverage/apps/cdk"],
                     "options": {
-                        "jestConfig": "apps/cdk/jest.config.js",
+                        "jestConfig": "apps/cdk/jest.config.ts",
                         "passWithNoTests": true
                     }
                 }
@@ -146,7 +146,7 @@
                     "builder": "@nrwl/jest:jest",
                     "outputs": ["coverage/libs/components"],
                     "options": {
-                        "jestConfig": "libs/components/jest.config.js",
+                        "jestConfig": "libs/components/jest.config.ts",
                         "passWithNoTests": true
                     }
                 }
@@ -186,7 +186,7 @@
                     "builder": "@nrwl/jest:jest",
                     "outputs": ["coverage/libs/core"],
                     "options": {
-                        "jestConfig": "libs/core/jest.config.js",
+                        "jestConfig": "libs/core/jest.config.ts",
                         "passWithNoTests": true
                     }
                 }
@@ -201,7 +201,7 @@
             "schematics": {},
             "architect": {
                 "build": {
-                    "builder": "@nrwl/node:package",
+                    "builder": "@nrwl/js:tsc",
                     "options": {
                         "outputPath": "dist/libs/tools/custom-asset-schematics",
                         "tsConfig": "libs/tools/schematics/custom-asset-schematics/tsconfig.json",
@@ -236,7 +236,7 @@
             "schematics": {},
             "architect": {
                 "build": {
-                    "builder": "@nrwl/node:package",
+                    "builder": "@nrwl/js:tsc",
                     "options": {
                         "outputPath": "dist/libs/tools/interface-asset-schematics",
                         "tsConfig": "libs/tools/schematics/interface-asset-schematics/tsconfig.json",

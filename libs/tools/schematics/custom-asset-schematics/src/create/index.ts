@@ -50,7 +50,7 @@ export function customAsset(_options: any): Rule {
 function generateAngularRepo(name: string): Rule {
     return externalSchematic('@schematics/angular', 'ng-new', {
         name: name,
-        version: '13.2.0',
+        version: '14.2.5',
         directory: '.',
         routing: false,
         style: 'scss',
