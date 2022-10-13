@@ -25,6 +25,8 @@ export function customAsset(_options: any): Rule {
         ]);
         const merged = mergeWith(templateSource, MergeStrategy.Overwrite);
 
+        tree.delete('package.json');
+
         const rule = chain([
             generateAngularRepo(name),
             generateComponent(name),
@@ -183,7 +185,7 @@ function addJsonDependencies(name: string): Rule{
 
         json.scripts = {
             ...json.scripts,
-            build: `ng build --project ${name} --outputPath=./dist/${name}`
+            build: `ng build --project ${name} --output-path=./dist/${name}`
         };
         tree.overwrite(path, JSON.stringify(json, null, 2));
         return tree;
@@ -196,7 +198,7 @@ function addJsonDependencies(name: string): Rule{
  */
 function installPackageJsonDependencies(): Rule {
     return (host: Tree, context: SchematicContext) => {
-        context.addTask(new NodePackageInstallTask());
+        context.addTask(new NodePackageInstallTask({ allowScripts : true}));
         // context.logger.log('info', '🔍 Installing packages...');
         return host;
     };
