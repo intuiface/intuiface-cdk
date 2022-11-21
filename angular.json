@@ -73,46 +73,8 @@
                     "options": {
                         "browserTarget": "cdk:build"
                     }
-                },
-                "test": {
-                    "builder": "@nrwl/jest:jest",
-                    "outputs": ["coverage/apps/cdk"],
-                    "options": {
-                        "jestConfig": "apps/cdk/jest.config.ts",
-                        "passWithNoTests": true
-                    }
                 }
-            },
-            "tags": []
-        },
-        "cdk-e2e": {
-            "root": "apps/cdk-e2e",
-            "sourceRoot": "apps/cdk-e2e/src",
-            "projectType": "application",
-            "architect": {
-                "e2e": {
-                    "builder": "@nrwl/cypress:cypress",
-                    "options": {
-                        "cypressConfig": "apps/cdk-e2e/cypress.json",
-                        "tsConfig": "apps/cdk-e2e/tsconfig.e2e.json",
-                        "devServerTarget": "cdk:serve"
-                    },
-                    "configurations": {
-                        "production": {
-                            "devServerTarget": "cdk:serve:production"
-                        }
-                    }
-                },
-                "lint": {
-                    "builder": "@nrwl/linter:eslint",
-                    "options": {
-                        "lintFilePatterns": ["apps/cdk-e2e/**/*.{js,ts}"]
-                    },
-                    "outputs": ["{options.outputFile}"]
-                }
-            },
-            "tags": [],
-            "implicitDependencies": ["cdk"]
+            }
         },
         "components": {
             "projectType": "library",
@@ -141,18 +103,8 @@
                         ]
                     },
                     "outputs": ["{options.outputFile}"]
-                },
-                "test": {
-                    "builder": "@nrwl/jest:jest",
-                    "outputs": ["coverage/libs/components"],
-                    "options": {
-                        "jestConfig": "libs/components/jest.config.ts",
-                        "passWithNoTests": true
-                    }
                 }
-            },
-            "tags": [],
-            "implicitDependencies": ["core"]
+            }
         },
         "core": {
             "projectType": "library",
@@ -181,17 +133,8 @@
                         ]
                     },
                     "outputs": ["{options.outputFile}"]
-                },
-                "test": {
-                    "builder": "@nrwl/jest:jest",
-                    "outputs": ["coverage/libs/core"],
-                    "options": {
-                        "jestConfig": "libs/core/jest.config.ts",
-                        "passWithNoTests": true
-                    }
                 }
-            },
-            "tags": []
+            }
         },
         "custom-asset-schematics": {
             "root": "libs/tools/schematics/custom-asset-schematics",
@@ -225,8 +168,7 @@
                     },
                     "outputs": ["{options.outputPath}"]
                 }
-            },
-            "tags": []
+            }
         },
         "interface-asset-schematics": {
             "root": "libs/tools/schematics/interface-asset-schematics",
@@ -275,8 +217,7 @@
                     },
                     "outputs": ["{options.outputPath}"]
                 }
-            },
-            "tags": []
+            }
         }
     }
 }
