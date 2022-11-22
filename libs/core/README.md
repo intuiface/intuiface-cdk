@@ -16,6 +16,8 @@ The core library to use when creating an interface asset.
     - [Action](#action)
     - [Parameter](#parameter)
 - [Types](#types)
+- [Services](#services)
+    - [Cache service](src/lib/services/README.md#cache-service)
 - [Help](#help)
 ## Decorators
 In Intuiface Core, we use [TypeScript decorators](https://www.typescriptlang.org/docs/handbook/decorators.html) to manage Properties, Triggers and Actions in Intuiface Composer.
@@ -321,6 +323,11 @@ We included different types for properties and parameters :
 - Path
 - Resource
 - Time
+
+## Services
+`@intuiface/core` exposes services that will help you access low level information (device's id, name, os...), hardware, cache... in an easy and cross-platform way.
+
+- [Cache service](src/lib/services/README.md#cache-service)
 
 ## Help
 
