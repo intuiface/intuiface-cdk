@@ -15,6 +15,7 @@ export { IDisposable } from './lib/base/disposable';
 export { EnvironmentService } from './lib/services/environment.service';
 export { UsbSerialService } from './lib/services/usb.serial.service';
 export { SystemInfoService } from './lib/services/system-info.service';
+export { CacheService, CacheStrategy, CacheOptions, CacheEntry, CacheScope, DownloadProgress, DownloadProgressCallback } from './lib/services/cache.service';
 
 // types
 export { Path } from './lib/types/path.type';
