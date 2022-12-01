@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.1](https://github.com/intuiface/intuiface-cdk/compare/v1.1.0...v1.1.1) (2022-12-01)
+
+
+### Bug Fixes
+
+* **interface-asset:** AbortSignal duplication when building IA ([#53](https://github.com/intuiface/intuiface-cdk/issues/53)) ([3c2506c](https://github.com/intuiface/intuiface-cdk/commit/3c2506c97d927293f772c57150fb52e8d334297d))
+
 ## [1.1.0](https://github.com/intuiface/intuiface-cdk/compare/v1.0.3...v1.1.0) (2022-11-22)
 
 
