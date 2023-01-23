@@ -16,7 +16,7 @@
   "license": "ISC",
   "devDependencies": {
     "@types/fs-extra": "^9.0.13",
-    "@types/node": "^18.8.4",
+    "@types/node": "^18.11.10",
     "@typescript-eslint/eslint-plugin": "^5.40.0",
     "@typescript-eslint/eslint-plugin-tslint": "^5.10.1",
     "@typescript-eslint/parser": "^5.40.0",
