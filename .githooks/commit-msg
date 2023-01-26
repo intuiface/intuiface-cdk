@@ -4,14 +4,14 @@
 
 
 const examples = "Valid message pattern: <TYPE>[(<SCOPE>)]!?: <SUBJECT> \n" +
-  "Valid types : 'feat', 'feature', 'fix', 'perf', 'refactor', 'style', 'test', 'build', 'docs', 'chore', 'ci', 'revert', 'Merge' \n" +
+  "Valid types : 'feat', 'feature', 'fix', 'perf', 'refactor', 'style', 'test', 'build', 'docs', 'chore', 'ci', 'revert', 'Merge', 'deps' \n" +
   "Valid scopes: 'core', 'components', 'interface-asset', 'custom-asset', 'intuiface-cdk', '*' \n" +
   "For more information, go to https://www.conventionalcommits.org/ \n" + 
   "-                                 \n";
 
 const fs = require('fs');
 
-const regex = /(feat|feature|fix|perf|refactor|style|test|build|docs|chore|ci|revert)(\((core|components|interface-asset|custom-asset|intuiface-cdk|\*)\))!?\s?:\s.*/gm;
+const regex = /(feat|feature|fix|perf|refactor|style|test|build|docs|chore|ci|revert|deps)(\((core|components|interface-asset|custom-asset|intuiface-cdk|\*)\))!?\s?:\s.*/gm;
 const regexMerge = /^(merge branch)\s.*/gm;
 
 // Alternative syntax using RegExp constructor
