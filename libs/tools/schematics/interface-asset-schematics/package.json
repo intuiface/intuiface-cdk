@@ -13,7 +13,7 @@
   "schematics": "./src/collection.json",
   "repository": "https://github.com/intuiface/intuiface-cdk",
   "dependencies": {
-    "@angular-devkit/core": "^13.2.0",
-    "@angular-devkit/schematics": "^13.2.0"
+    "@angular-devkit/core": "^14.2.5",
+    "@angular-devkit/schematics": "^14.2.5"
   }
 }

@@ -1,78 +1,25 @@
-const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPlugin");
-const mf = require("@angular-architects/module-federation/webpack");
-const path = require("path");
+const {
+  shareAll,
+  withModuleFederationPlugin,
+} = require('@angular-architects/module-federation/webpack');
 
-const sharedMappings = new mf.SharedMappings();
-sharedMappings.register(
-    path.join(__dirname, 'tsconfig.json'),
-    [ /* mapped paths to share */ ]);
-
-module.exports = {
+module.exports = withModuleFederationPlugin({
+    name: '<%= classify(customAssetName) %>',
+    filename: '<%= classify(customAssetName) %>.js',
     library: {
         type: "module"
     },
-    output: {
-        uniqueName: "<%= classify(customAssetName) %>",
-        publicPath: "auto"
+    exposes: {
+        './<%= classify(customAssetName) %>': 
+        {
+            import: './src/app/<%= dasherize(customAssetName) %>/<%= dasherize(customAssetName) %>.module.ts',
+            name: '<%= dasherize(customAssetName) %>.module'
+        },
     },
-    optimization: {
-        runtimeChunk: false
-    },
-    resolve: {
-        alias: {
-            ...sharedMappings.getAliases(),
-        }
-    },
-    plugins: [
-        new ModuleFederationPlugin({
-
-            name: '<%= classify(customAssetName) %>',
-            filename: '<%= classify(customAssetName) %>.js',
-            exposes: {
-                './<%= classify(customAssetName) %>': 
-                {
-                    import: './src/app/<%= dasherize(customAssetName) %>/<%= dasherize(customAssetName) %>.module.ts',
-                    name: '<%= dasherize(customAssetName) %>.module'
-                },
-            },
-
-            shared: {
-                "@angular/core": {
-                    singleton: true,
-                    strictVersion: false
-                },
-                "@angular/common": {
-                    singleton: true,
-                    strictVersion: false
-                },
-                "@angular/common/http": {
-                    singleton: true,
-                    strictVersion: false
-                },
-                "@angular/router": {
-                    singleton: true,
-                    strictVersion: false
-                },
-                "ngxd/core": {
-                    singleton: true,
-                    strictVersion: false
-                },
-                "@intuiface/core": {
-                    singleton: true,
-                    strictVersion: false
-                },
-                "@intuiface/components": {
-                    singleton: true,
-                    strictVersion: false
-                },
-
-                ...sharedMappings.getDescriptors()
-            }
-
+    shared: {
+        ...shareAll({
+            singleton: true,
+            strictVersion: false
         }),
-        sharedMappings.getPlugin()
-    ],
-    experiments: {
-        outputModule: true
     }
-};
+});
