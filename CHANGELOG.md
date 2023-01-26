@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.1.2](https://github.com/intuiface/intuiface-cdk/compare/v1.1.1...v1.1.2) (2023-01-26)
+
+
+### Bug Fixes
+
+* **custom-asset:** update generation of custom asset ([adef5ae](https://github.com/intuiface/intuiface-cdk/commit/adef5ae748f701f39bcf4bfb372274e6c54437e6))
+* **intuiface-cdk:** add 'deps' option for commit messages ([87279c0](https://github.com/intuiface/intuiface-cdk/commit/87279c0b7efe5cf9032114ebb4bc9114033252c2))
+
+
+### Dependencies
+
+* **intuiface-cdk:** clean packages ([adef5ae](https://github.com/intuiface/intuiface-cdk/commit/adef5ae748f701f39bcf4bfb372274e6c54437e6))
+* **intuiface-cdk:** update nodejs & github actions ([adef5ae](https://github.com/intuiface/intuiface-cdk/commit/adef5ae748f701f39bcf4bfb372274e6c54437e6))
+* **intuiface-cdk:** update packages and angular 14 ([adef5ae](https://github.com/intuiface/intuiface-cdk/commit/adef5ae748f701f39bcf4bfb372274e6c54437e6))
+
 ## [1.1.1](https://github.com/intuiface/intuiface-cdk/compare/v1.1.0...v1.1.1) (2022-12-01)
 
 
