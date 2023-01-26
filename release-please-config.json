@@ -64,6 +64,11 @@
             "type": "ci",
             "section": "Continuous Integration",
             "hidden": true
+        },
+        {
+            "type": "deps",
+            "section": "Dependencies",
+            "hidden": false
         }
     ],
     "packages": {
