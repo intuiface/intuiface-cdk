@@ -55,6 +55,7 @@ export function Action(options?: IActionOptions)
             // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
             id: `${globalThis.intuiface_ifd_name}.${propertyKey.toString()}`,
             path: propertyKey,
+            title: options.displayName,
             description: options.description,
             parameters: parameters
         };
