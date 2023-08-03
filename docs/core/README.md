@@ -26,6 +26,7 @@
 ### Interfaces
 
 - [IDisposable](interfaces/IDisposable.md)
+- [IActionOptions](interfaces/IActionOptions.md)
 - [ICollectionConfiguration](interfaces/ICollectionConfiguration.md)
 - [CacheEntry](interfaces/CacheEntry.md)
 - [CacheOptions](interfaces/CacheOptions.md)
@@ -312,7 +313,7 @@ Action decorator to add metadatas to action.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `options?` | `IActionOptions` | options of the action (display name, description, ...) |
+| `options?` | [`IActionOptions`](interfaces/IActionOptions.md) | options of the action (display name, description, ...) |
 
 #### Returns
 
