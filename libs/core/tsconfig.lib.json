@@ -6,9 +6,5 @@
         "enableResourceInlining": true
     },
     "exclude": ["src/test-setup.ts", "**/*.spec.ts", "**/*.test.ts"],
-    "include": ["**/*.ts"],
-    "compilerOptions": {
-        "target": "ES2022",
-        "useDefineForClassFields": false
-    }
+    "include": ["**/*.ts"]
 }

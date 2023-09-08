@@ -4,7 +4,6 @@
         "baseUrl": "./",
         "rootDir": ".",
         "outDir": "../../dist/out-tsc",
-        "target": "ES2022",
         "declaration": true,
         "declarationMap": true,
         "inlineSources": true,
