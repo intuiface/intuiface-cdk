@@ -1,0 +1,73 @@
+{
+    "name": "cdk",
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "projectType": "application",
+    "sourceRoot": "apps/cdk/src",
+    "targets": {
+        "build": {
+            "executor": "@angular-devkit/build-angular:browser",
+            "options": {
+                "outputPath": "dist/apps/cdk",
+                "index": "apps/cdk/src/index.html",
+                "main": "apps/cdk/src/main.ts",
+                "polyfills": "apps/cdk/src/polyfills.ts",
+                "tsConfig": "apps/cdk/tsconfig.app.json",
+                "assets": ["apps/cdk/src/favicon.ico", "apps/cdk/src/assets"],
+                "styles": ["apps/cdk/src/styles.scss"],
+                "scripts": [],
+                "vendorChunk": true,
+                "extractLicenses": false,
+                "buildOptimizer": false,
+                "sourceMap": true,
+                "optimization": false,
+                "namedChunks": true
+            },
+            "configurations": {
+                "production": {
+                    "fileReplacements": [
+                        {
+                            "replace": "apps/cdk/src/environments/environment.ts",
+                            "with": "apps/cdk/src/environments/environment.prod.ts"
+                        }
+                    ],
+                    "optimization": true,
+                    "outputHashing": "all",
+                    "sourceMap": false,
+                    "namedChunks": false,
+                    "extractLicenses": true,
+                    "vendorChunk": false,
+                    "buildOptimizer": true,
+                    "budgets": [
+                        {
+                            "type": "initial",
+                            "maximumWarning": "2mb",
+                            "maximumError": "5mb"
+                        },
+                        {
+                            "type": "anyComponentStyle",
+                            "maximumWarning": "6kb",
+                            "maximumError": "10kb"
+                        }
+                    ]
+                }
+            }
+        },
+        "serve": {
+            "executor": "@angular-devkit/build-angular:dev-server",
+            "options": {
+                "browserTarget": "cdk:build"
+            },
+            "configurations": {
+                "production": {
+                    "browserTarget": "cdk:build:production"
+                }
+            }
+        },
+        "extract-i18n": {
+            "executor": "@angular-devkit/build-angular:extract-i18n",
+            "options": {
+                "browserTarget": "cdk:build"
+            }
+        }
+    }
+}

@@ -7,5 +7,9 @@
         "compilationMode": "partial"
     },
     "exclude": ["src/test-setup.ts", "**/*.spec.ts", "**/*.test.ts"],
-    "include": ["**/*.ts"]
+    "include": ["**/*.ts"],
+    "compilerOptions": {
+        "target": "ES2022",
+        "useDefineForClassFields": false
+    }
 }

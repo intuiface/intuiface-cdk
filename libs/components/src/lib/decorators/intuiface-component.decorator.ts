@@ -6,6 +6,5 @@
  */
 export function IntuifaceComponent(args: any = {}): (cls: any) => any
 {
-    return (compType: any): void =>
-    {};
+    return (compType: any): void => {};
 }
