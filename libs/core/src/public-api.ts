@@ -20,6 +20,9 @@ export { CacheService, CacheStrategy, CacheOptions, CacheEntry, CacheScope, Down
 // types
 export { Path } from './lib/types/path.type';
 export { Color } from './lib/types/color.type';
+export { SolidColor } from './lib/types/solid-color.type';
+export { LinearGradient } from './lib/types/linear-gradient.type';
+export { RadialGradient } from './lib/types/radial-gradient.type';
 export { Time } from './lib/types/time.type';
 export { Typeface as IFont, Font } from './lib/types/font.type';
 export { Resource } from './lib/types/resource.type';
