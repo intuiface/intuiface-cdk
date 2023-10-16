@@ -1,1 +1,8 @@
+# compiled output
+/dist
+
+# IDE - VSCode
+.vscode/*
+
+# dependencies
 node_modules/
