@@ -73,7 +73,8 @@ export function Parameter(options?: IParameterOptions): Function
         // store datas
         globalThis.intuiface_ifd_params[targetName][propertyKey][options.name] = {
             type: typeAndFormat.type,
-            title: options.displayName
+            title: options.displayName,
+            description: options.description ?? options.displayName
         };
 
         // add the format if defined

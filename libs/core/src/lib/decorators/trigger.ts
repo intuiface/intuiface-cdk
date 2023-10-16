@@ -59,6 +59,7 @@ export function Trigger(options?: ITriggerOptions)
         globalThis.intuiface_ifd_triggers[targetName][options.name] = {
             id: propertyKey,
             title: options.displayName,
+            description: options.description,
             properties: properties
         };
     };
