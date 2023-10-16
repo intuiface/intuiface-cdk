@@ -41,6 +41,8 @@ async function loadIA()
 
     // set interface asset to import in composer
     resources['<%= IAName %>']['if.interfaceAsset'] = true;
+    resources['<%= IAName %>']['title'] = globalThisAny.iaTitle;
+    resources['<%= IAName %>']['description'] = globalThisAny.iaDescription;
 
     // create the ifd as json object
     // and add metadatas filled from decorators
