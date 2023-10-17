@@ -22,6 +22,8 @@ The core library to use when creating an interface asset.
 ## Decorators
 In Intuiface Core, we use [TypeScript decorators](https://www.typescriptlang.org/docs/handbook/decorators.html) to manage Properties, Triggers and Actions in Intuiface Composer.
 
+Before reading how to declare Properties, Triggers, Actions and Parameters, please note that we choose to use the camelCase naming convention.
+
 ### Property
 
 The `@Property` decorator enables you to declare a new property with:
@@ -100,6 +102,7 @@ Here's an example:
 })
 public volume: number = 0; // declaration of the property
 ```
+Note : the name "volume" is in camelCase as the naming convention
 
 ❗⚠️⚠️⚠️⚠️❗ For property type `Array` there is a limitation: if you modify the array with methods like `push`, `pop`, `reduce`, `reverse`, `shift`, `sort`, `slice`, `splice`... without calling a setter (e.g. `myArray = [...]`) bindings will not be updated. To fix that, you can use the method `notifyPropertyChanged`.
 
@@ -124,8 +127,6 @@ this.listItems.push(newItem);
 // call the notify property changed
 this.notifyPropertyChanged('listItems', this.listItems);
 ```
-
-
 
 
 ### Trigger
@@ -176,6 +177,9 @@ Here's an example:
 })
 public raiseButtonReleased(): void { } // the trigger is an empty function
 ```
+
+Note : the name "raiseButtonReleased" is in camelCase as the naming convention
+
 If your trigger has parameter(s), please read the section [Parameter](#parameter) to understand how to make them accessible in Intuiface Composer.
 
 ### Action
@@ -214,6 +218,8 @@ public turnOnAutoplay(): void
     this.isAutoplay = true; // code of the action
 }
 ```
+
+Note : the name "turnOnAutoplay" is in camelCase as the naming convention
 
 If your action has parameter(s), please read the section [Parameter](#parameter) to understand how to make them accessible in Intuiface Composer.
 
@@ -297,6 +303,8 @@ public setVolume(
     this.volume = volume; // the code of the action
 }
 ```
+
+Note : the name and the declaration "volume" is in camelCase as the naming convention
 
 And here's an exmple of a trigger with parameters: 
 ```ts
