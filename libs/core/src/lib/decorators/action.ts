@@ -1,3 +1,4 @@
+/* eslint-disable prefer-arrow/prefer-arrow-functions */
 /* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
@@ -25,8 +26,9 @@ export interface IActionOptions
 /**
  * Action decorator to add metadatas to action.
  * @param options options of the action (display name, description, ...)
+ *
+ * @group Decorators
  */
-// eslint-disable-next-line prefer-arrow/prefer-arrow-functions
 export function Action(options?: IActionOptions)
 {
     return (

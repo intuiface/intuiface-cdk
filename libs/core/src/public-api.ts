@@ -1,7 +1,7 @@
 export { Property } from './lib/decorators/property';
 export { InternalProperty } from './lib/decorators/internal-property';
 export { Trigger } from './lib/decorators/trigger';
-export { Action } from './lib/decorators/action';
+export { Action, IActionOptions } from './lib/decorators/action';
 export { Parameter } from './lib/decorators/parameter';
 export { Asset, Collection, Inject, DoNotInjectMethod } from './lib/decorators/element.decorator';
 export { Computor } from './lib/decorators/computor';

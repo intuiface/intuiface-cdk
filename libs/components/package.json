@@ -3,5 +3,8 @@
   "version": "1.1.2",
   "repository": "https://github.com/intuiface/intuiface-cdk",
   "description": "The components library of intuiface",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "docs": "typedoc"
+  }
 }
