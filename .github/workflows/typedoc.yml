@@ -1,10 +1,7 @@
 name: typedoc
 on:
   pull_request:
-    paths-ignore:
-      - 'docs/**'
-      - '**.md'
-      - '**.json'
+    types: [opened, reopened, synchronize]
 
 permissions:
   contents: write
@@ -15,7 +12,9 @@ jobs:
       contents: write
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.REPO_ACCESS_TOKEN }}
       - uses: actions/setup-node@v3
         with:
           node-version: 18
