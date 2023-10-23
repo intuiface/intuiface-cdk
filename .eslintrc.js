@@ -181,7 +181,9 @@ module.exports = {
         "no-shadow": "off",
         "@typescript-eslint/no-shadow": ["error"],
         "no-throw-literal": "error",
-        "no-trailing-spaces": "error",
+        "no-trailing-spaces": ["error",{
+            "ignoreComments": true
+        }],
         "no-undef-init": "error",
         "no-underscore-dangle": ["error", {
             "allowAfterThis": true
