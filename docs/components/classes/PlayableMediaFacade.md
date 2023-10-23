@@ -156,7 +156,7 @@ Listen playable ready event.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `callback` | `Function` | callback to call when event is emited |
+| `callback` | [`Function`]( https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function ) | callback to call when event is emited |
 
 #### Returns
 
@@ -178,7 +178,7 @@ Unlisten playable ready event.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `callback` | `Function` | callback to remove |
+| `callback` | [`Function`]( https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function ) | callback to remove |
 
 #### Returns
 
@@ -200,7 +200,7 @@ Listen to seeked event
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `callback` | `Function` | callback to call |
+| `callback` | [`Function`]( https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function ) | callback to call |
 
 #### Returns
 
@@ -218,7 +218,7 @@ Unlisten to seeked event
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `callback` | `Function` | callback to remove |
+| `callback` | [`Function`]( https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function ) | callback to remove |
 
 #### Returns
 
@@ -236,7 +236,7 @@ Listen to ended event
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `callback` | `Function` | callback to call when event is emitted |
+| `callback` | [`Function`]( https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function ) | callback to call when event is emitted |
 
 #### Returns
 
@@ -258,7 +258,7 @@ Unlisten to ended event.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `callback` | `Function` | callback to remove |
+| `callback` | [`Function`]( https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function ) | callback to remove |
 
 #### Returns
 
@@ -267,3 +267,8 @@ Unlisten to ended event.
 #### Implementation of
 
 PlayableFacade.unlistenToEndedEvent
+
+
+## Help
+Found a problem, a bug? Or need some help?  
+Please do not create an issue in Github! Ask us via our Support page : https://support.intuiface.com/

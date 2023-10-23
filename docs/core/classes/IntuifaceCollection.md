@@ -1,6 +1,8 @@
 # Class: IntuifaceCollection<T\>
 
-Intuiface Collection
+`IntuifaceCollection` is the base class to use to implements any kind of collection in Intuiface.
+
+_**This is experimental as there is currently no way to use a custom collection created with the CDK in Intuiface Composer.**_
 
 ## Type parameters
 
@@ -243,7 +245,7 @@ ___
 
 ### requestItems
 
-▸ **requestItems**(`start`, `count`): `Promise`<`void`\>
+▸ **requestItems**(`start`, `count`): [`Promise`]( https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise )<`void`\>
 
 Requests items of the collection
 
@@ -256,7 +258,7 @@ Requests items of the collection
 
 #### Returns
 
-`Promise`<`void`\>
+[`Promise`]( https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise )<`void`\>
 
 ___
 
@@ -313,3 +315,8 @@ Dispose the element.
 #### Inherited from
 
 [IntuifaceElement](IntuifaceElement.md).[dispose](IntuifaceElement.md#dispose)
+
+
+## Help
+Found a problem, a bug? Or need some help?  
+Please do not create an issue in Github! Ask us via our Support page : https://support.intuiface.com/

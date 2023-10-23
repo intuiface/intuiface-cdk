@@ -192,7 +192,7 @@ ___
 
 ### requestItems
 
-▸ **requestItems**(`start`, `count`): `Promise`<`void`\>
+▸ **requestItems**(`start`, `count`): [`Promise`]( https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise )<`void`\>
 
 Requests items of the collection
 
@@ -205,7 +205,7 @@ Requests items of the collection
 
 #### Returns
 
-`Promise`<`void`\>
+[`Promise`]( https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise )<`void`\>
 
 #### Inherited from
 
@@ -285,3 +285,8 @@ Close all opened items.
 #### Returns
 
 `void`
+
+
+## Help
+Found a problem, a bug? Or need some help?  
+Please do not create an issue in Github! Ask us via our Support page : https://support.intuiface.com/

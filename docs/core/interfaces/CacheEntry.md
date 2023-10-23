@@ -1,6 +1,6 @@
 # Interface: CacheEntry
 
-Metadata about stored data in cache
+An object containing metadata about an entry in cache.
 
 ## Table of contents
 
@@ -17,7 +17,7 @@ Metadata about stored data in cache
 
 • **cacheName**: `string`
 
-Name of the cache
+Name of the cache containing this entry.
 
 ___
 
@@ -25,15 +25,15 @@ ___
 
 • **sourceUrl**: `string`
 
-source URL from where the data was requested
+source URL from where the data was requested.
 
 ___
 
 ### lastUpdate
 
-• **lastUpdate**: `Date`
+• **lastUpdate**: [`Date`]( https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date )
 
-Date from last time entry was updated
+Date of last time entry was updated.
 
 ___
 
@@ -41,4 +41,9 @@ ___
 
 • `Optional` **cacheUri**: `string`
 
-URI of cache entry stored on file system and that can be used as source of HTML elements (such as <img>).
+URI of cache entry stored on file system and that can be used as source of HTML elements (such as `<img>`). _Only available when access to file system is possible_ (not for XP as webpage).
+
+
+## Help
+Found a problem, a bug? Or need some help?  
+Please do not create an issue in Github! Ask us via our Support page : https://support.intuiface.com/
