@@ -58,7 +58,7 @@
 ▸ **IntuifaceComponent**(`args?`): (`cls`: `any`) => `any`
 
 Decorator to link Component (Angular Component) to a Model
-This is usefell for dynamic component creation from a Model
+This is useful for dynamic component creation from a Model
 
 #### Parameters
 
