@@ -5,6 +5,6 @@
   "description": "The components library of intuiface",
   "license": "MIT",
   "scripts": {
-    "docs": "typedoc && node ../../patch-readme.mjs ../../docs/components && npx shx cp ../../docs/components/README.md ./README.md"
+    "docs": "typedoc --tsconfig ./tsconfig.lib.prod.json && node ../../patch-readme.mjs ../../docs/components && npx shx cp ../../docs/components/README.md ./README.md"
   }
 }
