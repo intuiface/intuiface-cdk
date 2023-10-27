@@ -21,7 +21,5 @@
         }
     },
     "exclude": ["node_modules", "tmp"],
-    "include": [
-        "**/*.ts"
-    ]
+    "include": ["**/*.ts"]
 }
