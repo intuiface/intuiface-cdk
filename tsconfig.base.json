@@ -3,7 +3,7 @@
     "compilerOptions": {
         "baseUrl": "./",
         "rootDir": ".",
-        "outDir": "./dist/out-tsc",
+        "outDir": "./dist",
         "sourceMap": true,
         "declaration": false,
         "downlevelIteration": true,
@@ -20,5 +20,8 @@
             "@intuiface/core": ["libs/core/src/public-api.ts"]
         }
     },
-    "exclude": ["node_modules", "tmp"]
+    "exclude": ["node_modules", "tmp"],
+    "include": [
+        "**/*.ts"
+    ]
 }

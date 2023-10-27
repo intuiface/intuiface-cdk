@@ -1,0 +1,7 @@
+{
+    "extends": ["../../typedoc.json"],
+    "entryPoints": ["src/public-api.ts"],
+  
+    // Only used by docs-all script
+    "out": "../../docs/core"
+  }

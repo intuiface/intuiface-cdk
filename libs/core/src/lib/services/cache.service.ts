@@ -123,18 +123,20 @@ export type DownloadProgressCallback = (progress: DownloadProgress) => void;
 
 
 /**
- * Service to make request or download file with a caching strategy
+ * `CacheService` enhances the [`Fetch API`](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) with caching strategy, allowing you to store locally request's responses and files and access them even offline.
  */
 export class CacheService {
 
+    private constructor() {
+
+    }
+
     /**
-     * Enhanced global fetch() with caching mechanism.
-     * Use fetch when you want to directly use the response content.
-     * To get path to a locally cached file, use downloadFile() instead.
-     * @param request
-     * @param init
-     * @param cacheOptions
-     * @param progressCallback
+     * Enhanced global [`fetch()`](https://developer.mozilla.org/en-US/docs/Web/API/fetch) with caching mechanism. Use fetch when you want to directly use the response content. To get path to a locally cached file, use {@link CacheService.downloadFile} instead.
+     * @param request This defines the resource that you wish to fetch. See [`fetch()` parameters](https://developer.mozilla.org/en-US/docs/Web/API/fetch#parameters).
+     * @param init An object containing any custom settings that you want to apply to the request, such as `headers`, `method`. See [`fetch()` parameters](https://developer.mozilla.org/en-US/docs/Web/API/fetch#parameters).
+     * @param cacheOptions An object containing cache behaviors for the request.
+     * @param progressCallback Use this callback to trace download progress.
      * @returns
      */
     public static async fetch(request: RequestInfo,

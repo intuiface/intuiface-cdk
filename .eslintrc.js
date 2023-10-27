@@ -70,6 +70,26 @@ module.exports = {
                 "@typescript-eslint/naming-convention": [
                     "error",
                     {
+                        "selector": 'variable',
+                        "format": ['camelCase']
+                    },
+                    {
+                        "selector": 'function',
+                        "format": ['camelCase']
+                    },
+                    {
+                        "selector": 'parameter',
+                        "format": ['camelCase']
+                    },
+                    {
+                        "selector": 'classProperty',
+                        "format": ['camelCase']
+                    },
+                    {
+                        "selector": 'classMethod',
+                        "format": ['camelCase']
+                    },
+                    {
                         "selector": "enumMember",
                         "format": ["PascalCase"]
                     }
