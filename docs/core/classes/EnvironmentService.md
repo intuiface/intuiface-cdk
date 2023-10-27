@@ -38,7 +38,7 @@ Susbscribes to be notified of canPromptInstallApp changes
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `listener` | `Function` | listener function |
+| `listener` | [`Function`]( https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function ) | listener function |
 
 #### Returns
 
@@ -56,7 +56,7 @@ Unsusbscribes to be notified of canPromptInstallApp changes
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `listener` | `Function` | listener function |
+| `listener` | [`Function`]( https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function ) | listener function |
 
 #### Returns
 
@@ -73,3 +73,8 @@ Prompt App installation
 #### Returns
 
 `void`
+
+
+## Help
+Found a problem, a bug? Or need some help?  
+Please do not create an issue in Github! Ask us via our Support page : https://support.intuiface.com/

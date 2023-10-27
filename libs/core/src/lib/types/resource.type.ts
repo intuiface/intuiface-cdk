@@ -1,7 +1,19 @@
 import { IConvertibleType } from './convertible.type';
 
 /**
- * Resource type
+ * Class to use when a property is using a resource from an experience.
+ *
+ * @example ```ts
+ * @Property({
+ *     displayName: 'Source',
+ *     description: 'Source of the data.',
+ *     defaultValue: null,
+ *     type: Resource
+ * })
+ * public source: Resource;
+ * ```
+ *
+ * @group Types
  */
 export class Resource implements IConvertibleType
 {

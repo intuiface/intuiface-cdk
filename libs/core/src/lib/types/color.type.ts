@@ -1,14 +1,38 @@
 import { IConvertibleType } from './convertible.type';
 
 /**
- * Color type
+ * Class to use to describe a color.
+ *
+ * @example ```ts
+ * @Property({
+ *     displayName: 'Background color',
+ *     defaultValue: Color.TransparentBlack, // the default value of the property
+ *     type: Color
+ * })
+ * public backgroundColor: Color;
+ * ```
+ * @group Types
  */
 export class Color implements IConvertibleType{
 
+    /**
+     * Color instance of black
+     */
     public static readonly Black = Color.convertFrom('#000000ff');
+
+    /**
+     * Color instance of transparent
+     */
     public static readonly TransparentBlack = Color.convertFrom('#00000000');
 
+    /**
+     * @internal
+     */
     public static readonly InputTextBackground = Color.convertFrom('#bababaff');
+
+    /**
+     * @internal
+     */
     public static readonly InputTextOutline = Color.convertFrom('#c6c7c8ff');
 
     /**

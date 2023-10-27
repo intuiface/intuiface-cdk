@@ -1,6 +1,6 @@
 # Interface: IActionOptions
 
-Options when use action decorator.
+Options to configure [`@Action`](../README.md#action) decorator
 
 ## Table of contents
 
@@ -33,3 +33,8 @@ ___
 • `Optional` **validate**: `boolean`
 
 If true, validate range of parameter values.
+
+
+## Help
+Found a problem, a bug? Or need some help?  
+Please do not create an issue in Github! Ask us via our Support page : https://support.intuiface.com/
