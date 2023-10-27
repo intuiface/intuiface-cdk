@@ -1,13 +1,32 @@
 import { IConvertibleType } from './convertible.type';
 
 /**
- * Time type
+ * Class to use to describe a time duration.
+ *
+ * @example ```ts
+ * @Property({
+ *     displayName: 'Remaining time',
+ *     description: 'Remaing time before the end.',
+ *     defaultValue: Time.Zero,
+ *     type: Time
+ * })
+ * public remainingTime: Time;
+ * ```
+ *
+ * @group Types
  */
 export class Time implements IConvertibleType {
 
     //#region Static Constants
 
+    /**
+     * Instance of time representing an empty duration of zero.
+     */
     public static readonly Zero = Time.convertFrom(0);
+
+    /**
+     * Instance of time representing a duration of 1 second.
+     */
     public static readonly One = Time.convertFrom(1);
 
     //#endregion Static Constants
@@ -106,7 +125,7 @@ export class Time implements IConvertibleType {
 
     /**
      * Convert a value to a Time
-     * @param value
+     * @param value Value can be converted from `string` or `number`. If `string`, it's parsed with the format `hh:mm:ss.ms`. If `number`, it's considered as a number of seconds.
      */
     public static convertFrom(value: unknown): Time {
         let time;

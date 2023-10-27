@@ -1,10 +1,22 @@
 # Class: Time
 
-Time type
+Class to use to describe a time duration.
+
+**`Example`**
+
+```ts
+@Property({
+    displayName: 'Remaining time',
+    description: 'Remaing time before the end.',
+    defaultValue: Time.Zero,
+    type: Time
+})
+public remainingTime: Time;
+```
 
 ## Implements
 
-- `IConvertibleType`
+- [`IConvertibleType`](../interfaces/IConvertibleType.md)
 
 ## Table of contents
 
@@ -14,6 +26,8 @@ Time type
 
 ### Properties
 
+- [Zero](Time.md#zero)
+- [One](Time.md#one)
 - [strTime](Time.md#strtime)
 - [strTimeWithoutMilliseconds](Time.md#strtimewithoutmilliseconds)
 - [totalSeconds](Time.md#totalseconds)
@@ -49,6 +63,22 @@ Create a new time with given hours, minutes and seconds.
 | `seconds` | `number` | seconds of the time |
 
 ## Properties
+
+### Zero
+
+▪ `Static` `Readonly` **Zero**: [`Time`](Time.md)
+
+Instance of time representing an empty duration of zero.
+
+___
+
+### One
+
+▪ `Static` `Readonly` **One**: [`Time`](Time.md)
+
+Instance of time representing a duration of 1 second.
+
+___
 
 ### strTime
 
@@ -122,9 +152,9 @@ Convert a value to a Time
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `value` | `unknown` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `value` | `unknown` | Value can be converted from `string` or `number`. If `string`, it's parsed with the format `hh:mm:ss.ms`. If `number`, it's considered as a number of seconds. |
 
 #### Returns
 
@@ -186,7 +216,7 @@ Convert time to string
 
 #### Implementation of
 
-IConvertibleType.toString
+[IConvertibleType](../interfaces/IConvertibleType.md).[toString](../interfaces/IConvertibleType.md#tostring)
 
 ___
 
@@ -208,7 +238,7 @@ Check if the type can be converted
 
 #### Implementation of
 
-IConvertibleType.canConvertTo
+[IConvertibleType](../interfaces/IConvertibleType.md).[canConvertTo](../interfaces/IConvertibleType.md#canconvertto)
 
 ___
 
@@ -230,4 +260,9 @@ Function to convert a Time to another type
 
 #### Implementation of
 
-IConvertibleType.convertTo
+[IConvertibleType](../interfaces/IConvertibleType.md).[convertTo](../interfaces/IConvertibleType.md#convertto)
+
+
+## Help
+Found a problem, a bug? Or need some help?  
+Please do not create an issue in Github! Ask us via our Support page : https://support.intuiface.com/

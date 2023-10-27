@@ -789,3 +789,8 @@ Action to change the font.
 #### Inherited from
 
 [TextBehavior](TextBehavior.md).[changeFont](TextBehavior.md#changefont)
+
+
+## Help
+Found a problem, a bug? Or need some help?  
+Please do not create an issue in Github! Ask us via our Support page : https://support.intuiface.com/

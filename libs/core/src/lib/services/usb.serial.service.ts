@@ -1,5 +1,7 @@
 /**
  * Usb serial service to access to usb port, open it and write to it
+ *
+ * @group Services
  */
 export class UsbSerialService {
 

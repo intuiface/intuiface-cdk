@@ -39,7 +39,7 @@ List all devices
 
 | Name | Type |
 | :------ | :------ |
-| `callback` | `Function` |
+| `callback` | [`Function`]( https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function ) |
 
 #### Returns
 
@@ -58,7 +58,7 @@ Open the serial port
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `opts` | `any` | : { port: string, pid: number, vid: number, driver: string, baudRate: number, dataBits: number, stopBits: number, parity: number, dtr: boolean, rts: boolean, sleepOnPause: boolean} |
-| `callback` | `Function` |  |
+| `callback` | [`Function`]( https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function ) |  |
 
 #### Returns
 
@@ -77,7 +77,7 @@ Write to the serial port
 | Name | Type |
 | :------ | :------ |
 | `data` | `string` |
-| `callback` | `Function` |
+| `callback` | [`Function`]( https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function ) |
 
 #### Returns
 
@@ -95,7 +95,7 @@ Close the serial port
 
 | Name | Type |
 | :------ | :------ |
-| `callback` | `Function` |
+| `callback` | [`Function`]( https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function ) |
 
 #### Returns
 
@@ -113,8 +113,8 @@ Close the serial port
 
 | Name | Type |
 | :------ | :------ |
-| `callbackToRegister` | `Function` |
-| `callback` | `Function` |
+| `callbackToRegister` | [`Function`]( https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function ) |
+| `callback` | [`Function`]( https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function ) |
 
 #### Returns
 
@@ -132,7 +132,7 @@ Check if is connected
 
 | Name | Type |
 | :------ | :------ |
-| `callback` | `Function` |
+| `callback` | [`Function`]( https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function ) |
 
 #### Returns
 
@@ -149,3 +149,8 @@ Dispose
 #### Returns
 
 `void`
+
+
+## Help
+Found a problem, a bug? Or need some help?  
+Please do not create an issue in Github! Ask us via our Support page : https://support.intuiface.com/

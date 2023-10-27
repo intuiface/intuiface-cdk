@@ -6,11 +6,12 @@
     "excludeExternals": true,
     "excludePrivate": true,
     "excludeProtected": true,
+    "excludeInternal": true,
     "hideGenerator": true,
     "disableSources": true,
     "hideBreadcrumbs": true,
     "githubPages": false,
-    "plugin": ["typedoc-plugin-markdown"],
+    "plugin": ["typedoc-plugin-markdown", "typedoc-plugin-mdn-links"],
     "readme": "none",
     "sort": [
         "static-first",

@@ -1,10 +1,22 @@
 # Class: Path
 
-Path type
+Class to use to describe any king of path that can be used as URL
+
+**`Example`**
+
+```ts
+@Property({
+    displayName: 'Source',
+    description: 'Source of the data.',
+    defaultValue: null,
+    type: Path
+})
+public source: Path;
+```
 
 ## Implements
 
-- `IConvertibleType`
+- [`IConvertibleType`](../interfaces/IConvertibleType.md)
 
 ## Table of contents
 
@@ -66,7 +78,7 @@ Transform url to string
 
 #### Implementation of
 
-IConvertibleType.toString
+[IConvertibleType](../interfaces/IConvertibleType.md).[toString](../interfaces/IConvertibleType.md#tostring)
 
 ___
 
@@ -88,7 +100,7 @@ Check if the type can be converted
 
 #### Implementation of
 
-IConvertibleType.canConvertTo
+[IConvertibleType](../interfaces/IConvertibleType.md).[canConvertTo](../interfaces/IConvertibleType.md#canconvertto)
 
 ___
 
@@ -110,4 +122,9 @@ Function to convert a Path to another type
 
 #### Implementation of
 
-IConvertibleType.convertTo
+[IConvertibleType](../interfaces/IConvertibleType.md).[convertTo](../interfaces/IConvertibleType.md#convertto)
+
+
+## Help
+Found a problem, a bug? Or need some help?  
+Please do not create an issue in Github! Ask us via our Support page : https://support.intuiface.com/

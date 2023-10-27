@@ -16,13 +16,13 @@ Service to get system information (device id, device name ...etc)
 
 ### getDeviceId
 
-▸ **getDeviceId**(): `Promise`<`string`\>
+▸ **getDeviceId**(): [`Promise`]( https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise )<`string`\>
 
 Get the unique ID of the device
 
 #### Returns
 
-`Promise`<`string`\>
+[`Promise`]( https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise )<`string`\>
 
 Device ID
 
@@ -30,13 +30,13 @@ ___
 
 ### getDeviceName
 
-▸ **getDeviceName**(): `Promise`<`string`\>
+▸ **getDeviceName**(): [`Promise`]( https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise )<`string`\>
 
 Get the device name
 
 #### Returns
 
-`Promise`<`string`\>
+[`Promise`]( https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise )<`string`\>
 
 the device name
 
@@ -58,13 +58,13 @@ ___
 
 ### getOS
 
-▸ **getOS**(): `Promise`<`string`\>
+▸ **getOS**(): [`Promise`]( https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise )<`string`\>
 
 Get OS
 
 #### Returns
 
-`Promise`<`string`\>
+[`Promise`]( https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise )<`string`\>
 
 Operating system and os version in same string
 
@@ -81,3 +81,8 @@ Get the application name
 `string`
 
 application name
+
+
+## Help
+Found a problem, a bug? Or need some help?  
+Please do not create an issue in Github! Ask us via our Support page : https://support.intuiface.com/
