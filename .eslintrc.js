@@ -39,6 +39,26 @@ module.exports = {
         "@typescript-eslint/naming-convention": [
             "error",
             {
+                "selector": 'variable',
+                "format": ['camelCase']
+            },
+            {
+                "selector": 'function',
+                "format": ['camelCase']
+            },
+            {
+                "selector": 'parameter',
+                "format": ['camelCase']
+            },
+            {
+                "selector": 'classProperty',
+                "format": ['camelCase']
+            },
+            {
+                "selector": 'classMethod',
+                "format": ['camelCase']
+            },
+            {
                 "selector": "enumMember",
                 "format": ["PascalCase"]
             }
@@ -66,7 +86,6 @@ module.exports = {
                 "ImportDeclaration": "first"
             }
         ],
-        "@typescript-eslint/interface-name-prefix": "off",
         "@typescript-eslint/member-delimiter-style": [
             "error",
             {
@@ -162,7 +181,9 @@ module.exports = {
         "no-shadow": "off",
         "@typescript-eslint/no-shadow": ["error"],
         "no-throw-literal": "error",
-        "no-trailing-spaces": "error",
+        "no-trailing-spaces": ["error",{
+            "ignoreComments": true
+        }],
         "no-undef-init": "error",
         "no-underscore-dangle": ["error", {
             "allowAfterThis": true

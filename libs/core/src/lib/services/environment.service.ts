@@ -1,6 +1,8 @@
 
 /**
  * Service to expose information about the environment context in which Player is running
+ *
+ * @group Services
  */
 export class EnvironmentService {
 

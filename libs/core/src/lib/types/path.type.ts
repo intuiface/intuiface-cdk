@@ -1,7 +1,19 @@
 import { IConvertibleType } from './convertible.type';
 
 /**
- * Path type
+ * Class to use to describe any king of path that can be used as URL
+ *
+ * @example ```ts
+ * @Property({
+ *     displayName: 'Source',
+ *     description: 'Source of the data.',
+ *     defaultValue: null,
+ *     type: Path
+ * })
+ * public source: Path;
+ * ```
+ *
+ * @group Types
  */
 export class Path implements IConvertibleType {
     public url: URL;

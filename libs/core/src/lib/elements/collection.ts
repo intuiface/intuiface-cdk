@@ -2,7 +2,11 @@ import { ElementContainer } from './container';
 import { IntuifaceElement } from './element';
 
 /**
- * Intuiface Collection
+ * `IntuifaceCollection` is the base class to use to implements any kind of collection in Intuiface.
+ *
+ * _**This is experimental as there is currently no way to use a custom collection created with the CDK in Intuiface Composer.**_
+ *
+ * @experimental
  */
 export class IntuifaceCollection<T extends ElementContainer> extends IntuifaceElement
 {

@@ -1,0 +1,23 @@
+{
+    "$schema": "https://typedoc.org/schema.json",
+    "entryPoints": ["libs/*"],
+    "entryPointStrategy": "resolve",
+    "excludeNotDocumented": true,
+    "excludeExternals": true,
+    "excludePrivate": true,
+    "excludeProtected": true,
+    "excludeInternal": true,
+    "hideGenerator": true,
+    "disableSources": true,
+    "hideBreadcrumbs": true,
+    "githubPages": false,
+    "plugin": ["typedoc-plugin-markdown", "typedoc-plugin-mdn-links"],
+    "readme": "none",
+    "sort": [
+        "static-first",
+        "required-first",
+        "visibility",
+        "source-order",
+        "alphabetical"
+    ]
+}

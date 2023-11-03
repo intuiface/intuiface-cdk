@@ -2,7 +2,9 @@ import { Watchable } from '../base/watchable';
 import { ElementContainer } from './container';
 
 /**
- * Element
+ * An `IntuifaceElement` represents the base of any kind of element that compose an Intuiface experience: asset, collection, interface asset, layer, scene, experience...
+ *
+ * All this elements extends `IntuifaceElement` and use the appropriate decorator to make it usable in the experience, such as {@link Asset | `@Asset`} or {@link Collection | `@Collection`}.
  */
 export class IntuifaceElement extends Watchable
 {

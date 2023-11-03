@@ -1,5 +1,7 @@
 /**
  * Service to get system information (device id, device name ...etc)
+ *
+ * @group Services
  */
 export class SystemInfoService
 {
