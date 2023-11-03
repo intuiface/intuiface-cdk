@@ -33,7 +33,10 @@ export class SolidColor extends Color
                        public format: EColorFormat = EColorFormat.HexARGB)
     {
         super();
-        this.alpha = alpha;
+        this.alpha = alpha.toUpperCase();
+        this.red = red.toUpperCase();
+        this.green = green.toUpperCase();
+        this.blue = blue.toUpperCase();
     }
 
     /**
@@ -83,9 +86,6 @@ export class SolidColor extends Color
                 {
                     case EColorFormat.HexRGB:
                         return `#${this.red}${this.green}${this.blue}`;
-
-                    case EColorFormat.RGBA:
-                        return this.toString();
 
                     default:
                         return `#${this.alpha}${this.red}${this.green}${this.blue}`;
