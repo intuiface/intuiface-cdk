@@ -31,6 +31,9 @@ Before reading how to create interface assets and declare Properties, Triggers, 
 - [IntuifaceCollection](classes/IntuifaceCollection.md)
 - [ElementContainer](classes/ElementContainer.md)
 - [IntuifaceElement](classes/IntuifaceElement.md)
+- [LinearGradient](classes/LinearGradient.md)
+- [RadialGradient](classes/RadialGradient.md)
+- [SolidColor](classes/SolidColor.md)
 
 ### Interfaces
 
