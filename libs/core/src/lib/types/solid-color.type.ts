@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import { TypeConversionService } from '../services/type.conversion.service';
 import { Color } from './color.type';
 

@@ -40,7 +40,7 @@ export abstract class Color implements IConvertibleType
      */
     public canConvertTo(type: unknown): boolean
     {
-        return TypeConversionService.canConvertColorTo(type);
+        return true;
     }
 
     /**
@@ -65,7 +65,7 @@ export abstract class Color implements IConvertibleType
      */
     public static canConvertFrom(value: unknown): boolean
     {
-        return TypeConversionService.canConvertColorFrom(value);
+        return true;
     }
 
     /**
