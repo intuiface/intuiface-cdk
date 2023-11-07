@@ -3,7 +3,16 @@ import { GradientPoint } from './gradient-point.type';
 import { SolidColor } from './solid-color.type';
 
 /**
- * Linear gradient type
+ * Class to use to describe a linear gradient.
+ *
+ * @example ```ts
+ * @Property({
+ *     displayName: 'Background color',
+ *     type: LinearGradient
+ * })
+ * public backgroundColor: LinearGradient;
+ * ```
+ * @group Types
  */
 export class LinearGradient extends Color
 {

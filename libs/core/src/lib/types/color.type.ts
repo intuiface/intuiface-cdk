@@ -2,12 +2,12 @@ import { TypeConversionService } from '../services/type.conversion.service';
 import { IConvertibleType } from './convertible.type';
 
 /**
- * Class to use to describe a color.
+ * Class to type a property that can be a solid color or a gradient.
  *
  * @example ```ts
  * @Property({
  *     displayName: 'Background color',
- *     defaultValue: Color.TransparentBlack, // the default value of the property
+ *     defaultValue: SolidColor.TransparentBlack, // the default value of the property
  *     type: Color
  * })
  * public backgroundColor: Color;
