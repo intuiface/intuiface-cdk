@@ -31,9 +31,6 @@ Before reading how to create interface assets and declare Properties, Triggers, 
 - [IntuifaceCollection](classes/IntuifaceCollection.md)
 - [ElementContainer](classes/ElementContainer.md)
 - [IntuifaceElement](classes/IntuifaceElement.md)
-- [LinearGradient](classes/LinearGradient.md)
-- [RadialGradient](classes/RadialGradient.md)
-- [SolidColor](classes/SolidColor.md)
 
 ### Interfaces
 
@@ -73,8 +70,11 @@ Before reading how to create interface assets and declare Properties, Triggers, 
 - [IConvertibleType](interfaces/IConvertibleType.md)
 - [Typeface](interfaces/Typeface.md)
 - [Font](classes/Font.md)
+- [LinearGradient](classes/LinearGradient.md)
 - [Path](classes/Path.md)
+- [RadialGradient](classes/RadialGradient.md)
 - [Resource](classes/Resource.md)
+- [SolidColor](classes/SolidColor.md)
 - [Time](classes/Time.md)
 
 ## Decorators

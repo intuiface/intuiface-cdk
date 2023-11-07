@@ -1,6 +1,16 @@
 # Class: LinearGradient
 
-Linear gradient type
+Class to use to describe a linear gradient.
+
+**`Example`**
+
+```ts
+@Property({
+    displayName: 'Background color',
+    type: LinearGradient
+})
+public backgroundColor: LinearGradient;
+```
 
 ## Hierarchy
 
