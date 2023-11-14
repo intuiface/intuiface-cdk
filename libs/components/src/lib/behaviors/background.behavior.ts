@@ -1,4 +1,5 @@
 import { Color as ColorType } from '@intuiface/core';
+import { SolidColor } from '@intuiface/core';
 
 /**
  * Background types
@@ -26,7 +27,7 @@ export class BackgroundBehavior {
     /**
      * BackgroundColor.
      */
-    public backgroundColor = ColorType.Black;
+    public backgroundColor = SolidColor.Black;
 
     /**
      * BackgroundImage.
@@ -41,7 +42,7 @@ export class BackgroundBehavior {
     /**
      * Outline color.
      */
-    public outlineColor = ColorType.Black;
+    public outlineColor = SolidColor.Black;
 
     /**
      * Outline thickness.

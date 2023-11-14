@@ -33,7 +33,7 @@ ___
 
 ### backgroundColor
 
-• **backgroundColor**: `Color` = `ColorType.Black`
+• **backgroundColor**: `SolidColor` = `SolidColor.Black`
 
 BackgroundColor.
 
@@ -57,7 +57,7 @@ ___
 
 ### outlineColor
 
-• **outlineColor**: `Color` = `ColorType.Black`
+• **outlineColor**: `SolidColor` = `SolidColor.Black`
 
 Outline color.
 

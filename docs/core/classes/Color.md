@@ -1,17 +1,27 @@
 # Class: Color
 
-Class to use to describe a color.
+Class to type a property that can be a solid color or a gradient.
 
 **`Example`**
 
 ```ts
 @Property({
     displayName: 'Background color',
-    defaultValue: Color.TransparentBlack, // the default value of the property
+    defaultValue: SolidColor.TransparentBlack, // the default value of the property
     type: Color
 })
 public backgroundColor: Color;
 ```
+
+## Hierarchy
+
+- **`Color`**
+
+  ↳ [`SolidColor`](SolidColor.md)
+
+  ↳ [`LinearGradient`](LinearGradient.md)
+
+  ↳ [`RadialGradient`](RadialGradient.md)
 
 ## Implements
 
@@ -19,58 +29,35 @@ public backgroundColor: Color;
 
 ## Table of contents
 
-### Constructors
-
-- [constructor](Color.md#constructor)
-
-### Properties
-
-- [Black](Color.md#black)
-- [TransparentBlack](Color.md#transparentblack)
-
 ### Methods
 
-- [convertFrom](Color.md#convertfrom)
 - [canConvertFrom](Color.md#canconvertfrom)
-- [rgba2hex](Color.md#rgba2hex)
+- [convertFrom](Color.md#convertfrom)
 - [toString](Color.md#tostring)
+- [equals](Color.md#equals)
+- [isGradient](Color.md#isgradient)
 - [canConvertTo](Color.md#canconvertto)
 - [convertTo](Color.md#convertto)
 
-## Constructors
+## Methods
 
-### constructor
+### canConvertFrom
 
-• **new Color**(`alpha`, `red`, `green`, `blue`)
+▸ `Static` **canConvertFrom**(`value`): `boolean`
 
-Constructor
+Check if we can convert a value to a color
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `alpha` | `string` |
-| `red` | `string` |
-| `green` | `string` |
-| `blue` | `string` |
+| `value` | `unknown` |
 
-## Properties
+#### Returns
 
-### Black
-
-▪ `Static` `Readonly` **Black**: [`Color`](Color.md)
-
-Color instance of black
+`boolean`
 
 ___
-
-### TransparentBlack
-
-▪ `Static` `Readonly` **TransparentBlack**: [`Color`](Color.md)
-
-Color instance of transparent
-
-## Methods
 
 ### convertFrom
 
@@ -90,47 +77,11 @@ Convert a value to a color
 
 ___
 
-### canConvertFrom
-
-▸ `Static` **canConvertFrom**(`value`): `boolean`
-
-Check if we can convert value to Color
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `value` | `unknown` |
-
-#### Returns
-
-`boolean`
-
-___
-
-### rgba2hex
-
-▸ `Static` **rgba2hex**(`color`): `string`
-
-Convert given rgba color to hexadecimal color.
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `color` | `string` | color to converts |
-
-#### Returns
-
-`string`
-
-___
-
 ### toString
 
-▸ **toString**(): `string`
+▸ `Abstract` **toString**(): `string`
 
-Convert a color to string
+Color to string method
 
 #### Returns
 
@@ -142,11 +93,41 @@ Convert a color to string
 
 ___
 
+### equals
+
+▸ `Abstract` **equals**(`color`): `boolean`
+
+Function equals for the color type
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `color` | [`Color`](Color.md) | color to compare |
+
+#### Returns
+
+`boolean`
+
+___
+
+### isGradient
+
+▸ `Abstract` **isGradient**(): `boolean`
+
+Is the color a gradient?
+
+#### Returns
+
+`boolean`
+
+___
+
 ### canConvertTo
 
 ▸ **canConvertTo**(`type`): `boolean`
 
-Check if the type can be converted
+Check if the color can be converted to a type
 
 #### Parameters
 
@@ -168,7 +149,7 @@ ___
 
 ▸ **convertTo**(`type`): `unknown`
 
-Function to convert a Color to another type
+Function to convert a color to another type
 
 #### Parameters
 
