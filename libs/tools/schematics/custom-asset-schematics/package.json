@@ -1,6 +1,6 @@
 {
   "name": "@intuiface/custom-asset",
-  "version": "1.1.2",
+  "version": "1.2.0",
   "description": "Schematic to create a custom asset/collection",
   "scripts": {
     "build": "tsc -p tsconfig.json"
