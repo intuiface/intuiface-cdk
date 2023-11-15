@@ -36,7 +36,7 @@ Constructor
 
 | Name | Type |
 | :------ | :------ |
-| `T` | extends `IntuifaceCollection`<`ElementContainer`, `T`\> |
+| `T` | extends `IntuifaceCollection`<`ElementContainer`\> |
 
 #### Parameters
 

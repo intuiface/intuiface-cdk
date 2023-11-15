@@ -1,0 +1,48 @@
+{
+    "name": "custom-asset-schematics",
+    "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+    "sourceRoot": "libs/tools/schematics/custom-asset-schematics/src",
+    "projectType": "library",
+    "prefix": "intuiface",
+    "generators": {},
+    "targets": {
+        "build": {
+            "executor": "@nx/js:tsc",
+            "options": {
+                "outputPath": "dist/libs/tools/custom-asset-schematics",
+                "tsConfig": "libs/tools/schematics/custom-asset-schematics/tsconfig.json",
+                "packageJson": "libs/tools/schematics/custom-asset-schematics/package.json",
+                "main": "libs/tools/schematics/custom-asset-schematics/src/create/index.ts",
+                "assets": [
+                    "libs/tools/schematics/custom-asset-schematics/*.md",
+                    {
+                        "glob": "**/*",
+                        "input": "libs/tools/schematics/custom-asset-schematics/src/",
+                        "output": "/src/",
+                        "ignore": ["**/index.ts"]
+                    }
+                ]
+            },
+            "configurations": {
+                "production": {
+                    "tsConfig": "libs/tools/schematics/custom-asset-schematics/tsconfig.json"
+                }
+            },
+            "outputs": ["{options.outputPath}"]
+        },
+        "lint": {
+            "executor": "@nx/linter:eslint",
+            "options": {
+                "lintFilePatterns": [
+                    "libs/components/src/**/*.ts",
+                    "libs/components/src/**/*.html",
+                    "libs/components/package.json"
+                ],
+                "eslintConfig": "libs/tools/schematics/custom-asset-schematics/.eslintrc.js"
+            },
+            "outputs": [
+                "{options.outputFile}"
+            ]
+        }
+    }
+}

@@ -4,7 +4,8 @@
     "experimentalDecorators": true,
     "outDir": "./dist/",
     "noImplicitAny": true,
-    "target": "es2017",
+    "target": "ES2022",
+    "useDefineForClassFields": false,
     "module": "es2020",
     "lib": [
       "es2018",

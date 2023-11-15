@@ -1,0 +1,50 @@
+{
+    "name": "interface-asset-schematics",
+    "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+    "sourceRoot": "libs/tools/schematics/interface-asset-schematics/src",
+    "projectType": "library",
+    "prefix": "intuiface",
+    "generators": {},
+    "targets": {
+        "build": {
+            "executor": "@nx/js:tsc",
+            "options": {
+                "outputPath": "dist/libs/tools/interface-asset-schematics",
+                "tsConfig": "libs/tools/schematics/interface-asset-schematics/tsconfig.json",
+                "packageJson": "libs/tools/schematics/interface-asset-schematics/package.json",
+                "updateBuildableProjectDepsInPackageJson": false,
+                "main": "libs/tools/schematics/interface-asset-schematics/src/create/index.ts",
+                "assets": [
+                    "libs/tools/schematics/interface-asset-schematics/*.md",
+                    {
+                        "glob": "**/*",
+                        "input": "libs/tools/schematics/interface-asset-schematics/src/",
+                        "output": "/src/",
+                        "ignore": ["**/index.ts"]
+                    },
+                    {
+                        "glob": ".eslintrc.js",
+                        "input": "libs/tools/schematics/interface-asset-schematics/src/",
+                        "output": "/src/"
+                    },
+                    {
+                        "glob": ".vscode/*",
+                        "input": "libs/tools/schematics/interface-asset-schematics/src/",
+                        "output": "/src/"
+                    },
+                    {
+                        "glob": ".gitignore",
+                        "input": "libs/tools/schematics/interface-asset-schematics/src/",
+                        "output": "/src/"
+                    }
+                ]
+            },
+            "configurations": {
+                "production": {
+                    "tsConfig": "libs/tools/schematics/interface-asset-schematics/tsconfig.json"
+                }
+            },
+            "outputs": ["{options.outputPath}"]
+        }
+    }
+}
