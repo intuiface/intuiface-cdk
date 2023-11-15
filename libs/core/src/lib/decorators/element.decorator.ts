@@ -169,6 +169,12 @@ export function Asset(options?: IElementOptions): (cls: any) => any
     {
         const targetName = options.name;
         globalThis.iaTitle = options.displayName;
+
+        if (options.description != null)
+        {
+            globalThis.iaDescription = options.description;
+        }
+
         if (globalThis.intuiface_ifd_classes.indexOf(targetName) === -1)
         {
             globalThis.intuiface_ifd_classes.push(targetName);
