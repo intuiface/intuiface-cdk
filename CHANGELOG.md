@@ -1,5 +1,28 @@
 # Changelog
 
+## [1.2.0](https://github.com/intuiface/intuiface-cdk/compare/v1.1.2...v1.2.0) (2023-11-15)
+
+
+### Features
+
+* **core:** Add color types ([99576f7](https://github.com/intuiface/intuiface-cdk/commit/99576f781e45897bfa1ea2bb1c9e2a31e80140de))
+* **core:** Fix color types ([8e153a9](https://github.com/intuiface/intuiface-cdk/commit/8e153a9ef0facc6bc928f53b092be732ceed8088))
+* **core:** Update solid color type ([fe90e83](https://github.com/intuiface/intuiface-cdk/commit/fe90e83edea790d279a8807e15a1af6183c475d4))
+* Update Angular 16 ([de7bc7c](https://github.com/intuiface/intuiface-cdk/commit/de7bc7c92dccf96b1dac013ce68a11b11f970ffb))
+
+
+### Bug Fixes
+
+* **core:** PN-2933 use displayName in Action ([2c150b1](https://github.com/intuiface/intuiface-cdk/commit/2c150b125919236eee3eab98253c88961fd6adca))
+* **core:** PN-3170 Add IA Title/Description, Add Description for all decorators ([09e729c](https://github.com/intuiface/intuiface-cdk/commit/09e729ce65fcb202c89cc968ab09949ea8cf7427))
+* **interface-asset:** apply camelCase naming convention with ESLint ([00e6155](https://github.com/intuiface/intuiface-cdk/commit/00e6155682b1ca31066a110c4919212b423dd890))
+
+
+### Dependencies
+
+* **intuiface-cdk:** fix missing deps ([8162ec6](https://github.com/intuiface/intuiface-cdk/commit/8162ec6d5983241af875cf799978793f1afc6f6b))
+* **intuiface-cdk:** update nx and angular to 16.10.0 ([176a53f](https://github.com/intuiface/intuiface-cdk/commit/176a53fde11e95038af2b0dfb5ca042c5f760f18))
+
 ## [1.1.2](https://github.com/intuiface/intuiface-cdk/compare/v1.1.1...v1.1.2) (2023-01-26)
 
 
