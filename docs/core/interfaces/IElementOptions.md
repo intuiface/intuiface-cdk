@@ -16,6 +16,7 @@ Options to configure [`@Asset`](../README.md#asset) decorator.
 - [name](IElementOptions.md#name)
 - [displayName](IElementOptions.md#displayname)
 - [description](IElementOptions.md#description)
+- [category](IElementOptions.md#category)
 
 ## Properties
 
@@ -54,6 +55,14 @@ ___
 • `Optional` **description**: `string`
 
 Description displayed in Composer.
+
+___
+
+### category
+
+• `Optional` **category**: `string`
+
+Category in Composer's Interface Assets panel.
 
 
 ## Help

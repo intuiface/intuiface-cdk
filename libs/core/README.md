@@ -221,6 +221,7 @@ Squeleton of an interface asset class:
  */
 @Asset({
     name: 'MyCustomInterfaceAsset',
+    category: 'My Custom Interface Asset Category'
     behaviors: []
 })
 export class MyCustomInterfaceAsset extends IntuifaceElement {
