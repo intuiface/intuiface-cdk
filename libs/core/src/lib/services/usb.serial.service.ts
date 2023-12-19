@@ -8,10 +8,17 @@ export class UsbSerialService {
     protected static instance;
 
     /**
-     * Get instance
+     * @Deprecated - Get instance,  Use the new {@link createInstance} instead.
      * @returns
      */
     public static getInstance() {
+    }
+
+    /**
+     * Create instance
+     * @returns
+     */
+    public static createInstance() {
         return UsbSerialService.instance;
     }
 
