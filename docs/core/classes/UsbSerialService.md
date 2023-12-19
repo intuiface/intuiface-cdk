@@ -7,6 +7,7 @@ Usb serial service to access to usb port, open it and write to it
 ### Methods
 
 - [getInstance](UsbSerialService.md#getinstance)
+- [createInstance](UsbSerialService.md#createinstance)
 - [list](UsbSerialService.md#list)
 - [open](UsbSerialService.md#open)
 - [write](UsbSerialService.md#write)
@@ -19,9 +20,23 @@ Usb serial service to access to usb port, open it and write to it
 
 ### getInstance
 
-▸ `Static` **getInstance**(): `any`
+▸ `Static` **getInstance**(): `void`
 
-Get instance
+#### Returns
+
+`void`
+
+**`Deprecated`**
+
+- Get instance,  Use the new [createInstance](UsbSerialService.md#createinstance) instead.
+
+___
+
+### createInstance
+
+▸ `Static` **createInstance**(): `any`
+
+Create instance
 
 #### Returns
 
