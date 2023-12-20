@@ -5,7 +5,8 @@ import { Action, Asset, IntuifaceElement, Parameter, Property, Trigger } from '@
  */
 @Asset({
     name: '<%= IAName %>',
-    behaviors: []
+    category: '<%= IACategory %>',
+    behaviors: [],
 })
 export class <%= IAName %> extends IntuifaceElement {
 

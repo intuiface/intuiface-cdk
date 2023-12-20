@@ -13,6 +13,15 @@
                 "$source": "argv",
                 "index": 0
             }
+        },
+        "IACategory": {
+            "type": "string",
+            "description": "The category in Composer's Interface Asset panel",
+            "x-prompt": "What is the category in Composer's Interface Asset panel name ?",
+            "$default": {
+                "$source": "argv",
+                "index": 1
+            }
         }
     }
 }
