@@ -22,13 +22,17 @@ Usb serial service to access to usb port, open it and write to it
 
 ▸ `Static` **getInstance**(): `void`
 
+Get instance, get the instance of the usb serial service.
+
 #### Returns
 
 `void`
 
+an instance of the usb serial service
+
 **`Deprecated`**
 
-- Get instance,  Use the new [createInstance](UsbSerialService.md#createinstance) instead.
+Use the new [createInstance](UsbSerialService.md#createinstance) instead.
 
 ___
 
@@ -36,11 +40,13 @@ ___
 
 ▸ `Static` **createInstance**(): `any`
 
-Create instance
+Create instance, create the instance of the usb serial service.
 
 #### Returns
 
 `any`
+
+an instance of the usb serial service
 
 ___
 
