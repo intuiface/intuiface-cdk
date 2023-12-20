@@ -13,7 +13,7 @@ export class UsbSerialService {
      * @deprecated Use the new {@link createInstance} instead.
      */
     public static getInstance() {
-        UsbSerialService.createInstance();
+        return UsbSerialService.createInstance();
     }
 
     /**
