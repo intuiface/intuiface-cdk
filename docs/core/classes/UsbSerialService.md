@@ -20,13 +20,13 @@ Usb serial service to access to usb port, open it and write to it
 
 ### getInstance
 
-▸ `Static` **getInstance**(): `void`
+▸ `Static` **getInstance**(): `any`
 
 Get instance, get the instance of the usb serial service.
 
 #### Returns
 
-`void`
+`any`
 
 an instance of the usb serial service
 
