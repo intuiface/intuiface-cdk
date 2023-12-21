@@ -22,7 +22,7 @@ Usb serial service to access to usb port, open it and write to it
 
 ▸ `Static` **getInstance**(): [`UsbSerialService`](UsbSerialService.md)
 
-Get instance, get the instance of the usb serial service.
+Get the instance of the usb serial service.
 
 #### Returns
 
@@ -40,7 +40,7 @@ ___
 
 ▸ `Static` **createInstance**(): [`UsbSerialService`](UsbSerialService.md)
 
-Create instance, create the instance of the usb serial service.
+Create an instance of the usb serial service.
 
 #### Returns
 
