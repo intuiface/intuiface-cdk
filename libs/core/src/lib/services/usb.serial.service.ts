@@ -5,14 +5,21 @@
  */
 export class UsbSerialService {
 
-    protected static instance;
+    /**
+     * Get instance, get the instance of the usb serial service.
+     * @returns an instance of the usb serial service
+     * @deprecated Use the new {@link createInstance} instead.
+     */
+    public static getInstance(): UsbSerialService {
+        return UsbSerialService.createInstance();
+    }
 
     /**
-     * Get instance
-     * @returns
+     * Create instance, create the instance of the usb serial service.
+     * @returns an instance of the usb serial service
      */
-    public static getInstance() {
-        return UsbSerialService.instance;
+    public static createInstance(): UsbSerialService {
+        return null;
     }
 
     /**
