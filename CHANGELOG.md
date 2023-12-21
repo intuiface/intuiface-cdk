@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.3.0](https://github.com/intuiface/intuiface-cdk/compare/v1.2.0...v1.3.0) (2023-12-21)
+
+
+### Features
+
+* **interface-asset:** Add Category property to Asset and Collections ([#67](https://github.com/intuiface/intuiface-cdk/issues/67)) ([fe5aafc](https://github.com/intuiface/intuiface-cdk/commit/fe5aafc87ad3301ca4b4e456645e98e2b0395b8f))
+
+
+### Code Refactoring
+
+* **core:** mark getInstance of USBSerialService as deprecated and expose createInstance ([#69](https://github.com/intuiface/intuiface-cdk/issues/69)) ([f435f3a](https://github.com/intuiface/intuiface-cdk/commit/f435f3ad3fb0a30a824dfa23e6cf71eae1cac362))
+
 ## [1.2.0](https://github.com/intuiface/intuiface-cdk/compare/v1.1.2...v1.2.0) (2023-11-15)
 
 
