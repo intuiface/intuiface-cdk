@@ -14,6 +14,7 @@ Options to configure [`@Asset`](../README.md#asset) decorator.
 
 - [behaviors](IElementOptions.md#behaviors)
 - [name](IElementOptions.md#name)
+- [category](IElementOptions.md#category)
 - [displayName](IElementOptions.md#displayname)
 - [description](IElementOptions.md#description)
 
@@ -38,6 +39,14 @@ ___
 • **name**: `string`
 
 Name used for serialization and identification
+
+___
+
+### category
+
+• **category**: `string`
+
+Category in Composer's Interface Assets panel.
 
 ___
 

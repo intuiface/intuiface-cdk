@@ -50,6 +50,7 @@ async function loadIA()
         'version': `v1.0.${Date.now()}`,
         'name': '<%= IAName %>',
         'title': globalThisAny.iaTitle,
+        'if.category': globalThisAny.iaCategory,
         'protocol': 'ts',
         'basePath': '<%= IAName %>',
         'if.dependencies': [

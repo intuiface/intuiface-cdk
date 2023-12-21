@@ -31,6 +31,11 @@ export interface IElementOptions extends IInjectOptions
      * Description displayed in Composer.
      */
     description?: string;
+
+    /**
+    * Category in Composer's Interface Assets panel.
+    */
+    category: string;
 }
 
 /**
@@ -59,6 +64,11 @@ export interface ICollectionOptions extends IInjectOptions
      * Description displayed in Composer.
      */
     description?: string;
+
+    /**
+     * Category in Composer's Interface Assets panel.
+     */
+    category: string;
 }
 
 /**
@@ -104,6 +114,7 @@ export function DoNotInjectMethod() {
  *  *\/
  * @Asset({
  *     name: 'MyCustomInterfaceAsset',
+ *     category: 'My Custom Interface Asset Category'
  *     behaviors: []
  * })
  * export class MyCustomInterfaceAsset extends IntuifaceElement {
@@ -169,6 +180,7 @@ export function Asset(options?: IElementOptions): (cls: any) => any
     {
         const targetName = options.name;
         globalThis.iaTitle = options.displayName;
+        globalThis.iaCategory = options.category;
 
         if (options.description != null)
         {
@@ -214,6 +226,8 @@ export function Collection(options?: ICollectionOptions): (cls: any) => any
 {
     return (ctor: Function) => {
         const targetName = options.name;
+        globalThis.iaCategory = options.category;
+
         if (globalThis.intuiface_ifd_classes.indexOf(targetName) === -1) {
             globalThis.intuiface_ifd_classes.push(targetName);
         }
