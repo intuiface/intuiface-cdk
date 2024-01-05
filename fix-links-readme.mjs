@@ -10,8 +10,6 @@ const patchFile = (filePath, basePath) => {
         const filename = match.substring(1, match.length - 1); // Extract filename within parentheses
         return `(${basePath}${filename})`;
     });
-    
-    console.log(newContent);
 
     fs.writeFileSync(filePath, newContent);
 
