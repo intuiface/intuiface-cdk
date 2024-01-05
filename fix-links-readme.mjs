@@ -32,5 +32,5 @@ if (!fs.existsSync(filePath)) {
     process.exit(1);
 }
 
-console.log('\nPatching documentation file...');
+console.log('\nPatching links in main README library entrypoint...');
 patchFile(filePath, basePath);
