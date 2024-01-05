@@ -12,7 +12,7 @@ In `@intuiface/core`, we use [TypeScript decorators](https://www.typescriptlang.
 
 `@intuiface/core` also exposes services that will help you access low level information (device's id, name, os...), hardware, cache... in an easy and cross-platform way.
 
-Use the [`@intuiface/interface-asset`](../../libs/tools/schematics/interface-asset-schematics/README.md) to create and initialize your project workspace. Then you can use [IntuifaceElement](classes/IntuifaceElement.md) and [`@Asset`](README.md#asset) decorator to declare your interface asset and [`@Property`](README.md#property), [`@Trigger`](README.md#trigger) and [`@Action`](README.md#action) decorators to customize it. See [`@Asset`](README.md#asset) example for a squeleton class of a custom interface asset.
+Use the [`@intuiface/interface-asset`](../../libs/tools/schematics/interface-asset-schematics/README.md) to create and initialize your project workspace. Then you can use [IntuifaceElement](docs/core/classes/IntuifaceElement.md) and [`@Asset`](README.md#asset) decorator to declare your interface asset and [`@Property`](README.md#property), [`@Trigger`](README.md#trigger) and [`@Action`](README.md#action) decorators to customize it. See [`@Asset`](README.md#asset) example for a squeleton class of a custom interface asset.
 
 **`Remarks`**
 
@@ -22,29 +22,29 @@ Before reading how to create interface assets and declare Properties, Triggers, 
 
 ### Enumerations
 
-- [CacheStrategy](enums/CacheStrategy.md)
-- [CacheScope](enums/CacheScope.md)
+- [CacheStrategy](docs/core/enums/CacheStrategy.md)
+- [CacheScope](docs/core/enums/CacheScope.md)
 
 ### Classes
 
-- [Watchable](classes/Watchable.md)
-- [IntuifaceCollection](classes/IntuifaceCollection.md)
-- [ElementContainer](classes/ElementContainer.md)
-- [IntuifaceElement](classes/IntuifaceElement.md)
+- [Watchable](docs/core/classes/Watchable.md)
+- [IntuifaceCollection](docs/core/classes/IntuifaceCollection.md)
+- [ElementContainer](docs/core/classes/ElementContainer.md)
+- [IntuifaceElement](docs/core/classes/IntuifaceElement.md)
 
 ### Interfaces
 
-- [IDisposable](interfaces/IDisposable.md)
-- [IActionOptions](interfaces/IActionOptions.md)
-- [IComputorOptions](interfaces/IComputorOptions.md)
-- [IElementOptions](interfaces/IElementOptions.md)
-- [IParameterOptions](interfaces/IParameterOptions.md)
-- [IPropertyOptions](interfaces/IPropertyOptions.md)
-- [ITriggerOptions](interfaces/ITriggerOptions.md)
-- [ICollectionConfiguration](interfaces/ICollectionConfiguration.md)
-- [CacheEntry](interfaces/CacheEntry.md)
-- [CacheOptions](interfaces/CacheOptions.md)
-- [DownloadProgress](interfaces/DownloadProgress.md)
+- [IDisposable](docs/core/interfaces/IDisposable.md)
+- [IActionOptions](docs/core/interfaces/IActionOptions.md)
+- [IComputorOptions](docs/core/interfaces/IComputorOptions.md)
+- [IElementOptions](docs/core/interfaces/IElementOptions.md)
+- [IParameterOptions](docs/core/interfaces/IParameterOptions.md)
+- [IPropertyOptions](docs/core/interfaces/IPropertyOptions.md)
+- [ITriggerOptions](docs/core/interfaces/ITriggerOptions.md)
+- [ICollectionConfiguration](docs/core/interfaces/ICollectionConfiguration.md)
+- [CacheEntry](docs/core/interfaces/CacheEntry.md)
+- [CacheOptions](docs/core/interfaces/CacheOptions.md)
+- [DownloadProgress](docs/core/interfaces/DownloadProgress.md)
 
 ### Decorators
 
@@ -59,23 +59,23 @@ Before reading how to create interface assets and declare Properties, Triggers, 
 
 ### Services
 
-- [CacheService](classes/CacheService.md)
-- [EnvironmentService](classes/EnvironmentService.md)
-- [SystemInfoService](classes/SystemInfoService.md)
-- [UsbSerialService](classes/UsbSerialService.md)
+- [CacheService](docs/core/classes/CacheService.md)
+- [EnvironmentService](docs/core/classes/EnvironmentService.md)
+- [SystemInfoService](docs/core/classes/SystemInfoService.md)
+- [UsbSerialService](docs/core/classes/UsbSerialService.md)
 
 ### Types
 
-- [Color](classes/Color.md)
-- [IConvertibleType](interfaces/IConvertibleType.md)
-- [Typeface](interfaces/Typeface.md)
-- [Font](classes/Font.md)
-- [LinearGradient](classes/LinearGradient.md)
-- [Path](classes/Path.md)
-- [RadialGradient](classes/RadialGradient.md)
-- [Resource](classes/Resource.md)
-- [SolidColor](classes/SolidColor.md)
-- [Time](classes/Time.md)
+- [Color](docs/core/classes/Color.md)
+- [IConvertibleType](docs/core/interfaces/IConvertibleType.md)
+- [Typeface](docs/core/interfaces/Typeface.md)
+- [Font](docs/core/classes/Font.md)
+- [LinearGradient](docs/core/classes/LinearGradient.md)
+- [Path](docs/core/classes/Path.md)
+- [RadialGradient](docs/core/classes/RadialGradient.md)
+- [Resource](docs/core/classes/Resource.md)
+- [SolidColor](docs/core/classes/SolidColor.md)
+- [Time](docs/core/classes/Time.md)
 
 ## Decorators
 
@@ -89,7 +89,7 @@ The `@Action` decorator enables you to declare an Action that can be used by Tri
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `options?` | [`IActionOptions`](interfaces/IActionOptions.md) | Options to configure the Action (Display name, description...) |
+| `options?` | [`IActionOptions`](docs/core/interfaces/IActionOptions.md) | Options to configure the Action (Display name, description...) |
 
 
 
@@ -147,7 +147,7 @@ ___
 
 The `@Computor` decorator can be added on a method that will be automatically called when one of the inputs declared in options changes.
 
-Computor listens to input changes on instance of [Watchable](classes/Watchable.md). This means all listed inputs must notify changes with [Watchable.notifyPropertyChanged](classes/Watchable.md#notifypropertychanged) to trigger a computor call.
+Computor listens to input changes on instance of [Watchable](docs/core/classes/Watchable.md). This means all listed inputs must notify changes with [Watchable.notifyPropertyChanged](classes/Watchable.md#notifypropertychanged) to trigger a computor call.
 
 Inputs values will be passed as arguments of the method in the order they appears in the `inputs` array in `options`.
 
@@ -155,7 +155,7 @@ Inputs values will be passed as arguments of the method in the order they appear
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `options` | [`IComputorOptions`](interfaces/IComputorOptions.md) | Options to configure the computor |
+| `options` | [`IComputorOptions`](docs/core/interfaces/IComputorOptions.md) | Options to configure the computor |
 
 
 
@@ -202,13 +202,13 @@ The `@Asset` decorator enables you to declare an interface asset that can be use
 
 The `@Asset` decorator is placed on a class and you can then declare properties, triggers and anction using decorators [`@Property`](README.md#property), [`@Trigger`](README.md#trigger) and [`@Action`](README.md#action) inside this class.
 
-An asset class must extends [IntuifaceElement](classes/IntuifaceElement.md).
+An asset class must extends [IntuifaceElement](docs/core/classes/IntuifaceElement.md).
 
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `options?` | [`IElementOptions`](interfaces/IElementOptions.md) | of the asset (display name, description, ...) |
+| `options?` | [`IElementOptions`](docs/core/interfaces/IElementOptions.md) | of the asset (display name, description, ...) |
 
 
 
@@ -326,7 +326,7 @@ The `@Parameter` decorator enables you to declare an action's parameter or a tri
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `options?` | [`IParameterOptions`](interfaces/IParameterOptions.md) | options of the parameter (display name, description, ...) |
+| `options?` | [`IParameterOptions`](docs/core/interfaces/IParameterOptions.md) | options of the parameter (display name, description, ...) |
 
 #### Returns
 
@@ -392,7 +392,7 @@ The `@Property` decorator enable you to declare a Property on your asset that ca
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `options?` | [`IPropertyOptions`](interfaces/IPropertyOptions.md) | options of the property (display name, description, ...) |
+| `options?` | [`IPropertyOptions`](docs/core/interfaces/IPropertyOptions.md) | options of the property (display name, description, ...) |
 
 
 
@@ -448,7 +448,7 @@ The `@Trigger` decorator enables you to declare a new trigger on your asset that
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `options?` | [`ITriggerOptions`](interfaces/ITriggerOptions.md) | options of the trigger (display name, description, ...) |
+| `options?` | [`ITriggerOptions`](docs/core/interfaces/ITriggerOptions.md) | options of the trigger (display name, description, ...) |
 
 
 

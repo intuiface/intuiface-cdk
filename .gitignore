@@ -36,6 +36,7 @@ yarn-error.log
 testem.log
 /typings
 .dccache
+.nx/
 
 # System Files
 .DS_Store
