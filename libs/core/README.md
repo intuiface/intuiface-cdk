@@ -147,7 +147,7 @@ ___
 
 The `@Computor` decorator can be added on a method that will be automatically called when one of the inputs declared in options changes.
 
-Computor listens to input changes on instance of [Watchable](../../docs/core/classes/Watchable.md). This means all listed inputs must notify changes with [Watchable.notifyPropertyChanged](classes/Watchable.md#notifypropertychanged) to trigger a computor call.
+Computor listens to input changes on instance of [Watchable](../../docs/core/classes/Watchable.md). This means all listed inputs must notify changes with [Watchable.notifyPropertyChanged](../../docs/core/classes/Watchable.md#notifypropertychanged) to trigger a computor call.
 
 Inputs values will be passed as arguments of the method in the order they appears in the `inputs` array in `options`.
 
@@ -303,7 +303,7 @@ ___
 
 Decorator similar to [`@Property`](README.md#property) but for property not intended to be exposed in Composer.
 
-When using this decorator on a property, it will automatically generate getter and setter that will raise the [Watchable.notifyPropertyChanged](classes/Watchable.md#notifypropertychanged) event. You can also set the `affectRendering` option to `true` to indicate that any change made on this property affects rendering and should trigger rendering engine update.
+When using this decorator on a property, it will automatically generate getter and setter that will raise the [Watchable.notifyPropertyChanged](../../docs/core/classes/Watchable.md#notifypropertychanged) event. You can also set the `affectRendering` option to `true` to indicate that any change made on this property affects rendering and should trigger rendering engine update.
 
 #### Parameters
 
@@ -411,7 +411,7 @@ public volume: number = 0; // declaration of the property
 ```
 _**Note**_: the name `volume` is in camelCase as the naming convention.
 
-❗⚠️⚠️⚠️⚠️❗For property type `Array` there is a limitation: if you modofy the array with methods like `push`, `pop`, `reduce`, `reverse`, `shift`, `sort`, `splice`... without calling a setter (e.g. `this.myArray = [...]`) bindings will not be updated. To fix that, you can use the method [Watchable.notifyPropertyChanged](classes/Watchable.md#notifypropertychanged).
+❗⚠️⚠️⚠️⚠️❗For property type `Array` there is a limitation: if you modofy the array with methods like `push`, `pop`, `reduce`, `reverse`, `shift`, `sort`, `splice`... without calling a setter (e.g. `this.myArray = [...]`) bindings will not be updated. To fix that, you can use the method [Watchable.notifyPropertyChanged](../../docs/core/classes/Watchable.md#notifypropertychanged).
 
 **`Example`**
 

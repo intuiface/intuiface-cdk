@@ -3,7 +3,8 @@ import fs from 'fs';
 const patchFile = (filePath, basePath) => {
     const content = fs.readFileSync(filePath, 'utf8');
     // regex to capture all files with () not starting with README.md and which is not already relative
-    const regex = /\((?!README\.md)(?![.\/])[^\s)]+\.md\)/gmi;
+    // manage anchors but avoid to modify external links (with http)
+    const regex = /\((?!README\.md)(?![.\/]|http)[^\s)]+\.md(\#\w+)?\)/gmi;
 
     let newContent = content;
     newContent = newContent.replace(regex, (match) => {
