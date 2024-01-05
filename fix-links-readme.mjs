@@ -31,4 +31,8 @@ if (!fs.existsSync(filePath)) {
 }
 
 console.log('\nPatching links in main README library entrypoint...');
-patchFile(filePath, basePath);
+const patched = patchFile(filePath, basePath);
+
+if (patched) {
+   console.log(`\x1b[32m✔\x1b[0m README.md patched`);
+}
