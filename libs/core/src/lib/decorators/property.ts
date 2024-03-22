@@ -78,8 +78,8 @@ export interface IPropertyOptions
  * ```
  * _**Note**_: the name `volume` is in camelCase as the naming convention.
  *
- * ❗⚠️⚠️⚠️⚠️❗For property type `Array` there is a limitation: if you modofy the array with methods like `push`, `pop`, `reduce`, `reverse`, `shift`, `sort`, `splice`... without calling a setter (e.g. `this.myArray = [...]`) bindings will not be updated. To fix that, you can use the method {@link Watchable.notifyPropertyChanged}.
- * @example I have an itme list declared like this:
+ * ❗⚠️⚠️⚠️⚠️❗For property type `Array` there is a limitation: if you modify the array with methods like `push`, `pop`, `reduce`, `reverse`, `shift`, `sort`, `splice`... without calling a setter (e.g. `this.myArray = [...]`) bindings will not be updated. To fix that, you can use the method {@link Watchable.notifyPropertyChanged}.
+ * @example I have an item list declared like this:
  * ```ts
  * /**
  *  * Item List
@@ -98,6 +98,17 @@ export interface IPropertyOptions
  * this.listItems.push(newItem);
  * // call the notify property changed
  * this.notifyPropertyChanged('listItems', this.listItems);
+ * ```
+ * Also the item class should extends {@link Watchable} and have the decorator {@link Asset}:
+ * ```ts
+ * @Asset({
+ *  name: 'ListItem',
+ *  behaviors: []
+ * }))
+ * export class ListItem extends Watchable
+ * {
+ *      // Declare here properties for this class 
+ * }
  * ```
  *
  * @group Decorators

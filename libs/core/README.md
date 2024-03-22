@@ -411,11 +411,11 @@ public volume: number = 0; // declaration of the property
 ```
 _**Note**_: the name `volume` is in camelCase as the naming convention.
 
-❗⚠️⚠️⚠️⚠️❗For property type `Array` there is a limitation: if you modofy the array with methods like `push`, `pop`, `reduce`, `reverse`, `shift`, `sort`, `splice`... without calling a setter (e.g. `this.myArray = [...]`) bindings will not be updated. To fix that, you can use the method [Watchable.notifyPropertyChanged](/docs/core/classes/Watchable.md#notifypropertychanged).
+❗⚠️⚠️⚠️⚠️❗For property type `Array` there is a limitation: if you modify the array with methods like `push`, `pop`, `reduce`, `reverse`, `shift`, `sort`, `splice`... without calling a setter (e.g. `this.myArray = [...]`) bindings will not be updated. To fix that, you can use the method [Watchable.notifyPropertyChanged](/docs/core/classes/Watchable.md#notifypropertychanged).
 
 **`Example`**
 
-I have an itme list declared like this:
+I have an item list declared like this:
 ```ts
 /**
  * Item List
@@ -434,6 +434,17 @@ I have an action which adds an item to the list using the `push` method. I have 
 this.listItems.push(newItem);
 // call the notify property changed
 this.notifyPropertyChanged('listItems', this.listItems);
+```
+Also the item class should extends [Watchable](/docs/core/classes/Watchable.md) and have the decorator [Asset](README.md#asset):
+```ts
+@Asset({
+ name: 'ListItem',
+ behaviors: []
+}))
+export class ListItem extends Watchable
+{
+     // Declare here properties for this class 
+}
 ```
 
 ___
