@@ -48,7 +48,15 @@ export class <%= IAName %> extends IntuifaceElement {
         displayName: 'A Trigger Example',
         description: 'Raised when the property example changed'
     })
-    public exampleTrigger(): void {}
+    public exampleTrigger(
+        @Parameter({
+            name: 'triggerParam',
+            displayName: 'Trigger parameter',
+            description: 'A trigger parameter example.',
+            defaultValue: '',
+            type: String
+        }) triggerParam: string
+    ): void {}
 
     //#endregion Triggers
 
@@ -76,7 +84,7 @@ export class <%= IAName %> extends IntuifaceElement {
         if (this.propertyExample !== actionParam) {
             this.propertyExample = actionParam;
             // raise the trigger
-            this.exampleTrigger();
+            this.exampleTrigger('An example parameter string value');
         }
     }
     //#endregion Actions
