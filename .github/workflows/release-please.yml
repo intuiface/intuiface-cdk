@@ -9,13 +9,6 @@ jobs:
   release-please:
     runs-on: ubuntu-latest
     steps:
-      - uses: google-github-actions/release-please-action@v3
+      - uses: googleapis/release-please-action@v4
         with:
-          release-type: node
-          command: manifest
-          default-branch: master
-          monorepo-tags: false
-          package-name: release-please-action
           token: ${{secrets.GITHUB_TOKEN}}
-          pull-request-title-pattern: "chore: release ${version}"
-            
