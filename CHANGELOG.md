@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.1](https://github.com/intuiface/intuiface-cdk/compare/v1.3.0...v1.3.1) (2024-06-05)
+
+
+### Bug Fixes
+
+* **interface-asset:** Adds an example parameter to the Trigger ([#74](https://github.com/intuiface/intuiface-cdk/issues/74)) ([bd11688](https://github.com/intuiface/intuiface-cdk/commit/bd11688b68e2f01f4a7a33bd17629d7f5cbf8b77))
+
 ## [1.3.0](https://github.com/intuiface/intuiface-cdk/compare/v1.2.0...v1.3.0) (2023-12-21)
 
 
