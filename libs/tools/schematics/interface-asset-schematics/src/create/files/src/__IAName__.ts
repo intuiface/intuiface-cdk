@@ -53,7 +53,7 @@ export class <%= IAName %> extends IntuifaceElement {
             name: 'triggerParam',
             displayName: 'Trigger parameter',
             description: 'A trigger parameter example.',
-            defaultValue: '',                        
+            defaultValue: '',
             type: String
         }) triggerParam: string
     ): void {}
