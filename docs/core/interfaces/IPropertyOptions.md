@@ -70,7 +70,7 @@ ___
 • `Optional` **type**: `any`
 
 The type of the property.
-It's optional but higly recommended fo better binding conversion.
+It's optional but highly recommended fo better binding conversion.
 It can be:
 - `String`
 - `Number`
@@ -78,6 +78,7 @@ It can be:
 - `Array`
 - Classe name of a [convertible type](IConvertibleType.md) (`Color`, `Font`, `Path`, `Resource`, `Time`)
 - Enum type
+- Class name of another class you created
 
 ___
 
