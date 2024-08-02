@@ -38,7 +38,7 @@ export interface IPropertyOptions
 
     /**
      * The type of the property.
-     * It's optional but higly recommended fo better binding conversion.
+     * It's optional but highly recommended fo better binding conversion.
      * It can be:
      * - `String`
      * - `Number`
@@ -46,6 +46,7 @@ export interface IPropertyOptions
      * - `Array`
      * - Classe name of a {@link IConvertibleType | convertible type} (`Color`, `Font`, `Path`, `Resource`, `Time`)
      * - Enum type
+     * - Class name of another class you created
      */
     type?: any;
 
@@ -122,7 +123,7 @@ export function Property(options?: IPropertyOptions)
         const targetName = target.constructor.name;
 
         // get type and format to store in ifd
-        const typeAndFormat = getTypeAndFormat(options.type);
+        const typeAndFormat = getTypeAndFormat(options.type, false);
 
         if (!globalThis.intuiface_ifd_properties[targetName]) {
             globalThis.intuiface_ifd_properties[targetName] = {};
@@ -130,15 +131,22 @@ export function Property(options?: IPropertyOptions)
 
         // store values
         globalThis.intuiface_ifd_properties[targetName][propertyKey] = {
-            type: typeAndFormat.type,
+            type: typeAndFormat?.type,
             title: options.displayName,
             description: options.description,
             default: options.defaultValue,
             readonly: options.readOnly
         };
 
+        // special case for type referencing another class 
+        if (typeAndFormat === null && options.type && !options.itemType)
+        {
+            globalThis.intuiface_ifd_properties[targetName][propertyKey].extends =
+                { $ref: options.type.name};
+        }
+
         // special case for array
-        if (typeAndFormat.type === 'array' && options.itemType)
+        if (typeAndFormat?.type === 'array' && options.itemType)
         {
             // store the item type
             let itemType: any = getTypeAndFormat(options.itemType, false);
@@ -159,7 +167,7 @@ export function Property(options?: IPropertyOptions)
         }
 
         // add format if it's defined
-        if (typeAndFormat.format) {
+        if (typeAndFormat?.format) {
             globalThis.intuiface_ifd_properties[targetName][propertyKey].format = typeAndFormat.format;
         }
     };
