@@ -70,7 +70,7 @@ ___
 • `Optional` **type**: `any`
 
 The type of the property.
-It's optional but highly recommended fo better binding conversion.
+It's optional but highly recommended for better binding conversion.
 It can be:
 - `String`
 - `Number`
