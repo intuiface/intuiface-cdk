@@ -38,7 +38,7 @@ export interface IPropertyOptions
 
     /**
      * The type of the property.
-     * It's optional but highly recommended fo better binding conversion.
+     * It's optional but highly recommended for better binding conversion.
      * It can be:
      * - `String`
      * - `Number`
@@ -169,6 +169,12 @@ export function Property(options?: IPropertyOptions)
         // add format if it's defined
         if (typeAndFormat?.format) {
             globalThis.intuiface_ifd_properties[targetName][propertyKey].format = typeAndFormat.format;
+        }
+
+        // default type is string
+        if (!globalThis.intuiface_ifd_properties[targetName][propertyKey].type)
+        {
+            globalThis.intuiface_ifd_properties[targetName][propertyKey].type = 'string';
         }
     };
 }
