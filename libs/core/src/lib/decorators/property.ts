@@ -171,8 +171,8 @@ export function Property(options?: IPropertyOptions)
             globalThis.intuiface_ifd_properties[targetName][propertyKey].format = typeAndFormat.format;
         }
 
-        // default type is string
-        if (!globalThis.intuiface_ifd_properties[targetName][propertyKey].type)
+        // if there is no type, the default type is string
+        if (typeAndFormat === null && !options.type)
         {
             globalThis.intuiface_ifd_properties[targetName][propertyKey].type = 'string';
         }
