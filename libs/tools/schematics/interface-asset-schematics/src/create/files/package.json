@@ -16,6 +16,7 @@
   "license": "ISC",
   "devDependencies": {
     "@types/fs-extra": "^9.0.13",
+    "@types/jsdom": "^21.1.7",
     "@types/node": "^18.11.10",
     "@typescript-eslint/eslint-plugin": "^5.40.0",
     "@typescript-eslint/eslint-plugin-tslint": "^5.10.1",
@@ -24,6 +25,7 @@
     "eslint-plugin-import": "^2.25.4",
     "eslint-plugin-prefer-arrow": "^1.2.3",
     "fs-extra": "^10.1.0",
+    "jsdom": "^25.0.0",
     "shx": "^0.3.4",
     "ts-loader": "^9.4.1",
     "tslint": "6.1.3",
