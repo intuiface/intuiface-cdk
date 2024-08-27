@@ -2,6 +2,7 @@
 /* eslint-disable dot-notation */
 // const fs = require('fs-extra');
 import fs from 'fs-extra';
+import { JSDOM } from 'jsdom';
 
 // create object to store metadatas
 const globalThisAny = globalThis as any;
@@ -11,6 +12,15 @@ globalThisAny.intuiface_ifd_properties = {};
 globalThisAny.intuiface_ifd_actions = {};
 globalThisAny.intuiface_ifd_params = {};
 globalThisAny.intuiface_ifd_triggers = {};
+
+// Initialize dom feature
+globalThisAny.window = new JSDOM('', {url: 'https://web.intuiface.com/'}).window;
+// Inject everything from `window` into global scope
+for (const key in globalThisAny.window) {
+    if (Object.prototype.hasOwnProperty.call(globalThisAny.window, key) && globalThisAny[key] === undefined) {
+        globalThisAny[key] = globalThisAny.window[key];
+    }
+}
 
 /**
  * import the IA
