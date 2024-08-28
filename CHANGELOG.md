@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.4.0](https://github.com/intuiface/intuiface-cdk/compare/v1.3.1...v1.4.0) (2024-08-28)
+
+
+### Features
+
+* **core:** manage complex object type in property ([#78](https://github.com/intuiface/intuiface-cdk/issues/78)) ([8740ba6](https://github.com/intuiface/intuiface-cdk/commit/8740ba61070c88240ed2098dae111f8cf1655079))
+* **interface-asset:** Allow usage of `window` in interface asset ([#79](https://github.com/intuiface/intuiface-cdk/issues/79)) ([e2f4fc6](https://github.com/intuiface/intuiface-cdk/commit/e2f4fc6a00b2ae46a8c18d082a334c1b3651b72a))
+
 ## [1.3.1](https://github.com/intuiface/intuiface-cdk/compare/v1.3.0...v1.3.1) (2024-06-05)
 
 
