@@ -32,7 +32,7 @@ Indicates if browser is ready to prompt install app
 
 ▸ `Static` **subscribeToCanPromptInstallChanges**(`listener`): `void`
 
-Susbscribes to be notified of canPromptInstallApp changes
+Subscribes to be notified of canPromptInstallApp changes
 
 #### Parameters
 
@@ -50,7 +50,7 @@ ___
 
 ▸ `Static` **unsubscribeToCanPromptInstallChanges**(`listener`): `void`
 
-Unsusbscribes to be notified of canPromptInstallApp changes
+Unsubscribes to be notified of canPromptInstallApp changes
 
 #### Parameters
 

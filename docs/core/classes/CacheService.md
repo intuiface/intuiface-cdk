@@ -4,7 +4,7 @@
 
 Cached data is stored through [Cache API](https://developer.mozilla.org/en-US/docs/Web/API/Cache) when using [`fetch()`](CacheService.md#fetch) and on file system (only for Player in-venue, not XP as a Webpage) when using [`downloadFile()`](CacheService.md#downloadfile).
 
-Cache is persistant, which means it is kept between player launches. It can also be scoped to be associated to one experience or available accross all. See [CacheScope](../enums/CacheScope.md) for details.
+Cache is persistent, which means it is kept between player launches. It can also be scoped to be associated to one experience or available across all. See [CacheScope](../enums/CacheScope.md) for details.
 
 ## Table of contents
 
@@ -52,7 +52,7 @@ try
                              {
                                  strategy: CacheStrategy.NetworkFirst,
                                  cacheName: 'myIA-data',
-                                 cacheScope: CacheScope.Experience, // This data will not be shared accross multiple XP
+                                 cacheScope: CacheScope.Experience, // This data will not be shared across multiple XP
                                  cacheErrorResponse: false, // We don't want to have an error in cache.
                              });
      if(response.ok)
@@ -63,7 +63,7 @@ try
 }
 catch(error)
 {
-    console.error('Failed to retreive data:', error);
+    console.error('Failed to retrieve data:', error);
 }
 ```
 
@@ -88,7 +88,7 @@ Downloads a file into local cache and returns its local uri
 
 [`Promise`]( https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise )<`string`\>
 
-A Promise that resolve to an URI as `string` that can be used as source (i.e. `src` attribut) of a HTMLElement such as `<img>`.
+A Promise that resolve to an URI as `string` that can be used as source (i.e. `src` attribute) of a HTMLElement such as `<img>`.
 
 **`Example`**
 
@@ -102,7 +102,7 @@ try
                              {
                                  strategy: CacheStrategy.CacheFirst,
                                  cacheName: 'myIA-data',
-                                 cacheScope: CacheScope.Experience, // This image will not be shared accross multiple XP
+                                 cacheScope: CacheScope.Experience, // This image will not be shared across multiple XP
                                  cacheErrorResponse: false, // We don't want to have an error in cache.
                              }
                              (progress)=> {
@@ -141,7 +141,7 @@ Get cache URI for the given url
 
 [`Promise`]( https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise )<`string`\>
 
-A Promise that resolve to an URI as `string` that can be used as source (i.e. `src` attribut) of a HTMLElement such as `<img>`.
+A Promise that resolve to an URI as `string` that can be used as source (i.e. `src` attribute) of a HTMLElement such as `<img>`.
 
 ___
 

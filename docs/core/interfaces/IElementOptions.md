@@ -38,7 +38,8 @@ ___
 
 • **name**: `string`
 
-Name used for serialization and identification
+Name used for serialization and identification.  
+It must be the name of the class.
 
 ___
 

@@ -6,7 +6,7 @@ import { IConvertibleType } from './convertible.type';
  * @example ```ts
  * @Property({
  *     displayName: 'Remaining time',
- *     description: 'Remaing time before the end.',
+ *     description: 'Remaining time before the end.',
  *     defaultValue: Time.Zero,
  *     type: Time
  * })

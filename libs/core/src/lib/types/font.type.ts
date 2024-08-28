@@ -53,7 +53,7 @@ export class Font implements Typeface, IConvertibleType
      * Constructor
      *
      * @param family Family of the font
-     * @param stretch Strecth of the font
+     * @param stretch Stretch of the font
      * @param weight Weight of the font
      * @param style Style of the font
      *

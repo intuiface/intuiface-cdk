@@ -1,6 +1,6 @@
 # Class: Watchable
 
-Class that allow watching property changes on inherinting instance
+Class that allow watching property changes on inheriting instance
 
 ## Hierarchy
 

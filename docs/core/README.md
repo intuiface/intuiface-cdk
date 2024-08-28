@@ -200,7 +200,7 @@ ___
 
 The `@Asset` decorator enables you to declare an interface asset that can be used in an Intuiface experience.
 
-The `@Asset` decorator is placed on a class and you can then declare properties, triggers and anction using decorators [`@Property`](README.md#property), [`@Trigger`](README.md#trigger) and [`@Action`](README.md#action) inside this class.
+The `@Asset` decorator is placed on a class and you can then declare properties, triggers and action using decorators [`@Property`](README.md#property), [`@Trigger`](README.md#trigger) and [`@Action`](README.md#action) inside this class.
 
 An asset class must extends [IntuifaceElement](classes/IntuifaceElement.md).
 
@@ -214,14 +214,15 @@ An asset class must extends [IntuifaceElement](classes/IntuifaceElement.md).
 
 **`Example`**
 
-Squeleton of an interface asset class:
+Skeleton of an interface asset class:
 ```ts
 /**
  * Custom Interface Asset
  */
 @Asset({
     name: 'MyCustomInterfaceAsset',
-    category: 'My Custom Interface Asset Category'
+    displayName: 'Custom interface asset',
+    category: 'My Custom Interface Asset Category',
     behaviors: []
 })
 export class MyCustomInterfaceAsset extends IntuifaceElement {
@@ -482,7 +483,7 @@ _**Note**_: the name `raiseButtonReleased` is in camelCase as the naming convent
 
 **`Example`**
 
-If your trigger has parameter(s), you can specify them with `@Parameter` decorator, the same way you declare paramters for actions.
+If your trigger has parameter(s), you can specify them with `@Parameter` decorator, the same way you declare parameters for actions.
 ```ts
 /**
  * Count changes event

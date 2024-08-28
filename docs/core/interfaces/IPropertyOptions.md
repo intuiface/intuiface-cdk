@@ -45,7 +45,8 @@ ___
 
 • `Optional` **minValue**: `number`
 
-Minimum value for this property.
+Minimum value for this property.  
+If specified, any number value smaller than this value will be ignored when and replaced by the minimum.
 
 ___
 
@@ -53,7 +54,8 @@ ___
 
 • `Optional` **maxValue**: `number`
 
-Maximum value for this property.
+Maximum value for this property.  
+If specified, any number value greater than this value will be ignored when and replaced by the maximum.
 
 ___
 
@@ -76,7 +78,7 @@ It can be:
 - `Number`
 - `Boolean`
 - `Array`
-- Classe name of a [convertible type](IConvertibleType.md) (`Color`, `Font`, `Path`, `Resource`, `Time`)
+- Class name of a [convertible type](IConvertibleType.md) (`Color`, `Font`, `Path`, `Resource`, `Time`)
 - Enum type
 - Class name of another class you created
 

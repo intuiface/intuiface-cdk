@@ -69,7 +69,7 @@ export class IntuifaceCollection<T extends ElementContainer> extends IntuifaceEl
 
     /**
      * Gets the start index in overall items for the given source
-     * @param source soure to find
+     * @param source source to find
      */
     public getStartIndexForSource(source: IntuifaceElement): number {
         return 0;

@@ -14,7 +14,7 @@ export class EnvironmentService {
     }
 
     /**
-     * Susbscribes to be notified of canPromptInstallApp changes
+     * Subscribes to be notified of canPromptInstallApp changes
      * @param listener listener function
      */
     public static subscribeToCanPromptInstallChanges(listener: Function): void
@@ -23,7 +23,7 @@ export class EnvironmentService {
     }
 
     /**
-     * Unsusbscribes to be notified of canPromptInstallApp changes
+     * Unsubscribes to be notified of canPromptInstallApp changes
      * @param listener listener function
      */
     public static unsubscribeToCanPromptInstallChanges(listener: Function): void

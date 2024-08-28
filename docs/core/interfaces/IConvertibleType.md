@@ -1,6 +1,6 @@
 # Interface: IConvertibleType
 
-Type can be convertible by impletmenting this interface. A convertible type can be used as `type` of a [`@Property`](../README.md#property) or [`@arameter`](../README.md#parameter) decorators. All value will then be converted in input/output when the property or parameter is used for example by bindings.
+Type can be convertible by implementing this interface. A convertible type can be used as `type` of a [`@Property`](../README.md#property) or [`@arameter`](../README.md#parameter) decorators. All value will then be converted in input/output when the property or parameter is used for example by bindings.
 
 ## Implemented by
 

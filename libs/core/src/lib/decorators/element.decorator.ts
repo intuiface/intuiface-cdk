@@ -18,7 +18,8 @@ export interface IInjectOptions
 export interface IElementOptions extends IInjectOptions
 {
     /**
-     * Name used for serialization and identification
+     * Name used for serialization and identification.  
+     * It must be the name of the class.
      */
     name: string;
 
@@ -46,7 +47,8 @@ export interface IElementOptions extends IInjectOptions
 export interface ICollectionOptions extends IInjectOptions
 {
     /**
-     * Name used for serialization and identification
+     * Name used for serialization and identification.  
+     * It must be the name of the class.
      */
     name: string;
 
@@ -101,20 +103,21 @@ export function DoNotInjectMethod() {
 /**
  * The `@Asset` decorator enables you to declare an interface asset that can be used in an Intuiface experience.
  *
- * The `@Asset` decorator is placed on a class and you can then declare properties, triggers and anction using decorators {@link Property | `@Property`}, {@link Trigger | `@Trigger`} and {@link Action | `@Action`} inside this class.
+ * The `@Asset` decorator is placed on a class and you can then declare properties, triggers and action using decorators {@link Property | `@Property`}, {@link Trigger | `@Trigger`} and {@link Action | `@Action`} inside this class.
  *
  * An asset class must extends {@link IntuifaceElement}.
  *
  * @param options of the asset (display name, description, ...)
  *
- * @example Squeleton of an interface asset class:
+ * @example Skeleton of an interface asset class:
  * ```ts
  * /**
  *  * Custom Interface Asset
  *  *\/
  * @Asset({
  *     name: 'MyCustomInterfaceAsset',
- *     category: 'My Custom Interface Asset Category'
+ *     displayName: 'Custom interface asset',
+ *     category: 'My Custom Interface Asset Category',
  *     behaviors: []
  * })
  * export class MyCustomInterfaceAsset extends IntuifaceElement {

@@ -29,7 +29,7 @@ ___
 • **cacheName**: `string`
 
 Name of the cache.  
-It's a way to segregate data and easily retreive cache entries. It can be considered as a folder and can include `/` separator to create sub-caches.  
+It's a way to segregate data and easily retrieve cache entries. It can be considered as a folder and can include `/` separator to create sub-caches.  
 If `null` of empty, defaults to global cache for interface assets.
 
 ___

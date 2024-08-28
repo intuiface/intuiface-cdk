@@ -59,7 +59,7 @@ export interface ITriggerOptions
  * ```
  * _**Note**_: the name `raiseButtonReleased` is in camelCase as the naming convention
  *
- * @example If your trigger has parameter(s), you can specify them with `@Parameter` decorator, the same way you declare paramters for actions.
+ * @example If your trigger has parameter(s), you can specify them with `@Parameter` decorator, the same way you declare parameters for actions.
  * ```ts
  * /**
  *  * Count changes event
