@@ -21,7 +21,7 @@ export enum ETranslateDirection {
 }
 
 /**
- * Base classe for all Container
+ * Base class for all Container
  */
 export class ElementContainer extends Watchable
 {
@@ -147,13 +147,13 @@ export class ElementContainer extends Watchable
 
     /**
      * Backface visibility
-     * Usefull for carousel container
+     * Useful for carousel container
      */
     public backfaceVisibility: string = 'visible';
 
     /**
      * Item Shadow
-     * Usefull for carousel container
+     * Useful for carousel container
      */
     public itemShadow: string = 'unset';
 
@@ -189,7 +189,7 @@ export class ElementContainer extends Watchable
 
     //#endregion Visibility
 
-    //#region Touchs
+    //#region Touches
     //#region Properties
 
     /**
@@ -217,5 +217,5 @@ export class ElementContainer extends Watchable
     public disableVisibleToInteractivity(): void {}
 
     //#endregion Actions
-    //#endregion Touchs
+    //#endregion Touches
 }

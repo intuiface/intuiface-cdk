@@ -35,7 +35,7 @@ export const enum CacheStrategy {
 
     /**
      * Only fetch response from cache. _No network request will be sent_.  
-     * Use this when you know data is already cached and you absolutly don't want to update it.
+     * Use this when you know data is already cached and you absolutely don't want to update it.
      */
     CacheOnly = 'CacheOnly',
 
@@ -47,7 +47,7 @@ export const enum CacheStrategy {
 
     /**
      * Get response from cache first. If nothing is found, make a network request and cache response.  
-     * Use for performance and you want to avoid making unecessary network request.
+     * Use for performance and you want to avoid making unnecessary network request.
      */
     CacheFirst = 'CacheFirst'
 }
@@ -79,7 +79,7 @@ export interface CacheOptions {
 
     /**
      * Name of the cache.  
-     * It's a way to segregate data and easily retreive cache entries. It can be considered as a folder and can include `/` separator to create sub-caches.  
+     * It's a way to segregate data and easily retrieve cache entries. It can be considered as a folder and can include `/` separator to create sub-caches.  
      * If `null` of empty, defaults to global cache for interface assets.
      */
     cacheName: string;
@@ -137,7 +137,7 @@ export type DownloadProgressCallback = (progress: DownloadProgress) => void;
  *
  * Cached data is stored through [Cache API](https://developer.mozilla.org/en-US/docs/Web/API/Cache) when using {@link fetch | `fetch()`} and on file system (only for Player in-venue, not XP as a Webpage) when using {@link downloadFile | `downloadFile()`}.
  *
- * Cache is persistant, which means it is kept between player launches. It can also be scoped to be associated to one experience or available accross all. See {@link CacheScope} for details.
+ * Cache is persistent, which means it is kept between player launches. It can also be scoped to be associated to one experience or available across all. See {@link CacheScope} for details.
  *
  * @group Services
  */
@@ -165,7 +165,7 @@ export class CacheService {
      *                              {
      *                                  strategy: CacheStrategy.NetworkFirst,
      *                                  cacheName: 'myIA-data',
-     *                                  cacheScope: CacheScope.Experience, // This data will not be shared accross multiple XP
+     *                                  cacheScope: CacheScope.Experience, // This data will not be shared across multiple XP
      *                                  cacheErrorResponse: false, // We don't want to have an error in cache.
      *                              });
      *      if(response.ok)
@@ -176,7 +176,7 @@ export class CacheService {
      * }
      * catch(error)
      * {
-     *     console.error('Failed to retreive data:', error);
+     *     console.error('Failed to retrieve data:', error);
      * }
      * ```
      */
@@ -194,7 +194,7 @@ export class CacheService {
      * @param init An object containing any custom settings that you want to apply to the request, such as `headers`, `method`. See [`fetch()` parameters](https://developer.mozilla.org/en-US/docs/Web/API/fetch#parameters).
      * @param cacheOptions An object containing cache behaviors for the request.
      * @param progressCallback Use this callback to trace download progress.
-     * @returns A Promise that resolve to an URI as `string` that can be used as source (i.e. `src` attribut) of a {@link HTMLElement} such as `<img>`.
+     * @returns A Promise that resolve to an URI as `string` that can be used as source (i.e. `src` attribute) of a {@link HTMLElement} such as `<img>`.
      *
      * @example download an image with {@link CacheStrategy.CacheFirst | _cache first_} strategy and progress feedback:
      * ```ts
@@ -206,7 +206,7 @@ export class CacheService {
      *                              {
      *                                  strategy: CacheStrategy.CacheFirst,
      *                                  cacheName: 'myIA-data',
-     *                                  cacheScope: CacheScope.Experience, // This image will not be shared accross multiple XP
+     *                                  cacheScope: CacheScope.Experience, // This image will not be shared across multiple XP
      *                                  cacheErrorResponse: false, // We don't want to have an error in cache.
      *                              }
      *                              (progress)=> {
@@ -240,7 +240,7 @@ export class CacheService {
      * @param cacheName Name of the cache. If `null` of empty, defaults to global cache for interface assets.
      * @param cacheScope Scope of the cached resource. Defaults to {@link CacheScope.Experience}.
      *
-     * @returns A Promise that resolve to an URI as `string` that can be used as source (i.e. `src` attribut) of a {@link HTMLElement} such as `<img>`.
+     * @returns A Promise that resolve to an URI as `string` that can be used as source (i.e. `src` attribute) of a {@link HTMLElement} such as `<img>`.
      *
      */
     public static async getCacheURI(url: string, cacheName: string, cacheScope: CacheScope): Promise<string>
