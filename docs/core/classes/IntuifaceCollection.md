@@ -272,7 +272,7 @@ Gets the start index in overall items for the given source
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `source` | [`IntuifaceElement`](IntuifaceElement.md) | soure to find |
+| `source` | [`IntuifaceElement`](IntuifaceElement.md) | source to find |
 
 #### Returns
 

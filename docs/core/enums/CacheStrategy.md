@@ -27,7 +27,7 @@ ___
 • **CacheOnly** = ``"CacheOnly"``
 
 Only fetch response from cache. _No network request will be sent_.  
-Use this when you know data is already cached and you absolutly don't want to update it.
+Use this when you know data is already cached and you absolutely don't want to update it.
 
 ___
 
@@ -45,7 +45,7 @@ ___
 • **CacheFirst** = ``"CacheFirst"``
 
 Get response from cache first. If nothing is found, make a network request and cache response.  
-Use for performance and you want to avoid making unecessary network request.
+Use for performance and you want to avoid making unnecessary network request.
 
 
 ## Help

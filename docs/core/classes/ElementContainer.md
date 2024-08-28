@@ -1,6 +1,6 @@
 # Class: ElementContainer
 
-Base classe for all Container
+Base class for all Container
 
 ## Hierarchy
 
@@ -254,7 +254,7 @@ ___
 • **backfaceVisibility**: `string` = `'visible'`
 
 Backface visibility
-Usefull for carousel container
+Useful for carousel container
 
 ___
 
@@ -263,7 +263,7 @@ ___
 • **itemShadow**: `string` = `'unset'`
 
 Item Shadow
-Usefull for carousel container
+Useful for carousel container
 
 ___
 

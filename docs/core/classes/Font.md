@@ -54,7 +54,7 @@ Constructor
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `family` | `string` | Family of the font |
-| `stretch` | `string` | Strecth of the font |
+| `stretch` | `string` | Stretch of the font |
 | `weight` | `string` | Weight of the font |
 | `style` | `string` | Style of the font |
 
@@ -88,7 +88,7 @@ ___
 
 • **stretch**: `string`
 
-Strecth of the font
+Stretch of the font
 
 #### Implementation of
 

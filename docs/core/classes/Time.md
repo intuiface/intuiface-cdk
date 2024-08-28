@@ -7,7 +7,7 @@ Class to use to describe a time duration.
 ```ts
 @Property({
     displayName: 'Remaining time',
-    description: 'Remaing time before the end.',
+    description: 'Remaining time before the end.',
     defaultValue: Time.Zero,
     type: Time
 })
