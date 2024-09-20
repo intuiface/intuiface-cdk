@@ -19,7 +19,6 @@
         "docs-all": "npm run docs --workspaces --if-present"
     },
     "dependencies": {
-        "@angular-architects/module-federation": "^16.0.4",
         "@angular-devkit/core": "17.3.9",
         "@angular-devkit/schematics": "17.3.9",
         "@angular/animations": "17.3.9",
