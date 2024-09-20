@@ -15,7 +15,6 @@ buildApp = async () => {
             tsconfig: tsConfig,
             plugins: [moduleFederationPlugin(federationConfig)],
             bundle: true,
-            external: external,
             format: 'esm',
             drop: productionMode ? ['debugger', 'console'] : [],
             logLevel: productionMode ? 'error' : 'info',
