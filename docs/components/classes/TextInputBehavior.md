@@ -1,488 +1,420 @@
+[**@intuiface/components**](../README.md) • **Docs**
+
+***
+
 # Class: TextInputBehavior
 
 Behavior to manage a text input.
 
-## Hierarchy
+## Extends
 
 - [`TextBehavior`](TextBehavior.md)
-
-  ↳ **`TextInputBehavior`**
-
-## Table of contents
-
-### Properties
-
-- [text](TextInputBehavior.md#text)
-- [editFillColor](TextInputBehavior.md#editfillcolor)
-- [editOutlineColor](TextInputBehavior.md#editoutlinecolor)
-- [editOutlineThickness](TextInputBehavior.md#editoutlinethickness)
-- [editRadius](TextInputBehavior.md#editradius)
-- [textMargin](TextInputBehavior.md#textmargin)
-- [caretColor](TextInputBehavior.md#caretcolor)
-- [selectionAreaColor](TextInputBehavior.md#selectionareacolor)
-- [isLineWrap](TextInputBehavior.md#islinewrap)
-- [minCharacterNumber](TextInputBehavior.md#mincharacternumber)
-- [maxCharacterNumber](TextInputBehavior.md#maxcharacternumber)
-- [instructionText](TextInputBehavior.md#instructiontext)
-- [instructionFont](TextInputBehavior.md#instructionfont)
-- [instructionFontSize](TextInputBehavior.md#instructionfontsize)
-- [instructionFontColor](TextInputBehavior.md#instructionfontcolor)
-- [instructionBold](TextInputBehavior.md#instructionbold)
-- [instructionItalic](TextInputBehavior.md#instructionitalic)
-- [hideInstruction](TextInputBehavior.md#hideinstruction)
-- [isPasswordModeEnabled](TextInputBehavior.md#ispasswordmodeenabled)
-- [passwordReplacementChar](TextInputBehavior.md#passwordreplacementchar)
-- [passwordReplacementCharDisplayTime](TextInputBehavior.md#passwordreplacementchardisplaytime)
-- [characterType](TextInputBehavior.md#charactertype)
-- [isTextValidated](TextInputBehavior.md#istextvalidated)
-- [useCustomRegex](TextInputBehavior.md#usecustomregex)
-- [customCharacterTypeRegExp](TextInputBehavior.md#customcharactertyperegexp)
-- [forceKeyboard](TextInputBehavior.md#forcekeyboard)
-- [keyboard](TextInputBehavior.md#keyboard)
-- [isFocused](TextInputBehavior.md#isfocused)
-- [inputType](TextInputBehavior.md#inputtype)
-- [fontColor](TextInputBehavior.md#fontcolor)
-- [fontSize](TextInputBehavior.md#fontsize)
-- [font](TextInputBehavior.md#font)
-- [minFontSize](TextInputBehavior.md#minfontsize)
-- [isBold](TextInputBehavior.md#isbold)
-- [isItalic](TextInputBehavior.md#isitalic)
-- [isUnderline](TextInputBehavior.md#isunderline)
-- [horizontalAlignment](TextInputBehavior.md#horizontalalignment)
-- [verticalAlignment](TextInputBehavior.md#verticalalignment)
-- [overflow](TextInputBehavior.md#overflow)
-- [isAdaptFontSize](TextInputBehavior.md#isadaptfontsize)
-- [adaptedFontSize](TextInputBehavior.md#adaptedfontsize)
-- [heightAfterAdaptFontSize](TextInputBehavior.md#heightafteradaptfontsize)
-
-### Methods
-
-- [raiseEnterKeyPressed](TextInputBehavior.md#raiseenterkeypressed)
-- [raiseKeyPressed](TextInputBehavior.md#raisekeypressed)
-- [raiseStartEditing](TextInputBehavior.md#raisestartediting)
-- [raiseStopEditing](TextInputBehavior.md#raisestopediting)
-- [raiseTextChanged](TextInputBehavior.md#raisetextchanged)
-- [raiseTextValidated](TextInputBehavior.md#raisetextvalidated)
-- [raiseInvalidCharacterEntered](TextInputBehavior.md#raiseinvalidcharacterentered)
-- [raiseInvalidTextEntered](TextInputBehavior.md#raiseinvalidtextentered)
-- [enableAdaptFontSize](TextInputBehavior.md#enableadaptfontsize)
-- [disableAdaptFontSize](TextInputBehavior.md#disableadaptfontsize)
-- [toggleAdaptFontSize](TextInputBehavior.md#toggleadaptfontsize)
-- [emptyField](TextInputBehavior.md#emptyfield)
-- [changeText](TextInputBehavior.md#changetext)
-- [startEdition](TextInputBehavior.md#startedition)
-- [stopEdition](TextInputBehavior.md#stopedition)
-- [setMinFontSize](TextInputBehavior.md#setminfontsize)
-- [changeFontColor](TextInputBehavior.md#changefontcolor)
-- [changeFontSize](TextInputBehavior.md#changefontsize)
-- [changeFontStyle](TextInputBehavior.md#changefontstyle)
-- [changeFont](TextInputBehavior.md#changefont)
 
 ## Properties
 
 ### text
 
-• **text**: `string` = `''`
+> **text**: `string` = `''`
 
 Text.
 
 #### Inherited from
 
-[TextBehavior](TextBehavior.md).[text](TextBehavior.md#text)
+[`TextBehavior`](TextBehavior.md).[`text`](TextBehavior.md#text)
 
-___
+***
 
 ### editFillColor
 
-• **editFillColor**: `string` = `'#cfcfcf'`
+> **editFillColor**: `string` = `'#cfcfcf'`
 
 Fill color during edit mode.
 
-___
+***
 
 ### editOutlineColor
 
-• **editOutlineColor**: `string` = `'#c6c7c8'`
+> **editOutlineColor**: `string` = `'#c6c7c8'`
 
 Outline color during edit mode.
 
-___
+***
 
 ### editOutlineThickness
 
-• **editOutlineThickness**: `number` = `5`
+> **editOutlineThickness**: `number` = `5`
 
 Outline thickness during edit mode.
 
-___
+***
 
 ### editRadius
 
-• **editRadius**: `number` = `0`
+> **editRadius**: `number` = `0`
 
 Radius of the input during edit mode.
 
-___
+***
 
 ### textMargin
 
-• **textMargin**: `number` = `4`
+> **textMargin**: `number` = `4`
 
 Text margin.
 
 #### Inherited from
 
-[TextBehavior](TextBehavior.md).[textMargin](TextBehavior.md#textmargin)
+[`TextBehavior`](TextBehavior.md).[`textMargin`](TextBehavior.md#textmargin)
 
-___
+***
 
 ### caretColor
 
-• **caretColor**: `string` = `'#000000'`
+> **caretColor**: `string` = `'#000000'`
 
 Caret color.
 
-___
+***
 
 ### selectionAreaColor
 
-• **selectionAreaColor**: `string` = `'#595959'`
+> **selectionAreaColor**: `string` = `'#595959'`
 
 Selection area color.
 
-___
+***
 
 ### isLineWrap
 
-• **isLineWrap**: `boolean` = `false`
+> **isLineWrap**: `boolean` = `false`
 
 Indicates line is wrap.
 
 #### Inherited from
 
-[TextBehavior](TextBehavior.md).[isLineWrap](TextBehavior.md#islinewrap)
+[`TextBehavior`](TextBehavior.md).[`isLineWrap`](TextBehavior.md#islinewrap)
 
-___
+***
 
 ### minCharacterNumber
 
-• **minCharacterNumber**: `number` = `0`
+> **minCharacterNumber**: `number` = `0`
 
 Minimum characters number.
 
-___
+***
 
 ### maxCharacterNumber
 
-• **maxCharacterNumber**: `number` = `500`
+> **maxCharacterNumber**: `number` = `500`
 
 Maximum characters number.
 
-___
+***
 
 ### instructionText
 
-• **instructionText**: `string` = `''`
+> **instructionText**: `string` = `''`
 
 Instruction text.
 
-___
+***
 
 ### instructionFont
 
-• **instructionFont**: `Typeface`
+> **instructionFont**: `Typeface`
 
 Instruction font.
 
-___
+***
 
 ### instructionFontSize
 
-• **instructionFontSize**: `number` = `25`
+> **instructionFontSize**: `number` = `25`
 
 Instruction font size.
 
-___
+***
 
 ### instructionFontColor
 
-• **instructionFontColor**: `string` = `'#858585'`
+> **instructionFontColor**: `string` = `'#858585'`
 
 Instruction font color.
 
-___
+***
 
 ### instructionBold
 
-• **instructionBold**: `boolean` = `false`
+> **instructionBold**: `boolean` = `false`
 
 Instruction bold.
 
-___
+***
 
 ### instructionItalic
 
-• **instructionItalic**: `boolean` = `true`
+> **instructionItalic**: `boolean` = `true`
 
 Instruction italic.
 
-___
+***
 
 ### hideInstruction
 
-• **hideInstruction**: `HideInstructionBehavior` = `HideInstructionBehavior.WhenEnterEditState`
+> **hideInstruction**: `HideInstructionBehavior` = `HideInstructionBehavior.WhenEnterEditState`
 
 Hide instruction behavior.
 
-___
+***
 
 ### isPasswordModeEnabled
 
-• **isPasswordModeEnabled**: `boolean` = `false`
+> **isPasswordModeEnabled**: `boolean` = `false`
 
 Indicates if password mode is enabled.
 
-___
+***
 
 ### passwordReplacementChar
 
-• **passwordReplacementChar**: `string` = `'*'`
+> **passwordReplacementChar**: `string` = `'*'`
 
 Indicates the replacement char for password.
 
-___
+***
 
 ### passwordReplacementCharDisplayTime
 
-• **passwordReplacementCharDisplayTime**: `number` = `2000`
+> **passwordReplacementCharDisplayTime**: `number` = `2000`
 
 Duration before to show replacement character in password mode.
 
-___
+***
 
 ### characterType
 
-• **characterType**: `CharacterType` = `CharacterType.Alphanumeric`
+> **characterType**: `CharacterType` = `CharacterType.Alphanumeric`
 
 Duration before to show replacement character in password mode.
 
-___
+***
 
 ### isTextValidated
 
-• **isTextValidated**: `boolean` = `false`
+> **isTextValidated**: `boolean` = `false`
 
 Indicates if the text is validated.
 
-___
+***
 
 ### useCustomRegex
 
-• **useCustomRegex**: `boolean` = `false`
+> **useCustomRegex**: `boolean` = `false`
 
 Indicates if we use cutom regex to validate this field.
 
-___
+***
 
 ### customCharacterTypeRegExp
 
-• **customCharacterTypeRegExp**: `string` = `'^([^0-9]*)$'`
+> **customCharacterTypeRegExp**: `string` = `'^([^0-9]*)$'`
 
 Indicates the regex to validate this field.
 
-___
+***
 
 ### forceKeyboard
 
-• **forceKeyboard**: `boolean` = `false`
+> **forceKeyboard**: `boolean` = `false`
 
 Indicates if we force, look Keyboard property.
 
-___
+***
 
 ### keyboard
 
-• **keyboard**: `KeyboardLayout` = `KeyboardLayout.None`
+> **keyboard**: `KeyboardLayout` = `KeyboardLayout.None`
 
 Indicates if we use cutom regex to validate this field.
 
-___
+***
 
 ### isFocused
 
-• **isFocused**: `boolean` = `false`
+> **isFocused**: `boolean` = `false`
 
 Indicates the input text is focused
 
-___
+***
 
 ### inputType
 
-• **inputType**: `InputType` = `InputType.Text`
+> **inputType**: `InputType` = `InputType.Text`
 
 Input type according to given character type
 
-___
+***
 
 ### fontColor
 
-• **fontColor**: `any`
+> **fontColor**: `any`
 
 Font color.
 
 #### Inherited from
 
-[TextBehavior](TextBehavior.md).[fontColor](TextBehavior.md#fontcolor)
+[`TextBehavior`](TextBehavior.md).[`fontColor`](TextBehavior.md#fontcolor)
 
-___
+***
 
 ### fontSize
 
-• **fontSize**: `any`
+> **fontSize**: `any`
 
 Font size.
 
 #### Inherited from
 
-[TextBehavior](TextBehavior.md).[fontSize](TextBehavior.md#fontsize)
+[`TextBehavior`](TextBehavior.md).[`fontSize`](TextBehavior.md#fontsize)
 
-___
+***
 
 ### font
 
-• **font**: `Typeface`
+> **font**: `Typeface`
 
 Font.
 
 #### Inherited from
 
-[TextBehavior](TextBehavior.md).[font](TextBehavior.md#font)
+[`TextBehavior`](TextBehavior.md).[`font`](TextBehavior.md#font)
 
-___
+***
 
 ### minFontSize
 
-• **minFontSize**: `any`
+> **minFontSize**: `any`
 
 Minimum Font size.
 
 #### Inherited from
 
-[TextBehavior](TextBehavior.md).[minFontSize](TextBehavior.md#minfontsize)
+[`TextBehavior`](TextBehavior.md).[`minFontSize`](TextBehavior.md#minfontsize)
 
-___
+***
 
 ### isBold
 
-• **isBold**: `any`
+> **isBold**: `any`
 
 Indicates text is bold.
 
 #### Inherited from
 
-[TextBehavior](TextBehavior.md).[isBold](TextBehavior.md#isbold)
+[`TextBehavior`](TextBehavior.md).[`isBold`](TextBehavior.md#isbold)
 
-___
+***
 
 ### isItalic
 
-• **isItalic**: `any`
+> **isItalic**: `any`
 
 Indicates text is italic.
 
 #### Inherited from
 
-[TextBehavior](TextBehavior.md).[isItalic](TextBehavior.md#isitalic)
+[`TextBehavior`](TextBehavior.md).[`isItalic`](TextBehavior.md#isitalic)
 
-___
+***
 
 ### isUnderline
 
-• **isUnderline**: `any`
+> **isUnderline**: `any`
 
 Indicates text is underline.
 
 #### Inherited from
 
-[TextBehavior](TextBehavior.md).[isUnderline](TextBehavior.md#isunderline)
+[`TextBehavior`](TextBehavior.md).[`isUnderline`](TextBehavior.md#isunderline)
 
-___
+***
 
 ### horizontalAlignment
 
-• **horizontalAlignment**: `any`
+> **horizontalAlignment**: `any`
 
 Indicates horizontal text alignment.
 
 #### Inherited from
 
-[TextBehavior](TextBehavior.md).[horizontalAlignment](TextBehavior.md#horizontalalignment)
+[`TextBehavior`](TextBehavior.md).[`horizontalAlignment`](TextBehavior.md#horizontalalignment)
 
-___
+***
 
 ### verticalAlignment
 
-• **verticalAlignment**: `any`
+> **verticalAlignment**: `any`
 
 Indicates vertical text alignment.
 
 #### Inherited from
 
-[TextBehavior](TextBehavior.md).[verticalAlignment](TextBehavior.md#verticalalignment)
+[`TextBehavior`](TextBehavior.md).[`verticalAlignment`](TextBehavior.md#verticalalignment)
 
-___
+***
 
 ### overflow
 
-• **overflow**: `any`
+> **overflow**: `any`
 
 Indicates text overflow.
 
 #### Inherited from
 
-[TextBehavior](TextBehavior.md).[overflow](TextBehavior.md#overflow)
+[`TextBehavior`](TextBehavior.md).[`overflow`](TextBehavior.md#overflow)
 
-___
+***
 
 ### isAdaptFontSize
 
-• **isAdaptFontSize**: `any`
+> **isAdaptFontSize**: `any`
 
 Indicates text adapt font size.
 
 #### Inherited from
 
-[TextBehavior](TextBehavior.md).[isAdaptFontSize](TextBehavior.md#isadaptfontsize)
+[`TextBehavior`](TextBehavior.md).[`isAdaptFontSize`](TextBehavior.md#isadaptfontsize)
 
-___
+***
 
 ### adaptedFontSize
 
-• **adaptedFontSize**: `number`
+> **adaptedFontSize**: `number`
 
 Font size computed after font size algorithm
 
 #### Inherited from
 
-[TextBehavior](TextBehavior.md).[adaptedFontSize](TextBehavior.md#adaptedfontsize)
+[`TextBehavior`](TextBehavior.md).[`adaptedFontSize`](TextBehavior.md#adaptedfontsize)
 
-___
+***
 
 ### heightAfterAdaptFontSize
 
-• **heightAfterAdaptFontSize**: `number`
+> **heightAfterAdaptFontSize**: `number`
 
 Text height computed after font size algorithm
 
 #### Inherited from
 
-[TextBehavior](TextBehavior.md).[heightAfterAdaptFontSize](TextBehavior.md#heightafteradaptfontsize)
+[`TextBehavior`](TextBehavior.md).[`heightAfterAdaptFontSize`](TextBehavior.md#heightafteradaptfontsize)
 
 ## Methods
 
-### raiseEnterKeyPressed
+### raiseEnterKeyPressed()
 
-▸ **raiseEnterKeyPressed**(): `void`
+> **raiseEnterKeyPressed**(): `void`
 
 Trigger when the enter key is pressed
 
@@ -490,29 +422,27 @@ Trigger when the enter key is pressed
 
 `void`
 
-___
+***
 
-### raiseKeyPressed
+### raiseKeyPressed()
 
-▸ **raiseKeyPressed**(`keys`): `void`
+> **raiseKeyPressed**(`keys`): `void`
 
 Trigger when a key is pressed
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `keys` | `string` |
+• **keys**: `string`
 
 #### Returns
 
 `void`
 
-___
+***
 
-### raiseStartEditing
+### raiseStartEditing()
 
-▸ **raiseStartEditing**(): `void`
+> **raiseStartEditing**(): `void`
 
 Trigger when start editing
 
@@ -520,11 +450,11 @@ Trigger when start editing
 
 `void`
 
-___
+***
 
-### raiseStopEditing
+### raiseStopEditing()
 
-▸ **raiseStopEditing**(): `void`
+> **raiseStopEditing**(): `void`
 
 Trigger when stop editing
 
@@ -532,30 +462,29 @@ Trigger when stop editing
 
 `void`
 
-___
+***
 
-### raiseTextChanged
+### raiseTextChanged()
 
-▸ **raiseTextChanged**(`firstParam`, `secondParam`): `void`
+> **raiseTextChanged**(`firstParam`, `secondParam`): `void`
 
 Trigger when the text changed
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `firstParam` | `string` |
-| `secondParam` | `string` |
+• **firstParam**: `string`
+
+• **secondParam**: `string`
 
 #### Returns
 
 `void`
 
-___
+***
 
-### raiseTextValidated
+### raiseTextValidated()
 
-▸ **raiseTextValidated**(): `void`
+> **raiseTextValidated**(): `void`
 
 Trigger when the text is validated
 
@@ -563,11 +492,11 @@ Trigger when the text is validated
 
 `void`
 
-___
+***
 
-### raiseInvalidCharacterEntered
+### raiseInvalidCharacterEntered()
 
-▸ **raiseInvalidCharacterEntered**(): `void`
+> **raiseInvalidCharacterEntered**(): `void`
 
 Trigger when an invalid character is entered
 
@@ -575,11 +504,11 @@ Trigger when an invalid character is entered
 
 `void`
 
-___
+***
 
-### raiseInvalidTextEntered
+### raiseInvalidTextEntered()
 
-▸ **raiseInvalidTextEntered**(): `void`
+> **raiseInvalidTextEntered**(): `void`
 
 Trigger when an invalid text is entered
 
@@ -587,11 +516,11 @@ Trigger when an invalid text is entered
 
 `void`
 
-___
+***
 
-### enableAdaptFontSize
+### enableAdaptFontSize()
 
-▸ **enableAdaptFontSize**(): `void`
+> **enableAdaptFontSize**(): `void`
 
 Enable font size adaptation.
 
@@ -599,11 +528,11 @@ Enable font size adaptation.
 
 `void`
 
-___
+***
 
-### disableAdaptFontSize
+### disableAdaptFontSize()
 
-▸ **disableAdaptFontSize**(): `void`
+> **disableAdaptFontSize**(): `void`
 
 Disable font size adaptation.
 
@@ -611,11 +540,11 @@ Disable font size adaptation.
 
 `void`
 
-___
+***
 
-### toggleAdaptFontSize
+### toggleAdaptFontSize()
 
-▸ **toggleAdaptFontSize**(): `void`
+> **toggleAdaptFontSize**(): `void`
 
 Toggle font size adaptation.
 
@@ -623,11 +552,11 @@ Toggle font size adaptation.
 
 `void`
 
-___
+***
 
-### emptyField
+### emptyField()
 
-▸ **emptyField**(): `void`
+> **emptyField**(): `void`
 
 Empty text field.
 
@@ -635,19 +564,19 @@ Empty text field.
 
 `void`
 
-___
+***
 
-### changeText
+### changeText()
 
-▸ **changeText**(`text`): `void`
+> **changeText**(`text`): `void`
 
 Set text.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `text` | `string` | text to set |
+• **text**: `string`
+
+text to set
 
 #### Returns
 
@@ -655,13 +584,13 @@ Set text.
 
 #### Inherited from
 
-[TextBehavior](TextBehavior.md).[changeText](TextBehavior.md#changetext)
+[`TextBehavior`](TextBehavior.md).[`changeText`](TextBehavior.md#changetext)
 
-___
+***
 
-### startEdition
+### startEdition()
 
-▸ **startEdition**(): `void`
+> **startEdition**(): `void`
 
 Enter editing mode.
 
@@ -669,11 +598,11 @@ Enter editing mode.
 
 `void`
 
-___
+***
 
-### stopEdition
+### stopEdition()
 
-▸ **stopEdition**(): `void`
+> **stopEdition**(): `void`
 
 Exit editing mode.
 
@@ -681,37 +610,37 @@ Exit editing mode.
 
 `void`
 
-___
+***
 
-### setMinFontSize
+### setMinFontSize()
 
-▸ **setMinFontSize**(`size`): `void`
+> **setMinFontSize**(`size`): `void`
 
 Set minimum size for font size adaptation.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `size` | `number` | minimum font size |
+• **size**: `number`
+
+minimum font size
 
 #### Returns
 
 `void`
 
-___
+***
 
-### changeFontColor
+### changeFontColor()
 
-▸ **changeFontColor**(`color`): `void`
+> **changeFontColor**(`color`): `void`
 
 Action to change the font color.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `color` | `string` | new font color to set |
+• **color**: `string`
+
+new font color to set
 
 #### Returns
 
@@ -719,21 +648,21 @@ Action to change the font color.
 
 #### Inherited from
 
-[TextBehavior](TextBehavior.md).[changeFontColor](TextBehavior.md#changefontcolor)
+[`TextBehavior`](TextBehavior.md).[`changeFontColor`](TextBehavior.md#changefontcolor)
 
-___
+***
 
-### changeFontSize
+### changeFontSize()
 
-▸ **changeFontSize**(`size`): `void`
+> **changeFontSize**(`size`): `void`
 
 Action to change the font size.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `size` | `number` | new font size to set |
+• **size**: `number`
+
+new font size to set
 
 #### Returns
 
@@ -741,24 +670,33 @@ Action to change the font size.
 
 #### Inherited from
 
-[TextBehavior](TextBehavior.md).[changeFontSize](TextBehavior.md#changefontsize)
+[`TextBehavior`](TextBehavior.md).[`changeFontSize`](TextBehavior.md#changefontsize)
 
-___
+***
 
-### changeFontStyle
+### changeFontStyle()
 
-▸ **changeFontStyle**(`isBold`, `isItalic`, `isUnderline`, `isLineWrap`): `void`
+> **changeFontStyle**(`isBold`, `isItalic`, `isUnderline`, `isLineWrap`): `void`
 
 Action to change the style.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `isBold` | `boolean` | true to bold |
-| `isItalic` | `boolean` | true to italic |
-| `isUnderline` | `boolean` | true to underline |
-| `isLineWrap` | `boolean` | true to line wrap |
+• **isBold**: `boolean`
+
+true to bold
+
+• **isItalic**: `boolean`
+
+true to italic
+
+• **isUnderline**: `boolean`
+
+true to underline
+
+• **isLineWrap**: `boolean`
+
+true to line wrap
 
 #### Returns
 
@@ -766,21 +704,19 @@ Action to change the style.
 
 #### Inherited from
 
-[TextBehavior](TextBehavior.md).[changeFontStyle](TextBehavior.md#changefontstyle)
+[`TextBehavior`](TextBehavior.md).[`changeFontStyle`](TextBehavior.md#changefontstyle)
 
-___
+***
 
-### changeFont
+### changeFont()
 
-▸ **changeFont**(`value`): `void`
+> **changeFont**(`value`): `void`
 
 Action to change the font.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `value` | `unknown` |
+• **value**: `unknown`
 
 #### Returns
 
@@ -788,7 +724,7 @@ Action to change the font.
 
 #### Inherited from
 
-[TextBehavior](TextBehavior.md).[changeFont](TextBehavior.md#changefont)
+[`TextBehavior`](TextBehavior.md).[`changeFont`](TextBehavior.md#changefont)
 
 
 ## Help

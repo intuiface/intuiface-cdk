@@ -1,95 +1,34 @@
+[**@intuiface/core**](../README.md) • **Docs**
+
+***
+
 # Class: LinearGradient
 
 Class to use to describe a linear gradient.
 
-**`Example`**
+## Example
 
-```ts
-@Property({
-    displayName: 'Background color',
-    type: LinearGradient
-})
-public backgroundColor: LinearGradient;
-```
-
-## Hierarchy
+## Extends
 
 - [`Color`](Color.md)
 
-  ↳ **`LinearGradient`**
-
-## Table of contents
-
-### Constructors
-
-- [constructor](LinearGradient.md#constructor)
-
-### Methods
-
-- [canConvertFrom](LinearGradient.md#canconvertfrom)
-- [convertFrom](LinearGradient.md#convertfrom)
-- [canConvertTo](LinearGradient.md#canconvertto)
-- [convertTo](LinearGradient.md#convertto)
-- [equals](LinearGradient.md#equals)
-- [toString](LinearGradient.md#tostring)
-- [isGradient](LinearGradient.md#isgradient)
-
 ## Constructors
 
-### constructor
+### new LinearGradient()
 
-• **new LinearGradient**(`angle`, `startPoint`, `endPoint`, `gradientPoints`)
+> **new LinearGradient**(`angle`, `startPoint`, `endPoint`, `gradientPoints`): [`LinearGradient`](LinearGradient.md)
 
 Constructor
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `angle` | `number` |
-| `startPoint` | `string` |
-| `endPoint` | `string` |
-| `gradientPoints` | `GradientPoint`[] |
+• **angle**: `number`
 
-#### Overrides
+• **startPoint**: `string`
 
-Color.constructor
+• **endPoint**: `string`
 
-## Methods
-
-### canConvertFrom
-
-▸ `Static` **canConvertFrom**(`value`): `boolean`
-
-Check if we can convert a value to a linear gradient
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `value` | `unknown` |
-
-#### Returns
-
-`boolean`
-
-#### Overrides
-
-[Color](Color.md).[canConvertFrom](Color.md#canconvertfrom)
-
-___
-
-### convertFrom
-
-▸ `Static` **convertFrom**(`value`): [`LinearGradient`](LinearGradient.md)
-
-Convert a value to a linear gradient
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `value` | `unknown` |
+• **gradientPoints**: `GradientPoint`[]
 
 #### Returns
 
@@ -97,65 +36,19 @@ Convert a value to a linear gradient
 
 #### Overrides
 
-[Color](Color.md).[convertFrom](Color.md#convertfrom)
+`Color.constructor`
 
-___
+## Methods
 
-### canConvertTo
+### canConvertFrom()
 
-▸ **canConvertTo**(`type`): `boolean`
+> `static` **canConvertFrom**(`value`): `boolean`
 
-Check if the color can be converted to a type
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `type` | `unknown` |
-
-#### Returns
-
-`boolean`
-
-#### Inherited from
-
-[Color](Color.md).[canConvertTo](Color.md#canconvertto)
-
-___
-
-### convertTo
-
-▸ **convertTo**(`type`): `unknown`
-
-Function to convert a color to another type
+Check if we can convert a value to a linear gradient
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `type` | `unknown` |
-
-#### Returns
-
-`unknown`
-
-#### Inherited from
-
-[Color](Color.md).[convertTo](Color.md#convertto)
-
-___
-
-### equals
-
-▸ **equals**(`color`): `boolean`
-
-Function equals for the color type
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `color` | [`LinearGradient`](LinearGradient.md) | color to compare |
+• **value**: `unknown`
 
 #### Returns
 
@@ -163,13 +56,95 @@ Function equals for the color type
 
 #### Overrides
 
-[Color](Color.md).[equals](Color.md#equals)
+[`Color`](Color.md).[`canConvertFrom`](Color.md#canconvertfrom)
 
-___
+***
 
-### toString
+### convertFrom()
 
-▸ **toString**(): `string`
+> `static` **convertFrom**(`value`): [`LinearGradient`](LinearGradient.md)
+
+Convert a value to a linear gradient
+
+#### Parameters
+
+• **value**: `unknown`
+
+#### Returns
+
+[`LinearGradient`](LinearGradient.md)
+
+#### Overrides
+
+[`Color`](Color.md).[`convertFrom`](Color.md#convertfrom)
+
+***
+
+### canConvertTo()
+
+> **canConvertTo**(`type`): `boolean`
+
+Check if the color can be converted to a type
+
+#### Parameters
+
+• **type**: `unknown`
+
+#### Returns
+
+`boolean`
+
+#### Inherited from
+
+[`Color`](Color.md).[`canConvertTo`](Color.md#canconvertto)
+
+***
+
+### convertTo()
+
+> **convertTo**(`type`): `unknown`
+
+Function to convert a color to another type
+
+#### Parameters
+
+• **type**: `unknown`
+
+#### Returns
+
+`unknown`
+
+#### Inherited from
+
+[`Color`](Color.md).[`convertTo`](Color.md#convertto)
+
+***
+
+### equals()
+
+> **equals**(`color`): `boolean`
+
+Function equals for the color type
+
+#### Parameters
+
+• **color**: [`LinearGradient`](LinearGradient.md)
+
+color to compare
+
+#### Returns
+
+`boolean`
+
+#### Overrides
+
+[`Color`](Color.md).[`equals`](Color.md#equals)
+
+***
+
+### toString()
+
+> **toString**(): `string`
 
 Convert a linear gradient to a string
 
@@ -179,13 +154,13 @@ Convert a linear gradient to a string
 
 #### Overrides
 
-[Color](Color.md).[toString](Color.md#tostring)
+[`Color`](Color.md).[`toString`](Color.md#tostring)
 
-___
+***
 
-### isGradient
+### isGradient()
 
-▸ **isGradient**(): `boolean`
+> **isGradient**(): `boolean`
 
 Is the color a gradient?
 
@@ -195,7 +170,7 @@ Is the color a gradient?
 
 #### Overrides
 
-[Color](Color.md).[isGradient](Color.md#isgradient)
+[`Color`](Color.md).[`isGradient`](Color.md#isgradient)
 
 
 ## Help

@@ -1,24 +1,16 @@
+[**@intuiface/core**](../README.md) • **Docs**
+
+***
+
 # Class: EnvironmentService
 
 Service to expose information about the environment context in which Player is running
-
-## Table of contents
-
-### Accessors
-
-- [canPromptInstallApp](EnvironmentService.md#canpromptinstallapp)
-
-### Methods
-
-- [subscribeToCanPromptInstallChanges](EnvironmentService.md#subscribetocanpromptinstallchanges)
-- [unsubscribeToCanPromptInstallChanges](EnvironmentService.md#unsubscribetocanpromptinstallchanges)
-- [promptInstallApp](EnvironmentService.md#promptinstallapp)
 
 ## Accessors
 
 ### canPromptInstallApp
 
-• `Static` `get` **canPromptInstallApp**(): `boolean`
+> `get` `static` **canPromptInstallApp**(): `boolean`
 
 Indicates if browser is ready to prompt install app
 
@@ -28,45 +20,45 @@ Indicates if browser is ready to prompt install app
 
 ## Methods
 
-### subscribeToCanPromptInstallChanges
+### subscribeToCanPromptInstallChanges()
 
-▸ `Static` **subscribeToCanPromptInstallChanges**(`listener`): `void`
+> `static` **subscribeToCanPromptInstallChanges**(`listener`): `void`
 
 Subscribes to be notified of canPromptInstallApp changes
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `listener` | [`Function`]( https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function ) | listener function |
+• **listener**: [`Function`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function)
+
+listener function
 
 #### Returns
 
 `void`
 
-___
+***
 
-### unsubscribeToCanPromptInstallChanges
+### unsubscribeToCanPromptInstallChanges()
 
-▸ `Static` **unsubscribeToCanPromptInstallChanges**(`listener`): `void`
+> `static` **unsubscribeToCanPromptInstallChanges**(`listener`): `void`
 
 Unsubscribes to be notified of canPromptInstallApp changes
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `listener` | [`Function`]( https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function ) | listener function |
+• **listener**: [`Function`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function)
+
+listener function
 
 #### Returns
 
 `void`
 
-___
+***
 
-### promptInstallApp
+### promptInstallApp()
 
-▸ `Static` **promptInstallApp**(): `void`
+> `static` **promptInstallApp**(): `void`
 
 Prompt App installation
 

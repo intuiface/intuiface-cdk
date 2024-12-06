@@ -1,85 +1,60 @@
-# Class: Color
+[**@intuiface/core**](../README.md) • **Docs**
+
+***
+
+# Class: `abstract` Color
 
 Class to type a property that can be a solid color or a gradient.
 
-**`Example`**
+## Example
 
-```ts
-@Property({
-    displayName: 'Background color',
-    defaultValue: SolidColor.TransparentBlack, // the default value of the property
-    type: Color
-})
-public backgroundColor: Color;
-```
+## Extended by
 
-## Hierarchy
-
-- **`Color`**
-
-  ↳ [`SolidColor`](SolidColor.md)
-
-  ↳ [`LinearGradient`](LinearGradient.md)
-
-  ↳ [`RadialGradient`](RadialGradient.md)
+- [`SolidColor`](SolidColor.md)
+- [`LinearGradient`](LinearGradient.md)
+- [`RadialGradient`](RadialGradient.md)
 
 ## Implements
 
 - [`IConvertibleType`](../interfaces/IConvertibleType.md)
 
-## Table of contents
-
-### Methods
-
-- [canConvertFrom](Color.md#canconvertfrom)
-- [convertFrom](Color.md#convertfrom)
-- [toString](Color.md#tostring)
-- [equals](Color.md#equals)
-- [isGradient](Color.md#isgradient)
-- [canConvertTo](Color.md#canconvertto)
-- [convertTo](Color.md#convertto)
-
 ## Methods
 
-### canConvertFrom
+### canConvertFrom()
 
-▸ `Static` **canConvertFrom**(`value`): `boolean`
+> `static` **canConvertFrom**(`value`): `boolean`
 
 Check if we can convert a value to a color
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `value` | `unknown` |
+• **value**: `unknown`
 
 #### Returns
 
 `boolean`
 
-___
+***
 
-### convertFrom
+### convertFrom()
 
-▸ `Static` **convertFrom**(`value`): [`Color`](Color.md)
+> `static` **convertFrom**(`value`): [`Color`](Color.md)
 
 Convert a value to a color
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `value` | `unknown` |
+• **value**: `unknown`
 
 #### Returns
 
 [`Color`](Color.md)
 
-___
+***
 
-### toString
+### toString()
 
-▸ `Abstract` **toString**(): `string`
+> `abstract` **toString**(): `string`
 
 Color to string method
 
@@ -89,31 +64,31 @@ Color to string method
 
 #### Implementation of
 
-[IConvertibleType](../interfaces/IConvertibleType.md).[toString](../interfaces/IConvertibleType.md#tostring)
+[`IConvertibleType`](../interfaces/IConvertibleType.md).[`toString`](../interfaces/IConvertibleType.md#tostring)
 
-___
+***
 
-### equals
+### equals()
 
-▸ `Abstract` **equals**(`color`): `boolean`
+> `abstract` **equals**(`color`): `boolean`
 
 Function equals for the color type
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `color` | [`Color`](Color.md) | color to compare |
+• **color**: [`Color`](Color.md)
+
+color to compare
 
 #### Returns
 
 `boolean`
 
-___
+***
 
-### isGradient
+### isGradient()
 
-▸ `Abstract` **isGradient**(): `boolean`
+> `abstract` **isGradient**(): `boolean`
 
 Is the color a gradient?
 
@@ -121,19 +96,17 @@ Is the color a gradient?
 
 `boolean`
 
-___
+***
 
-### canConvertTo
+### canConvertTo()
 
-▸ **canConvertTo**(`type`): `boolean`
+> **canConvertTo**(`type`): `boolean`
 
 Check if the color can be converted to a type
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `type` | `unknown` |
+• **type**: `unknown`
 
 #### Returns
 
@@ -141,21 +114,19 @@ Check if the color can be converted to a type
 
 #### Implementation of
 
-[IConvertibleType](../interfaces/IConvertibleType.md).[canConvertTo](../interfaces/IConvertibleType.md#canconvertto)
+[`IConvertibleType`](../interfaces/IConvertibleType.md).[`canConvertTo`](../interfaces/IConvertibleType.md#canconvertto)
 
-___
+***
 
-### convertTo
+### convertTo()
 
-▸ **convertTo**(`type`): `unknown`
+> **convertTo**(`type`): `unknown`
 
 Function to convert a color to another type
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `type` | `unknown` |
+• **type**: `unknown`
 
 #### Returns
 
@@ -163,7 +134,7 @@ Function to convert a color to another type
 
 #### Implementation of
 
-[IConvertibleType](../interfaces/IConvertibleType.md).[convertTo](../interfaces/IConvertibleType.md#convertto)
+[`IConvertibleType`](../interfaces/IConvertibleType.md).[`convertTo`](../interfaces/IConvertibleType.md#convertto)
 
 
 ## Help

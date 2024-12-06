@@ -1,73 +1,48 @@
+[**@intuiface/components**](../README.md) • **Docs**
+
+***
+
 # Class: ButtonBehavior
 
 Behavior to manage a text.
-
-## Table of contents
-
-### Properties
-
-- [enable](ButtonBehavior.md#enable)
-- [pressedColor](ButtonBehavior.md#pressedcolor)
-- [isPressed](ButtonBehavior.md#ispressed)
-- [textMargin](ButtonBehavior.md#textmargin)
-
-### Methods
-
-- [raiseButtonPressed](ButtonBehavior.md#raisebuttonpressed)
-- [raiseButtonReleased](ButtonBehavior.md#raisebuttonreleased)
-- [disableButton](ButtonBehavior.md#disablebutton)
-- [enableButton](ButtonBehavior.md#enablebutton)
-- [simulateTap](ButtonBehavior.md#simulatetap)
 
 ## Properties
 
 ### enable
 
-• **enable**: `boolean` = `true`
+> **enable**: `boolean` = `true`
 
 Enable.
 
-___
+***
 
 ### pressedColor
 
-• **pressedColor**: `string` = `'#80000000'`
+> **pressedColor**: `string` = `'#80000000'`
 
 Pressed color.
 
-___
+***
 
 ### isPressed
 
-• **isPressed**: `boolean` = `false`
+> **isPressed**: `boolean` = `false`
 
 Is Pressed.
 
-___
+***
 
 ### textMargin
 
-• **textMargin**: `number` = `0`
+> **textMargin**: `number` = `0`
 
 Text margin.
 
 ## Methods
 
-### raiseButtonPressed
+### raiseButtonPressed()
 
-▸ **raiseButtonPressed**(): `void`
-
-Trigger when button is pressed
-
-#### Returns
-
-`void`
-
-___
-
-### raiseButtonReleased
-
-▸ **raiseButtonReleased**(): `void`
+> **raiseButtonPressed**(): `void`
 
 Trigger when button is pressed
 
@@ -75,11 +50,23 @@ Trigger when button is pressed
 
 `void`
 
-___
+***
 
-### disableButton
+### raiseButtonReleased()
 
-▸ **disableButton**(): `void`
+> **raiseButtonReleased**(): `void`
+
+Trigger when button is pressed
+
+#### Returns
+
+`void`
+
+***
+
+### disableButton()
+
+> **disableButton**(): `void`
 
 Action to disable the button.
 
@@ -87,11 +74,11 @@ Action to disable the button.
 
 `void`
 
-___
+***
 
-### enableButton
+### enableButton()
 
-▸ **enableButton**(): `void`
+> **enableButton**(): `void`
 
 Action to enable the button.
 
@@ -99,11 +86,11 @@ Action to enable the button.
 
 `void`
 
-___
+***
 
-### simulateTap
+### simulateTap()
 
-▸ **simulateTap**(): `void`
+> **simulateTap**(): `void`
 
 Action to simulate a single tap on the button.
 

@@ -1,18 +1,16 @@
+[**@intuiface/core**](../README.md) • **Docs**
+
+***
+
 # Interface: IComputorOptions
 
-Options to configure [`@Computor`](../README.md#computor) decorator.
-
-## Table of contents
-
-### Properties
-
-- [inputs](IComputorOptions.md#inputs)
+Options to configure [`@Computor`](../functions/Computor.md) decorator.
 
 ## Properties
 
 ### inputs
 
-• **inputs**: `string`[]
+> **inputs**: `string`[]
 
 List of properties to watch that will trigger a call to the decorated method.
 

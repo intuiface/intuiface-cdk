@@ -1,3 +1,7 @@
+[**@intuiface/components**](../README.md) • **Docs**
+
+***
+
 # Class: ComponentsModule
 
 NG Module

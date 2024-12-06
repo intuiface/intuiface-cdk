@@ -1,73 +1,58 @@
+[**@intuiface/core**](../README.md) • **Docs**
+
+***
+
 # Class: IntuifaceElement
 
 An `IntuifaceElement` represents the base of any kind of element that compose an Intuiface experience: asset, collection, interface asset, layer, scene, experience...
 
-All this elements extends `IntuifaceElement` and use the appropriate decorator to make it usable in the experience, such as [`@Asset`](../README.md#asset) or [`@Collection`](../README.md#collection).
+All this elements extends `IntuifaceElement` and use the appropriate decorator to make it usable in the experience, such as [`@Asset`](../functions/Asset.md) or [`@Collection`](../functions/Collection.md).
 
-## Hierarchy
+## Extends
 
 - [`Watchable`](Watchable.md)
 
-  ↳ **`IntuifaceElement`**
+## Extended by
 
-  ↳↳ [`IntuifaceCollection`](IntuifaceCollection.md)
-
-## Table of contents
-
-### Properties
-
-- [container](IntuifaceElement.md#container)
-- [parent](IntuifaceElement.md#parent)
-- [name](IntuifaceElement.md#name)
-
-### Methods
-
-- [notifyPropertyChanged](IntuifaceElement.md#notifypropertychanged)
-- [subscribeToPropertiesChanges](IntuifaceElement.md#subscribetopropertieschanges)
-- [unsubscribeFromPropertiesChanges](IntuifaceElement.md#unsubscribefrompropertieschanges)
-- [subscribeToPropertyChanged](IntuifaceElement.md#subscribetopropertychanged)
-- [unsubscribeFromPropertyChanged](IntuifaceElement.md#unsubscribefrompropertychanged)
-- [initialize](IntuifaceElement.md#initialize)
-- [dispose](IntuifaceElement.md#dispose)
+- [`IntuifaceCollection`](IntuifaceCollection.md)
 
 ## Properties
 
 ### container
 
-• **container**: [`ElementContainer`](ElementContainer.md)
+> **container**: [`ElementContainer`](ElementContainer.md)
 
 Container of this element
 
-___
+***
 
 ### parent
 
-• **parent**: [`IntuifaceElement`](IntuifaceElement.md)
+> **parent**: [`IntuifaceElement`](IntuifaceElement.md)
 
 Parent of this element.
 
-___
+***
 
 ### name
 
-• **name**: `string` = `''`
+> **name**: `string` = `''`
 
 Name of the element.
 
 ## Methods
 
-### notifyPropertyChanged
+### notifyPropertyChanged()
 
-▸ **notifyPropertyChanged**(`propertyKey`, `value`): `void`
+> **notifyPropertyChanged**(`propertyKey`, `value`): `void`
 
 Function to call when a property in the element changed to notify listeners
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `propertyKey` | `string` |
-| `value` | `any` |
+• **propertyKey**: `string`
+
+• **value**: `any`
 
 #### Returns
 
@@ -75,21 +60,19 @@ Function to call when a property in the element changed to notify listeners
 
 #### Inherited from
 
-[Watchable](Watchable.md).[notifyPropertyChanged](Watchable.md#notifypropertychanged)
+[`Watchable`](Watchable.md).[`notifyPropertyChanged`](Watchable.md#notifypropertychanged)
 
-___
+***
 
-### subscribeToPropertiesChanges
+### subscribeToPropertiesChanges()
 
-▸ **subscribeToPropertiesChanges**(`listener`): `void`
+> **subscribeToPropertiesChanges**(`listener`): `void`
 
 Function to subscribe to properties changes of the element
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `listener` | `PropertiesListener` |
+• **listener**: `PropertiesListener`
 
 #### Returns
 
@@ -97,21 +80,19 @@ Function to subscribe to properties changes of the element
 
 #### Inherited from
 
-[Watchable](Watchable.md).[subscribeToPropertiesChanges](Watchable.md#subscribetopropertieschanges)
+[`Watchable`](Watchable.md).[`subscribeToPropertiesChanges`](Watchable.md#subscribetopropertieschanges)
 
-___
+***
 
-### unsubscribeFromPropertiesChanges
+### unsubscribeFromPropertiesChanges()
 
-▸ **unsubscribeFromPropertiesChanges**(`listener`): `void`
+> **unsubscribeFromPropertiesChanges**(`listener`): `void`
 
 function to unsubscribe from properties changes of the element
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `listener` | `PropertiesListener` |
+• **listener**: `PropertiesListener`
 
 #### Returns
 
@@ -119,22 +100,21 @@ function to unsubscribe from properties changes of the element
 
 #### Inherited from
 
-[Watchable](Watchable.md).[unsubscribeFromPropertiesChanges](Watchable.md#unsubscribefrompropertieschanges)
+[`Watchable`](Watchable.md).[`unsubscribeFromPropertiesChanges`](Watchable.md#unsubscribefrompropertieschanges)
 
-___
+***
 
-### subscribeToPropertyChanged
+### subscribeToPropertyChanged()
 
-▸ **subscribeToPropertyChanged**(`property`, `listener`): `void`
+> **subscribeToPropertyChanged**(`property`, `listener`): `void`
 
 function to subscribe to one property changed
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `property` | `string` |
-| `listener` | `PropertyListener` |
+• **property**: `string`
+
+• **listener**: `PropertyListener`
 
 #### Returns
 
@@ -142,22 +122,21 @@ function to subscribe to one property changed
 
 #### Inherited from
 
-[Watchable](Watchable.md).[subscribeToPropertyChanged](Watchable.md#subscribetopropertychanged)
+[`Watchable`](Watchable.md).[`subscribeToPropertyChanged`](Watchable.md#subscribetopropertychanged)
 
-___
+***
 
-### unsubscribeFromPropertyChanged
+### unsubscribeFromPropertyChanged()
 
-▸ **unsubscribeFromPropertyChanged**(`property`, `listener`): `void`
+> **unsubscribeFromPropertyChanged**(`property`, `listener`): `void`
 
 function to unsubscribe from one property changed
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `property` | `string` |
-| `listener` | `PropertyListener` |
+• **property**: `string`
+
+• **listener**: `PropertyListener`
 
 #### Returns
 
@@ -165,31 +144,31 @@ function to unsubscribe from one property changed
 
 #### Inherited from
 
-[Watchable](Watchable.md).[unsubscribeFromPropertyChanged](Watchable.md#unsubscribefrompropertychanged)
+[`Watchable`](Watchable.md).[`unsubscribeFromPropertyChanged`](Watchable.md#unsubscribefrompropertychanged)
 
-___
+***
 
-### initialize
+### initialize()
 
-▸ **initialize**(`configuration?`): `void`
+> **initialize**(`configuration`?): `void`
 
 Initialize default value of each property.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `configuration?` | `any` | : configuration |
+• **configuration?**: `any`
+
+: configuration
 
 #### Returns
 
 `void`
 
-___
+***
 
-### dispose
+### dispose()
 
-▸ **dispose**(): `void`
+> **dispose**(): `void`
 
 Dispose the element.
 
@@ -199,7 +178,7 @@ Dispose the element.
 
 #### Overrides
 
-[Watchable](Watchable.md).[dispose](Watchable.md#dispose)
+[`Watchable`](Watchable.md).[`dispose`](Watchable.md#dispose)
 
 
 ## Help

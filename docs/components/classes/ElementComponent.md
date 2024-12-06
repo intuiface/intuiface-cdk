@@ -1,18 +1,18 @@
-# Class: ElementComponent<T\>
+[**@intuiface/components**](../README.md) • **Docs**
+
+***
+
+# Class: ElementComponent\<T\>
 
 Base element view component
 
-## Type parameters
+## Extended by
 
-| Name | Type |
-| :------ | :------ |
-| `T` | extends `IntuifaceElement` |
+- [`CollectionComponent`](CollectionComponent.md)
 
-## Hierarchy
+## Type Parameters
 
-- **`ElementComponent`**
-
-  ↳ [`CollectionComponent`](CollectionComponent.md)
+• **T** *extends* `IntuifaceElement`
 
 
 ## Help
