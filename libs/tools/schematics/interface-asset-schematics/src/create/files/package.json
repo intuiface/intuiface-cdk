@@ -5,8 +5,8 @@
   "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "npm run cleanDist && npx tsc --project tsconfig.ifd.json && shx cp ./src/package.json ./tmp/ && node --experimental-modules --es-module-specifier-resolution=node tmp/index_ifd.js && npm run cleanTmp && node ./esbuild.config.js",
-    "build:debug": "npm run cleanDist && npx tsc --project tsconfig.ifd.json && shx cp ./src/package.json ./tmp/ && node --experimental-modules --es-module-specifier-resolution=node tmp/index_ifd.js && npm run cleanTmp && node ./esbuild.config.js --development",
+    "build": "npm run cleanDist && node ./esbuild.config.js && npx tsc --project tsconfig.ifd.json && shx cp ./src/package.json ./tmp/ && node --experimental-modules --es-module-specifier-resolution=node tmp/index_ifd.js && npm run cleanTmp",
+    "build:debug": "npm run cleanDist && node ./esbuild.config.js --development && npx tsc --project tsconfig.ifd.json && shx cp ./src/package.json ./tmp/ && node --experimental-modules --es-module-specifier-resolution=node tmp/index_ifd.js && npm run cleanTmp",
     "lint": "npx eslint -c .eslintrc.js --ext .ts .",
     "cleanDist": "node -e \"require('fs-extra').remove('dist/');\"",
     "cleanTmp": "node -e \"require('fs-extra').remove('tmp/');\""
@@ -33,9 +33,10 @@
     "typescript": "^4.5.5"
   },
   "dependencies": {
+    "@angular-architects/native-federation": "^17.1.8",
     "@intuiface/core": "1.4.0",
-    "@module-federation/esbuild": "^0.0.24",
-    "@module-federation/webpack-bundler-runtime": "^0.6.6",
+    "@softarc/native-federation": "^2.0.9",
+    "@softarc/native-federation-esbuild": "^2.0.9",
     "tslib": "^2.4.0"
   }
 }

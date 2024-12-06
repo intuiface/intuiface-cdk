@@ -1,6 +1,7 @@
-const { withFederation } = require('@module-federation/esbuild/build');
+// const { withFederation } = require('@module-federation/esbuild/build');
+const { withNativeFederation } = require('@angular-architects/native-federation/config');
 
-module.exports = withFederation(
+module.exports = withNativeFederation(
 {   
     name: "<%= IAName %>",
     filename: "<%= IAName %>.js",
