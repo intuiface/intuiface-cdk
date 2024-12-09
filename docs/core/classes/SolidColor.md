@@ -1,98 +1,36 @@
+[**@intuiface/core**](../README.md) • **Docs**
+
+***
+
 # Class: SolidColor
 
 Class to use to describe a solid color.
 
-**`Example`**
+## Example
 
-```ts
-@Property({
-    displayName: 'Background color',
-    defaultValue: SolidColor.TransparentBlack, // the default value of the property
-    type: SolidColor
-})
-public backgroundColor: SolidColor;
-```
-
-## Hierarchy
+## Extends
 
 - [`Color`](Color.md)
 
-  ↳ **`SolidColor`**
-
-## Table of contents
-
-### Constructors
-
-- [constructor](SolidColor.md#constructor)
-
-### Methods
-
-- [canConvertFrom](SolidColor.md#canconvertfrom)
-- [convertFrom](SolidColor.md#convertfrom)
-- [canConvertTo](SolidColor.md#canconvertto)
-- [toString](SolidColor.md#tostring)
-- [isGradient](SolidColor.md#isgradient)
-- [equals](SolidColor.md#equals)
-- [convertTo](SolidColor.md#convertto)
-
 ## Constructors
 
-### constructor
+### new SolidColor()
 
-• **new SolidColor**(`alpha`, `red`, `green`, `blue`, `format?`)
+> **new SolidColor**(`alpha`, `red`, `green`, `blue`, `format`): [`SolidColor`](SolidColor.md)
 
 Constructor
 
 #### Parameters
 
-| Name | Type | Default value |
-| :------ | :------ | :------ |
-| `alpha` | `string` | `undefined` |
-| `red` | `string` | `undefined` |
-| `green` | `string` | `undefined` |
-| `blue` | `string` | `undefined` |
-| `format` | `EColorFormat` | `EColorFormat.HexARGB` |
+• **alpha**: `string`
 
-#### Overrides
+• **red**: `string`
 
-Color.constructor
+• **green**: `string`
 
-## Methods
+• **blue**: `string`
 
-### canConvertFrom
-
-▸ `Static` **canConvertFrom**(`value`): `boolean`
-
-Check if we can convert a value to a solid color
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `value` | `unknown` |
-
-#### Returns
-
-`boolean`
-
-#### Overrides
-
-[Color](Color.md).[canConvertFrom](Color.md#canconvertfrom)
-
-___
-
-### convertFrom
-
-▸ `Static` **convertFrom**(`value`, `format?`): [`SolidColor`](SolidColor.md)
-
-Convert a value to a solid color
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `value` | `unknown` |
-| `format?` | `EColorFormat` |
+• **format**: `EColorFormat` = `EColorFormat.HexARGB`
 
 #### Returns
 
@@ -100,21 +38,61 @@ Convert a value to a solid color
 
 #### Overrides
 
-[Color](Color.md).[convertFrom](Color.md#convertfrom)
+`Color.constructor`
 
-___
+## Methods
 
-### canConvertTo
+### canConvertFrom()
 
-▸ **canConvertTo**(`type`): `boolean`
+> `static` **canConvertFrom**(`value`): `boolean`
+
+Check if we can convert a value to a solid color
+
+#### Parameters
+
+• **value**: `unknown`
+
+#### Returns
+
+`boolean`
+
+#### Overrides
+
+[`Color`](Color.md).[`canConvertFrom`](Color.md#canconvertfrom)
+
+***
+
+### convertFrom()
+
+> `static` **convertFrom**(`value`, `format`?): [`SolidColor`](SolidColor.md)
+
+Convert a value to a solid color
+
+#### Parameters
+
+• **value**: `unknown`
+
+• **format?**: `EColorFormat`
+
+#### Returns
+
+[`SolidColor`](SolidColor.md)
+
+#### Overrides
+
+[`Color`](Color.md).[`convertFrom`](Color.md#convertfrom)
+
+***
+
+### canConvertTo()
+
+> **canConvertTo**(`type`): `boolean`
 
 Check if the color can be converted to a type
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `type` | `unknown` |
+• **type**: `unknown`
 
 #### Returns
 
@@ -122,13 +100,13 @@ Check if the color can be converted to a type
 
 #### Inherited from
 
-[Color](Color.md).[canConvertTo](Color.md#canconvertto)
+[`Color`](Color.md).[`canConvertTo`](Color.md#canconvertto)
 
-___
+***
 
-### toString
+### toString()
 
-▸ **toString**(): `string`
+> **toString**(): `string`
 
 Convert a solid color to a string
 
@@ -138,13 +116,13 @@ Convert a solid color to a string
 
 #### Overrides
 
-[Color](Color.md).[toString](Color.md#tostring)
+[`Color`](Color.md).[`toString`](Color.md#tostring)
 
-___
+***
 
-### isGradient
+### isGradient()
 
-▸ **isGradient**(): `boolean`
+> **isGradient**(): `boolean`
 
 Is the color a gradient?
 
@@ -154,21 +132,21 @@ Is the color a gradient?
 
 #### Overrides
 
-[Color](Color.md).[isGradient](Color.md#isgradient)
+[`Color`](Color.md).[`isGradient`](Color.md#isgradient)
 
-___
+***
 
-### equals
+### equals()
 
-▸ **equals**(`color`): `boolean`
+> **equals**(`color`): `boolean`
 
 Function equals for the color type
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `color` | [`SolidColor`](SolidColor.md) | color to compare |
+• **color**: [`SolidColor`](SolidColor.md)
+
+color to compare
 
 #### Returns
 
@@ -176,21 +154,19 @@ Function equals for the color type
 
 #### Overrides
 
-[Color](Color.md).[equals](Color.md#equals)
+[`Color`](Color.md).[`equals`](Color.md#equals)
 
-___
+***
 
-### convertTo
+### convertTo()
 
-▸ **convertTo**(`type`): `unknown`
+> **convertTo**(`type`): `unknown`
 
 Function to convert a color to another type
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `type` | `unknown` |
+• **type**: `unknown`
 
 #### Returns
 
@@ -198,7 +174,7 @@ Function to convert a color to another type
 
 #### Overrides
 
-[Color](Color.md).[convertTo](Color.md#convertto)
+[`Color`](Color.md).[`convertTo`](Color.md#convertto)
 
 
 ## Help

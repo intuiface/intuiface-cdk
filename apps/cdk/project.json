@@ -55,18 +55,18 @@
         "serve": {
             "executor": "@angular-devkit/build-angular:dev-server",
             "options": {
-                "browserTarget": "cdk:build"
+                "buildTarget": "cdk:build"
             },
             "configurations": {
                 "production": {
-                    "browserTarget": "cdk:build:production"
+                    "buildTarget": "cdk:build:production"
                 }
             }
         },
         "extract-i18n": {
             "executor": "@angular-devkit/build-angular:extract-i18n",
             "options": {
-                "browserTarget": "cdk:build"
+                "buildTarget": "cdk:build"
             }
         }
     }

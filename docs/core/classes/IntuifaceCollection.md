@@ -1,147 +1,156 @@
-# Class: IntuifaceCollection<T\>
+[**@intuiface/core**](../README.md) • **Docs**
+
+***
+
+# Class: IntuifaceCollection\<T\>
+
+**`Experimental`**
 
 `IntuifaceCollection` is the base class to use to implements any kind of collection in Intuiface.
 
 _**This is experimental as there is currently no way to use a custom collection created with the CDK in Intuiface Composer.**_
 
-## Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `T` | extends [`ElementContainer`](ElementContainer.md) |
-
-## Hierarchy
+## Extends
 
 - [`IntuifaceElement`](IntuifaceElement.md)
 
-  ↳ **`IntuifaceCollection`**
+## Type Parameters
 
-## Table of contents
+• **T** *extends* [`ElementContainer`](ElementContainer.md)
 
-### Properties
+## Constructors
 
-- [visibleItems](IntuifaceCollection.md#visibleitems)
-- [visibleItemsStartIndex](IntuifaceCollection.md#visibleitemsstartindex)
-- [totalItemsCount](IntuifaceCollection.md#totalitemscount)
-- [hasInfiniteItems](IntuifaceCollection.md#hasinfiniteitems)
-- [hasItems](IntuifaceCollection.md#hasitems)
-- [sources](IntuifaceCollection.md#sources)
-- [container](IntuifaceCollection.md#container)
-- [parent](IntuifaceCollection.md#parent)
-- [name](IntuifaceCollection.md#name)
+### new IntuifaceCollection()
 
-### Methods
+> **new IntuifaceCollection**\<`T`\>(): [`IntuifaceCollection`](IntuifaceCollection.md)\<`T`\>
 
-- [notifyPropertyChanged](IntuifaceCollection.md#notifypropertychanged)
-- [subscribeToPropertiesChanges](IntuifaceCollection.md#subscribetopropertieschanges)
-- [unsubscribeFromPropertiesChanges](IntuifaceCollection.md#unsubscribefrompropertieschanges)
-- [subscribeToPropertyChanged](IntuifaceCollection.md#subscribetopropertychanged)
-- [unsubscribeFromPropertyChanged](IntuifaceCollection.md#unsubscribefrompropertychanged)
-- [requestItems](IntuifaceCollection.md#requestitems)
-- [getStartIndexForSource](IntuifaceCollection.md#getstartindexforsource)
-- [initialize](IntuifaceCollection.md#initialize)
-- [dispose](IntuifaceCollection.md#dispose)
+**`Experimental`**
+
+#### Returns
+
+[`IntuifaceCollection`](IntuifaceCollection.md)\<`T`\>
+
+#### Inherited from
+
+`IntuifaceElement.constructor`
 
 ## Properties
 
 ### visibleItems
 
-• **visibleItems**: [`IntuifaceElement`](IntuifaceElement.md)[] = `[]`
+> **visibleItems**: [`IntuifaceElement`](IntuifaceElement.md)[] = `[]`
+
+**`Experimental`**
 
 Visible items
 
-___
+***
 
 ### visibleItemsStartIndex
 
-• **visibleItemsStartIndex**: `number` = `0`
+> **visibleItemsStartIndex**: `number` = `0`
+
+**`Experimental`**
 
 Indicates the start index of the current items requested from collection sources
 
-___
+***
 
 ### totalItemsCount
 
-• **totalItemsCount**: `number` = `0`
+> **totalItemsCount**: `number` = `0`
+
+**`Experimental`**
 
 Total number of items aggregated from each source in this collection
 
-___
+***
 
 ### hasInfiniteItems
 
-• **hasInfiniteItems**: `boolean` = `false`
+> **hasInfiniteItems**: `boolean` = `false`
+
+**`Experimental`**
 
 Indicates if this Collection has an infinite number of items.
 If true, totalItemsCount if the number of currently known items
 
-___
+***
 
 ### hasItems
 
-• **hasItems**: `boolean` = `false`
+> **hasItems**: `boolean` = `false`
+
+**`Experimental`**
 
 Indicated if the collection has any items
 Needed to display ghosts in an empty collection
 
-___
+***
 
 ### sources
 
-• `Readonly` **sources**: [`IntuifaceElement`](IntuifaceElement.md)[] = `[]`
+> `readonly` **sources**: [`IntuifaceElement`](IntuifaceElement.md)[] = `[]`
+
+**`Experimental`**
 
 List of sources (IntuifaceElement and DataFeed) for this collection
 
-___
+***
 
 ### container
 
-• **container**: [`ElementContainer`](ElementContainer.md)
+> **container**: [`ElementContainer`](ElementContainer.md)
+
+**`Experimental`**
 
 Container of this element
 
 #### Inherited from
 
-[IntuifaceElement](IntuifaceElement.md).[container](IntuifaceElement.md#container)
+[`IntuifaceElement`](IntuifaceElement.md).[`container`](IntuifaceElement.md#container)
 
-___
+***
 
 ### parent
 
-• **parent**: [`IntuifaceElement`](IntuifaceElement.md)
+> **parent**: [`IntuifaceElement`](IntuifaceElement.md)
+
+**`Experimental`**
 
 Parent of this element.
 
 #### Inherited from
 
-[IntuifaceElement](IntuifaceElement.md).[parent](IntuifaceElement.md#parent)
+[`IntuifaceElement`](IntuifaceElement.md).[`parent`](IntuifaceElement.md#parent)
 
-___
+***
 
 ### name
 
-• **name**: `string` = `''`
+> **name**: `string` = `''`
+
+**`Experimental`**
 
 Name of the element.
 
 #### Inherited from
 
-[IntuifaceElement](IntuifaceElement.md).[name](IntuifaceElement.md#name)
+[`IntuifaceElement`](IntuifaceElement.md).[`name`](IntuifaceElement.md#name)
 
 ## Methods
 
-### notifyPropertyChanged
+### notifyPropertyChanged()
 
-▸ **notifyPropertyChanged**(`propertyKey`, `value`): `void`
+> **notifyPropertyChanged**(`propertyKey`, `value`): `void`
 
-Function to call when a property in the element changed to notify listeners
+**`Experimental`**
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `propertyKey` | `string` |
-| `value` | `any` |
+• **propertyKey**: `string`
+
+• **value**: `any`
 
 #### Returns
 
@@ -149,21 +158,19 @@ Function to call when a property in the element changed to notify listeners
 
 #### Inherited from
 
-[IntuifaceElement](IntuifaceElement.md).[notifyPropertyChanged](IntuifaceElement.md#notifypropertychanged)
+[`IntuifaceElement`](IntuifaceElement.md).[`notifyPropertyChanged`](IntuifaceElement.md#notifypropertychanged)
 
-___
+***
 
-### subscribeToPropertiesChanges
+### subscribeToPropertiesChanges()
 
-▸ **subscribeToPropertiesChanges**(`listener`): `void`
+> **subscribeToPropertiesChanges**(`listener`): `void`
 
-Function to subscribe to properties changes of the element
+**`Experimental`**
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `listener` | `PropertiesListener` |
+• **listener**: `PropertiesListener`
 
 #### Returns
 
@@ -171,21 +178,19 @@ Function to subscribe to properties changes of the element
 
 #### Inherited from
 
-[IntuifaceElement](IntuifaceElement.md).[subscribeToPropertiesChanges](IntuifaceElement.md#subscribetopropertieschanges)
+[`IntuifaceElement`](IntuifaceElement.md).[`subscribeToPropertiesChanges`](IntuifaceElement.md#subscribetopropertieschanges)
 
-___
+***
 
-### unsubscribeFromPropertiesChanges
+### unsubscribeFromPropertiesChanges()
 
-▸ **unsubscribeFromPropertiesChanges**(`listener`): `void`
+> **unsubscribeFromPropertiesChanges**(`listener`): `void`
 
-function to unsubscribe from properties changes of the element
+**`Experimental`**
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `listener` | `PropertiesListener` |
+• **listener**: `PropertiesListener`
 
 #### Returns
 
@@ -193,22 +198,21 @@ function to unsubscribe from properties changes of the element
 
 #### Inherited from
 
-[IntuifaceElement](IntuifaceElement.md).[unsubscribeFromPropertiesChanges](IntuifaceElement.md#unsubscribefrompropertieschanges)
+[`IntuifaceElement`](IntuifaceElement.md).[`unsubscribeFromPropertiesChanges`](IntuifaceElement.md#unsubscribefrompropertieschanges)
 
-___
+***
 
-### subscribeToPropertyChanged
+### subscribeToPropertyChanged()
 
-▸ **subscribeToPropertyChanged**(`property`, `listener`): `void`
+> **subscribeToPropertyChanged**(`property`, `listener`): `void`
 
-function to subscribe to one property changed
+**`Experimental`**
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `property` | `string` |
-| `listener` | `PropertyListener` |
+• **property**: `string`
+
+• **listener**: `PropertyListener`
 
 #### Returns
 
@@ -216,22 +220,21 @@ function to subscribe to one property changed
 
 #### Inherited from
 
-[IntuifaceElement](IntuifaceElement.md).[subscribeToPropertyChanged](IntuifaceElement.md#subscribetopropertychanged)
+[`IntuifaceElement`](IntuifaceElement.md).[`subscribeToPropertyChanged`](IntuifaceElement.md#subscribetopropertychanged)
 
-___
+***
 
-### unsubscribeFromPropertyChanged
+### unsubscribeFromPropertyChanged()
 
-▸ **unsubscribeFromPropertyChanged**(`property`, `listener`): `void`
+> **unsubscribeFromPropertyChanged**(`property`, `listener`): `void`
 
-function to unsubscribe from one property changed
+**`Experimental`**
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `property` | `string` |
-| `listener` | `PropertyListener` |
+• **property**: `string`
+
+• **listener**: `PropertyListener`
 
 #### Returns
 
@@ -239,58 +242,61 @@ function to unsubscribe from one property changed
 
 #### Inherited from
 
-[IntuifaceElement](IntuifaceElement.md).[unsubscribeFromPropertyChanged](IntuifaceElement.md#unsubscribefrompropertychanged)
+[`IntuifaceElement`](IntuifaceElement.md).[`unsubscribeFromPropertyChanged`](IntuifaceElement.md#unsubscribefrompropertychanged)
 
-___
+***
 
-### requestItems
+### requestItems()
 
-▸ **requestItems**(`start`, `count`): [`Promise`]( https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise )<`void`\>
+> **requestItems**(`start`, `count`): [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)\<`void`\>
 
-Requests items of the collection
+**`Experimental`**
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `start` | `number` | start index of the requested items |
-| `count` | `number` | number of requested items |
+• **start**: `number`
+
+start index of the requested items
+
+• **count**: `number`
+
+number of requested items
 
 #### Returns
 
-[`Promise`]( https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise )<`void`\>
+[`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)\<`void`\>
 
-___
+***
 
-### getStartIndexForSource
+### getStartIndexForSource()
 
-▸ **getStartIndexForSource**(`source`): `number`
+> **getStartIndexForSource**(`source`): `number`
 
-Gets the start index in overall items for the given source
+**`Experimental`**
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `source` | [`IntuifaceElement`](IntuifaceElement.md) | source to find |
+• **source**: [`IntuifaceElement`](IntuifaceElement.md)
+
+source to find
 
 #### Returns
 
 `number`
 
-___
+***
 
-### initialize
+### initialize()
 
-▸ **initialize**(`configuration?`): `void`
+> **initialize**(`configuration`?): `void`
 
-Initialize default value of each property.
+**`Experimental`**
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `configuration?` | `any` | : configuration |
+• **configuration?**: `any`
+
+: configuration
 
 #### Returns
 
@@ -298,15 +304,15 @@ Initialize default value of each property.
 
 #### Inherited from
 
-[IntuifaceElement](IntuifaceElement.md).[initialize](IntuifaceElement.md#initialize)
+[`IntuifaceElement`](IntuifaceElement.md).[`initialize`](IntuifaceElement.md#initialize)
 
-___
+***
 
-### dispose
+### dispose()
 
-▸ **dispose**(): `void`
+> **dispose**(): `void`
 
-Dispose the element.
+**`Experimental`**
 
 #### Returns
 
@@ -314,7 +320,7 @@ Dispose the element.
 
 #### Inherited from
 
-[IntuifaceElement](IntuifaceElement.md).[dispose](IntuifaceElement.md#dispose)
+[`IntuifaceElement`](IntuifaceElement.md).[`dispose`](IntuifaceElement.md#dispose)
 
 
 ## Help

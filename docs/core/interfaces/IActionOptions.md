@@ -1,36 +1,32 @@
+[**@intuiface/core**](../README.md) • **Docs**
+
+***
+
 # Interface: IActionOptions
 
-Options to configure [`@Action`](../README.md#action) decorator
-
-## Table of contents
-
-### Properties
-
-- [displayName](IActionOptions.md#displayname)
-- [description](IActionOptions.md#description)
-- [validate](IActionOptions.md#validate)
+Options to configure [`@Action`](../functions/Action.md) decorator
 
 ## Properties
 
 ### displayName
 
-• **displayName**: `string`
+> **displayName**: `string`
 
 Name displayed in Composer.
 
-___
+***
 
-### description
+### description?
 
-• `Optional` **description**: `string`
+> `optional` **description**: `string`
 
 Description displayed in Composer.
 
-___
+***
 
-### validate
+### validate?
 
-• `Optional` **validate**: `boolean`
+> `optional` **validate**: `boolean`
 
 If true, validate range of parameter values.
 

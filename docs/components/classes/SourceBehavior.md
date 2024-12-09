@@ -1,32 +1,24 @@
+[**@intuiface/components**](../README.md) • **Docs**
+
+***
+
 # Class: SourceBehavior
 
 Behavior to manage a source.
-
-## Table of contents
-
-### Properties
-
-- [source](SourceBehavior.md#source)
-
-### Methods
-
-- [raiseSourceChanged](SourceBehavior.md#raisesourcechanged)
-- [changeSource](SourceBehavior.md#changesource)
-- [getSourceRelativePath](SourceBehavior.md#getsourcerelativepath)
 
 ## Properties
 
 ### source
 
-• **source**: `string` = `'assets/defaultAssets/DefaultImage.png'`
+> **source**: `string` = `'assets/defaultAssets/DefaultImage.png'`
 
 Source of the resource.
 
 ## Methods
 
-### raiseSourceChanged
+### raiseSourceChanged()
 
-▸ **raiseSourceChanged**(): `void`
+> **raiseSourceChanged**(): `void`
 
 Source changed event.
 
@@ -34,29 +26,29 @@ Source changed event.
 
 `void`
 
-___
+***
 
-### changeSource
+### changeSource()
 
-▸ **changeSource**(`source`): `void`
+> **changeSource**(`source`): `void`
 
 Action to change the source.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `source` | `string` | source to set |
+• **source**: `string`
+
+source to set
 
 #### Returns
 
 `void`
 
-___
+***
 
-### getSourceRelativePath
+### getSourceRelativePath()
 
-▸ **getSourceRelativePath**(): `string`
+> **getSourceRelativePath**(): `string`
 
 Get source relativepath
 

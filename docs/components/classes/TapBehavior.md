@@ -1,47 +1,42 @@
+[**@intuiface/components**](../README.md) • **Docs**
+
+***
+
 # Class: TapBehavior
 
 Behavior to manage tap.
 
-## Table of contents
-
-### Methods
-
-- [raiseTap](TapBehavior.md#raisetap)
-- [raiseDoubleTap](TapBehavior.md#raisedoubletap)
-
 ## Methods
 
-### raiseTap
+### raiseTap()
 
-▸ **raiseTap**(`x`, `y`): `void`
+> **raiseTap**(`x`, `y`): `void`
 
 Tap event.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `x` | `number` |
-| `y` | `number` |
+• **x**: `number`
+
+• **y**: `number`
 
 #### Returns
 
 `void`
 
-___
+***
 
-### raiseDoubleTap
+### raiseDoubleTap()
 
-▸ **raiseDoubleTap**(`x`, `y`): `void`
+> **raiseDoubleTap**(`x`, `y`): `void`
 
 Double tap event
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `x` | `number` |
-| `y` | `number` |
+• **x**: `number`
+
+• **y**: `number`
 
 #### Returns
 

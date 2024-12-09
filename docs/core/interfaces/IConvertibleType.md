@@ -1,28 +1,16 @@
+[**@intuiface/core**](../README.md) • **Docs**
+
+***
+
 # Interface: IConvertibleType
 
-Type can be convertible by implementing this interface. A convertible type can be used as `type` of a [`@Property`](../README.md#property) or [`@arameter`](../README.md#parameter) decorators. All value will then be converted in input/output when the property or parameter is used for example by bindings.
-
-## Implemented by
-
-- [`Color`](../classes/Color.md)
-- [`Font`](../classes/Font.md)
-- [`Path`](../classes/Path.md)
-- [`Resource`](../classes/Resource.md)
-- [`Time`](../classes/Time.md)
-
-## Table of contents
-
-### Methods
-
-- [toString](IConvertibleType.md#tostring)
-- [convertTo](IConvertibleType.md#convertto)
-- [canConvertTo](IConvertibleType.md#canconvertto)
+Type can be convertible by implementing this interface. A convertible type can be used as `type` of a [`@Property`](../functions/Property.md) or [`@arameter`](../functions/Parameter.md) decorators. All value will then be converted in input/output when the property or parameter is used for example by bindings.
 
 ## Methods
 
-### toString
+### toString()
 
-▸ **toString**(): `string`
+> **toString**(): `string`
 
 Transform a type to a string
 
@@ -30,37 +18,33 @@ Transform a type to a string
 
 `string`
 
-___
+***
 
-### convertTo
+### convertTo()
 
-▸ **convertTo**(`type`): `unknown`
+> **convertTo**(`type`): `unknown`
 
 Convert a value to type
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `type` | `unknown` |
+• **type**: `unknown`
 
 #### Returns
 
 `unknown`
 
-___
+***
 
-### canConvertTo
+### canConvertTo()
 
-▸ **canConvertTo**(`type`): `boolean`
+> **canConvertTo**(`type`): `boolean`
 
 Check if the type can be converted to another type
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `type` | `unknown` |
+• **type**: `unknown`
 
 #### Returns
 
