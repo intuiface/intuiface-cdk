@@ -124,6 +124,16 @@ export function Property(options?: IPropertyOptions)
         // get target name
         const targetName = target.constructor.name;
 
+        // manage property declared with _ 
+        if (propertyKey.startsWith('_'))
+        {
+            const newPropertyKey = propertyKey.slice(1);
+            if(Object.prototype.hasOwnProperty.call(target, newPropertyKey))
+            {
+                propertyKey = newPropertyKey;
+            }
+        }
+
         // get type and format to store in ifd
         const typeAndFormat = getTypeAndFormat(options.type, false);
 
