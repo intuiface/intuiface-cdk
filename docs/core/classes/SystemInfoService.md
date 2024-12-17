@@ -6,6 +6,7 @@ Service to get system information (device id, device name ...etc)
 
 ### Methods
 
+- [getInstance](SystemInfoService.md#getinstance)
 - [getDeviceId](SystemInfoService.md#getdeviceid)
 - [getDeviceName](SystemInfoService.md#getdevicename)
 - [getPlatform](SystemInfoService.md#getplatform)
@@ -13,6 +14,24 @@ Service to get system information (device id, device name ...etc)
 - [getApplicationName](SystemInfoService.md#getapplicationname)
 
 ## Methods
+
+### getInstance
+
+▸ `Static` **getInstance**(): [`SystemInfoService`](SystemInfoService.md)
+
+Get the instance of the system info service.
+You have to call this method to be able to call other methods to get system information.
+```ts
+await SystemInfoService.getInstance().getPlatform()
+```
+
+#### Returns
+
+[`SystemInfoService`](SystemInfoService.md)
+
+an instance of the system info service
+
+___
 
 ### getDeviceId
 
@@ -44,13 +63,13 @@ ___
 
 ### getPlatform
 
-▸ **getPlatform**(): `string`
+▸ **getPlatform**(): [`Promise`]( https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise )<`string`\>
 
 Get the platform (ios, android or web)
 
 #### Returns
 
-`string`
+[`Promise`]( https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise )<`string`\>
 
 platform
 
