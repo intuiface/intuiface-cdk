@@ -5,6 +5,19 @@
  */
 export class SystemInfoService
 {
+    /**
+     * Get the instance of the system info service.
+     * You have to call this method to be able to call other methods to get system information.
+     * ```ts
+     * await SystemInfoService.getInstance().getPlatform()
+     * ```
+     * @returns an instance of the system info service
+     */
+    public static getInstance(): SystemInfoService
+    {
+        return null;
+    }
+
     //#region Device info
 
     /**
@@ -27,8 +40,8 @@ export class SystemInfoService
      * Get the platform (ios, android or web)
      * @returns platform
      */
-    public getPlatform(): string {
-        return '';
+    public async getPlatform(): Promise<string> {
+        return await new Promise(r => { r(''); });
     }
 
     /**
