@@ -6,7 +6,6 @@ Service to get system information (device id, device name ...etc)
 
 ### Methods
 
-- [getInstance](SystemInfoService.md#getinstance)
 - [getDeviceId](SystemInfoService.md#getdeviceid)
 - [getDeviceName](SystemInfoService.md#getdevicename)
 - [getPlatform](SystemInfoService.md#getplatform)
@@ -14,20 +13,6 @@ Service to get system information (device id, device name ...etc)
 - [getApplicationName](SystemInfoService.md#getapplicationname)
 
 ## Methods
-
-### getInstance
-
-▸ `Static` **getInstance**(): [`SystemInfoService`](SystemInfoService.md)
-
-Get the instance of the system info service.
-
-#### Returns
-
-[`SystemInfoService`](SystemInfoService.md)
-
-an instance of the system info service
-
-___
 
 ### getDeviceId
 
