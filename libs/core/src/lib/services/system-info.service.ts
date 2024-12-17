@@ -5,15 +5,6 @@
  */
 export class SystemInfoService
 {
-    /**
-     * Get the instance of the system info service.
-     * @returns an instance of the system info service
-     */
-    public static getInstance(): SystemInfoService
-    {
-        return null;
-    }
-
     //#region Device info
 
     /**

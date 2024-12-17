@@ -80,6 +80,25 @@ export interface IPropertyOptions
  * public volume: number = 0; // declaration of the property
  * ```
  * _**Note**_: the name `volume` is in camelCase as the naming convention.
+ * 
+ * With Player version 8.0.2 and after, you can create your own getter and setter for the property. This is really helpful when you want some logic if the value of the property change.
+ * To do that, you have to declare your property with '_' (_volume)
+ * Then create a getter and setter like this :
+ * 
+ * ```ts
+ * public get volume(): number
+ * {
+ *      return this._volume;
+ * } 
+ * public set volume(newVolume: number)
+ * {
+ *      if(newVolume !== this._volume)
+ *      {
+ *          this._volume = newVolume;
+ *          // Your logic here ... 
+ *      }
+ * }
+ * ```
  *
  * ❗⚠️⚠️⚠️⚠️❗For property type `Array` there is a limitation: if you modify the array with methods like `push`, `pop`, `reduce`, `reverse`, `shift`, `sort`, `splice`... without calling a setter (e.g. `this.myArray = [...]`) bindings will not be updated. To fix that, you can use the method {@link Watchable.notifyPropertyChanged}.
  * @example I have an item list declared like this:
