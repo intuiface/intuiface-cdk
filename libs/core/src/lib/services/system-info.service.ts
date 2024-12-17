@@ -27,8 +27,8 @@ export class SystemInfoService
      * Get the platform (ios, android or web)
      * @returns platform
      */
-    public async getPlatform(): Promise<string> {
-        return await new Promise(r => { r(''); });
+    public getPlatform(): string {
+        return '';
     }
 
     /**
