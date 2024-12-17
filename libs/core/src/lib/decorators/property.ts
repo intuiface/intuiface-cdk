@@ -81,11 +81,21 @@ export interface IPropertyOptions
  * ```
  * _**Note**_: the name `volume` is in camelCase as the naming convention.
  * 
- * With Player version 8.0.2 and after, you can create your own getter and setter for the property. This is really helpful when you want some logic if the value of the property change.
- * To do that, you have to declare your property with '_' (_volume)
+ * **With Player version 8.0.2 and after**, you can create your own getter and setter for the property. This is really helpful when you want some logic if the value of the property change.
+ * To do that, you have to declare your property prefixed by `_` (i.e.: `_volume`)
  * Then create a getter and setter like this :
  * 
  * ```ts
+ * @Property({
+ *     displayName: 'Volume', // 'Volume' is the name of the property
+ *     description: 'Current volume in the media.', // here the description of the property
+ *     defaultValue: 1, // the default value of the property : 1
+ *     minValue: 0, // the minimum value : 0
+ *     maxValue: 1, // the maximum value : 1
+ *     type: Number // the property is a number (so binding on a text with '0.5' value will be converted in a number value 0.5)
+ * })
+ * public _volume: number = 0;
+ *
  * public get volume(): number
  * {
  *      return this._volume;
@@ -95,7 +105,7 @@ export interface IPropertyOptions
  *      if(newVolume !== this._volume)
  *      {
  *          this._volume = newVolume;
- *          // Your logic here ... 
+ *          // Put your code here and preferably use `this._volume` instead of `newVolume` as internal Player logic will have apply type conversion and custom range value on it.
  *      }
  * }
  * ```
