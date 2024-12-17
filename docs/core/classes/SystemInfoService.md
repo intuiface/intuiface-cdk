@@ -44,13 +44,13 @@ ___
 
 ### getPlatform
 
-▸ **getPlatform**(): [`Promise`]( https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise )<`string`\>
+▸ **getPlatform**(): `string`
 
 Get the platform (ios, android or web)
 
 #### Returns
 
-[`Promise`]( https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise )<`string`\>
+`string`
 
 platform
 
