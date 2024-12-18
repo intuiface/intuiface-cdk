@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.5.0](https://github.com/intuiface/intuiface-cdk/compare/v1.4.0...v1.5.0) (2024-12-18)
+
+
+### Features
+
+* **core:** Manage auto generated setter action ([#83](https://github.com/intuiface/intuiface-cdk/issues/83)) ([c0a5ef6](https://github.com/intuiface/intuiface-cdk/commit/c0a5ef6597513e1cc9a151eb70b13b9464659e17))
+
+
+### Bug Fixes
+
+* **core:** expose `getInstance()` on system-info.service ([#84](https://github.com/intuiface/intuiface-cdk/issues/84)) ([02d4cfe](https://github.com/intuiface/intuiface-cdk/commit/02d4cfeee6797e040b89170d9159acdeb56ae87f))
+
 ## [1.4.0](https://github.com/intuiface/intuiface-cdk/compare/v1.3.1...v1.4.0) (2024-08-28)
 
 
