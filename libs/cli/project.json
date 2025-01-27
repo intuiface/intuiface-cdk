@@ -1,0 +1,48 @@
+{
+    "name": "ifd",
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "sourceRoot": "libs/cli/src",
+    "projectType": "library",
+    "release": {
+        "version": {
+            "generatorOptions": {
+                "packageRoot": "dist/{projectRoot}",
+                "currentVersionResolver": "git-tag"
+            }
+        }
+    },
+    "tags": [],
+    "targets": {
+        "build": {
+            "executor": "nx:run-commands",
+            "options": {
+                "commands": [
+                    "nx run ifd:process-build",
+                    "chmod +x dist/libs/cli/src/ifd.js"
+                ],
+                "parallel": false
+            }
+        },
+        "process-build": {
+            "executor": "@nx/js:tsc",
+            "outputs": ["{options.outputPath}"],
+            "options": {
+                "updateBuildableProjectDepsInPackageJson": true,
+                "buildableProjectDepsInPackageJsonType": "dependencies",
+                "outputPath": "dist/libs/cli",
+                "tsConfig": "libs/cli/tsconfig.lib.json",
+                "packageJson": "libs/cli/package.json",
+                "main": "libs/cli/src/ifd.ts",
+                "assets": ["libs/cli/*.md"]
+            }
+        },
+        "nx-release-publish": {
+            "options": {
+                "packageRoot": "dist/{projectRoot}"
+            }
+        },
+        "lint": {
+            "executor": "@nx/eslint:lint"
+        }
+    }
+}

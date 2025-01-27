@@ -13,7 +13,7 @@
     ],
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
-    "esModuleInterop" : true,    
+    "esModuleInterop" : true,
     "declaration": false,
     "downlevelIteration": true,
     "moduleResolution": "node",

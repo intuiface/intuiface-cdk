@@ -17,7 +17,8 @@
         "lib": ["es2018", "dom"],
         "paths": {
             "@intuiface/components": ["libs/components/src/public-api.ts"],
-            "@intuiface/core": ["libs/core/src/public-api.ts"]
+            "@intuiface/core": ["libs/core/src/public-api.ts"],
+            "@intuiface/ifd": ["libs/cli/src/ifd.ts"]
         }
     },
     "exclude": ["node_modules", "tmp"],
