@@ -66,12 +66,12 @@ else
  * @param dir 
  */
 // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
-function cleanBuildFolders(dir: string): void
+function cleanBuildFolders(dir: string, iaName: string = undefined): void
 {
     // clean dist
-    if (fs.existsSync(`${dir}/dist/`))
+    if (iaName && fs.existsSync(`${dir}/dist/${iaName}`))
     {
-        fs.remove(`${dir}/dist/`);
+        fs.remove(`${dir}/dist/${iaName}`);
     }
     // clean tmp
     if (fs.existsSync(`${dir}/tmp/`))
@@ -88,7 +88,7 @@ async function loadIA(iaName: string | undefined): Promise<void>
 {
     const dir = process.cwd();
 
-    cleanBuildFolders(dir);
+    cleanBuildFolders(dir, iaName);
     try
     {
         // set interface asset to import in composer
@@ -144,7 +144,7 @@ async function loadIA(iaName: string | undefined): Promise<void>
 
 
             // write the ifd file
-            fs.outputFile(`dist/${iaName}.ifd`, JSON.stringify(globalThisAny.intuiface_ifd_file), 'utf8', (err: any) =>
+            fs.outputFile(`dist/${iaName}/${iaName}.ifd`, JSON.stringify(globalThisAny.intuiface_ifd_file), 'utf8', (err: any) =>
             {
                 if (err)
                 {
@@ -173,7 +173,7 @@ async function loadIA(iaName: string | undefined): Promise<void>
     }
     catch (e)
     {
-        cleanBuildFolders(dir);
+        cleanBuildFolders(dir, iaName);
         console.error(e);
     }
 }
