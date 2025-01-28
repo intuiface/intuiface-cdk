@@ -32,6 +32,35 @@ options of the property (display name, description, ...)
 
 _**Note**_: the name `volume` is in camelCase as the naming convention.
 
+**With Player version 8.0.2 and after**, you can create your own getter and setter for the property. This is really helpful when you want some logic if the value of the property change.
+To do that, you have to declare your property prefixed by `_` (i.e.: `_volume`)
+Then create a getter and setter like this :
+
+```ts
+@Property({
+    displayName: 'Volume', // 'Volume' is the name of the property
+    description: 'Current volume in the media.', // here the description of the property
+    defaultValue: 1, // the default value of the property : 1
+    minValue: 0, // the minimum value : 0
+    maxValue: 1, // the maximum value : 1
+    type: Number // the property is a number (so binding on a text with '0.5' value will be converted in a number value 0.5)
+})
+public _volume: number = 0;
+
+public get volume(): number
+{
+     return this._volume;
+} 
+public set volume(newVolume: number)
+{
+     if(newVolume !== this._volume)
+     {
+         this._volume = newVolume;
+         // Put your code here and preferably use `this._volume` instead of `newVolume` as internal Player logic will have apply type conversion and custom range value on it.
+     }
+}
+```
+
 ❗⚠️⚠️⚠️⚠️❗For property type `Array` there is a limitation: if you modify the array with methods like `push`, `pop`, `reduce`, `reverse`, `shift`, `sort`, `splice`... without calling a setter (e.g. `this.myArray = [...]`) bindings will not be updated. To fix that, you can use the method [Watchable.notifyPropertyChanged](../classes/Watchable.md#notifypropertychanged).
 
 ```ts
