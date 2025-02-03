@@ -11,7 +11,7 @@ const examples = "Valid message pattern: <TYPE>[(<SCOPE>)]!?: <SUBJECT> \n" +
 
 const fs = require('fs');
 
-const regex = /^(feat|feature|fix|perf|refactor|style|test|build|docs|chore|ci|revert|deps)(\((core|components|interface-asset|custom-asset|intuiface-cdk|\*)\))!?\s?:\s.*/gm;
+const regex = /^(feat|feature|fix|perf|refactor|style|test|build|docs|chore|ci|revert|deps)(\((core|components|interface-asset|custom-asset|intuiface-cdk|cli|\*)\))!?\s?:\s.*/gm;
 const regexMerge = /^(merge branch)\s.*/gm;
 
 // Alternative syntax using RegExp constructor
