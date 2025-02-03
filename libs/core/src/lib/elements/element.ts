@@ -6,9 +6,9 @@ import { ElementContainer } from './container';
  *
  * All this elements extends `IntuifaceElement` and use the appropriate decorator to make it usable in the experience, such as {@link Asset | `@Asset`} or {@link Collection | `@Collection`}.
  * 
- * Each element or collection has the same life cycle :
- * 1 - Constructor : Can be use to declare properties, set default values.
- * 2 - Initialize : Initialize the element with the configuration. The configuration contains the values of each properties defined in Composer.
+ * Each element or collection has the same life cycle :\
+ * 1 - Constructor : Can be use to declare properties, set default values.\
+ * 2 - Initialize : Initialize the element with the configuration. The configuration contains the values of each properties defined in Composer.\
  * 3 - Dispose : Dispose the element, remove all listeners, clear memory.
  * 
  * It is important to call the `super()` in each method to ensure the correct behavior of the element. 
