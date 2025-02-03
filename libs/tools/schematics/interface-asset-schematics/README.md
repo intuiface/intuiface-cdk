@@ -35,7 +35,7 @@ After installation is complete, restart VSCode if you want the code analyzer run
 
 Develop your interface asset using the skeleton or read the documentation for [Intuiface Core](https://github.com/intuiface/intuiface-cdk/blob/master/libs/core/README.md)
 
-Then run `npm run build` to build for production or `npm run build:debug` to debug your interface asset.
+Then run `npm run build` to build for production or `npm run build:debug` to debug your interface asset or you can use the [Command Line](./libs/cli/README).
 
 ## Help
 
