@@ -7,11 +7,13 @@ import { JSDOM } from 'jsdom';
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 import { promisify } from 'util';
+import yoctoSpinner, {Spinner} from 'yocto-spinner';
+
 
 const execPromise = promisify(exec);
 
 const y = yargs(hideBin(process.argv));
-const argv = y.argv as { name?: string; n?: string;[key: string]: unknown };
+const argv = y.argv as { name?: string; n?: string; icon?: string; i?: string; debug?: boolean; d?: boolean };
 
 const globalThisAny = globalThis as any;
 
@@ -20,7 +22,11 @@ const options = y
     .usage(usage)
     .option('name',
         {
-            alias: 'n', describe: 'The name of the IA file.', type: 'string', demandOption: false
+            alias: 'n', describe: 'The name of the IA file.', type: 'string', demandOption: true
+        })
+    .option('icon',
+        {
+            alias: 'i', describe: 'The path to the icon of the IA displayed in Composer Interface Asset panel.', type: 'string', demandOption: false
         })
     .option(
         'debug',
@@ -52,7 +58,7 @@ if (argv.name != null || argv.n != null)
         }
     }
 
-    void loadIA(argv.name || argv.n);
+    void loadIA(argv.name || argv.n, argv.i || argv.icon);
 }
 else
 {
@@ -84,8 +90,11 @@ function cleanBuildFolders(dir: string, iaName: string = undefined): void
  * import the IA
  */
 // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
-async function loadIA(iaName: string | undefined): Promise<void>
+async function loadIA(iaName: string | undefined, icon: string | undefined): Promise<void>
 {
+    const spinner: Spinner = yoctoSpinner({ text: 'Using intuiface CLI...' }).start();
+    spinner.info('Using intuiface CLI...');
+
     const dir = process.cwd();
 
     cleanBuildFolders(dir, iaName);
@@ -94,6 +103,7 @@ async function loadIA(iaName: string | undefined): Promise<void>
         // set interface asset to import in composer
         if (iaName !== undefined)
         {
+            const spinnerIFD: Spinner = yoctoSpinner({text: 'Generating ifd...'}).start();
             // transpile ia file
             await execPromise(`npx tsc --project ${dir}/tsconfig.ifd.json`);
             // copy package.json
@@ -142,18 +152,17 @@ async function loadIA(iaName: string | undefined): Promise<void>
                 'resources': resources
             };
 
+            let iconName = '';
+            if (icon)
+            {
+                // get the icon name from the icon path
+                iconName = icon.substring(icon.lastIndexOf('/') + 1);
+                // add the icon to the ifd file
+                globalThisAny.intuiface_ifd_file.icons = { x32: iconName };
+            }
 
             // write the ifd file
-            fs.outputFile(`dist/${iaName}/${iaName}.ifd`, JSON.stringify(globalThisAny.intuiface_ifd_file), 'utf8', (err: any) =>
-            {
-                if (err)
-                {
-                    console.log('An error occured while writing JSON Object to File.');
-                    return console.log(err);
-                }
-
-                console.log('IFD file has been saved.');
-            });
+            await writeIFDFile(iaName, globalThisAny.intuiface_ifd_file, spinnerIFD);
 
             // clean tmp
             if (fs.existsSync(`${dir}/tmp/`))
@@ -161,19 +170,62 @@ async function loadIA(iaName: string | undefined): Promise<void>
                 fs.remove(`${dir}/tmp/`);
             }
 
+            const spinnerIA: Spinner = yoctoSpinner({ text: `Building IA : ${iaName}...` }).start();
             if (!argv.debug)
             {
-                exec(`npx webpack --config ${dir}/webpack.config.js`);
+                await execPromise(`npx webpack --config ${dir}/webpack.config.js`);
             }
             else
             {
-                exec(`npx webpack --config ${dir}/webpack-debug.config.js`);
+                await execPromise(`npx webpack --config ${dir}/webpack-debug.config.js`);
             }
+            spinnerIA.success(`IA ${iaName} successfully built.`);
+
+            if(icon)
+            {
+                if (icon.startsWith('./'))
+                {
+                    icon = icon.substring(2);
+                }
+                const spinnerIcon: Spinner = yoctoSpinner({ text: `Copy icon ${iconName}...` }).start();
+                // copy the icon in dist folder
+                await execPromise(`shx cp ${dir}/${icon} ${dir}/dist/${iaName}/${iconName}`);
+                spinnerIcon.success(`Icon ${iconName} copied.`);
+            }
+
+            spinnerIA.success('Done, you can now use your IA in Composer.');
         }
+        spinner.stop();
     }
     catch (e)
     {
         cleanBuildFolders(dir, iaName);
-        console.error(e);
+        spinner.error(e);
     }
+}
+
+/**
+ * Write the ifd file
+ * @param iaName 
+ * @param ifd 
+ */
+// eslint-disable-next-line prefer-arrow/prefer-arrow-functions
+async function writeIFDFile(iaName: string, ifd: any, spinner: Spinner): Promise<void>
+{
+    return new Promise((resolve, reject) =>
+    {
+        // write the ifd file
+        fs.outputFile(`dist/${iaName}/${iaName}.ifd`, JSON.stringify(ifd), 'utf8', (err: any) =>
+        {
+            if (err)
+            {
+                spinner.error('An error occurred while writing JSON Object to File.');
+                reject(err);
+                return spinner.error(err);
+            }
+
+            spinner.success('IFD file has been saved.');
+            resolve();
+        });
+    });
 }

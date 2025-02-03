@@ -83,7 +83,8 @@
         "typedoc": "^0.26.7",
         "typedoc-plugin-markdown": "4.2.7",
         "typedoc-plugin-mdn-links": "3.1.0",
-        "typescript": "5.4.5"
+        "typescript": "5.4.5",
+        "yocto-spinner": "^0.2.0"
     },
     "nx": {
         "includedScripts": []
