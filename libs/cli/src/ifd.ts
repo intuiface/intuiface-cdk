@@ -215,7 +215,7 @@ async function writeIFDFile(iaName: string, ifd: any, spinner: Spinner): Promise
     return new Promise((resolve, reject) =>
     {
         // write the ifd file
-        fs.outputFile(`dist/${iaName}/${iaName}.ifd`, JSON.stringify(ifd), 'utf8', (err: any) =>
+        fs.outputFile(`dist/${iaName}/${iaName}.ifd`, JSON.stringify(ifd, null, 2), 'utf8', (err: any) =>
         {
             if (err)
             {
