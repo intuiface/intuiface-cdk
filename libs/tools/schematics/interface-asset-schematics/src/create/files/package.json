@@ -7,9 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "npx ifd -n <%= IAName %>",
     "build:debug": "npx ifd -n <%= IAName %> -d",
-    "lint": "npx eslint -c .eslintrc.js --ext .ts .",
-    "cleanDist": "node -e \"require('fs-extra').remove('dist/<%= IAName %>/');\"",
-    "cleanTmp": "node -e \"require('fs-extra').remove('tmp/');\""
+    "lint": "npx eslint -c .eslintrc.js --ext .ts ."
   },
   "keywords": [],
   "author": "",

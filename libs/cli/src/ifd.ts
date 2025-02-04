@@ -105,7 +105,7 @@ async function loadIA(iaName: string | undefined, icon: string | undefined): Pro
         {
             const spinnerIFD: Spinner = yoctoSpinner({text: 'Generating ifd...'}).start();
             // transpile ia file
-            await execPromise(`npx tsc --project ${dir}/tsconfig.ifd.json`);
+            await execPromise(`npx tsc --project ${dir}/tsconfig.json --outDir ${dir}/tmp/`);
             // copy package.json
             await execPromise(`shx cp ${dir}/src/package.json ${dir}/tmp/`);
 
