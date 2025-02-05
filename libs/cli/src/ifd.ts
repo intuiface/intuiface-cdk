@@ -13,58 +13,55 @@ import yoctoSpinner, {Spinner} from 'yocto-spinner';
 const execPromise = promisify(exec);
 
 const y = yargs(hideBin(process.argv));
-const argv = y.argv as { name?: string; n?: string; icon?: string; i?: string; debug?: boolean; d?: boolean };
+// const argv = y.argv as { name?: string; n?: string; icon?: string; i?: string; debug?: boolean; d?: boolean };
 
 const globalThisAny = globalThis as any;
 
 const usage = '\nUsage: Generate ifd file and build the IA <name> to be able to add it in an Intuiface Experience.';
 const options = y
-    .usage(usage)
-    .option('name',
+    .command('$0 <name|n> [icon|i] [debug|d]', usage,
+        () =>
         {
-            alias: 'n', describe: 'The name of the IA file.', type: 'string', demandOption: true
+            y.option('name', { alias: 'n', describe: 'The name of the IA file.', type: 'string', demandOption: true });
+            y.option('icon', { alias: 'i', describe: 'The path to the icon of the IA displayed in Composer Interface Asset panel.', type: 'string', demandOption: false });
+            y.option('debug', { alias: 'd', describe: 'Build in debug mode.', type: 'boolean', demandOption: false });
+        },
+        (args) =>
+        {
+
+            // Check parameters
+            if (args.name != null || args.n != null)
+            {
+            // create object to store metadatas
+                globalThisAny.intuiface_ifd_name = args.name || args.n;
+                globalThisAny.intuiface_ifd_classes = [];
+                globalThisAny.intuiface_ifd_properties = {};
+                globalThisAny.intuiface_ifd_actions = {};
+                globalThisAny.intuiface_ifd_params = {};
+                globalThisAny.intuiface_ifd_triggers = {};
+
+                // Initialize dom feature
+                globalThisAny.window = new JSDOM('', { url: 'https://web.intuiface.com/' }).window;
+                // Inject everything from `window` into global scope
+                for (const key in globalThisAny.window)
+                {
+                    if (Object.prototype.hasOwnProperty.call(globalThisAny.window, key) && globalThisAny[key] === undefined)
+                    {
+                        globalThisAny[key] = globalThisAny.window[key];
+                    }
+                }
+
+                void loadIA(args.name as string || args.n as string,
+                    args.i as string || args.icon as string,
+                    args.debug !== undefined || args.d !== undefined);
+            }
         })
-    .option('icon',
-        {
-            alias: 'i', describe: 'The path to the icon of the IA displayed in Composer Interface Asset panel.', type: 'string', demandOption: false
-        })
-    .option(
-        'debug',
-        {
-            alias: 'd', describe: 'Build in debug mode.', type: 'boolean', demandOption: false
-        })
-    .help().argv;
-
-
-// Check parameters
-if (argv.name != null || argv.n != null)
-{
-    // create object to store metadatas
-    globalThisAny.intuiface_ifd_name = argv.name || argv.n;
-    globalThisAny.intuiface_ifd_classes = [];
-    globalThisAny.intuiface_ifd_properties = {};
-    globalThisAny.intuiface_ifd_actions = {};
-    globalThisAny.intuiface_ifd_params = {};
-    globalThisAny.intuiface_ifd_triggers = {};
-
-    // Initialize dom feature
-    globalThisAny.window = new JSDOM('', { url: 'https://web.intuiface.com/' }).window;
-    // Inject everything from `window` into global scope
-    for (const key in globalThisAny.window)
-    {
-        if (Object.prototype.hasOwnProperty.call(globalThisAny.window, key) && globalThisAny[key] === undefined)
-        {
-            globalThisAny[key] = globalThisAny.window[key];
-        }
-    }
-
-    void loadIA(argv.name || argv.n, argv.i || argv.icon);
-}
-else
-{
-    // show help if parameters are not correct
-    y.showHelp();
-}
+    .command('migrate', 'Migrate old projects to new CLI.', {}, () => {
+        migrateProject();
+    })
+    .wrap(null)
+    .help()
+    .parse();
 
 
 /**
@@ -77,12 +74,12 @@ function cleanBuildFolders(dir: string, iaName: string = undefined): void
     // clean dist
     if (iaName && fs.existsSync(`${dir}/dist/${iaName}`))
     {
-        fs.remove(`${dir}/dist/${iaName}`);
+        fs.removeSync(`${dir}/dist/${iaName}`);
     }
     // clean tmp
     if (fs.existsSync(`${dir}/tmp/`))
     {
-        fs.remove(`${dir}/tmp/`);
+        fs.removeSync(`${dir}/tmp/`);
     }
 }
 
@@ -90,7 +87,7 @@ function cleanBuildFolders(dir: string, iaName: string = undefined): void
  * import the IA
  */
 // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
-async function loadIA(iaName: string | undefined, icon: string | undefined): Promise<void>
+async function loadIA(iaName: string | undefined, icon: string | undefined, debug?: boolean): Promise<void>
 {
     const spinner: Spinner = yoctoSpinner({ text: 'Using intuiface CLI...' }).start();
     spinner.info('Using intuiface CLI...');
@@ -130,7 +127,6 @@ async function loadIA(iaName: string | undefined, icon: string | undefined): Pro
                 };
             }
 
-
             resources[iaName]['if.interfaceAsset'] = true;
             resources[iaName].title = globalThisAny.iaTitle;
             resources[iaName].description = globalThisAny.iaDescription;
@@ -167,11 +163,11 @@ async function loadIA(iaName: string | undefined, icon: string | undefined): Pro
             // clean tmp
             if (fs.existsSync(`${dir}/tmp/`))
             {
-                fs.remove(`${dir}/tmp/`);
+                fs.removeSync(`${dir}/tmp/`);
             }
 
             const spinnerIA: Spinner = yoctoSpinner({ text: `Building IA : ${iaName}...` }).start();
-            if (!argv.debug)
+            if (!debug)
             {
                 await execPromise(`npx webpack --config ${dir}/webpack.config.js`);
             }
@@ -201,6 +197,7 @@ async function loadIA(iaName: string | undefined, icon: string | undefined): Pro
     {
         cleanBuildFolders(dir, iaName);
         spinner.error(e);
+        process.exit(-1);
     }
 }
 
@@ -228,4 +225,60 @@ async function writeIFDFile(iaName: string, ifd: any, spinner: Spinner): Promise
             resolve();
         });
     });
+}
+
+// eslint-disable-next-line prefer-arrow/prefer-arrow-functions
+function migrateProject(): void
+{
+    const dir = process.env.INIT_CWD;
+
+    const spinner: Spinner = yoctoSpinner({ text: 'Running migration to new CLI...' }).start();
+    // check for index_ifd.ts
+    if (fs.existsSync(`${dir}/src/index_ifd.ts`))
+    {
+
+
+        try
+        {
+            // read index_ifd.ts to get ia name
+            const indexIFD = fs.readFileSync(`${dir}/src/index_ifd.ts`);
+            const regexp = /const ia = await import\('.\/(.*).js'\);/g;
+
+            // get line with import of IA file
+            if (indexIFD && indexIFD.includes('const ia = await import('))
+            {
+                // get ia name with a regexp
+                const iaName = regexp.exec(indexIFD)[1];
+                // read the package.json
+                const packageJson = fs.readJsonSync(`${dir}/package.json`, { flag: 'r' });
+                // edit script build
+                packageJson.scripts.build = `npx ifd -n ${iaName}`;
+                packageJson.scripts['build:debug'] = `npx ifd -n ${iaName} -d`;
+                // remove old scripts
+                delete packageJson.scripts.cleanDist;
+                delete packageJson.scripts.cleanTmp;
+
+                // write package.json
+                fs.writeFileSync(`${dir}/package.json`, JSON.stringify(packageJson, null, 2));
+
+                // remove index_ifd.ts
+                fs.removeSync(`${dir}/src/index_ifd.ts`);
+                // remove tsconfig.ifd.json
+                fs.removeSync(`${dir}/tsconfig.ifd.json`);
+                // clear dist folder
+                fs.removeSync(`${dir}/dist`);
+
+                spinner.success('Migration completed. You can now use the new CLI.');
+            }
+        } catch (error)
+        {
+            spinner.error(error);
+            process.exit(-2);
+        }
+    }
+    else
+    {
+        spinner.success('Migration was already done. You can now use the new CLI.');
+    }
+
 }

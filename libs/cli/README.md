@@ -50,4 +50,8 @@ For existing project, installing the command line with
 ```sh
 npm install @intuiface/ifd
 ```
-will automatically migrate your project to be compatible with CLI.
+then you can call 
+```sh
+npm ifd migrate
+```
+to automatically migrate your project to be compatible with CLI.

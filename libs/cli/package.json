@@ -7,7 +7,6 @@
     "type": "module",
     "scripts": {
         "build": "nx run ifd:build && chmod +x dist/libs/cli/ifd.js",
-        "watch": "nx run ifd:build --watch",
-        "postinstall": "node ./src/migrate.js"
+        "watch": "nx run ifd:build --watch"
     }
 }
