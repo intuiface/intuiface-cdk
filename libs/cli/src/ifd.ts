@@ -4,65 +4,62 @@
 import { exec } from 'child_process';
 import fs from 'fs-extra';
 import { JSDOM } from 'jsdom';
-import yargs from 'yargs';
-import { hideBin } from 'yargs/helpers';
 import { promisify } from 'util';
 import yoctoSpinner, {Spinner} from 'yocto-spinner';
-
+import { Command } from 'commander';
 
 const execPromise = promisify(exec);
-
-const y = yargs(hideBin(process.argv));
-// const argv = y.argv as { name?: string; n?: string; icon?: string; i?: string; debug?: boolean; d?: boolean };
 
 const globalThisAny = globalThis as any;
 
 const usage = '\nUsage: Generate ifd file and build the IA <name> to be able to add it in an Intuiface Experience.';
-const options = y
-    .command('$0 <name|n> [icon|i] [debug|d]', usage,
-        () =>
-        {
-            y.option('name', { alias: 'n', describe: 'The name of the IA file.', type: 'string', demandOption: true });
-            y.option('icon', { alias: 'i', describe: 'The path to the icon of the IA displayed in Composer Interface Asset panel.', type: 'string', demandOption: false });
-            y.option('debug', { alias: 'd', describe: 'Build in debug mode.', type: 'boolean', demandOption: false });
-        },
-        (args) =>
-        {
 
-            // Check parameters
-            if (args.name != null || args.n != null)
-            {
+const program = new Command();
+
+const ifdCmd = program
+    .name('ifd')
+    .description(usage);
+
+
+ifdCmd.command('build')
+    .requiredOption('-n, --name <name>', 'The name of the IA file.')
+    .option('-i, --icon [icon]', 'The path to the icon of the IA displayed in Composer Interface Asset panel.')
+    .option('-d, --debug', 'Build in debug mode.')
+    .action((options) =>
+    {
+        // Check parameters
+        if (options.name != null)
+        {
             // create object to store metadatas
-                globalThisAny.intuiface_ifd_name = args.name || args.n;
-                globalThisAny.intuiface_ifd_classes = [];
-                globalThisAny.intuiface_ifd_properties = {};
-                globalThisAny.intuiface_ifd_actions = {};
-                globalThisAny.intuiface_ifd_params = {};
-                globalThisAny.intuiface_ifd_triggers = {};
+            globalThisAny.intuiface_ifd_name = options.name;
+            globalThisAny.intuiface_ifd_classes = [];
+            globalThisAny.intuiface_ifd_properties = {};
+            globalThisAny.intuiface_ifd_actions = {};
+            globalThisAny.intuiface_ifd_params = {};
+            globalThisAny.intuiface_ifd_triggers = {};
 
-                // Initialize dom feature
-                globalThisAny.window = new JSDOM('', { url: 'https://web.intuiface.com/' }).window;
-                // Inject everything from `window` into global scope
-                for (const key in globalThisAny.window)
+            // Initialize dom feature
+            globalThisAny.window = new JSDOM('', { url: 'https://web.intuiface.com/' }).window;
+            // Inject everything from `window` into global scope
+            for (const key in globalThisAny.window)
+            {
+                if (Object.prototype.hasOwnProperty.call(globalThisAny.window, key) && globalThisAny[key] === undefined)
                 {
-                    if (Object.prototype.hasOwnProperty.call(globalThisAny.window, key) && globalThisAny[key] === undefined)
-                    {
-                        globalThisAny[key] = globalThisAny.window[key];
-                    }
+                    globalThisAny[key] = globalThisAny.window[key];
                 }
-
-                void loadIA(args.name as string || args.n as string,
-                    args.i as string || args.icon as string,
-                    args.debug !== undefined || args.d !== undefined);
             }
-        })
-    .command('migrate', 'Migrate old projects to new CLI.', {}, () => {
-        migrateProject();
-    })
-    .wrap(null)
-    .help()
-    .parse();
 
+            void loadIA(options.name, options.icon, options.debug);
+        }
+    });
+
+// add subcommand
+ifdCmd.command('migrate').action(() =>
+{
+    migrateProject();
+});
+program.parse();
+program.showHelpAfterError();
 
 /**
  * Clean build folders
@@ -107,6 +104,11 @@ async function loadIA(iaName: string | undefined, icon: string | undefined, debu
             await execPromise(`shx cp ${dir}/src/package.json ${dir}/tmp/`);
 
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            if(!fs.existsSync(`${dir}/tmp/${iaName}.js`))
+            {
+                spinnerIFD.error(`Fail generating IFD file for ${iaName}. Please check the name is correct and try again`);
+                process.exit(-3);
+            }
             const ia = await import(`${dir}/tmp/${iaName}.js`);
 
             const schemas: any = {};
@@ -216,11 +218,13 @@ async function writeIFDFile(iaName: string, ifd: any, spinner: Spinner): Promise
         {
             if (err)
             {
+                console.error(err);
                 spinner.error('An error occurred while writing JSON Object to File.');
                 reject(err);
                 return spinner.error(err);
             }
 
+            console.log('IFD file has been saved.');
             spinner.success('IFD file has been saved.');
             resolve();
         });
@@ -236,8 +240,6 @@ function migrateProject(): void
     // check for index_ifd.ts
     if (fs.existsSync(`${dir}/src/index_ifd.ts`))
     {
-
-
         try
         {
             // read index_ifd.ts to get ia name
@@ -252,8 +254,8 @@ function migrateProject(): void
                 // read the package.json
                 const packageJson = fs.readJsonSync(`${dir}/package.json`, { flag: 'r' });
                 // edit script build
-                packageJson.scripts.build = `npx ifd -n ${iaName}`;
-                packageJson.scripts['build:debug'] = `npx ifd -n ${iaName} -d`;
+                packageJson.scripts.build = `npx ifd build -n ${iaName}`;
+                packageJson.scripts['build:debug'] = `npx ifd build -n ${iaName} -d`;
                 // remove old scripts
                 delete packageJson.scripts.cleanDist;
                 delete packageJson.scripts.cleanTmp;
