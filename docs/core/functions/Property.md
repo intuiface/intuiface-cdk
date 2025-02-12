@@ -32,7 +32,7 @@ options of the property (display name, description, ...)
 
 _**Note**_: the name `volume` is in camelCase as the naming convention.
 
-**With Player version 8.0.2 and after**, you can create your own getter and setter for the property. This is really helpful when you want some logic if the value of the property change.
+**With Player version 8.0.3 and after**, you can create your own getter and setter for the property. This is really helpful when you want some logic if the value of the property change.
 To do that, you have to declare your property prefixed by `_` (i.e.: `_volume`)
 Then create a getter and setter like this :
 
