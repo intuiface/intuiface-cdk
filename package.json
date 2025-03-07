@@ -8,7 +8,7 @@
     "scripts": {
         "nx": "nx",
         "start": "nx serve",
-        "build": "nx build core --prod && nx build components --prod && nx build interface-asset-schematics --prod && nx build custom-asset-schematics --prod && nx build ifd --prod",
+        "build": "nx build core --prod && nx build components --prod && nx build interface-asset-schematics --prod && nx build custom-asset-schematics --prod && nx build cli --prod",
         "lint": "npx eslint -c .eslintrc.js --ext .ts .",
         "update": "nx migrate latest",
         "workspace-generator": "nx workspace-generator",

@@ -18,7 +18,7 @@
         "paths": {
             "@intuiface/components": ["libs/components/src/public-api.ts"],
             "@intuiface/core": ["libs/core/src/public-api.ts"],
-            "@intuiface/ifd": ["libs/cli/src/ifd.ts"]
+            "@intuiface/cli": ["libs/cli/src/cli.ts"]
         }
     },
     "exclude": ["node_modules", "tmp"],

@@ -2,6 +2,6 @@
     "@intuiface/core": "1.4.0",
     "@intuiface/components": "1.4.0",
     "@intuiface/custom-asset": "1.4.0",
-    "@intuiface/ifd": "1.4.0",
+    "@intuiface/cli": "1.4.0",
     "@angular-architects/module-federation": "^17.0.8"
 }

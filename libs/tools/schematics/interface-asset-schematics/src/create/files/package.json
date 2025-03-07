@@ -5,8 +5,8 @@
   "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "npx ifd build -n <%= IAName %>",
-    "build:debug": "npx ifd build -n <%= IAName %> -d",
+    "build": "npx intuiface-cli build -n <%= IAName %>",
+    "build:debug": "npx intuiface-cli build -n <%= IAName %> -d",
     "lint": "npx eslint -c .eslintrc.js --ext .ts ."
   },
   "keywords": [],
@@ -33,7 +33,7 @@
   },
   "dependencies": {
     "@intuiface/core": "1.4.0",
-    "@intuiface/ifd": "1.4.0",
+    "@intuiface/cli": "1.4.0",
     "tslib": "^2.4.0"
   }
 }

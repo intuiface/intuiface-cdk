@@ -1,12 +1,12 @@
 {
-    "name": "@intuiface/ifd",
+    "name": "@intuiface/cli",
     "version": "1.4.0",
     "bin": {
-        "ifd": "./src/ifd.js"
+        "intuiface-cli": "./src/cli.js"
     },
     "type": "module",
     "scripts": {
-        "build": "nx run ifd:build && chmod +x dist/libs/cli/ifd.js",
-        "watch": "nx run ifd:build --watch"
+        "build": "nx run cli:build && chmod +x dist/libs/cli/cli.js",
+        "watch": "nx run cli:build --watch"
     }
 }

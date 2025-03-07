@@ -17,7 +17,7 @@ const usage = '\nUsage: Generate ifd file and build the IA <name> to be able to 
 const program = new Command();
 
 const ifdCmd = program
-    .name('ifd')
+    .name('intuiface-cli')
     .description(usage);
 
 
@@ -254,8 +254,8 @@ function migrateProject(): void
                 // read the package.json
                 const packageJson = fs.readJsonSync(`${dir}/package.json`, { flag: 'r' });
                 // edit script build
-                packageJson.scripts.build = `npx ifd build -n ${iaName}`;
-                packageJson.scripts['build:debug'] = `npx ifd build -n ${iaName} -d`;
+                packageJson.scripts.build = `npx intuiface-cli build -n ${iaName}`;
+                packageJson.scripts['build:debug'] = `npx intuiface-cli build -n ${iaName} -d`;
                 // remove old scripts
                 delete packageJson.scripts.cleanDist;
                 delete packageJson.scripts.cleanTmp;
