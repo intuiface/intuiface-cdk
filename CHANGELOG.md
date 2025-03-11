@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.5.0](https://github.com/intuiface/intuiface-cdk/compare/v1.4.0...v1.5.0) (2025-03-11)
+
+
+### Features
+
+* **core:** Manage auto generated setter action ([#83](https://github.com/intuiface/intuiface-cdk/issues/83)) ([c0a5ef6](https://github.com/intuiface/intuiface-cdk/commit/c0a5ef6597513e1cc9a151eb70b13b9464659e17))
+
+
+### Bug Fixes
+
+* **core:** add default values to parameters in ifd file ([#87](https://github.com/intuiface/intuiface-cdk/issues/87)) ([7a5ffda](https://github.com/intuiface/intuiface-cdk/commit/7a5ffda4da2d5b0c4beb072f7ed97685dd858a8c))
+* **core:** expose `getInstance()` on system-info.service ([#84](https://github.com/intuiface/intuiface-cdk/issues/84)) ([02d4cfe](https://github.com/intuiface/intuiface-cdk/commit/02d4cfeee6797e040b89170d9159acdeb56ae87f))
+
 ## [1.4.0](https://github.com/intuiface/intuiface-cdk/compare/v1.3.1...v1.4.0) (2024-08-28)
 
 
