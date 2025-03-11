@@ -1,17 +1,4 @@
 {
-    "affected": {
-        "defaultBase": "master"
-    },
-    "npmScope": "intuiface-cdk",
-    "tasksRunnerOptions": {
-        "default": {
-            "runner": "nx/tasks-runners/default",
-            "options": {
-                "cacheableOperations": ["build", "lint", "test", "e2e"],
-                "parallel": 1
-            }
-        }
-    },
     "targetDependencies": {
         "build": [
             {
@@ -19,9 +6,6 @@
                 "projects": "dependencies"
             }
         ]
-    },
-    "cli": {
-        "defaultCollection": "@nx/angular"
     },
     "defaultProject": "cdk",
     "generators": {
@@ -68,17 +52,15 @@
     },
     "targetDefaults": {
         "build": {
-            "inputs": ["production", "^production"]
+            "inputs": ["production", "^production"],
+            "cache": true
         },
-        "lint": {
-            "inputs": ["default", "{workspaceRoot}/.eslintrc.js"]
-        },
-        "test": {
-            "inputs": [
-                "default",
-                "^production",
-                "{workspaceRoot}/jest.preset.js"
-            ]
+        "@nx/eslint:lint": {
+            "inputs": ["default", "{workspaceRoot}/.eslintrc.js"],
+            "cache": true
         }
-    }
+    },
+    "parallel": 1,
+    "useInferencePlugins": false,
+    "defaultBase": "master"
 }

@@ -1,75 +1,60 @@
+[**@intuiface/core**](../README.md) • **Docs**
+
+***
+
 # Class: Resource
 
 Class to use when a property is using a resource from an experience.
 
-**`Example`**
-
-```ts
-@Property({
-    displayName: 'Source',
-    description: 'Source of the data.',
-    defaultValue: null,
-    type: Resource
-})
-public source: Resource;
-```
+## Example
 
 ## Implements
 
 - [`IConvertibleType`](../interfaces/IConvertibleType.md)
 
-## Table of contents
-
-### Methods
-
-- [convertFrom](Resource.md#convertfrom)
-- [canConvertFrom](Resource.md#canconvertfrom)
-- [toString](Resource.md#tostring)
-- [canConvertTo](Resource.md#canconvertto)
-- [convertTo](Resource.md#convertto)
-
 ## Methods
 
-### convertFrom
+### convertFrom()
 
-▸ `Static` **convertFrom**(`value`, `propertyOwner?`): [`Resource`](Resource.md)
+> `static` **convertFrom**(`value`, `propertyOwner`?): [`Resource`](Resource.md)
 
 Convert a value to a Resource
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `value` | `string` | value to convert |
-| `propertyOwner?` | `any` | - |
+• **value**: `string`
+
+value to convert
+
+• **propertyOwner?**: `any`
 
 #### Returns
 
 [`Resource`](Resource.md)
 
-___
+***
 
-### canConvertFrom
+### canConvertFrom()
 
-▸ `Static` **canConvertFrom**(`value`): `boolean`
+> `static` **canConvertFrom**(`value`): `boolean`
 
 Check if we can convert value to Resource
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `value` | `string` | value to convert |
+• **value**: `string`
+
+value to convert
 
 #### Returns
 
 `boolean`
 
-___
+***
 
-### toString
+### toString()
 
-▸ **toString**(): `string`
+> **toString**(): `string`
 
 Transform resource to string
 
@@ -79,21 +64,21 @@ Transform resource to string
 
 #### Implementation of
 
-[IConvertibleType](../interfaces/IConvertibleType.md).[toString](../interfaces/IConvertibleType.md#tostring)
+[`IConvertibleType`](../interfaces/IConvertibleType.md).[`toString`](../interfaces/IConvertibleType.md#tostring)
 
-___
+***
 
-### canConvertTo
+### canConvertTo()
 
-▸ **canConvertTo**(`type`): `boolean`
+> **canConvertTo**(`type`): `boolean`
 
 Check if the type can be converted
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `type` | `unknown` | targeted type |
+• **type**: `unknown`
+
+targeted type
 
 #### Returns
 
@@ -101,21 +86,21 @@ Check if the type can be converted
 
 #### Implementation of
 
-[IConvertibleType](../interfaces/IConvertibleType.md).[canConvertTo](../interfaces/IConvertibleType.md#canconvertto)
+[`IConvertibleType`](../interfaces/IConvertibleType.md).[`canConvertTo`](../interfaces/IConvertibleType.md#canconvertto)
 
-___
+***
 
-### convertTo
+### convertTo()
 
-▸ **convertTo**(`type`): `unknown`
+> **convertTo**(`type`): `unknown`
 
 Function to convert a Resource to another type
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `type` | `unknown` | targeted type |
+• **type**: `unknown`
+
+targeted type
 
 #### Returns
 
@@ -123,7 +108,7 @@ Function to convert a Resource to another type
 
 #### Implementation of
 
-[IConvertibleType](../interfaces/IConvertibleType.md).[convertTo](../interfaces/IConvertibleType.md#convertto)
+[`IConvertibleType`](../interfaces/IConvertibleType.md).[`convertTo`](../interfaces/IConvertibleType.md#convertto)
 
 
 ## Help

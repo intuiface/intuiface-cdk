@@ -1,27 +1,24 @@
+[**@intuiface/core**](../README.md) • **Docs**
+
+***
+
 # Interface: DownloadProgress
 
 Object containing information about a download progress.
-
-## Table of contents
-
-### Properties
-
-- [receivedLength](DownloadProgress.md#receivedlength)
-- [contentLength](DownloadProgress.md#contentlength)
 
 ## Properties
 
 ### receivedLength
 
-• **receivedLength**: `number`
+> **receivedLength**: `number`
 
 Number of bytes received for this download
 
-___
+***
 
 ### contentLength
 
-• **contentLength**: `number`
+> **contentLength**: `number`
 
 Number of total bytes to download from the `Response` content.
 

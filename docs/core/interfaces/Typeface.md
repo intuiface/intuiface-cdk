@@ -1,71 +1,62 @@
+[**@intuiface/core**](../README.md) • **Docs**
+
+***
+
 # Interface: Typeface
 
 Interface of font.
-
-## Implemented by
-
-- [`Font`](../classes/Font.md)
-
-## Table of contents
-
-### Properties
-
-- [family](Typeface.md#family)
-- [stretch](Typeface.md#stretch)
-- [weight](Typeface.md#weight)
-- [style](Typeface.md#style)
 
 ## Properties
 
 ### family
 
-• **family**: `string`
+> **family**: `string`
 
 Family of the font.
 
-**`Example`**
+#### Example
 
 ```ts
 'arial'
 ```
 
-___
+***
 
 ### stretch
 
-• **stretch**: `string`
+> **stretch**: `string`
 
 Stretch of the font.
 
-**`Example`**
+#### Example
 
 ```ts
 'narrow'
 ```
 
-___
+***
 
 ### weight
 
-• **weight**: `string`
+> **weight**: `string`
 
 Weight of the font.
 
-**`Example`**
+#### Example
 
 ```ts
 'bold'
 ```
 
-___
+***
 
 ### style
 
-• **style**: `string`
+> **style**: `string`
 
 Style of the font.
 
-**`Example`**
+#### Example
 
 ```ts
 'italic'

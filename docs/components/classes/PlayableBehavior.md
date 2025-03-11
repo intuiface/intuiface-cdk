@@ -1,145 +1,112 @@
+[**@intuiface/components**](../README.md) • **Docs**
+
+***
+
 # Class: PlayableBehavior
 
 Behavior to manage a playable media.
-
-## Table of contents
-
-### Properties
-
-- [playableState](PlayableBehavior.md#playablestate)
-- [currentTime](PlayableBehavior.md#currenttime)
-- [duration](PlayableBehavior.md#duration)
-- [speed](PlayableBehavior.md#speed)
-- [isAutoplay](PlayableBehavior.md#isautoplay)
-- [isAutoplayOnRewind](PlayableBehavior.md#isautoplayonrewind)
-- [isLoop](PlayableBehavior.md#isloop)
-- [showControls](PlayableBehavior.md#showcontrols)
-- [showControlsBehavior](PlayableBehavior.md#showcontrolsbehavior)
-- [playingIsActivity](PlayableBehavior.md#playingisactivity)
-- [pauseWhenHidden](PlayableBehavior.md#pausewhenhidden)
-- [playableElement](PlayableBehavior.md#playableelement)
-
-### Methods
-
-- [raisePlayRequested](PlayableBehavior.md#raiseplayrequested)
-- [raisePauseRequested](PlayableBehavior.md#raisepauserequested)
-- [raiseRewindRequested](PlayableBehavior.md#raiserewindrequested)
-- [raiseLooped](PlayableBehavior.md#raiselooped)
-- [raiseTimeReached](PlayableBehavior.md#raisetimereached)
-- [raiseTimelineMoved](PlayableBehavior.md#raisetimelinemoved)
-- [raiseEnded](PlayableBehavior.md#raiseended)
-- [play](PlayableBehavior.md#play)
-- [stop](PlayableBehavior.md#stop)
-- [pause](PlayableBehavior.md#pause)
-- [togglePlayPause](PlayableBehavior.md#toggleplaypause)
-- [rewind](PlayableBehavior.md#rewind)
-- [setTimeline](PlayableBehavior.md#settimeline)
-- [turnOnAutoplay](PlayableBehavior.md#turnonautoplay)
-- [turnOffAutoplay](PlayableBehavior.md#turnoffautoplay)
-- [turnOnLoop](PlayableBehavior.md#turnonloop)
-- [turnOffLoop](PlayableBehavior.md#turnoffloop)
 
 ## Properties
 
 ### playableState
 
-• **playableState**: [`EPlayableState`](../enums/EPlayableState.md) = `EPlayableState.STOPPED`
+> **playableState**: [`EPlayableState`](../enumerations/EPlayableState.md) = `EPlayableState.STOPPED`
 
 State.
 
-___
+***
 
 ### currentTime
 
-• **currentTime**: `Time` = `Time.Zero`
+> **currentTime**: `Time` = `Time.Zero`
 
 Current time.
 
-___
+***
 
 ### duration
 
-• **duration**: `Time` = `Time.One`
+> **duration**: `Time` = `Time.One`
 
 Duration.
 
-___
+***
 
 ### speed
 
-• **speed**: `number` = `1`
+> **speed**: `number` = `1`
 
 Speed.
 
-___
+***
 
 ### isAutoplay
 
-• **isAutoplay**: `boolean` = `false`
+> **isAutoplay**: `boolean` = `false`
 
 Autoplay.
 
-___
+***
 
 ### isAutoplayOnRewind
 
-• **isAutoplayOnRewind**: `boolean` = `true`
+> **isAutoplayOnRewind**: `boolean` = `true`
 
 AutoplayOnRewind.
 
-___
+***
 
 ### isLoop
 
-• **isLoop**: `boolean` = `false`
+> **isLoop**: `boolean` = `false`
 
 Loop.
 
-___
+***
 
 ### showControls
 
-• **showControls**: `boolean` = `true`
+> **showControls**: `boolean` = `true`
 
 Show controls.
 
-___
+***
 
 ### showControlsBehavior
 
-• **showControlsBehavior**: `EShowControlsBehavior` = `EShowControlsBehavior.Temporary`
+> **showControlsBehavior**: `EShowControlsBehavior` = `EShowControlsBehavior.Temporary`
 
 Show controls behavior.
 
-___
+***
 
 ### playingIsActivity
 
-• **playingIsActivity**: `boolean` = `true`
+> **playingIsActivity**: `boolean` = `true`
 
 Playing is activity
 
-___
+***
 
 ### pauseWhenHidden
 
-• **pauseWhenHidden**: `boolean` = `true`
+> **pauseWhenHidden**: `boolean` = `true`
 
 Pause when hidden
 
-___
+***
 
 ### playableElement
 
-• **playableElement**: `PlayableFacade`
+> **playableElement**: `PlayableFacade`
 
 Playable element accessors.
 
 ## Methods
 
-### raisePlayRequested
+### raisePlayRequested()
 
-▸ **raisePlayRequested**(): `void`
+> **raisePlayRequested**(): `void`
 
 Is played
 
@@ -147,11 +114,11 @@ Is played
 
 `void`
 
-___
+***
 
-### raisePauseRequested
+### raisePauseRequested()
 
-▸ **raisePauseRequested**(): `void`
+> **raisePauseRequested**(): `void`
 
 Is paused
 
@@ -159,11 +126,11 @@ Is paused
 
 `void`
 
-___
+***
 
-### raiseRewindRequested
+### raiseRewindRequested()
 
-▸ **raiseRewindRequested**(): `void`
+> **raiseRewindRequested**(): `void`
 
 Is rewound
 
@@ -171,11 +138,11 @@ Is rewound
 
 `void`
 
-___
+***
 
-### raiseLooped
+### raiseLooped()
 
-▸ **raiseLooped**(): `void`
+> **raiseLooped**(): `void`
 
 Is looped
 
@@ -183,29 +150,27 @@ Is looped
 
 `void`
 
-___
+***
 
-### raiseTimeReached
+### raiseTimeReached()
 
-▸ **raiseTimeReached**(`time`): `void`
+> **raiseTimeReached**(`time`): `void`
 
 Time Changes
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `time` | `Time` |
+• **time**: `Time`
 
 #### Returns
 
 `void`
 
-___
+***
 
-### raiseTimelineMoved
+### raiseTimelineMoved()
 
-▸ **raiseTimelineMoved**(): `void`
+> **raiseTimelineMoved**(): `void`
 
 Timeline moved
 
@@ -213,11 +178,11 @@ Timeline moved
 
 `void`
 
-___
+***
 
-### raiseEnded
+### raiseEnded()
 
-▸ **raiseEnded**(): `void`
+> **raiseEnded**(): `void`
 
 Timeline moved
 
@@ -225,11 +190,11 @@ Timeline moved
 
 `void`
 
-___
+***
 
-### play
+### play()
 
-▸ **play**(): `void`
+> **play**(): `void`
 
 Action to play the media.
 
@@ -237,11 +202,11 @@ Action to play the media.
 
 `void`
 
-___
+***
 
-### stop
+### stop()
 
-▸ **stop**(): `void`
+> **stop**(): `void`
 
 Action to stop the media.
 
@@ -249,11 +214,11 @@ Action to stop the media.
 
 `void`
 
-___
+***
 
-### pause
+### pause()
 
-▸ **pause**(): `void`
+> **pause**(): `void`
 
 Pause the media.
 
@@ -261,11 +226,11 @@ Pause the media.
 
 `void`
 
-___
+***
 
-### togglePlayPause
+### togglePlayPause()
 
-▸ **togglePlayPause**(): `void`
+> **togglePlayPause**(): `void`
 
 Toggle Play/Pause the media.
 
@@ -273,11 +238,11 @@ Toggle Play/Pause the media.
 
 `void`
 
-___
+***
 
-### rewind
+### rewind()
 
-▸ **rewind**(): `void`
+> **rewind**(): `void`
 
 Rewind the media.
 
@@ -285,29 +250,27 @@ Rewind the media.
 
 `void`
 
-___
+***
 
-### setTimeline
+### setTimeline()
 
-▸ **setTimeline**(`position`): `void`
+> **setTimeline**(`position`): `void`
 
 Set current time in the media.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `position` | `Time` |
+• **position**: `Time`
 
 #### Returns
 
 `void`
 
-___
+***
 
-### turnOnAutoplay
+### turnOnAutoplay()
 
-▸ **turnOnAutoplay**(): `void`
+> **turnOnAutoplay**(): `void`
 
 Turn on autoplay.
 
@@ -315,11 +278,11 @@ Turn on autoplay.
 
 `void`
 
-___
+***
 
-### turnOffAutoplay
+### turnOffAutoplay()
 
-▸ **turnOffAutoplay**(): `void`
+> **turnOffAutoplay**(): `void`
 
 Turn off autoplay.
 
@@ -327,11 +290,11 @@ Turn off autoplay.
 
 `void`
 
-___
+***
 
-### turnOnLoop
+### turnOnLoop()
 
-▸ **turnOnLoop**(): `void`
+> **turnOnLoop**(): `void`
 
 Turn on loop.
 
@@ -339,11 +302,11 @@ Turn on loop.
 
 `void`
 
-___
+***
 
-### turnOffLoop
+### turnOffLoop()
 
-▸ **turnOffLoop**(): `void`
+> **turnOffLoop**(): `void`
 
 Turn off loop.
 

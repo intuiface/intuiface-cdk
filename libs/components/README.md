@@ -4,19 +4,21 @@
     </a>
 </p>
 
+**@intuiface/components** • **Docs**
+
+***
+
 # @intuiface/components
 
-## Table of contents
+## Enumerations
 
-### Enumerations
+- [EBackgroundType](/docs/components/enumerations/EBackgroundType.md)
+- [EFillDirection](/docs/components/enumerations/EFillDirection.md)
+- [EFillBehavior](/docs/components/enumerations/EFillBehavior.md)
+- [EPlayableState](/docs/components/enumerations/EPlayableState.md)
+- [ETextHorizontalAlignment](/docs/components/enumerations/ETextHorizontalAlignment.md)
 
-- [EBackgroundType](/docs/components/enums/EBackgroundType.md)
-- [EFillDirection](/docs/components/enums/EFillDirection.md)
-- [EFillBehavior](/docs/components/enums/EFillBehavior.md)
-- [EPlayableState](/docs/components/enums/EPlayableState.md)
-- [ETextHorizontalAlignment](/docs/components/enums/ETextHorizontalAlignment.md)
-
-### Classes
+## Classes
 
 - [CollectionComponent](/docs/components/classes/CollectionComponent.md)
 - [ElementContainerComponent](/docs/components/classes/ElementContainerComponent.md)
@@ -47,26 +49,9 @@
 - [ComponentsModule](/docs/components/classes/ComponentsModule.md)
 - [SelectionService](/docs/components/classes/SelectionService.md)
 
-### Functions
-
-- [IntuifaceComponent](README.md#intuifacecomponent)
-
 ## Functions
 
-### IntuifaceComponent
-
-▸ **IntuifaceComponent**(`args?`): (`cls`: `any`) => `any`
-
-Decorator to link Component (Angular Component) to a Model
-This is useful for dynamic component creation from a Model
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `args` | `any` | : arguments with model property |
-
-
+- [IntuifaceComponent](/docs/components/functions/IntuifaceComponent.md)
 
 
 ## Help

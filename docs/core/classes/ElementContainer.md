@@ -1,309 +1,263 @@
+[**@intuiface/core**](../README.md) • **Docs**
+
+***
+
 # Class: ElementContainer
 
 Base class for all Container
 
-## Hierarchy
+## Extends
 
 - [`Watchable`](Watchable.md)
-
-  ↳ **`ElementContainer`**
-
-## Table of contents
-
-### Properties
-
-- [top](ElementContainer.md#top)
-- [topUnit](ElementContainer.md#topunit)
-- [bottom](ElementContainer.md#bottom)
-- [bottomUnit](ElementContainer.md#bottomunit)
-- [left](ElementContainer.md#left)
-- [leftUnit](ElementContainer.md#leftunit)
-- [right](ElementContainer.md#right)
-- [rightUnit](ElementContainer.md#rightunit)
-- [zIndex](ElementContainer.md#zindex)
-- [width](ElementContainer.md#width)
-- [widthUnit](ElementContainer.md#widthunit)
-- [height](ElementContainer.md#height)
-- [heightUnit](ElementContainer.md#heightunit)
-- [margin](ElementContainer.md#margin)
-- [orientation](ElementContainer.md#orientation)
-- [transform](ElementContainer.md#transform)
-- [position](ElementContainer.md#position)
-- [transition](ElementContainer.md#transition)
-- [transformOrigin](ElementContainer.md#transformorigin)
-- [opacity](ElementContainer.md#opacity)
-- [blur](ElementContainer.md#blur)
-- [sepia](ElementContainer.md#sepia)
-- [hueRotation](ElementContainer.md#huerotation)
-- [brightness](ElementContainer.md#brightness)
-- [backfaceVisibility](ElementContainer.md#backfacevisibility)
-- [itemShadow](ElementContainer.md#itemshadow)
-- [isShown](ElementContainer.md#isshown)
-- [isDisplayed](ElementContainer.md#isdisplayed)
-- [isVisibleToInteractivity](ElementContainer.md#isvisibletointeractivity)
-
-### Methods
-
-- [notifyPropertyChanged](ElementContainer.md#notifypropertychanged)
-- [subscribeToPropertiesChanges](ElementContainer.md#subscribetopropertieschanges)
-- [unsubscribeFromPropertiesChanges](ElementContainer.md#unsubscribefrompropertieschanges)
-- [subscribeToPropertyChanged](ElementContainer.md#subscribetopropertychanged)
-- [unsubscribeFromPropertyChanged](ElementContainer.md#unsubscribefrompropertychanged)
-- [dispose](ElementContainer.md#dispose)
-- [setOpacity](ElementContainer.md#setopacity)
-- [toggleVisibleToInteractivity](ElementContainer.md#togglevisibletointeractivity)
-- [enableVisibleToInteractivity](ElementContainer.md#enablevisibletointeractivity)
-- [disableVisibleToInteractivity](ElementContainer.md#disablevisibletointeractivity)
 
 ## Properties
 
 ### top
 
-• **top**: `number`
+> **top**: `number`
 
 Value of the CSS top property
 
-___
+***
 
 ### topUnit
 
-• **topUnit**: `string` = `CssUnits.Pixel`
+> **topUnit**: `string` = `CssUnits.Pixel`
 
 Unit for the CSS top property
 
-___
+***
 
 ### bottom
 
-• **bottom**: `number`
+> **bottom**: `number`
 
 Value of the CSS bottom property
 
-___
+***
 
 ### bottomUnit
 
-• **bottomUnit**: `string` = `CssUnits.Pixel`
+> **bottomUnit**: `string` = `CssUnits.Pixel`
 
 Unit for the CSS top property
 
-___
+***
 
 ### left
 
-• **left**: `number`
+> **left**: `number`
 
 Value of the CSS left property
 
-___
+***
 
 ### leftUnit
 
-• **leftUnit**: `string` = `CssUnits.Pixel`
+> **leftUnit**: `string` = `CssUnits.Pixel`
 
 Unit for the CSS left property
 
-___
+***
 
 ### right
 
-• **right**: `number`
+> **right**: `number`
 
 Value of the CSS right property
 
-___
+***
 
 ### rightUnit
 
-• **rightUnit**: `string` = `CssUnits.Pixel`
+> **rightUnit**: `string` = `CssUnits.Pixel`
 
 Unit for the CSS right property
 
-___
+***
 
 ### zIndex
 
-• **zIndex**: `number`
+> **zIndex**: `number`
 
 Value of the CSS zIndex property
 
-___
+***
 
 ### width
 
-• **width**: `number`
+> **width**: `number`
 
 Value of the CSS width property
 
-___
+***
 
 ### widthUnit
 
-• **widthUnit**: `string` = `CssUnits.Pixel`
+> **widthUnit**: `string` = `CssUnits.Pixel`
 
 Unit for the CSS width property
 
-___
+***
 
 ### height
 
-• **height**: `number`
+> **height**: `number`
 
 Value of the CSS height property
 
-___
+***
 
 ### heightUnit
 
-• **heightUnit**: `string` = `CssUnits.Pixel`
+> **heightUnit**: `string` = `CssUnits.Pixel`
 
 Unit for the CSS height property
 
-___
+***
 
 ### margin
 
-• **margin**: `string`
+> **margin**: `string`
 
 Value of the CSS margin property
 
-___
+***
 
 ### orientation
 
-• **orientation**: `number`
+> **orientation**: `number`
 
 Value for the orientation of this element
 
-___
+***
 
 ### transform
 
-• **transform**: `any`
+> **transform**: `any`
 
 Value for the CSS transform property
 
-___
+***
 
 ### position
 
-• **position**: `string` = `''`
+> **position**: `string` = `''`
 
 Value of the CSS position property
 
-___
+***
 
 ### transition
 
-• **transition**: `string` = `''`
+> **transition**: `string` = `''`
 
 Value for the CSS transition property
 
-___
+***
 
 ### transformOrigin
 
-• **transformOrigin**: `string` = `'center'`
+> **transformOrigin**: `string` = `'center'`
 
 Value for the CSS transform origin property
 
-___
+***
 
 ### opacity
 
-• **opacity**: `number` = `1`
+> **opacity**: `number` = `1`
 
 Opacity.
 
-___
+***
 
 ### blur
 
-• **blur**: `number` = `0`
+> **blur**: `number` = `0`
 
 Blur.
 
-___
+***
 
 ### sepia
 
-• **sepia**: `number` = `0`
+> **sepia**: `number` = `0`
 
 Sepia.
 
-___
+***
 
 ### hueRotation
 
-• **hueRotation**: `number` = `0`
+> **hueRotation**: `number` = `0`
 
 Hue Rotation.
 
-___
+***
 
 ### brightness
 
-• **brightness**: `number` = `100`
+> **brightness**: `number` = `100`
 
 Brightness.
 
-___
+***
 
 ### backfaceVisibility
 
-• **backfaceVisibility**: `string` = `'visible'`
+> **backfaceVisibility**: `string` = `'visible'`
 
 Backface visibility
 Useful for carousel container
 
-___
+***
 
 ### itemShadow
 
-• **itemShadow**: `string` = `'unset'`
+> **itemShadow**: `string` = `'unset'`
 
 Item Shadow
 Useful for carousel container
 
-___
+***
 
 ### isShown
 
-• **isShown**: `boolean` = `true`
+> **isShown**: `boolean` = `true`
 
 Is Visible property of the current container.
 
-___
+***
 
 ### isDisplayed
 
-• **isDisplayed**: `boolean` = `true`
+> **isDisplayed**: `boolean` = `true`
 
 Indicates whether or not the current container is displayed on the screen
 Takes into account both isShown and isShownByInheritance properties
 
-___
+***
 
 ### isVisibleToInteractivity
 
-• **isVisibleToInteractivity**: `boolean` = `true`
+> **isVisibleToInteractivity**: `boolean` = `true`
 
 Is Visible to Interactivity
 
 ## Methods
 
-### notifyPropertyChanged
+### notifyPropertyChanged()
 
-▸ **notifyPropertyChanged**(`propertyKey`, `value`): `void`
+> **notifyPropertyChanged**(`propertyKey`, `value`): `void`
 
 Function to call when a property in the element changed to notify listeners
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `propertyKey` | `string` |
-| `value` | `any` |
+• **propertyKey**: `string`
+
+• **value**: `any`
 
 #### Returns
 
@@ -311,21 +265,19 @@ Function to call when a property in the element changed to notify listeners
 
 #### Inherited from
 
-[Watchable](Watchable.md).[notifyPropertyChanged](Watchable.md#notifypropertychanged)
+[`Watchable`](Watchable.md).[`notifyPropertyChanged`](Watchable.md#notifypropertychanged)
 
-___
+***
 
-### subscribeToPropertiesChanges
+### subscribeToPropertiesChanges()
 
-▸ **subscribeToPropertiesChanges**(`listener`): `void`
+> **subscribeToPropertiesChanges**(`listener`): `void`
 
 Function to subscribe to properties changes of the element
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `listener` | `PropertiesListener` |
+• **listener**: `PropertiesListener`
 
 #### Returns
 
@@ -333,21 +285,19 @@ Function to subscribe to properties changes of the element
 
 #### Inherited from
 
-[Watchable](Watchable.md).[subscribeToPropertiesChanges](Watchable.md#subscribetopropertieschanges)
+[`Watchable`](Watchable.md).[`subscribeToPropertiesChanges`](Watchable.md#subscribetopropertieschanges)
 
-___
+***
 
-### unsubscribeFromPropertiesChanges
+### unsubscribeFromPropertiesChanges()
 
-▸ **unsubscribeFromPropertiesChanges**(`listener`): `void`
+> **unsubscribeFromPropertiesChanges**(`listener`): `void`
 
 function to unsubscribe from properties changes of the element
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `listener` | `PropertiesListener` |
+• **listener**: `PropertiesListener`
 
 #### Returns
 
@@ -355,22 +305,21 @@ function to unsubscribe from properties changes of the element
 
 #### Inherited from
 
-[Watchable](Watchable.md).[unsubscribeFromPropertiesChanges](Watchable.md#unsubscribefrompropertieschanges)
+[`Watchable`](Watchable.md).[`unsubscribeFromPropertiesChanges`](Watchable.md#unsubscribefrompropertieschanges)
 
-___
+***
 
-### subscribeToPropertyChanged
+### subscribeToPropertyChanged()
 
-▸ **subscribeToPropertyChanged**(`property`, `listener`): `void`
+> **subscribeToPropertyChanged**(`property`, `listener`): `void`
 
 function to subscribe to one property changed
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `property` | `string` |
-| `listener` | `PropertyListener` |
+• **property**: `string`
+
+• **listener**: `PropertyListener`
 
 #### Returns
 
@@ -378,22 +327,21 @@ function to subscribe to one property changed
 
 #### Inherited from
 
-[Watchable](Watchable.md).[subscribeToPropertyChanged](Watchable.md#subscribetopropertychanged)
+[`Watchable`](Watchable.md).[`subscribeToPropertyChanged`](Watchable.md#subscribetopropertychanged)
 
-___
+***
 
-### unsubscribeFromPropertyChanged
+### unsubscribeFromPropertyChanged()
 
-▸ **unsubscribeFromPropertyChanged**(`property`, `listener`): `void`
+> **unsubscribeFromPropertyChanged**(`property`, `listener`): `void`
 
 function to unsubscribe from one property changed
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `property` | `string` |
-| `listener` | `PropertyListener` |
+• **property**: `string`
+
+• **listener**: `PropertyListener`
 
 #### Returns
 
@@ -401,13 +349,13 @@ function to unsubscribe from one property changed
 
 #### Inherited from
 
-[Watchable](Watchable.md).[unsubscribeFromPropertyChanged](Watchable.md#unsubscribefrompropertychanged)
+[`Watchable`](Watchable.md).[`unsubscribeFromPropertyChanged`](Watchable.md#unsubscribefrompropertychanged)
 
-___
+***
 
-### dispose
+### dispose()
 
-▸ **dispose**(): `void`
+> **dispose**(): `void`
 
 Dispose watchable.
 
@@ -417,31 +365,29 @@ Dispose watchable.
 
 #### Inherited from
 
-[Watchable](Watchable.md).[dispose](Watchable.md#dispose)
+[`Watchable`](Watchable.md).[`dispose`](Watchable.md#dispose)
 
-___
+***
 
-### setOpacity
+### setOpacity()
 
-▸ **setOpacity**(`opacity`): `void`
+> **setOpacity**(`opacity`): `void`
 
 Action to set opacity.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `opacity` | `number` |
+• **opacity**: `number`
 
 #### Returns
 
 `void`
 
-___
+***
 
-### toggleVisibleToInteractivity
+### toggleVisibleToInteractivity()
 
-▸ **toggleVisibleToInteractivity**(): `void`
+> **toggleVisibleToInteractivity**(): `void`
 
 Action to toggle the isVisibleToInteractivity property
 
@@ -449,11 +395,11 @@ Action to toggle the isVisibleToInteractivity property
 
 `void`
 
-___
+***
 
-### enableVisibleToInteractivity
+### enableVisibleToInteractivity()
 
-▸ **enableVisibleToInteractivity**(): `void`
+> **enableVisibleToInteractivity**(): `void`
 
 Function to enable the isVisibleToInteractivity property
 
@@ -461,11 +407,11 @@ Function to enable the isVisibleToInteractivity property
 
 `void`
 
-___
+***
 
-### disableVisibleToInteractivity
+### disableVisibleToInteractivity()
 
-▸ **disableVisibleToInteractivity**(): `void`
+> **disableVisibleToInteractivity**(): `void`
 
 Function to disable the isVisibleToInteractivity property
 

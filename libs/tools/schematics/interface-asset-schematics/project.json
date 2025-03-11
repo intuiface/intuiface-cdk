@@ -12,7 +12,6 @@
                 "outputPath": "dist/libs/tools/interface-asset-schematics",
                 "tsConfig": "libs/tools/schematics/interface-asset-schematics/tsconfig.json",
                 "packageJson": "libs/tools/schematics/interface-asset-schematics/package.json",
-                "updateBuildableProjectDepsInPackageJson": false,
                 "main": "libs/tools/schematics/interface-asset-schematics/src/create/index.ts",
                 "assets": [
                     "libs/tools/schematics/interface-asset-schematics/*.md",

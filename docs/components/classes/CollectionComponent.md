@@ -1,69 +1,56 @@
-# Class: CollectionComponent<T\>
+[**@intuiface/components**](../README.md) • **Docs**
+
+***
+
+# Class: CollectionComponent\<T\>
 
 Collection component
 
-## Type parameters
+## Extends
 
-| Name | Type |
-| :------ | :------ |
-| `T` | extends `IntuifaceCollection`<`ElementContainer`\> |
+- [`ElementComponent`](ElementComponent.md)\<`T`\>
 
-## Hierarchy
+## Type Parameters
 
-- [`ElementComponent`](ElementComponent.md)<`T`\>
-
-  ↳ **`CollectionComponent`**
-
-## Table of contents
-
-### Constructors
-
-- [constructor](CollectionComponent.md#constructor)
-
-### Methods
-
-- [trackByFn](CollectionComponent.md#trackbyfn)
+• **T** *extends* `IntuifaceCollection`\<`ElementContainer`\>
 
 ## Constructors
 
-### constructor
+### new CollectionComponent()
 
-• **new CollectionComponent**<`T`\>(`selectionService`, `domSanitizer`, `elementReference`)
+> **new CollectionComponent**\<`T`\>(`selectionService`, `domSanitizer`, `elementReference`): [`CollectionComponent`](CollectionComponent.md)\<`T`\>
 
 Constructor
 
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `T` | extends `IntuifaceCollection`<`ElementContainer`\> |
-
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `selectionService` | [`SelectionService`](SelectionService.md) |
-| `domSanitizer` | `DomSanitizer` |
-| `elementReference` | `ElementRef`<`any`\> |
+• **selectionService**: [`SelectionService`](SelectionService.md)
+
+• **domSanitizer**: `DomSanitizer`
+
+• **elementReference**: `ElementRef`\<`any`\>
+
+#### Returns
+
+[`CollectionComponent`](CollectionComponent.md)\<`T`\>
 
 #### Overrides
 
-ElementComponent&lt;T\&gt;.constructor
+`ElementComponent<T>.constructor`
 
 ## Methods
 
-### trackByFn
+### trackByFn()
 
-▸ **trackByFn**(`index`, `item`): `number`
+> **trackByFn**(`index`, `item`): `number`
 
 Track by fn
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `index` | `number` |
-| `item` | `IntuifaceElement` |
+• **index**: `number`
+
+• **item**: `IntuifaceElement`
 
 #### Returns
 
