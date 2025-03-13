@@ -6,7 +6,7 @@
 
 An `IntuifaceElement` represents the base of any kind of element that compose an Intuiface experience: asset, collection, interface asset, layer, scene, experience...
 
-All this elements extends `IntuifaceElement` and use the appropriate decorator to make it usable in the experience, such as [`@Asset`](../functions/Asset.md) or [`@Collection`](../functions/Collection.md).
+All these elements extend `IntuifaceElement` and use the appropriate decorator to make them usable in the experience, such as [`@Asset`](../functions/Asset.md) or [`@Collection`](../functions/Collection.md).
 
 Each element or collection has the same life cycle :\
 1 - Constructor : Can be use to declare properties, set default values.\
