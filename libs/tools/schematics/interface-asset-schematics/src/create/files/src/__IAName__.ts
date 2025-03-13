@@ -124,7 +124,7 @@ export class <%= IAName %> extends IntuifaceElement {
 
     /**
      * Action Example
-     * This action will change the property example value.
+     * This action will change the propertyExample value.
      * It will raise the trigger exampleTrigger if the value of the property changed.
      * An action is called if defined in Composer.
      * 
