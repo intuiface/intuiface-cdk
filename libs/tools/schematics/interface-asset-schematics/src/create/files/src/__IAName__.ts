@@ -35,7 +35,7 @@ export class <%= IAName %> extends IntuifaceElement {
     /**
      * A private property example
      */
-    private _privateInterval: NodeJS.Timeout = null;
+    private _privateStr: String = null;
 
     //#endregion Private Properties
 
@@ -67,30 +67,28 @@ export class <%= IAName %> extends IntuifaceElement {
      * Initialize the element with the configuration.
      * This is an example of how to use the initialize method.
      */
-    // public override initialize(configuration?: any): void
-    // {
-    //     // call the super to apply the configuration (default values declared in Composer)
-    //     super(configuration);
-
-    //     this._privateInterval = setInterval(() => {
-    //         // do something every 10 seconds
-    //     }, 10000);
-    // }
+    public override initialize(configuration?: any): void
+    {
+        // call the super to apply the configuration (default values declared in Composer)
+        super.initialize(configuration);
+    
+        // Add here any code you want to be executed after the Interface Asset has been loaded,
+        // and after the property values have been set by Composer / Player
+    }
 
 
     /**
      * Dispose the element.
      * This is an example of how to use the dispose method.
      */
-    // public override dispose(): void
-    // {
-    //     // clean the interval
-    //     if(this._privateProperty)
-    //     {
-    //         clearInterval(this._privateInterval);
-    //     }
-    //     super();
-    // }
+    public override dispose(): void
+    {
+        // Add here any code you want to be executed when the experience is stopping.
+        // For example: stop an infinite timer, close a Serial Port, ...
+
+        // then call the super
+        super.dispose();
+    }
 
 
     //#endregion Life Cycle
@@ -99,7 +97,7 @@ export class <%= IAName %> extends IntuifaceElement {
 
     /**
      * Trigger Example
-     * This trigger will be raised when the property example changed
+     * This trigger will be raised when the propertyExample changed
      * You need to call this method to raise the trigger.
      * For the example, this method is called in the action below.
      * 
@@ -130,7 +128,7 @@ export class <%= IAName %> extends IntuifaceElement {
      * It will raise the trigger exampleTrigger if the value of the property changed.
      * An action is called if defined in Composer.
      * 
-     * Here the action has a parameter and a validation.
+     * This action has a parameter and a validation.
      * The parameter is a number between 0 and 10.
      * If the parameter is not defined or not valid, the action will be called with the default value (1 in this case).
      */

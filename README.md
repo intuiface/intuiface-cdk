@@ -18,7 +18,7 @@ This CDK enables you to create TypeScript-based interface assets for Intuiface e
 ## Quick Start
 
 To develop your own interface asset, please make sure you have installed:
-- [NodeJS](https://nodejs.org/) so you can use NPM to manage your project’s dependencies. We recommend to use the version 22 LTS.
+- [NodeJS](https://nodejs.org/) so you can use NPM to manage your project’s dependencies. We recommend using the version 22 LTS.
 - [Visual Studio Code](https://code.visualstudio.com/) to code, build, and test your project
 - [Angular Schematics CLI](https://www.npmjs.com/package/@angular-devkit/schematics-cli). Install it using NPM:<br> ```npm install -g @angular-devkit/schematics-cli```
 
