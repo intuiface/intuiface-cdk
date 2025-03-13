@@ -1,0 +1,12 @@
+{
+    "name": "@intuiface/cli",
+    "version": "1.4.0",
+    "bin": {
+        "intuiface-cli": "./src/cli.js"
+    },
+    "type": "module",
+    "scripts": {
+        "build": "nx run cli:build && chmod +x dist/libs/cli/cli.js",
+        "watch": "nx run cli:build --watch"
+    }
+}

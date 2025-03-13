@@ -21,6 +21,6 @@ Install `@angular-devkit/schematics-cli` with `npm install -g @angular-devkit/sc
 Use it with : `schematics @intuiface/custom-asset:create`
     it will prompt you about the custom asset name, if it's a collection and create all files
 
-Develop your asset / collection using the squeleton or read the documentation of `@intuiface/core` and `@intuiface/components`
+Develop your asset / collection using the skeleton or read the documentation of `@intuiface/core` and `@intuiface/components`
 
 Then run `npm run build`
