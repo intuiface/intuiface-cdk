@@ -11,6 +11,7 @@ import { strings } from '@angular-devkit/core';
  * @param _options
  * @returns
  */
+// eslint-disable-next-line @typescript-eslint/naming-convention
 export function createInterfaceAsset(_options: any): Rule
 {
     return (tree: Tree, context: SchematicContext) => {
@@ -52,6 +53,8 @@ function moveConfigFiles(): Rule
     {
         tree.rename('node_modules/@intuiface/interface-asset/src/workspace-template/eslintrc.js', '.eslintrc.js');
         tree.rename('node_modules/@intuiface/interface-asset/src/workspace-template/vscode-settings.json', '.vscode/settings.json');
+        tree.rename('node_modules/@intuiface/interface-asset/src/workspace-template/vscode-extensions.json', '.vscode/extensions.json');
         tree.rename('node_modules/@intuiface/interface-asset/src/workspace-template/gitignore', '.gitignore');
+        tree.rename('node_modules/@intuiface/interface-asset/src/workspace-template/eslintignore', '.eslintignore');
     };
 }
