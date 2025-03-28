@@ -32,7 +32,7 @@ options of the trigger (display name, description, ...)
 
 ## Examples
 
-_**Note**_: the name `raiseButtonReleased` is in camelCase as the naming convention
+_**Note**_: the name `raiseButtonReleased` is in camelCase as the naming convention. It is important to do the same in your triggers declaration.
 
 ```ts
 /**

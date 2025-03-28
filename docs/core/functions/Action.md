@@ -24,7 +24,7 @@ Options to configure the Action (Display name, description...)
 
 ## Examples
 
-_**Note**_: the name "turnOnAutoplay" is in camelCase as the naming convention.
+_**Note**_: the name "turnOnAutoplay" is in camelCase as the naming convention. It is important to do the same in your actions declaration.
 
 ```ts
 /**

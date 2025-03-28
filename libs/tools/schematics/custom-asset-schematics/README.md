@@ -22,5 +22,6 @@ Use it with : `schematics @intuiface/custom-asset:create`
     it will prompt you about the custom asset name, if it's a collection and create all files
 
 Develop your asset / collection using the skeleton or read the documentation of `@intuiface/core` and `@intuiface/components`
+Note: After the run of the schematics, VSCode will prompt you to install recommended extensions. This is very important to accept and install the Eslint extension to analyze your code for errors.
 
 Then run `npm run build`

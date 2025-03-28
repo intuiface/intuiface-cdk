@@ -1,4 +1,5 @@
 module.exports = {
+    "root": false,
     "env": {
         "browser": true,
         "es6": true,
@@ -38,9 +39,57 @@ module.exports = {
         ],
         "@typescript-eslint/naming-convention": [
             "error",
+            // default camelCase
             {
-                "selector": "enumMember",
+                "selector": "default",
+                "format": ["camelCase"]
+            },
+            // allow underscore for memberLike (classicAccessor, autoAccessor, enumMember, method, parameterProperty, property)
+            {
+                "selector": "memberLike",
+                "format": ["camelCase"],
+                "leadingUnderscore": "allow"
+            },
+            // // pascal case and UPPER_CASE for for import because we do not control what we import
+            // {
+            //     "selector": ["import"],
+            //     "format": ["camelCase", "UPPER_CASE", "PascalCase"]
+            // },
+            // parameters can have leading underscore
+            {
+                "selector": "parameter",
+                "format": ["camelCase"],
+                "leadingUnderscore": "allow"
+            },
+            // All enumMember, interface, class and type has to be in PascalCase
+            {
+                "selector": ["enumMember", "interface", "class", "typeLike"],
                 "format": ["PascalCase"]
+            },
+            // All enum has to be in PascalCase or in UPPER_CASE
+            {
+                "selector": ["enum"],
+                "format": ["PascalCase", "UPPER_CASE"]
+            },
+            // we accept property type in PascalCase
+            {
+                "selector": ["typeProperty"],
+                "format": ["camelCase", "PascalCase"],
+            },
+            // all that requires quotes like HTTP Headers
+            {
+                "selector": [
+                    "classProperty",
+                    "objectLiteralProperty",
+                    "typeProperty",
+                    "classMethod",
+                    "objectLiteralMethod",
+                    "typeMethod",
+                    "accessor",
+                    "enumMember",
+                ],
+                "format": null,
+                "modifiers": ["requiresQuotes"]
             }
         ],
         "@typescript-eslint/consistent-type-assertions": "error",
@@ -66,7 +115,6 @@ module.exports = {
                 "ImportDeclaration": "first"
             }
         ],
-        "@typescript-eslint/interface-name-prefix": "off",
         "@typescript-eslint/member-delimiter-style": [
             "error",
             {
@@ -86,7 +134,6 @@ module.exports = {
         "@typescript-eslint/no-explicit-any": "off",
         "@typescript-eslint/no-misused-new": "error",
         "@typescript-eslint/no-namespace": "error",
-        "@typescript-eslint/no-parameter-properties": "off",
         "@typescript-eslint/no-use-before-define": "off",
         "@typescript-eslint/no-var-requires": "error",
         "@typescript-eslint/prefer-for-of": "error",

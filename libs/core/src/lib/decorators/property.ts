@@ -79,7 +79,7 @@ export interface IPropertyOptions
  * })
  * public volume: number = 0; // declaration of the property
  * ```
- * _**Note**_: the name `volume` is in camelCase as the naming convention.
+ * _**Note**_: the name `volume` is in camelCase as the naming convention. It is important to do the same in your properties declaration.
  * 
  * **With Player version 8.0.3 and after**, you can create your own getter and setter for the property. This is really helpful when you want some logic if the value of the property change.
  * To do that, you have to declare your property prefixed by `_` (i.e.: `_volume`)
