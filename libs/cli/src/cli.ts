@@ -12,7 +12,7 @@ const execPromise = promisify(exec);
 
 const globalThisAny = globalThis as any;
 
-const usage = '\nUsage: Generate ifd file and build the IA <name> to be able to add it in an Intuiface Experience.';
+const usage = 'Intuiface CLI helps you build interface assets for Intuiface.\nTo see help for a specific command, you can run:\n  intuiface-cli help <command>\n  intuiface-cli <command> --help';
 
 const program = new Command();
 
@@ -22,9 +22,12 @@ const ifdCmd = program
 
 
 ifdCmd.command('build')
-    .requiredOption('-n, --name <name>', 'The name of the IA file.')
-    .option('-i, --icon [icon]', 'The path to the icon of the IA displayed in Composer Interface Asset panel.')
-    .option('-d, --debug', 'Build in debug mode.')
+    .summary('build an interface asset')
+    .description('Build an interface asset and generate its descriptor file (*.ifd) to be imported into Intuiface Composer.')
+    .requiredOption('-n, --name <name>', 'name of the interface asset\'s main file in the src/* folder (without extension).')
+    .option('-i, --icon [icon]', 'path to the icon of the IA displayed in Composer Interface Asset panel.')
+    .option('-d, --debug', 'build in debug mode.')
+    .addHelpText('afterAll', '\nExample:\n  intuiface-cli build --name MyCustomIA --icon ./icon.png\n')
     .action((options) =>
     {
         // Check parameters
@@ -54,10 +57,13 @@ ifdCmd.command('build')
     });
 
 // add subcommand
-ifdCmd.command('migrate').action(() =>
-{
-    migrateProject();
-});
+ifdCmd.command('migrate')
+    .description('Migrate old project (<2.x) to new CLI.\nRun this command in the root folder of your project.')
+    .summary('migrate old project (<2.x) to new CLI.')
+    .action(() =>
+    {
+        migrateProject();
+    });
 program.parse();
 program.showHelpAfterError();
 
@@ -97,7 +103,7 @@ async function loadIA(iaName: string | undefined, icon: string | undefined, debu
         // set interface asset to import in composer
         if (iaName !== undefined)
         {
-            const spinnerIFD: Spinner = yoctoSpinner({text: 'Generating ifd...'}).start();
+            const spinnerIFD: Spinner = yoctoSpinner({text: 'Generating descriptor...'}).start();
             // transpile ia file
             await execPromise(`npx tsc --project ${dir}/tsconfig.json --outDir ${dir}/tmp/`);
             // copy package.json
@@ -168,7 +174,7 @@ async function loadIA(iaName: string | undefined, icon: string | undefined, debu
                 fs.removeSync(`${dir}/tmp/`);
             }
 
-            const spinnerIA: Spinner = yoctoSpinner({ text: `Building IA : ${iaName}...` }).start();
+            const spinnerIA: Spinner = yoctoSpinner({ text: `Building interface asset: ${iaName}...` }).start();
             if (!debug)
             {
                 await execPromise(`npx webpack --config ${dir}/webpack.config.js`);
@@ -177,7 +183,7 @@ async function loadIA(iaName: string | undefined, icon: string | undefined, debu
             {
                 await execPromise(`npx webpack --config ${dir}/webpack-debug.config.js`);
             }
-            spinnerIA.success(`IA ${iaName} successfully built.`);
+            spinnerIA.success(`Interface asset '${iaName}' successfully built.`);
 
             if(icon)
             {
@@ -191,7 +197,7 @@ async function loadIA(iaName: string | undefined, icon: string | undefined, debu
                 spinnerIcon.success(`Icon ${iconName} copied.`);
             }
 
-            spinnerIA.success('Done, you can now use your IA in Composer.');
+            spinnerIA.success('Done, you can now use your interface asset in Composer.');
         }
         spinner.stop();
     }
@@ -224,8 +230,8 @@ async function writeIFDFile(iaName: string, ifd: any, spinner: Spinner): Promise
                 return spinner.error(err);
             }
 
-            console.log('IFD file has been saved.');
-            spinner.success('IFD file has been saved.');
+            console.log('Descriptor file (.ifd) has been saved.');
+            spinner.success('Descriptor file (.ifd) has been saved.');
             resolve();
         });
     });
