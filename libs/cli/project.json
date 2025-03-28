@@ -18,7 +18,7 @@
             "options": {
                 "commands": [
                     "nx run cli:process-build",
-                    "chmod +x dist/libs/cli/src/cli.js"
+                    "chmod +x dist/libs/cli/src/cli.js || exit 0"
                 ],
                 "parallel": false
             }
