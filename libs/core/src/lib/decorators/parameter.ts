@@ -81,7 +81,7 @@ export interface IParameterOptions
  *
  * ```
  *
- * @example A trigger with paramters
+ * @example A trigger with parameters
  * ```ts
  * /**
  *  * Count changes event
@@ -137,6 +137,12 @@ export function Parameter(options?: IParameterOptions): Function
         if (typeAndFormat.format)
         {
             globalThis.intuiface_ifd_params[targetName][propertyKey][options.name].format = typeAndFormat.format;
+        }
+
+        // add default value for parameter if defined
+        if (options.defaultValue !== undefined)
+        {
+            globalThis.intuiface_ifd_params[targetName][propertyKey][options.name].default = options.defaultValue;
         }
 
     };
