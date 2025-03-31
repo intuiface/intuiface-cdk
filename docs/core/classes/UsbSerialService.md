@@ -42,23 +42,23 @@ an instance of the usb serial service
 
 ### list()
 
-> **list**(`callback`): `void`
+> **list**(): [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)\<`string`[]\>
 
 List all devices
 
-#### Parameters
-
-• **callback**: [`Function`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function)
-
 #### Returns
 
-`void`
+[`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)\<`string`[]\>
+
+error
+
+list of ports (USB0, USB1, ...)
 
 ***
 
 ### open()
 
-> **open**(`opts`, `callback`): `void`
+> **open**(`opts`): [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)\<`string`\>
 
 Open the serial port
 
@@ -67,21 +67,23 @@ Open the serial port
 • **opts**: `any`
 
 :
-{ port: string, pid: number, vid: number, driver: string,
+{ port: string, pid: number, vid: number,
 baudRate: number, dataBits: number, stopBits: number, parity: number,
 dtr: boolean, rts: boolean, sleepOnPause: boolean}
 
-• **callback**: [`Function`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function)
-
 #### Returns
 
-`void`
+[`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)\<`string`\>
+
+error
+
+result: a message telling if the port is opened or not
 
 ***
 
 ### write()
 
-> **write**(`data`, `callback`): `void`
+> **write**(`data`): [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)\<`void`\>
 
 Write to the serial port
 
@@ -89,61 +91,51 @@ Write to the serial port
 
 • **data**: `string`
 
-• **callback**: [`Function`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function)
-
 #### Returns
 
-`void`
+[`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)\<`void`\>
 
 ***
 
 ### close()
 
-> **close**(`callback`): `void`
+> **close**(): [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)\<`void`\>
 
 Close the serial port
 
-#### Parameters
-
-• **callback**: [`Function`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function)
-
 #### Returns
 
-`void`
+[`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)\<`void`\>
 
 ***
 
 ### registerReadCallback()
 
-> **registerReadCallback**(`callbackToRegister`, `callback`): `void`
+> **registerReadCallback**(`callbackToRegister`): [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)\<`void`\>
 
-Close the serial port
+Register a callback to be called when data is received
 
 #### Parameters
 
 • **callbackToRegister**: [`Function`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function)
 
-• **callback**: [`Function`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function)
-
 #### Returns
 
-`void`
+[`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)\<`void`\>
 
 ***
 
 ### isConnected()
 
-> **isConnected**(`callback`): `void`
+> **isConnected**(): [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)\<`boolean`\>
 
 Check if is connected
 
-#### Parameters
-
-• **callback**: [`Function`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function)
-
 #### Returns
 
-`void`
+[`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)\<`boolean`\>
+
+isConnected
 
 ***
 
