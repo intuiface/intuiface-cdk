@@ -104,18 +104,18 @@
                 {
                     "type": "json",
                     "path": "/libs/tools/schematics/custom-asset-schematics/src/create/files/packageVersions.json",
-                    "jsonpath": "$['@intuiface/core']"
+                    "jsonpath": "$.dependencies['@intuiface/core']"
                 },
                 
                 {
                     "type": "json",
                     "path": "/libs/tools/schematics/custom-asset-schematics/src/create/files/packageVersions.json",
-                    "jsonpath": "$['@intuiface/components']"
+                    "jsonpath": "$.dependencies['@intuiface/components']"
                 },
                 {
                     "type": "json",
                     "path": "/libs/tools/schematics/custom-asset-schematics/src/create/files/packageVersions.json",
-                    "jsonpath": "$['@intuiface/custom-asset']"
+                    "jsonpath": "$.dependencies['@intuiface/custom-asset']"
                 }
             ]
         }
