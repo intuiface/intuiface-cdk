@@ -1,14 +1,27 @@
 #!/usr/bin/env node
 
 /* eslint-disable camelcase */
-import { exec } from 'child_process';
+import { exec, ExecException } from 'child_process';
 import fs from 'fs-extra';
 import { JSDOM } from 'jsdom';
-import { promisify } from 'util';
-import yoctoSpinner, {Spinner} from 'yocto-spinner';
+import ora, { Ora } from 'ora';
 import { Command } from 'commander';
+import { pathToFileURL } from 'url';
 
-const execPromise = promisify(exec);
+const isExecException = (error: unknown): error is ExecException => typeof error === 'object' && error !== null && 'code' in error && 'cmd' in error;
+
+const execPromise = (command: string): Promise<{stdout: string; stderr: string }> => new Promise((resolve, reject) => {
+    exec(command, (error, stdout, stderr)=> {
+        if(error)
+        {
+            error.stderr = error.stderr ?? stderr;
+            error.stdout = error.stdout ?? stdout;
+            reject(error);
+        }
+
+        resolve({stdout, stderr});
+    });
+});
 
 const globalThisAny = globalThis as any;
 
@@ -33,7 +46,7 @@ ifdCmd.command('build')
         // Check parameters
         if (options.name != null)
         {
-            // create object to store metadatas
+            // create object to store metadata
             globalThisAny.intuiface_ifd_name = options.name;
             globalThisAny.intuiface_ifd_classes = [];
             globalThisAny.intuiface_ifd_properties = {};
@@ -52,7 +65,7 @@ ifdCmd.command('build')
                 }
             }
 
-            void loadIA(options.name, options.icon, options.debug);
+            return loadIA(options.name, options.icon, options.debug);
         }
     });
 
@@ -92,8 +105,8 @@ function cleanBuildFolders(dir: string, iaName: string = undefined): void
 // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
 async function loadIA(iaName: string | undefined, icon: string | undefined, debug?: boolean): Promise<void>
 {
-    const spinner: Spinner = yoctoSpinner({ text: 'Using intuiface CLI...' }).start();
-    spinner.info('Using intuiface CLI...');
+    const spinner = ora({ text: `Build interface asset ${iaName}.` }).start();
+    spinner.info();
 
     const dir = process.cwd();
 
@@ -103,7 +116,7 @@ async function loadIA(iaName: string | undefined, icon: string | undefined, debu
         // set interface asset to import in composer
         if (iaName !== undefined)
         {
-            const spinnerIFD: Spinner = yoctoSpinner({text: 'Generating descriptor...'}).start();
+            spinner.start('Compiling typescript...');
             // transpile ia file
             await execPromise(`npx tsc --project ${dir}/tsconfig.json --outDir ${dir}/tmp/`);
             // copy package.json
@@ -112,11 +125,17 @@ async function loadIA(iaName: string | undefined, icon: string | undefined, debu
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
             if(!fs.existsSync(`${dir}/tmp/${iaName}.js`))
             {
-                spinnerIFD.error(`Fail generating IFD file for ${iaName}. Please check the name is correct and try again`);
+                spinner.fail(`Fail generating IFD file for ${iaName}. Please check the name is correct and try again`);
                 process.exit(-3);
             }
-            const ia = await import(`${dir}/tmp/${iaName}.js`);
+            spinner.succeed('Typescript compiled.');
 
+            spinner.start('Loading interface asset...');
+            // Convert IA path as full URI (with file://) to be able to load it with import
+            const iaUrl = pathToFileURL(`${dir}/tmp/${iaName}.js`);
+            const ia = await import(iaUrl.toString());
+
+            spinner.start('Loading interface asset metadata...');
             const schemas: any = {};
             const resources: any = {};
             for (const name of globalThisAny.intuiface_ifd_classes)
@@ -140,7 +159,7 @@ async function loadIA(iaName: string | undefined, icon: string | undefined, debu
             resources[iaName].description = globalThisAny.iaDescription;
 
             // create the ifd as json object
-            // and add metadatas filled from decorators
+            // and add metadata filled from decorators
             globalThisAny.intuiface_ifd_file = {
                 'version': `v1.0.${Date.now()}`,
                 'name': iaName,
@@ -165,8 +184,9 @@ async function loadIA(iaName: string | undefined, icon: string | undefined, debu
                 globalThisAny.intuiface_ifd_file.icons = { x32: iconName };
             }
 
+            spinner.start('Writing descriptor file...');
             // write the ifd file
-            await writeIFDFile(iaName, globalThisAny.intuiface_ifd_file, spinnerIFD);
+            await writeIFDFile(iaName, globalThisAny.intuiface_ifd_file, spinner);
 
             // clean tmp
             if (fs.existsSync(`${dir}/tmp/`))
@@ -174,7 +194,7 @@ async function loadIA(iaName: string | undefined, icon: string | undefined, debu
                 fs.removeSync(`${dir}/tmp/`);
             }
 
-            const spinnerIA: Spinner = yoctoSpinner({ text: `Building interface asset: ${iaName}...` }).start();
+            spinner.start(`Building interface asset: ${iaName}...`);
             if (!debug)
             {
                 await execPromise(`npx webpack --config ${dir}/webpack.config.js`);
@@ -183,7 +203,7 @@ async function loadIA(iaName: string | undefined, icon: string | undefined, debu
             {
                 await execPromise(`npx webpack --config ${dir}/webpack-debug.config.js`);
             }
-            spinnerIA.success(`Interface asset '${iaName}' successfully built.`);
+            spinner.succeed(`Interface asset '${iaName}' successfully built.`);
 
             if(icon)
             {
@@ -191,20 +211,39 @@ async function loadIA(iaName: string | undefined, icon: string | undefined, debu
                 {
                     icon = icon.substring(2);
                 }
-                const spinnerIcon: Spinner = yoctoSpinner({ text: `Copy icon ${iconName}...` }).start();
+                spinner.start(`Copying icon ${iconName}...`);
                 // copy the icon in dist folder
                 await execPromise(`shx cp ${dir}/${icon} ${dir}/dist/${iaName}/${iconName}`);
-                spinnerIcon.success(`Icon ${iconName} copied.`);
+                spinner.succeed(`Icon ${iconName} copied.`);
             }
 
-            spinnerIA.success('Done, you can now use your interface asset in Composer.');
+            spinner.succeed(`Done! Your interface asset is in 'dist/${iaName}'.\nCopy this folder into "Documents\\Intuiface\\Interface Assets" to use it in Composer.`);
         }
         spinner.stop();
     }
     catch (e)
     {
+        spinner.fail(); // Force fail without text to let the current step text persist
+
+        if(isExecException(e))
+        {
+            // Format error from exec command
+            let errorText = `Fail to execute command '${e.cmd}'.\n`;
+            if(e.stderr)
+            {
+                errorText += `Error: ${e.stderr}\n`;
+            }
+            else if(e.stdout)
+            {
+                errorText += `Error: ${e.stdout}\n`;
+            }
+            spinner.fail(errorText);
+        }
+        else
+        {
+            spinner.fail(`Error: ${e.message}\n${e.stack}`);
+        }
         cleanBuildFolders(dir, iaName);
-        spinner.error(e);
         process.exit(-1);
     }
 }
@@ -215,7 +254,7 @@ async function loadIA(iaName: string | undefined, icon: string | undefined, debu
  * @param ifd 
  */
 // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
-async function writeIFDFile(iaName: string, ifd: any, spinner: Spinner): Promise<void>
+async function writeIFDFile(iaName: string, ifd: any, spinner: Ora): Promise<void>
 {
     return new Promise((resolve, reject) =>
     {
@@ -224,14 +263,12 @@ async function writeIFDFile(iaName: string, ifd: any, spinner: Spinner): Promise
         {
             if (err)
             {
-                console.error(err);
-                spinner.error('An error occurred while writing JSON Object to File.');
+                spinner.fail(`An error occurred while writing JSON Object to File.\n${err}`);
                 reject(err);
-                return spinner.error(err);
+                return;
             }
 
-            console.log('Descriptor file (.ifd) has been saved.');
-            spinner.success('Descriptor file (.ifd) has been saved.');
+            spinner.succeed('Descriptor file (.ifd) has been saved.');
             resolve();
         });
     });
@@ -242,13 +279,16 @@ function migrateProject(): void
 {
     const dir = process.env.INIT_CWD;
 
-    const spinner: Spinner = yoctoSpinner({ text: 'Running migration to new CLI...' }).start();
+    const spinner = ora({ text: 'Migrating project to Intuiface CLI...' }).start();
     // check for index_ifd.ts
     if (fs.existsSync(`${dir}/src/index_ifd.ts`))
     {
+        spinner.info();
         try
         {
             // read index_ifd.ts to get ia name
+            spinner.indent = 3;
+            spinner.start('Extract information from current code');
             const indexIFD = fs.readFileSync(`${dir}/src/index_ifd.ts`);
             const regexp = /const ia = await import\('.\/(.*).js'\);/g;
 
@@ -257,6 +297,8 @@ function migrateProject(): void
             {
                 // get ia name with a regexp
                 const iaName = regexp.exec(indexIFD)[1];
+
+                spinner.start('Update package.json scripts');
                 // read the package.json
                 const packageJson = fs.readJsonSync(`${dir}/package.json`, { flag: 'r' });
                 // edit script build
@@ -268,7 +310,8 @@ function migrateProject(): void
 
                 // write package.json
                 fs.writeFileSync(`${dir}/package.json`, JSON.stringify(packageJson, null, 2));
-
+                spinner.succeed();
+                spinner.start('Remove unused files');
                 // remove index_ifd.ts
                 fs.removeSync(`${dir}/src/index_ifd.ts`);
                 // remove tsconfig.ifd.json
@@ -276,17 +319,21 @@ function migrateProject(): void
                 // clear dist folder
                 fs.removeSync(`${dir}/dist`);
 
-                spinner.success('Migration completed. You can now use the new CLI.');
+                spinner.succeed();
+
+                spinner.indent = 0;
+                spinner.succeed('Migration completed. You can now use the new CLI.');
             }
         } catch (error)
         {
-            spinner.error(error);
+            spinner.fail();
+            spinner.fail(`Error: ${error.message}\n${error.stack}`);
             process.exit(-2);
         }
     }
     else
     {
-        spinner.success('Migration was already done. You can now use the new CLI.');
+        spinner.succeed('Migration was already done. You can now use the new CLI.');
     }
 
 }
