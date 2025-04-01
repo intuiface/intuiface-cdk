@@ -311,9 +311,27 @@ function migrateProject(): void
                 // write package.json
                 fs.writeFileSync(`${dir}/package.json`, JSON.stringify(packageJson, null, 2));
                 spinner.succeed();
+
+                spinner.start('Update tsconfig.json');
+                // read the tsconfig.json
+                // Read the tsconfig.json file as a string
+                const tsconfigRaw = fs.readFileSync(`${dir}/tsconfig.json`, 'utf8');
+                // Remove trailing commas
+                const tsconfig = JSON.parse(tsconfigRaw.replace(/,\s*}/g, '}').replace(/,\s*]/g, ']'));
+
+                // update tsconfig to match new default
+                tsconfig.compilerOptions.outDir = `./dist/${iaName}`;
+                tsconfig.compilerOptions.target = 'ES2022';
+                tsconfig.compilerOptions.useDefineForClassFields = false;
+                tsconfig.include = ['**/src/**/*.ts'];
+                // write tsconfig.json
+                fs.writeFileSync(`${dir}/tsconfig.json`, JSON.stringify(tsconfig, null, 2));
+                spinner.succeed();
+
                 spinner.start('Remove unused files');
                 // remove index_ifd.ts
                 fs.removeSync(`${dir}/src/index_ifd.ts`);
+                fs.removeSync(`${dir}/src/index.js`);
                 // remove tsconfig.ifd.json
                 fs.removeSync(`${dir}/tsconfig.ifd.json`);
                 // clear dist folder

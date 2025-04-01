@@ -34,5 +34,5 @@ module.exports = {
             }
         })
     ],
-    entry: './src/index.js'
+    entry: './src/<%= IAName %>.ts'
 };
