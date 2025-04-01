@@ -107,7 +107,8 @@ export function DoNotInjectMethod() {
  *
  * An asset class must extends {@link IntuifaceElement}.
  *
- * @param options of the asset (display name, description, ...)
+ * @param options Options of the asset (name, display name, description, ...) The option 'name' is important to match the class name. And this can be use in a property to declare its type as another class name. 
+ * For this see {@link IPropertyOptions | `itemType`}.
  *
  * @example Skeleton of an interface asset class:
  * ```ts

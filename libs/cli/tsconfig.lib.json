@@ -1,0 +1,15 @@
+{
+    "extends": "./tsconfig.json",
+    "compilerOptions": {
+        "baseUrl": "tsconfig",
+        "module": "ESNext",
+        "declaration": true,
+        "types": ["node"],
+        "allowSyntheticDefaultImports": true,
+        "allowJs": true,
+        "sourceMap": false,
+        "target": "esnext"
+    },
+    "exclude": ["jest.config.ts", "**/src/*.spec.ts", "**/src/*.test.ts"],
+    "include": ["**/src/*.ts"]
+}

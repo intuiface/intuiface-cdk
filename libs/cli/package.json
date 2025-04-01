@@ -1,0 +1,11 @@
+{
+    "name": "@intuiface/cli",
+    "version": "1.4.0",
+    "repository": "https://github.com/intuiface/intuiface-cdk",
+    "description": "Intuiface CLI helps you build interface assets for Intuiface",
+    "bin": {
+        "intuiface-cli": "./src/cli.js"
+    },
+    "type": "module",
+    "license": "MIT"
+}

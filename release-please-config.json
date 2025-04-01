@@ -88,6 +88,11 @@
                 },
                 {
                     "type": "json",
+                    "path": "/libs/cli/package.json",
+                    "jsonpath": "$.version"
+                },
+                {
+                    "type": "json",
                     "path": "/libs/tools/schematics/custom-asset-schematics/package.json",
                     "jsonpath": "$.version"
                 },
@@ -100,6 +105,11 @@
                     "type": "json",
                     "path": "/libs/tools/schematics/interface-asset-schematics/src/create/files/package.json",
                     "jsonpath": "$.dependencies['@intuiface/core']"
+                },
+                {
+                    "type": "json",
+                    "path": "/libs/tools/schematics/interface-asset-schematics/src/create/files/package.json",
+                    "jsonpath": "$.dependencies['@intuiface/cli']"
                 },
                 {
                     "type": "json",

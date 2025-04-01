@@ -81,7 +81,7 @@ export interface IParameterOptions
  *
  * ```
  *
- * @example A trigger with paramters
+ * @example A trigger with parameters
  * ```ts
  * /**
  *  * Count changes event

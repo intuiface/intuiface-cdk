@@ -1,4 +1,5 @@
 const ModuleFederationPlugin = require("webpack").container.ModuleFederationPlugin;
+const path = require('path');
 
 module.exports = {
     module: {
@@ -10,6 +11,7 @@ module.exports = {
     },
     output: {
         publicPath: "auto",
+        path: path.resolve(__dirname, 'dist/<%= IAName %>')
     },
     resolve: {
         extensions: ['.tsx', '.ts', '.js'],
@@ -32,5 +34,5 @@ module.exports = {
             }
         })
     ],
-    entry: './src/index.js'
+    entry: './src/<%= IAName %>.ts'
 };

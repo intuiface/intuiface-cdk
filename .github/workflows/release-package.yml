@@ -15,7 +15,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 22
           registry-url: 'https://registry.npmjs.org'
           scope: '@intuiface'
 
@@ -32,6 +32,11 @@ jobs:
 
       - name: Publish components to npmjs packages
         run: npm publish dist/libs/components --access public
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPMJS_PUBLISH_TOKEN }}
+
+      - name: Publish cli to npmjs packages
+        run: npm publish dist/libs/cli --access public
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPMJS_PUBLISH_TOKEN }}
 
