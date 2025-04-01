@@ -328,6 +328,18 @@ function migrateProject(): void
                 fs.writeFileSync(`${dir}/tsconfig.json`, JSON.stringify(tsconfig, null, 2));
                 spinner.succeed();
 
+                spinner.start('Update webpack.config.js');
+                let webpackConfig: string = fs.readFileSync(`${dir}/webpack.config.js`, 'utf8');
+                // inject require path
+                webpackConfig = `const path = require('path');\n${webpackConfig}`;
+                // update output path
+                webpackConfig = webpackConfig.replace(/publicPath: "auto",?/g, `publicPath: "auto",\n\t\tpath: path.resolve(__dirname, 'dist/${iaName}')`);
+                // Update entry
+                webpackConfig = webpackConfig.replace(/entry: '.+'/g, `entry: './src/${iaName}.ts'`);
+                // Write new webpack config
+                fs.writeFileSync(`${dir}/webpack.config.js`, webpackConfig);
+                spinner.succeed();
+
                 spinner.start('Remove unused files');
                 // remove index_ifd.ts
                 fs.removeSync(`${dir}/src/index_ifd.ts`);
@@ -340,7 +352,7 @@ function migrateProject(): void
                 spinner.succeed();
 
                 spinner.indent = 0;
-                spinner.succeed('Migration completed. You can now use the new CLI.');
+                spinner.succeed('Migration completed.\nRun: \'npm run build\' to build your interface asset with new CLI.');
             }
         } catch (error)
         {
