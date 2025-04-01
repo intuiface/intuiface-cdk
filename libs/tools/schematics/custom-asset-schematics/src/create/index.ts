@@ -167,10 +167,10 @@ function addJsonDependencies(name: string): Rule{
         if (packages)
         {
             const packageVersions = JSON.parse(packages.toString());
-            json.dependencies['@intuiface/core'] = packageVersions['@intuiface/core'];
-            json.dependencies['@intuiface/components'] = packageVersions['@intuiface/components'];
-            json.devDependencies['@angular-architects/module-federation'] = packageVersions['@angular-architects/module-federation'];
-            json.devDependencies['@intuiface/custom-asset'] = packageVersions['@intuiface/custom-asset'];
+            json.dependencies['@intuiface/core'] = packageVersions.dependencies['@intuiface/core'];
+            json.dependencies['@intuiface/components'] = packageVersions.dependencies['@intuiface/components'];
+            json.devDependencies['@angular-architects/module-federation'] = packageVersions.dependencies['@angular-architects/module-federation'];
+            json.devDependencies['@intuiface/custom-asset'] = packageVersions.dependencies['@intuiface/custom-asset'];
         }
         else
         {

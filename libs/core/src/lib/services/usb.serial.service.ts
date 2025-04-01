@@ -24,82 +24,63 @@ export class UsbSerialService {
 
     /**
      * List all devices
-     * @param {list~callback} callback
      *
-     *
-     * @callback list~callback
-     * @param {string | null} error
-     * @param {[object] ?} result
-     * @param {string} result.devicePort
-     * @param {string} result.deviceId
-     * @param {string} result.productId
-     * @param {string} result.productName
-     * @param {string} result.vendorId
-     * @param {string} result.serialNumber
-     * @param {string} result.manufacturerName
-     * @param {string} result.interfaceCount
+     * @returns {string | null} error
+     * @returns {[string] ?} list of ports (USB0, USB1, ...)
      */
-    public list(callback: Function): void {
+    public list(): Promise<string[]>{
+        return Promise.resolve([]);
     }
 
 
     /**
      * Open the serial port
      * @param opts :
-     * { port: string, pid: number, vid: number, driver: string,
+     * { port: string, pid: number, vid: number,
      * baudRate: number, dataBits: number, stopBits: number, parity: number,
      * dtr: boolean, rts: boolean, sleepOnPause: boolean}
-     * @param {open~callback} callback
      *
-     * @callback open~callback
-     * @param {string | null} error
-     * @param {string ?} result
+     * @returns {string | null} error
+     * @returns {string} result: a message telling if the port is opened or not
      */
-    public open(opts: any, callback: Function): void {
+    public open(opts: any): Promise<string> {
+        return Promise.resolve('');
     }
 
     /**
      * Write to the serial port
      * @param {string} data
-     * @param {write~callback} callback
-     *
-     * @callback write~callback
-     * @param {string | null} error
-     * @param {string ?} result
      */
-    public write(data: string, callback: Function): void {
+    public write(data: string): Promise<void> {
+        return Promise.resolve();
     }
 
     /**
      * Close the serial port
-     * @param {close~callback} callback
-     *
-     * @callback close~callback
-     * @param {string | null} error
      */
-    public close(callback: Function): void {
+    public close(): Promise<void> {
+        return Promise.resolve();
     }
 
     /**
-     * Close the serial port
+     * Register a callback to be called when data is received
      * @param {function} callbackToRegister
      * @param {registerReadCallback~callback} callback
+     * @param {string} data
      *
-     * @callback registerReadCallback~callback
-     * @param {string} message
+     * @returns {void}
      */
-    public registerReadCallback(callbackToRegister: Function, callback: Function): void {
+    public registerReadCallback(callbackToRegister: Function): Promise<void> {
+        return Promise.resolve();
     }
 
     /**
      * Check if is connected
-     * @param {isConnected~callback} callback
      *
-     * @callback isConnected~callback
-     * @param {string | null} error
-     * @param {boolean ?} result
+     * @returns {boolean} isConnected
      */
-    public isConnected(callback: Function): void {
+    public isConnected(): Promise<boolean> {
+        return Promise.resolve(false);
     }
 
     /**
