@@ -1,82 +1,60 @@
+[**@intuiface/components**](../README.md) • **Docs**
+
+***
+
 # Class: ToggleButtonBehavior
 
 Behavior to manage a text.
 
-## Hierarchy
+## Extends
 
 - `Watchable`
-
-  ↳ **`ToggleButtonBehavior`**
-
-## Table of contents
-
-### Properties
-
-- [isChecked](ToggleButtonBehavior.md#ischecked)
-- [checkedColor](ToggleButtonBehavior.md#checkedcolor)
-- [logicGroupName](ToggleButtonBehavior.md#logicgroupname)
-- [allowToUncheck](ToggleButtonBehavior.md#allowtouncheck)
-- [isMemberOfToggleSet](ToggleButtonBehavior.md#ismemberoftoggleset)
-
-### Methods
-
-- [raiseButtonChecked](ToggleButtonBehavior.md#raisebuttonchecked)
-- [raiseButtonUnchecked](ToggleButtonBehavior.md#raisebuttonunchecked)
-- [check](ToggleButtonBehavior.md#check)
-- [uncheck](ToggleButtonBehavior.md#uncheck)
-- [toggleCheckUncheck](ToggleButtonBehavior.md#togglecheckuncheck)
-- [notifyPropertyChanged](ToggleButtonBehavior.md#notifypropertychanged)
-- [subscribeToPropertiesChanges](ToggleButtonBehavior.md#subscribetopropertieschanges)
-- [unsubscribeFromPropertiesChanges](ToggleButtonBehavior.md#unsubscribefrompropertieschanges)
-- [subscribeToPropertyChanged](ToggleButtonBehavior.md#subscribetopropertychanged)
-- [unsubscribeFromPropertyChanged](ToggleButtonBehavior.md#unsubscribefrompropertychanged)
-- [dispose](ToggleButtonBehavior.md#dispose)
 
 ## Properties
 
 ### isChecked
 
-• **isChecked**: `boolean` = `false`
+> **isChecked**: `boolean` = `false`
 
 Is Checked
 
-___
+***
 
 ### checkedColor
 
-• **checkedColor**: `string` = `'#83D3F6FF'`
+> **checkedColor**: `string` = `'#83D3F6FF'`
 
 Checked color.
 
-___
+***
 
 ### logicGroupName
 
-• **logicGroupName**: `string` = `null`
+> **logicGroupName**: `string` = `null`
 
 Logic Group Name
 
-___
+***
 
 ### allowToUncheck
 
-• **allowToUncheck**: `boolean` = `false`
+> **allowToUncheck**: `boolean` = `false`
 
 Allow to uncheck
 
-___
+***
 
 ### isMemberOfToggleSet
 
-• **isMemberOfToggleSet**: `boolean` = `false`
+> **isMemberOfToggleSet**: `boolean` = `false`
 
 Boolean to know if the toggle button is member of toggle set
 
 ## Methods
 
-### raiseButtonChecked
+### raiseButtonChecked()
 
-▸ **raiseButtonChecked**(): `void`
+> **raiseButtonChecked**(): `void`
 
 Trigger when button is checked
 
@@ -84,11 +62,11 @@ Trigger when button is checked
 
 `void`
 
-___
+***
 
-### raiseButtonUnchecked
+### raiseButtonUnchecked()
 
-▸ **raiseButtonUnchecked**(): `void`
+> **raiseButtonUnchecked**(): `void`
 
 Trigger when button is unchecked
 
@@ -96,11 +74,11 @@ Trigger when button is unchecked
 
 `void`
 
-___
+***
 
-### check
+### check()
 
-▸ **check**(): `void`
+> **check**(): `void`
 
 Action to check the button
 
@@ -108,11 +86,11 @@ Action to check the button
 
 `void`
 
-___
+***
 
-### uncheck
+### uncheck()
 
-▸ **uncheck**(): `void`
+> **uncheck**(): `void`
 
 Action to unckeck the button
 
@@ -120,11 +98,11 @@ Action to unckeck the button
 
 `void`
 
-___
+***
 
-### toggleCheckUncheck
+### toggleCheckUncheck()
 
-▸ **toggleCheckUncheck**(): `void`
+> **toggleCheckUncheck**(): `void`
 
 Action to toggle the button.
 
@@ -132,104 +110,97 @@ Action to toggle the button.
 
 `void`
 
-___
+***
 
-### notifyPropertyChanged
+### notifyPropertyChanged()
 
-▸ **notifyPropertyChanged**(`propertyKey`, `value`): `void`
+> **notifyPropertyChanged**(`propertyKey`, `value`): `void`
 
 Function to call when a property in the element changed to notify listeners
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `propertyKey` | `string` |
-| `value` | `any` |
+• **propertyKey**: `string`
+
+• **value**: `any`
 
 #### Returns
 
 `void`
 
-___
+***
 
-### subscribeToPropertiesChanges
+### subscribeToPropertiesChanges()
 
-▸ **subscribeToPropertiesChanges**(`listener`): `void`
+> **subscribeToPropertiesChanges**(`listener`): `void`
 
 Function to subscribe to properties changes of the element
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `listener` | `PropertiesListener` |
+• **listener**: `PropertiesListener`
 
 #### Returns
 
 `void`
 
-___
+***
 
-### unsubscribeFromPropertiesChanges
+### unsubscribeFromPropertiesChanges()
 
-▸ **unsubscribeFromPropertiesChanges**(`listener`): `void`
+> **unsubscribeFromPropertiesChanges**(`listener`): `void`
 
 function to unsubscribe from properties changes of the element
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `listener` | `PropertiesListener` |
+• **listener**: `PropertiesListener`
 
 #### Returns
 
 `void`
 
-___
+***
 
-### subscribeToPropertyChanged
+### subscribeToPropertyChanged()
 
-▸ **subscribeToPropertyChanged**(`property`, `listener`): `void`
+> **subscribeToPropertyChanged**(`property`, `listener`): `void`
 
 function to subscribe to one property changed
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `property` | `string` |
-| `listener` | `PropertyListener` |
+• **property**: `string`
+
+• **listener**: `PropertyListener`
 
 #### Returns
 
 `void`
 
-___
+***
 
-### unsubscribeFromPropertyChanged
+### unsubscribeFromPropertyChanged()
 
-▸ **unsubscribeFromPropertyChanged**(`property`, `listener`): `void`
+> **unsubscribeFromPropertyChanged**(`property`, `listener`): `void`
 
 function to unsubscribe from one property changed
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `property` | `string` |
-| `listener` | `PropertyListener` |
+• **property**: `string`
+
+• **listener**: `PropertyListener`
 
 #### Returns
 
 `void`
 
-___
+***
 
-### dispose
+### dispose()
 
-▸ **dispose**(): `void`
+> **dispose**(): `void`
 
 Dispose watchable.
 

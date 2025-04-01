@@ -1,39 +1,32 @@
+[**@intuiface/components**](../README.md) • **Docs**
+
+***
+
 # Class: TimelineBehavior
 
 Behavior to manage the timeline on media element (audio, video, ...).
-
-## Table of contents
-
-### Properties
-
-- [showTimeline](TimelineBehavior.md#showtimeline)
-- [mediaTimelineElement](TimelineBehavior.md#mediatimelineelement)
-
-### Methods
-
-- [raiseTimelineMoved](TimelineBehavior.md#raisetimelinemoved)
 
 ## Properties
 
 ### showTimeline
 
-• **showTimeline**: `boolean` = `false`
+> **showTimeline**: `boolean` = `false`
 
 Show timeline.
 
-___
+***
 
 ### mediaTimelineElement
 
-• **mediaTimelineElement**: [`PlayableMediaFacade`](PlayableMediaFacade.md) = `undefined`
+> **mediaTimelineElement**: [`PlayableMediaFacade`](PlayableMediaFacade.md) = `undefined`
 
 Media with timeline element accessors.
 
 ## Methods
 
-### raiseTimelineMoved
+### raiseTimelineMoved()
 
-▸ **raiseTimelineMoved**(): `void`
+> **raiseTimelineMoved**(): `void`
 
 Timeline moved
 

@@ -1,46 +1,40 @@
+[**@intuiface/core**](../README.md) • **Docs**
+
+***
+
 # Interface: ITriggerOptions
 
-Options to configure [`@Trigger`](../README.md#trigger) decorator.
-
-## Table of contents
-
-### Properties
-
-- [name](ITriggerOptions.md#name)
-- [displayName](ITriggerOptions.md#displayname)
-- [description](ITriggerOptions.md#description)
-- [propagationMode](ITriggerOptions.md#propagationmode)
-- [propagationDirection](ITriggerOptions.md#propagationdirection)
+Options to configure [`@Trigger`](../functions/Trigger.md) decorator.
 
 ## Properties
 
 ### name
 
-• **name**: `string`
+> **name**: `string`
 
 Name used for serialization and identification
 
-___
+***
 
 ### displayName
 
-• **displayName**: `string`
+> **displayName**: `string`
 
 Name displayed in Composer.
 
-___
+***
 
-### description
+### description?
 
-• `Optional` **description**: `string`
+> `optional` **description**: `string`
 
 Description displayed in Composer.
 
-___
+***
 
-### propagationMode
+### propagationMode?
 
-• `Optional` **propagationMode**: ``"once"`` \| ``"none"`` \| ``"standard"`` \| ``"untilUsed"``
+> `optional` **propagationMode**: `"once"` \| `"none"` \| `"standard"` \| `"untilUsed"`
 
 Indicates the mode of propagation:
 - `none`: No propagation.
@@ -48,23 +42,23 @@ Indicates the mode of propagation:
 - `untilUsed`: Same as `standard` but propagation will be stopped when an action is triggered.
 - `once`: propagate only one time, which means the trigger will reach either parent or children depending of the `propagationDirection`.
 
-**`Default`**
+#### Default
 
 ```ts
 'none'
 ```
 
-___
+***
 
-### propagationDirection
+### propagationDirection?
 
-• `Optional` **propagationDirection**: ``"bubbling"`` \| ``"cascading"``
+> `optional` **propagationDirection**: `"bubbling"` \| `"cascading"`
 
 Indicates the direction of propagation:
 - `bubbling`: trigger will be ascending the experience tree.
 - `cascading`: trigger will propagate through collection's children.
 
-**`Default`**
+#### Default
 
 ```ts
 'bubbling'

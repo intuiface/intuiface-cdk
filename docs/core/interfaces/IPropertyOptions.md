@@ -1,75 +1,66 @@
+[**@intuiface/core**](../README.md) • **Docs**
+
+***
+
 # Interface: IPropertyOptions
 
-Options used to configure [`@Property`](../README.md#property) decorator
-
-## Table of contents
-
-### Properties
-
-- [displayName](IPropertyOptions.md#displayname)
-- [description](IPropertyOptions.md#description)
-- [defaultValue](IPropertyOptions.md#defaultvalue)
-- [minValue](IPropertyOptions.md#minvalue)
-- [maxValue](IPropertyOptions.md#maxvalue)
-- [readOnly](IPropertyOptions.md#readonly)
-- [type](IPropertyOptions.md#type)
-- [itemType](IPropertyOptions.md#itemtype)
+Options used to configure [`@Property`](../functions/Property.md) decorator
 
 ## Properties
 
 ### displayName
 
-• **displayName**: `string`
+> **displayName**: `string`
 
 Name of the property displayed in Composer.
 
-___
+***
 
-### description
+### description?
 
-• `Optional` **description**: `string`
+> `optional` **description**: `string`
 
 Description of the property displayed in Composer.
 
-___
+***
 
-### defaultValue
+### defaultValue?
 
-• `Optional` **defaultValue**: `any`
+> `optional` **defaultValue**: `any`
 
 Default value of the property.
 
-___
+***
 
-### minValue
+### minValue?
 
-• `Optional` **minValue**: `number`
+> `optional` **minValue**: `number`
 
 Minimum value for this property.  
 If specified, any number value smaller than this value will be ignored when and replaced by the minimum.
 
-___
+***
 
-### maxValue
+### maxValue?
 
-• `Optional` **maxValue**: `number`
+> `optional` **maxValue**: `number`
 
 Maximum value for this property.  
 If specified, any number value greater than this value will be ignored when and replaced by the maximum.
 
-___
+***
 
-### readOnly
+### readOnly?
 
-• `Optional` **readOnly**: `boolean`
+> `optional` **readOnly**: `boolean`
 
 True if property is read only in Intuiface Composer. The property will only be usable as a binding source.
 
-___
+***
 
-### type
+### type?
 
-• `Optional` **type**: `any`
+> `optional` **type**: `any`
 
 The type of the property.
 It's optional but highly recommended for better binding conversion.
@@ -82,11 +73,11 @@ It can be:
 - Enum type
 - Class name of another class you created
 
-___
+***
 
-### itemType
+### itemType?
 
-• `Optional` **itemType**: `any`
+> `optional` **itemType**: `any`
 
 The item type in case the type is `Array`.
 It's optional but useful in interface assets to display item's properties in Intuiface Composer.

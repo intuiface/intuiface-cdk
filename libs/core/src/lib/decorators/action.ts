@@ -39,7 +39,7 @@ export interface IActionOptions
  *    this.isAutoplay = true; // code of the action
  * }
  * ```
- * _**Note**_: the name "turnOnAutoplay" is in camelCase as the naming convention.
+ * _**Note**_: the name "turnOnAutoplay" is in camelCase as the naming convention. It is important to do the same in your actions declaration.
  *
  * @example If your action has parameter(s), you can specify them with `@Parameter` decorator:
  * ```ts

@@ -1,74 +1,54 @@
+[**@intuiface/core**](../README.md) • **Docs**
+
+***
+
 # Class: Path
 
 Class to use to describe any king of path that can be used as URL
 
-**`Example`**
-
-```ts
-@Property({
-    displayName: 'Source',
-    description: 'Source of the data.',
-    defaultValue: null,
-    type: Path
-})
-public source: Path;
-```
+## Example
 
 ## Implements
 
 - [`IConvertibleType`](../interfaces/IConvertibleType.md)
 
-## Table of contents
-
-### Methods
-
-- [convertFrom](Path.md#convertfrom)
-- [canConvertFrom](Path.md#canconvertfrom)
-- [toString](Path.md#tostring)
-- [canConvertTo](Path.md#canconvertto)
-- [convertTo](Path.md#convertto)
-
 ## Methods
 
-### convertFrom
+### convertFrom()
 
-▸ `Static` **convertFrom**(`value`): [`Path`](Path.md)
+> `static` **convertFrom**(`value`): [`Path`](Path.md)
 
 Convert a value to a Path
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `value` | `string` |
+• **value**: `string`
 
 #### Returns
 
 [`Path`](Path.md)
 
-___
+***
 
-### canConvertFrom
+### canConvertFrom()
 
-▸ `Static` **canConvertFrom**(`value`): `boolean`
+> `static` **canConvertFrom**(`value`): `boolean`
 
 Check if we can convert value to Path
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `value` | `string` |
+• **value**: `string`
 
 #### Returns
 
 `boolean`
 
-___
+***
 
-### toString
+### toString()
 
-▸ **toString**(): `string`
+> **toString**(): `string`
 
 Transform url to string
 
@@ -78,21 +58,19 @@ Transform url to string
 
 #### Implementation of
 
-[IConvertibleType](../interfaces/IConvertibleType.md).[toString](../interfaces/IConvertibleType.md#tostring)
+[`IConvertibleType`](../interfaces/IConvertibleType.md).[`toString`](../interfaces/IConvertibleType.md#tostring)
 
-___
+***
 
-### canConvertTo
+### canConvertTo()
 
-▸ **canConvertTo**(`type`): `boolean`
+> **canConvertTo**(`type`): `boolean`
 
 Check if the type can be converted
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `type` | `unknown` |
+• **type**: `unknown`
 
 #### Returns
 
@@ -100,21 +78,19 @@ Check if the type can be converted
 
 #### Implementation of
 
-[IConvertibleType](../interfaces/IConvertibleType.md).[canConvertTo](../interfaces/IConvertibleType.md#canconvertto)
+[`IConvertibleType`](../interfaces/IConvertibleType.md).[`canConvertTo`](../interfaces/IConvertibleType.md#canconvertto)
 
-___
+***
 
-### convertTo
+### convertTo()
 
-▸ **convertTo**(`type`): `unknown`
+> **convertTo**(`type`): `unknown`
 
 Function to convert a Path to another type
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `type` | `unknown` |
+• **type**: `unknown`
 
 #### Returns
 
@@ -122,7 +98,7 @@ Function to convert a Path to another type
 
 #### Implementation of
 
-[IConvertibleType](../interfaces/IConvertibleType.md).[convertTo](../interfaces/IConvertibleType.md#convertto)
+[`IConvertibleType`](../interfaces/IConvertibleType.md).[`convertTo`](../interfaces/IConvertibleType.md#convertto)
 
 
 ## Help

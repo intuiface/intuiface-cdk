@@ -5,8 +5,8 @@
   "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "npm run cleanDist && npx tsc --project tsconfig.ifd.json && shx cp ./src/package.json ./tmp/ && node --experimental-modules --es-module-specifier-resolution=node tmp/index_ifd.js && npm run cleanTmp && npx webpack --config webpack.config.js",
-    "build:debug": "npm run cleanDist && npx tsc --project tsconfig.ifd.json && shx cp ./src/package.json ./tmp/ && node --experimental-modules --es-module-specifier-resolution=node tmp/index_ifd.js && npm run cleanTmp && npx webpack --config webpack-debug.config.js",
+    "build": "npm run cleanDist && npx tsc --project tsconfig.ifd.json && shx cp ./src/package.json ./tmp/ && node --experimental-modules --import=specifier-resolution-node/register tmp/index_ifd.js && npm run cleanTmp && npx webpack --config webpack.config.js",
+    "build:debug": "npm run cleanDist && npx tsc --project tsconfig.ifd.json && shx cp ./src/package.json ./tmp/ && node --experimental-modules --import=specifier-resolution-node/register tmp/index_ifd.js && npm run cleanTmp && npx webpack --config webpack-debug.config.js",
     "lint": "npx eslint -c .eslintrc.js --ext .ts .",
     "cleanDist": "node -e \"require('fs-extra').remove('dist/');\"",
     "cleanTmp": "node -e \"require('fs-extra').remove('tmp/');\""
@@ -17,7 +17,7 @@
   "devDependencies": {
     "@types/fs-extra": "^9.0.13",
     "@types/jsdom": "^21.1.7",
-    "@types/node": "^18.11.10",
+    "@types/node": "^22.10.1",
     "@typescript-eslint/eslint-plugin": "^5.40.0",
     "@typescript-eslint/eslint-plugin-tslint": "^5.10.1",
     "@typescript-eslint/parser": "^5.40.0",
@@ -27,9 +27,10 @@
     "fs-extra": "^10.1.0",
     "jsdom": "^25.0.0",
     "shx": "^0.3.4",
+    "specifier-resolution-node": "^1.1.4",
     "ts-loader": "^9.4.1",
     "tslint": "6.1.3",
-    "typescript": "^4.5.5",
+    "typescript": "^5.7.2",
     "webpack": "^5.67.0",
     "webpack-cli": "^4.10.0"
   },

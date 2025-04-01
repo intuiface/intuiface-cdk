@@ -17,14 +17,7 @@
             }
         },
         "lint": {
-            "executor": "@nx/linter:eslint",
-            "options": {
-                "lintFilePatterns": [
-                    "libs/core/src/**/*.ts",
-                    "libs/core/src/**/*.html",
-                    "libs/core/package.json"
-                ]
-            },
+            "executor": "@nx/eslint:lint",
             "outputs": ["{options.outputFile}"]
         }
     }

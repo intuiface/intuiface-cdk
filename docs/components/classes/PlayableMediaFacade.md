@@ -1,3 +1,7 @@
+[**@intuiface/components**](../README.md) • **Docs**
+
+***
+
 # Class: PlayableMediaFacade
 
 Facade to use audio API.
@@ -6,29 +10,11 @@ Facade to use audio API.
 
 - `PlayableFacade`
 
-## Table of contents
-
-### Methods
-
-- [getCurrentTime](PlayableMediaFacade.md#getcurrenttime)
-- [setCurrentTime](PlayableMediaFacade.md#setcurrenttime)
-- [getDuration](PlayableMediaFacade.md#getduration)
-- [isPaused](PlayableMediaFacade.md#ispaused)
-- [setVolume](PlayableMediaFacade.md#setvolume)
-- [play](PlayableMediaFacade.md#play)
-- [pause](PlayableMediaFacade.md#pause)
-- [listenIsReadyEvent](PlayableMediaFacade.md#listenisreadyevent)
-- [unlistenIsReadyEvent](PlayableMediaFacade.md#unlistenisreadyevent)
-- [listenToSeekedEvent](PlayableMediaFacade.md#listentoseekedevent)
-- [unlistenToSeekedEvent](PlayableMediaFacade.md#unlistentoseekedevent)
-- [listenToEndedEvent](PlayableMediaFacade.md#listentoendedevent)
-- [unlistenToEndedEvent](PlayableMediaFacade.md#unlistentoendedevent)
-
 ## Methods
 
-### getCurrentTime
+### getCurrentTime()
 
-▸ **getCurrentTime**(): `number`
+> **getCurrentTime**(): `number`
 
 Get current time of the playable element.
 
@@ -38,21 +24,21 @@ Get current time of the playable element.
 
 #### Implementation of
 
-PlayableFacade.getCurrentTime
+`PlayableFacade.getCurrentTime`
 
-___
+***
 
-### setCurrentTime
+### setCurrentTime()
 
-▸ **setCurrentTime**(`currentTime`): `void`
+> **setCurrentTime**(`currentTime`): `void`
 
 Set current time to the playable element.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `currentTime` | `number` | current time to set |
+• **currentTime**: `number`
+
+current time to set
 
 #### Returns
 
@@ -60,13 +46,13 @@ Set current time to the playable element.
 
 #### Implementation of
 
-PlayableFacade.setCurrentTime
+`PlayableFacade.setCurrentTime`
 
-___
+***
 
-### getDuration
+### getDuration()
 
-▸ **getDuration**(): `number`
+> **getDuration**(): `number`
 
 Get duration of the playable element.
 
@@ -76,13 +62,13 @@ Get duration of the playable element.
 
 #### Implementation of
 
-PlayableFacade.getDuration
+`PlayableFacade.getDuration`
 
-___
+***
 
-### isPaused
+### isPaused()
 
-▸ **isPaused**(): `boolean`
+> **isPaused**(): `boolean`
 
 Return true if playable element is paused.
 
@@ -92,31 +78,29 @@ Return true if playable element is paused.
 
 #### Implementation of
 
-PlayableFacade.isPaused
+`PlayableFacade.isPaused`
 
-___
+***
 
-### setVolume
+### setVolume()
 
-▸ **setVolume**(`volume`): `void`
+> **setVolume**(`volume`): `void`
 
 Change volume
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `volume` | `number` |
+• **volume**: `number`
 
 #### Returns
 
 `void`
 
-___
+***
 
-### play
+### play()
 
-▸ **play**(): `void`
+> **play**(): `void`
 
 Play the playable element.
 
@@ -126,13 +110,13 @@ Play the playable element.
 
 #### Implementation of
 
-PlayableFacade.play
+`PlayableFacade.play`
 
-___
+***
 
-### pause
+### pause()
 
-▸ **pause**(): `void`
+> **pause**(): `void`
 
 Pause the playable element.
 
@@ -142,21 +126,21 @@ Pause the playable element.
 
 #### Implementation of
 
-PlayableFacade.pause
+`PlayableFacade.pause`
 
-___
+***
 
-### listenIsReadyEvent
+### listenIsReadyEvent()
 
-▸ **listenIsReadyEvent**(`callback`): `void`
+> **listenIsReadyEvent**(`callback`): `void`
 
 Listen playable ready event.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `callback` | [`Function`]( https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function ) | callback to call when event is emited |
+• **callback**: [`Function`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function)
+
+callback to call when event is emited
 
 #### Returns
 
@@ -164,21 +148,21 @@ Listen playable ready event.
 
 #### Implementation of
 
-PlayableFacade.listenIsReadyEvent
+`PlayableFacade.listenIsReadyEvent`
 
-___
+***
 
-### unlistenIsReadyEvent
+### unlistenIsReadyEvent()
 
-▸ **unlistenIsReadyEvent**(`callback`): `void`
+> **unlistenIsReadyEvent**(`callback`): `void`
 
 Unlisten playable ready event.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `callback` | [`Function`]( https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function ) | callback to remove |
+• **callback**: [`Function`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function)
+
+callback to remove
 
 #### Returns
 
@@ -186,57 +170,57 @@ Unlisten playable ready event.
 
 #### Implementation of
 
-PlayableFacade.unlistenIsReadyEvent
+`PlayableFacade.unlistenIsReadyEvent`
 
-___
+***
 
-### listenToSeekedEvent
+### listenToSeekedEvent()
 
-▸ **listenToSeekedEvent**(`callback`): `void`
+> **listenToSeekedEvent**(`callback`): `void`
 
 Listen to seeked event
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `callback` | [`Function`]( https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function ) | callback to call |
+• **callback**: [`Function`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function)
+
+callback to call
 
 #### Returns
 
 `void`
 
-___
+***
 
-### unlistenToSeekedEvent
+### unlistenToSeekedEvent()
 
-▸ **unlistenToSeekedEvent**(`callback`): `void`
+> **unlistenToSeekedEvent**(`callback`): `void`
 
 Unlisten to seeked event
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `callback` | [`Function`]( https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function ) | callback to remove |
+• **callback**: [`Function`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function)
+
+callback to remove
 
 #### Returns
 
 `void`
 
-___
+***
 
-### listenToEndedEvent
+### listenToEndedEvent()
 
-▸ **listenToEndedEvent**(`callback`): `void`
+> **listenToEndedEvent**(`callback`): `void`
 
 Listen to ended event
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `callback` | [`Function`]( https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function ) | callback to call when event is emitted |
+• **callback**: [`Function`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function)
+
+callback to call when event is emitted
 
 #### Returns
 
@@ -244,21 +228,21 @@ Listen to ended event
 
 #### Implementation of
 
-PlayableFacade.listenToEndedEvent
+`PlayableFacade.listenToEndedEvent`
 
-___
+***
 
-### unlistenToEndedEvent
+### unlistenToEndedEvent()
 
-▸ **unlistenToEndedEvent**(`callback`): `void`
+> **unlistenToEndedEvent**(`callback`): `void`
 
 Unlisten to ended event.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `callback` | [`Function`]( https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function ) | callback to remove |
+• **callback**: [`Function`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function)
+
+callback to remove
 
 #### Returns
 
@@ -266,7 +250,7 @@ Unlisten to ended event.
 
 #### Implementation of
 
-PlayableFacade.unlistenToEndedEvent
+`PlayableFacade.unlistenToEndedEvent`
 
 
 ## Help

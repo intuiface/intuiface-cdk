@@ -1,31 +1,28 @@
+[**@intuiface/core**](../README.md) • **Docs**
+
+***
+
 # Enumeration: CacheScope
 
 `Enum` that defines if a cache is available across all experiences or only the current one.
-
-## Table of contents
-
-### Enumeration Members
-
-- [Player](CacheScope.md#player)
-- [Experience](CacheScope.md#experience)
 
 ## Enumeration Members
 
 ### Player
 
-• **Player** = ``"player"``
+> **Player**: `"player"`
 
 Player scope means cache will be shared between all experiences.
 
-___
+***
 
 ### Experience
 
-• **Experience** = ``"experience"``
+> **Experience**: `"experience"`
 
 Experience scope means cache will be available only for current experience.
 
-**`Remarks`**
+#### Remarks
 
 When deleting experience, Player will delete all cache associated with this experience.
 

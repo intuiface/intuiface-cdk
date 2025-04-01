@@ -1,26 +1,16 @@
+[**@intuiface/core**](../README.md) • **Docs**
+
+***
+
 # Class: UsbSerialService
 
 Usb serial service to access to usb port, open it and write to it
 
-## Table of contents
-
-### Methods
-
-- [getInstance](UsbSerialService.md#getinstance)
-- [createInstance](UsbSerialService.md#createinstance)
-- [list](UsbSerialService.md#list)
-- [open](UsbSerialService.md#open)
-- [write](UsbSerialService.md#write)
-- [close](UsbSerialService.md#close)
-- [registerReadCallback](UsbSerialService.md#registerreadcallback)
-- [isConnected](UsbSerialService.md#isconnected)
-- [dispose](UsbSerialService.md#dispose)
-
 ## Methods
 
-### getInstance
+### ~~getInstance()~~
 
-▸ `Static` **getInstance**(): [`UsbSerialService`](UsbSerialService.md)
+> `static` **getInstance**(): [`UsbSerialService`](UsbSerialService.md)
 
 Get the instance of the usb serial service.
 
@@ -30,15 +20,15 @@ Get the instance of the usb serial service.
 
 an instance of the usb serial service
 
-**`Deprecated`**
+#### Deprecated
 
 Use the new [createInstance](UsbSerialService.md#createinstance) instead.
 
-___
+***
 
-### createInstance
+### createInstance()
 
-▸ `Static` **createInstance**(): [`UsbSerialService`](UsbSerialService.md)
+> `static` **createInstance**(): [`UsbSerialService`](UsbSerialService.md)
 
 Create an instance of the usb serial service.
 
@@ -48,122 +38,110 @@ Create an instance of the usb serial service.
 
 an instance of the usb serial service
 
-___
+***
 
-### list
+### list()
 
-▸ **list**(`callback`): `void`
+> **list**(): [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)\<`string`[]\>
 
 List all devices
 
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `callback` | [`Function`]( https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function ) |
-
 #### Returns
 
-`void`
+[`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)\<`string`[]\>
 
-___
+error
 
-### open
+list of ports (USB0, USB1, ...)
 
-▸ **open**(`opts`, `callback`): `void`
+***
+
+### open()
+
+> **open**(`opts`): [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)\<`string`\>
 
 Open the serial port
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `opts` | `any` | : { port: string, pid: number, vid: number, driver: string, baudRate: number, dataBits: number, stopBits: number, parity: number, dtr: boolean, rts: boolean, sleepOnPause: boolean} |
-| `callback` | [`Function`]( https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function ) |  |
+• **opts**: `any`
+
+:
+{ port: string, pid: number, vid: number,
+baudRate: number, dataBits: number, stopBits: number, parity: number,
+dtr: boolean, rts: boolean, sleepOnPause: boolean}
 
 #### Returns
 
-`void`
+[`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)\<`string`\>
 
-___
+error
 
-### write
+result: a message telling if the port is opened or not
 
-▸ **write**(`data`, `callback`): `void`
+***
+
+### write()
+
+> **write**(`data`): [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)\<`void`\>
 
 Write to the serial port
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `data` | `string` |
-| `callback` | [`Function`]( https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function ) |
+• **data**: `string`
 
 #### Returns
 
-`void`
+[`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)\<`void`\>
 
-___
+***
 
-### close
+### close()
 
-▸ **close**(`callback`): `void`
+> **close**(): [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)\<`void`\>
 
 Close the serial port
 
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `callback` | [`Function`]( https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function ) |
-
 #### Returns
 
-`void`
+[`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)\<`void`\>
 
-___
+***
 
-### registerReadCallback
+### registerReadCallback()
 
-▸ **registerReadCallback**(`callbackToRegister`, `callback`): `void`
+> **registerReadCallback**(`callbackToRegister`): [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)\<`void`\>
 
-Close the serial port
+Register a callback to be called when data is received
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `callbackToRegister` | [`Function`]( https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function ) |
-| `callback` | [`Function`]( https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function ) |
+• **callbackToRegister**: [`Function`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function)
 
 #### Returns
 
-`void`
+[`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)\<`void`\>
 
-___
+***
 
-### isConnected
+### isConnected()
 
-▸ **isConnected**(`callback`): `void`
+> **isConnected**(): [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)\<`boolean`\>
 
 Check if is connected
 
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `callback` | [`Function`]( https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function ) |
-
 #### Returns
 
-`void`
+[`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)\<`boolean`\>
 
-___
+isConnected
 
-### dispose
+***
 
-▸ **dispose**(): `void`
+### dispose()
+
+> **dispose**(): `void`
 
 Dispose
 

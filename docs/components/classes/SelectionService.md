@@ -1,3 +1,7 @@
+[**@intuiface/components**](../README.md) • **Docs**
+
+***
+
 # Class: SelectionService
 
 Service to manage element selection.

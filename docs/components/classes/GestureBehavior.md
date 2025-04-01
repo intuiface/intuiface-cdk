@@ -1,26 +1,22 @@
+[**@intuiface/components**](../README.md) • **Docs**
+
+***
+
 # Class: GestureBehavior
 
 Behavior to manage gestures.
 
-## Table of contents
-
-### Methods
-
-- [raiseGestureDetected](GestureBehavior.md#raisegesturedetected)
-
 ## Methods
 
-### raiseGestureDetected
+### raiseGestureDetected()
 
-▸ **raiseGestureDetected**(`gestureName`): `void`
+> **raiseGestureDetected**(`gestureName`): `void`
 
 Gesture detected event.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `gestureName` | `string` |
+• **gestureName**: `string`
 
 #### Returns
 

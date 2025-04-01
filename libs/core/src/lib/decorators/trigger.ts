@@ -57,7 +57,7 @@ export interface ITriggerOptions
  * })
  * public raiseButtonReleased(): void { } // the trigger is an empty function
  * ```
- * _**Note**_: the name `raiseButtonReleased` is in camelCase as the naming convention
+ * _**Note**_: the name `raiseButtonReleased` is in camelCase as the naming convention. It is important to do the same in your triggers declaration.
  *
  * @example If your trigger has parameter(s), you can specify them with `@Parameter` decorator, the same way you declare parameters for actions.
  * ```ts

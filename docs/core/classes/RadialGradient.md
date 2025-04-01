@@ -1,96 +1,36 @@
+[**@intuiface/core**](../README.md) • **Docs**
+
+***
+
 # Class: RadialGradient
 
 Class to use to describe a linear gradient.
 
-**`Example`**
+## Example
 
-```ts
-@Property({
-    displayName: 'Background color',
-    type: RadialGradient
-})
-public backgroundColor: RadialGradient;
-```
-
-## Hierarchy
+## Extends
 
 - [`Color`](Color.md)
 
-  ↳ **`RadialGradient`**
-
-## Table of contents
-
-### Constructors
-
-- [constructor](RadialGradient.md#constructor)
-
-### Methods
-
-- [canConvertFrom](RadialGradient.md#canconvertfrom)
-- [convertFrom](RadialGradient.md#convertfrom)
-- [canConvertTo](RadialGradient.md#canconvertto)
-- [convertTo](RadialGradient.md#convertto)
-- [equals](RadialGradient.md#equals)
-- [toString](RadialGradient.md#tostring)
-- [isGradient](RadialGradient.md#isgradient)
-
 ## Constructors
 
-### constructor
+### new RadialGradient()
 
-• **new RadialGradient**(`originPoint`, `centerPoint`, `radiusX`, `radiusY`, `gradientPoints`)
+> **new RadialGradient**(`originPoint`, `centerPoint`, `radiusX`, `radiusY`, `gradientPoints`): [`RadialGradient`](RadialGradient.md)
 
 Constructor
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `originPoint` | `string` |
-| `centerPoint` | `string` |
-| `radiusX` | `number` |
-| `radiusY` | `number` |
-| `gradientPoints` | `GradientPoint`[] |
+• **originPoint**: `string`
 
-#### Overrides
+• **centerPoint**: `string`
 
-Color.constructor
+• **radiusX**: `number`
 
-## Methods
+• **radiusY**: `number`
 
-### canConvertFrom
-
-▸ `Static` **canConvertFrom**(`value`): `boolean`
-
-Check if we can convert a value to a radial gradient
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `value` | `unknown` |
-
-#### Returns
-
-`boolean`
-
-#### Overrides
-
-[Color](Color.md).[canConvertFrom](Color.md#canconvertfrom)
-
-___
-
-### convertFrom
-
-▸ `Static` **convertFrom**(`value`): [`RadialGradient`](RadialGradient.md)
-
-Convert a value to a radial gradient
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `value` | `unknown` |
+• **gradientPoints**: `GradientPoint`[]
 
 #### Returns
 
@@ -98,65 +38,19 @@ Convert a value to a radial gradient
 
 #### Overrides
 
-[Color](Color.md).[convertFrom](Color.md#convertfrom)
+`Color.constructor`
 
-___
+## Methods
 
-### canConvertTo
+### canConvertFrom()
 
-▸ **canConvertTo**(`type`): `boolean`
+> `static` **canConvertFrom**(`value`): `boolean`
 
-Check if the color can be converted to a type
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `type` | `unknown` |
-
-#### Returns
-
-`boolean`
-
-#### Inherited from
-
-[Color](Color.md).[canConvertTo](Color.md#canconvertto)
-
-___
-
-### convertTo
-
-▸ **convertTo**(`type`): `unknown`
-
-Function to convert a color to another type
+Check if we can convert a value to a radial gradient
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `type` | `unknown` |
-
-#### Returns
-
-`unknown`
-
-#### Inherited from
-
-[Color](Color.md).[convertTo](Color.md#convertto)
-
-___
-
-### equals
-
-▸ **equals**(`color`): `boolean`
-
-Function equals for the color type
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `color` | [`RadialGradient`](RadialGradient.md) | color to compare |
+• **value**: `unknown`
 
 #### Returns
 
@@ -164,13 +58,95 @@ Function equals for the color type
 
 #### Overrides
 
-[Color](Color.md).[equals](Color.md#equals)
+[`Color`](Color.md).[`canConvertFrom`](Color.md#canconvertfrom)
 
-___
+***
 
-### toString
+### convertFrom()
 
-▸ **toString**(): `string`
+> `static` **convertFrom**(`value`): [`RadialGradient`](RadialGradient.md)
+
+Convert a value to a radial gradient
+
+#### Parameters
+
+• **value**: `unknown`
+
+#### Returns
+
+[`RadialGradient`](RadialGradient.md)
+
+#### Overrides
+
+[`Color`](Color.md).[`convertFrom`](Color.md#convertfrom)
+
+***
+
+### canConvertTo()
+
+> **canConvertTo**(`type`): `boolean`
+
+Check if the color can be converted to a type
+
+#### Parameters
+
+• **type**: `unknown`
+
+#### Returns
+
+`boolean`
+
+#### Inherited from
+
+[`Color`](Color.md).[`canConvertTo`](Color.md#canconvertto)
+
+***
+
+### convertTo()
+
+> **convertTo**(`type`): `unknown`
+
+Function to convert a color to another type
+
+#### Parameters
+
+• **type**: `unknown`
+
+#### Returns
+
+`unknown`
+
+#### Inherited from
+
+[`Color`](Color.md).[`convertTo`](Color.md#convertto)
+
+***
+
+### equals()
+
+> **equals**(`color`): `boolean`
+
+Function equals for the color type
+
+#### Parameters
+
+• **color**: [`RadialGradient`](RadialGradient.md)
+
+color to compare
+
+#### Returns
+
+`boolean`
+
+#### Overrides
+
+[`Color`](Color.md).[`equals`](Color.md#equals)
+
+***
+
+### toString()
+
+> **toString**(): `string`
 
 Convert a radial gradient to a string
 
@@ -180,13 +156,13 @@ Convert a radial gradient to a string
 
 #### Overrides
 
-[Color](Color.md).[toString](Color.md#tostring)
+[`Color`](Color.md).[`toString`](Color.md#tostring)
 
-___
+***
 
-### isGradient
+### isGradient()
 
-▸ **isGradient**(): `boolean`
+> **isGradient**(): `boolean`
 
 Is the color a gradient?
 
@@ -196,7 +172,7 @@ Is the color a gradient?
 
 #### Overrides
 
-[Color](Color.md).[isGradient](Color.md#isgradient)
+[`Color`](Color.md).[`isGradient`](Color.md#isgradient)
 
 
 ## Help
