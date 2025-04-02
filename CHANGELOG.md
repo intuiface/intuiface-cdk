@@ -1,5 +1,30 @@
 # Changelog
 
+## [2.0.0](https://github.com/intuiface/intuiface-cdk/compare/v1.4.0...v2.0.0) (2025-04-01)
+
+
+### ⚠ BREAKING CHANGES
+
+* **core:** remove deprecated callbacks in usb serial service and work with promises
+
+### Features
+
+* **cli:** add new intuiface-cli to build interface asset project ([#86](https://github.com/intuiface/intuiface-cdk/issues/86)) ([974365f](https://github.com/intuiface/intuiface-cdk/commit/974365fedb45d16906adb111786dd214b6ec1287))
+* **core:** Manage auto generated setter action ([#83](https://github.com/intuiface/intuiface-cdk/issues/83)) ([c0a5ef6](https://github.com/intuiface/intuiface-cdk/commit/c0a5ef6597513e1cc9a151eb70b13b9464659e17))
+* update angular to version 17 ([#82](https://github.com/intuiface/intuiface-cdk/issues/82)) ([d7c73ff](https://github.com/intuiface/intuiface-cdk/commit/d7c73ff933f11421a30e3ef2b4cd9927905e1994))
+
+
+### Bug Fixes
+
+* **core:** add default values to parameters in ifd file ([#87](https://github.com/intuiface/intuiface-cdk/issues/87)) ([7a5ffda](https://github.com/intuiface/intuiface-cdk/commit/7a5ffda4da2d5b0c4beb072f7ed97685dd858a8c))
+* **core:** expose `getInstance()` on system-info.service ([#84](https://github.com/intuiface/intuiface-cdk/issues/84)) ([02d4cfe](https://github.com/intuiface/intuiface-cdk/commit/02d4cfeee6797e040b89170d9159acdeb56ae87f))
+* **interface-asset:** PN-3098: Can't build an IA with the CDK and Nodejs 20 and 22 ([d7c73ff](https://github.com/intuiface/intuiface-cdk/commit/d7c73ff933f11421a30e3ef2b4cd9927905e1994))
+
+
+### Code Refactoring
+
+* **core:** remove deprecated callbacks in usb serial service and work with promises ([d7c73ff](https://github.com/intuiface/intuiface-cdk/commit/d7c73ff933f11421a30e3ef2b4cd9927905e1994))
+
 ## [1.4.0](https://github.com/intuiface/intuiface-cdk/compare/v1.3.1...v1.4.0) (2024-08-28)
 
 

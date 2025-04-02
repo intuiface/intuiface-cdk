@@ -33,8 +33,8 @@
     "webpack-cli": "^4.10.0"
   },
   "dependencies": {
-    "@intuiface/core": "1.4.0",
-    "@intuiface/cli": "1.4.0",
+    "@intuiface/core": "2.0.0",
+    "@intuiface/cli": "2.0.0",
     "tslib": "^2.4.0"
   }
 }
