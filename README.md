@@ -28,6 +28,8 @@ You can follow the documentation here: [Create an Interface Asset](./libs/tools/
 
 More information about specific development syntax is here: [Intuiface Core](./libs/core/README.md)
 
+Documentation about Intuiface CLI (`@intuiface/cli`) used to build interface asset: [`intuiface-cli`](./libs/cli/README.md)
+
 
 ## For CDK developers 
 
