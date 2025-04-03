@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.1](https://github.com/intuiface/intuiface-cdk/compare/v2.0.0...v2.0.1) (2025-04-03)
+
+
+### Bug Fixes
+
+* **cli:** fix missing jsdom in output package.json for intuiface-cli ([#88](https://github.com/intuiface/intuiface-cdk/issues/88)) ([0526c89](https://github.com/intuiface/intuiface-cdk/commit/0526c8980306fad0f7242dc51aa0584bd2762d64))
+
 ## [2.0.0](https://github.com/intuiface/intuiface-cdk/compare/v1.4.0...v2.0.0) (2025-04-01)
 
 
