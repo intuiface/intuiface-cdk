@@ -49,12 +49,17 @@ try
 {
     const response = await CacheService.fetch(
                              'https://mydomain.com/data.json',
-                             null,
                              {
-                                 strategy: CacheStrategy.NetworkFirst,
+                                 headers: {
+                                    'Accept': 'application/json',
+                                    'Authorization': 'Bearer API_TOKEN'
+                                 }
+                             },
+                             {
+                                 strategy: CacheStrategy.NetworkFirst, // Data will first be fetch from network and fallback on cache
                                  cacheName: 'myIA-data',
                                  cacheScope: CacheScope.Experience, // This data will not be shared across multiple XP
-                                 cacheErrorResponse: false, // We don't want to have an error in cache.
+                                 cacheErrorResponse: true, // In this example, if response is an error, it will be cached to avoid keeping authenticated data in cache
                              });
      if(response.ok)
      {
@@ -146,7 +151,7 @@ URL of the resource to search
 
 • **cacheName**: `string`
 
-Name of the cache. If `null` of empty, defaults to global cache for interface assets.
+Name of the cache. If `null` or empty, defaults to global cache for interface assets.
 
 • **cacheScope**: [`CacheScope`](../enumerations/CacheScope.md)
 
@@ -170,7 +175,7 @@ List entries cached in given cache
 
 • **cacheName**: `string`
 
-Name of the cache. If `null` of empty, defaults to global cache for interface assets.
+Name of the cache. If `null` or empty, defaults to global cache for interface assets.
 
 • **cacheScope**: [`CacheScope`](../enumerations/CacheScope.md)
 
@@ -198,7 +203,7 @@ URL of the resource to remove
 
 • **cacheName**: `string`
 
-Name of the cache. If `null` of empty, defaults to global cache for interface assets.
+Name of the cache. If `null` or empty, defaults to global cache for interface assets.
 
 • **cacheScope**: [`CacheScope`](../enumerations/CacheScope.md)
 
@@ -222,7 +227,7 @@ Delete given cache
 
 • **cacheName**: `string`
 
-Name of the cache. If `null` of empty, defaults to global cache for interface assets.
+Name of the cache. If `null` or empty, defaults to global cache for interface assets.
 
 • **cacheScope**: [`CacheScope`](../enumerations/CacheScope.md)
 
@@ -230,7 +235,7 @@ Scope of the cache to delete. Defaults to [CacheScope.Experience](../enumeration
 
 • **failOnError**: `boolean` = `true`
 
-If `true`, throws `Error` when deletion fails. Otherwise catch error silently. Defaults to `false`.
+If `true`, throws `Error` when deletion fails. Otherwise catch error silently. Defaults to `true`.
 
 #### Returns
 
