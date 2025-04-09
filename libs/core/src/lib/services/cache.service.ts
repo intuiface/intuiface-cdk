@@ -80,7 +80,7 @@ export interface CacheOptions {
     /**
      * Name of the cache.  
      * It's a way to segregate data and easily retrieve cache entries. It can be considered as a folder and can include `/` separator to create sub-caches.  
-     * If `null` of empty, defaults to global cache for interface assets.
+     * If `null` or empty, defaults to global cache for interface assets.
      */
     cacheName: string;
 
@@ -161,12 +161,17 @@ export class CacheService {
      * {
      *     const response = await CacheService.fetch(
      *                              'https://mydomain.com/data.json',
-     *                              null,
      *                              {
-     *                                  strategy: CacheStrategy.NetworkFirst,
+     *                                  headers: {
+     *                                     'Accept': 'application/json',
+     *                                     'Authorization': 'Bearer API_TOKEN'
+     *                                  }
+     *                              },
+     *                              {
+     *                                  strategy: CacheStrategy.NetworkFirst, // Data will first be fetch from network and fallback on cache
      *                                  cacheName: 'myIA-data',
      *                                  cacheScope: CacheScope.Experience, // This data will not be shared across multiple XP
-     *                                  cacheErrorResponse: false, // We don't want to have an error in cache.
+     *                                  cacheErrorResponse: true, // In this example, if response is an error, it will be cached to avoid keeping authenticated data in cache
      *                              });
      *      if(response.ok)
      *      {
@@ -237,7 +242,7 @@ export class CacheService {
     /**
      * Get cache URI for the given url
      * @param url URL of the resource to search
-     * @param cacheName Name of the cache. If `null` of empty, defaults to global cache for interface assets.
+     * @param cacheName Name of the cache. If `null` or empty, defaults to global cache for interface assets.
      * @param cacheScope Scope of the cached resource. Defaults to {@link CacheScope.Experience}.
      *
      * @returns A Promise that resolve to an URI as `string` that can be used as source (i.e. `src` attribute) of a {@link HTMLElement} such as `<img>`.
@@ -250,7 +255,7 @@ export class CacheService {
 
     /**
      * List entries cached in given cache
-     * @param cacheName Name of the cache. If `null` of empty, defaults to global cache for interface assets.
+     * @param cacheName Name of the cache. If `null` or empty, defaults to global cache for interface assets.
      * @param cacheScope Scope of the cache entries to list. Defaults to {@link CacheScope.Experience}.
      * @returns A Promise that resolve to an array of {@link CacheEntry}.
      */
@@ -263,7 +268,7 @@ export class CacheService {
     /**
      * Remove cached data for the given url
      * @param url URL of the resource to remove
-     * @param cacheName Name of the cache. If `null` of empty, defaults to global cache for interface assets.
+     * @param cacheName Name of the cache. If `null` or empty, defaults to global cache for interface assets.
      * @param cacheScope Scope of the cached data to remove. Defaults to {@link CacheScope.Experience}.
      *
      * @returns A Promise that resolve when data has been removed from cache.
@@ -276,9 +281,9 @@ export class CacheService {
 
     /**
      * Delete given cache
-     * @param cacheName Name of the cache. If `null` of empty, defaults to global cache for interface assets.
+     * @param cacheName Name of the cache. If `null` or empty, defaults to global cache for interface assets.
      * @param cacheScope Scope of the cache to delete. Defaults to {@link CacheScope.Experience}.
-     * @param failOnError If `true`, throws `Error` when deletion fails. Otherwise catch error silently. Defaults to `false`.
+     * @param failOnError If `true`, throws `Error` when deletion fails. Otherwise catch error silently. Defaults to `true`.
      *
      * @returns a Promise that resolve when cache has been deleted.
      *
