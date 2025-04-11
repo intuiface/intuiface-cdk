@@ -133,6 +133,9 @@ async function loadIA(iaName: string | undefined, icon: string | undefined, debu
             spinner.start('Loading interface asset...');
             // Convert IA path as full URI (with file://) to be able to load it with import
             const iaUrl = pathToFileURL(`${dir}/tmp/${iaName}.js`);
+            // load the loader for typescript files
+            const loader = await import('./register-ts-loader.js');
+            // load the IA file
             const ia = await import(iaUrl.toString());
 
             spinner.start('Loading interface asset metadata...');
