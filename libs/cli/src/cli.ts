@@ -7,6 +7,8 @@ import { JSDOM } from 'jsdom';
 import ora, { Ora } from 'ora';
 import { Command } from 'commander';
 import { pathToFileURL } from 'url';
+import chalk from 'chalk';
+import ts from 'typescript';
 
 const isExecException = (error: unknown): error is ExecException => typeof error === 'object' && error !== null && 'code' in error && 'cmd' in error;
 
@@ -100,6 +102,93 @@ function cleanBuildFolders(dir: string, iaName: string = undefined): void
 }
 
 /**
+ * Transpile TypeScript programmatically
+ * @param tsConfigPath Path to the tsconfig.json file
+ * @param outDir Output directory for transpiled files
+ */
+// eslint-disable-next-line prefer-arrow/prefer-arrow-functions
+function transpileTypeScript(tsConfigPath: string, outDir: string, spinner: Ora): void {
+    const configFile = ts.readConfigFile(tsConfigPath, ts.sys.readFile);
+    if (configFile.error) {
+        throw new Error(`Error reading tsconfig.json: ${configFile.error.messageText}`);
+    }
+
+    const parsedCommandLine = ts.parseJsonConfigFileContent(
+        configFile.config,
+        ts.sys,
+        process.cwd()
+    );
+
+    const tsProgram = ts.createProgram(parsedCommandLine.fileNames, {
+        ...parsedCommandLine.options,
+        outDir: outDir,
+        skipLibCheck: true
+    });
+
+    const emitResult = tsProgram.emit(undefined, undefined, undefined, undefined, {
+        after: [
+            (context): ts.Transformer<ts.SourceFile> => {
+                const visit = (node: ts.Node): ts.Node => {
+                    if (ts.isImportDeclaration(node) || ts.isExportDeclaration(node)) {
+                        const moduleSpecifier = node.moduleSpecifier;
+                        if (moduleSpecifier && ts.isStringLiteral(moduleSpecifier)) {
+                            const text = moduleSpecifier.text;
+                            if ((text.startsWith('./') || text.startsWith('../')) && !text.endsWith('.js') && !text.endsWith('.json')) {
+                                const updatedSpecifier = ts.factory.createStringLiteral(`${text}.js`);
+                                if (ts.isImportDeclaration(node)) {
+                                    return ts.factory.updateImportDeclaration(
+                                        node,
+                                        node.modifiers,
+                                        node.importClause,
+                                        updatedSpecifier,
+                                        node.attributes
+                                    );
+                                } else if (ts.isExportDeclaration(node)) {
+                                    return ts.factory.updateExportDeclaration(
+                                        node,
+                                        node.modifiers,
+                                        node.isTypeOnly,
+                                        node.exportClause,
+                                        updatedSpecifier,
+                                        node.attributes
+                                    );
+                                }
+                            }
+                        }
+                    }
+                    return ts.visitEachChild(node, visit, context);
+                };
+                return (node: ts.SourceFile) => ts.visitNode(node, visit) as ts.SourceFile;
+            },
+        ],
+    });
+
+    const allDiagnostics = ts.getPreEmitDiagnostics(tsProgram).concat(emitResult.diagnostics);
+
+    const hasErrors = allDiagnostics.some((diagnostic) => diagnostic.category === ts.DiagnosticCategory.Error);
+    if(hasErrors)
+    {
+        spinner.fail();
+        spinner.text = '';
+    }
+    spinner.indent = 3;
+
+    allDiagnostics.forEach(diagnostic => {
+        if (diagnostic.file) {
+            const { line, character } = diagnostic.file.getLineAndCharacterOfPosition(diagnostic.start!);
+            const message = ts.flattenDiagnosticMessageText(diagnostic.messageText, '\n');
+            spinner.fail(chalk.red(`${diagnostic.file.fileName} (${line + 1},${character + 1}): ${message}`));
+        } else {
+            spinner.fail(chalk.red(ts.flattenDiagnosticMessageText(diagnostic.messageText, '\n')));
+        }
+    });
+    spinner.indent = 0;
+    if (hasErrors || emitResult.emitSkipped) {
+        throw new Error('TypeScript compilation failed.');
+    }
+}
+
+/**
  * import the IA
  */
 // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
@@ -116,9 +205,9 @@ async function loadIA(iaName: string | undefined, icon: string | undefined, debu
         // set interface asset to import in composer
         if (iaName !== undefined)
         {
-            spinner.start('Compiling typescript...');
-            // transpile ia file
-            await execPromise(`npx tsc --project ${dir}/tsconfig.json --outDir ${dir}/tmp/`);
+            spinner.start('Compiling TypeScript...');
+            // Transpile TypeScript programmatically
+            transpileTypeScript(`${dir}/tsconfig.json`, `${dir}/tmp/`, spinner);
 
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
             if(!fs.existsSync(`${dir}/tmp/${iaName}.js`))
@@ -126,7 +215,7 @@ async function loadIA(iaName: string | undefined, icon: string | undefined, debu
                 spinner.fail(`Fail generating IFD file for ${iaName}. Please check the name is correct and try again`);
                 process.exit(-3);
             }
-            spinner.succeed('Typescript compiled.');
+            spinner.succeed('TypeScript compiled.');
 
             // Write package.json to load IA as module
             fs.writeFileSync(`${dir}/tmp/package.json`, JSON.stringify({type: 'module'}, null, 2));
@@ -231,7 +320,10 @@ async function loadIA(iaName: string | undefined, icon: string | undefined, debu
     }
     catch (e)
     {
-        spinner.fail(); // Force fail without text to let the current step text persist
+        if(spinner.isSpinning)
+        {
+            spinner.fail(); // Force fail without text to let the current step text persist
+        }
 
         if(isExecException(e))
         {
@@ -298,13 +390,24 @@ function migrateProject(): void
             spinner.indent = 3;
             spinner.start('Extract information from current code');
             const indexIFD = fs.readFileSync(`${dir}/src/index_ifd.ts`);
-            const regexp = /const ia = await import\('.\/(.*).js'\);/g;
+            const regexp = /const ia = (await import\('.\/(?<importName>\w+).js'\))|(new (?<cstrName>\w+)\(\));/g;
 
             // get line with import of IA file
-            if (indexIFD && indexIFD.includes('const ia = await import('))
+            if (indexIFD)
             {
                 // get ia name with a regexp
-                const iaName = regexp.exec(indexIFD)[1];
+                const match = regexp.exec(indexIFD);
+                let iaName: string;
+                if(match)
+                {
+                    iaName = match.groups.importName ?? match.groups.cstrName;
+                }
+
+                if(iaName == null || iaName === '')
+                {
+                    throw new Error('Can\'t find IA name from current workspace.');
+                }
+                spinner.succeed(`Information of Interface Asset '${iaName}' extracted`);
 
                 spinner.start('Update package.json scripts');
                 // read the package.json
