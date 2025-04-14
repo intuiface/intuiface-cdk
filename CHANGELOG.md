@@ -1,5 +1,15 @@
 # Changelog
 
+## [2.0.2](https://github.com/intuiface/intuiface-cdk/compare/v2.0.1...v2.0.2) (2025-04-14)
+
+
+### Bug Fixes
+
+* **cli:** display webpack output when building ([4cd0482](https://github.com/intuiface/intuiface-cdk/commit/4cd0482689221ff4e6949ca958ff12edd89df189))
+* **cli:** Fix build when using multiple typescript files ([#92](https://github.com/intuiface/intuiface-cdk/issues/92)) ([f9bf76b](https://github.com/intuiface/intuiface-cdk/commit/f9bf76b1496c4e58fdf8d1bc2288230f6c565366))
+* **cli:** handle extracting IA name from older project ([#94](https://github.com/intuiface/intuiface-cdk/issues/94)) ([805da65](https://github.com/intuiface/intuiface-cdk/commit/805da655eb84ee690ff2a0c57f44389e7829680b))
+* removed unnecessary package.json and only write it at build time ([#95](https://github.com/intuiface/intuiface-cdk/issues/95)) ([e6209e8](https://github.com/intuiface/intuiface-cdk/commit/e6209e85cf5fcf0174e7d608f37222a763095f4b))
+
 ## [2.0.1](https://github.com/intuiface/intuiface-cdk/compare/v2.0.0...v2.0.1) (2025-04-03)
 
 
