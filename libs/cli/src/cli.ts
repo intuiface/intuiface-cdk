@@ -133,7 +133,7 @@ function transpileTypeScript(tsConfigPath: string, outDir: string, spinner: Ora)
                         const moduleSpecifier = node.moduleSpecifier;
                         if (moduleSpecifier && ts.isStringLiteral(moduleSpecifier)) {
                             const text = moduleSpecifier.text;
-                            if (text.startsWith('./') || text.startsWith('../')) {
+                            if ((text.startsWith('./') || text.startsWith('../')) && !text.endsWith('.js') && !text.endsWith('.json')) {
                                 const updatedSpecifier = ts.factory.createStringLiteral(`${text}.js`);
                                 if (ts.isImportDeclaration(node)) {
                                     return ts.factory.updateImportDeclaration(
