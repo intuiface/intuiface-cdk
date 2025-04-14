@@ -209,9 +209,6 @@ async function loadIA(iaName: string | undefined, icon: string | undefined, debu
             // Transpile TypeScript programmatically
             transpileTypeScript(`${dir}/tsconfig.json`, `${dir}/tmp/`, spinner);
 
-            // copy package.json
-            await execPromise(`shx cp ${dir}/src/package.json ${dir}/tmp/`);
-
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
             if(!fs.existsSync(`${dir}/tmp/${iaName}.js`))
             {
@@ -219,6 +216,9 @@ async function loadIA(iaName: string | undefined, icon: string | undefined, debu
                 process.exit(-3);
             }
             spinner.succeed('TypeScript compiled.');
+
+            // Write package.json to load IA as module
+            fs.writeFileSync(`${dir}/tmp/package.json`, JSON.stringify({type: 'module'}, null, 2));
 
             spinner.start('Loading interface asset...');
             // Convert IA path as full URI (with file://) to be able to load it with import
@@ -455,6 +455,10 @@ function migrateProject(): void
                 // remove index_ifd.ts
                 fs.removeSync(`${dir}/src/index_ifd.ts`);
                 fs.removeSync(`${dir}/src/index.js`);
+                if(fs.existsSync(`${dir}/src/package.json`))
+                {
+                    fs.removeSync(`${dir}/src/package.json`);
+                }
                 // remove tsconfig.ifd.json
                 fs.removeSync(`${dir}/tsconfig.ifd.json`);
                 // clear dist folder
