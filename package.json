@@ -30,6 +30,7 @@
         "@angular/platform-browser": "17.3.9",
         "@angular/platform-browser-dynamic": "17.3.9",
         "@angular/router": "17.3.9",
+        "chalk": "^5.4.1",
         "commander": "^13.1.0",
         "jsdom": "^26.0.0",
         "ng-packagr": "17.3.0",
