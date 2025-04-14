@@ -297,13 +297,24 @@ function migrateProject(): void
             spinner.indent = 3;
             spinner.start('Extract information from current code');
             const indexIFD = fs.readFileSync(`${dir}/src/index_ifd.ts`);
-            const regexp = /const ia = await import\('.\/(.*).js'\);/g;
+            const regexp = /const ia = (await import\('.\/(?<importName>\w+).js'\))|(new (?<cstrName>\w+)\(\));/g;
 
             // get line with import of IA file
-            if (indexIFD && indexIFD.includes('const ia = await import('))
+            if (indexIFD)
             {
                 // get ia name with a regexp
-                const iaName = regexp.exec(indexIFD)[1];
+                const match = regexp.exec(indexIFD);
+                let iaName: string;
+                if(match)
+                {
+                    iaName = match.groups.importName ?? match.groups.cstrName;
+                }
+
+                if(iaName == null || iaName === '')
+                {
+                    throw new Error('Can\'t find IA name from current workspace.');
+                }
+                spinner.succeed(`Information of Interface Asset '${iaName}' extracted`);
 
                 spinner.start('Update package.json scripts');
                 // read the package.json
