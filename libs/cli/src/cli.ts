@@ -195,13 +195,20 @@ async function loadIA(iaName: string | undefined, icon: string | undefined, debu
             }
 
             spinner.start(`Building interface asset: ${iaName}...`);
+            let webpackOutput;
             if (!debug)
             {
-                await execPromise(`npx webpack --config ${dir}/webpack.config.js`);
+                webpackOutput = await execPromise(`npx webpack --config ${dir}/webpack.config.js`);
             }
             else
             {
-                await execPromise(`npx webpack --config ${dir}/webpack-debug.config.js`);
+                webpackOutput = await execPromise(`npx webpack --config ${dir}/webpack-debug.config.js`);
+            }
+            if(webpackOutput)
+            {
+                spinner.succeed();
+                console.log();
+                console.log(webpackOutput.stdout);
             }
             spinner.succeed(`Interface asset '${iaName}' successfully built.`);
 
