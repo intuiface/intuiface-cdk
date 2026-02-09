@@ -30,6 +30,14 @@ Description displayed in Composer.
 
 If true, validate range of parameter values.
 
+***
+
+### category?
+
+> `optional` **category**: `string`
+
+Indicates the name of the category in which the action will be located in the Composer’s “Action category”
+
 
 ## Help
 Found a problem, a bug? Or need some help?  
