@@ -51,10 +51,90 @@ function moveConfigFiles(): Rule
 {
     return (tree: Tree) =>
     {
-        tree.rename('node_modules/@intuiface/interface-asset/src/workspace-template/eslintrc.js', '.eslintrc.js');
-        tree.rename('node_modules/@intuiface/interface-asset/src/workspace-template/vscode-settings.json', '.vscode/settings.json');
-        tree.rename('node_modules/@intuiface/interface-asset/src/workspace-template/vscode-extensions.json', '.vscode/extensions.json');
-        tree.rename('node_modules/@intuiface/interface-asset/src/workspace-template/gitignore', '.gitignore');
-        tree.rename('node_modules/@intuiface/interface-asset/src/workspace-template/eslintignore', '.eslintignore');
+        moveTemplateFile(
+            tree,
+            'node_modules/@intuiface/interface-asset/src/workspace-template/eslintrc.js',
+            '.eslintrc.js'
+        );
+        moveTemplateFile(
+            tree,
+            'node_modules/@intuiface/interface-asset/src/workspace-template/vscode-settings.json',
+            '.vscode/settings.json'
+        );
+        moveTemplateFile(
+            tree,
+            'node_modules/@intuiface/interface-asset/src/workspace-template/vscode-extensions.json',
+            '.vscode/extensions.json'
+        );
+        moveTemplateFile(
+            tree,
+            'node_modules/@intuiface/interface-asset/src/workspace-template/gitignore',
+            '.gitignore'
+        );
+        moveTemplateFile(
+            tree,
+            'node_modules/@intuiface/interface-asset/src/workspace-template/eslintignore',
+            '.eslintignore'
+        );
     };
+}
+
+function moveTemplateFile(tree: Tree, sourcePath: string, targetPath: string): void
+{
+    if (!tree.exists(sourcePath)) {
+        return;
+    }
+
+    const sourceContent = tree.readText(sourcePath);
+    if (!tree.exists(targetPath)) {
+        tree.rename(sourcePath, targetPath);
+        return;
+    }
+
+    const targetContent = tree.readText(targetPath);
+    const isJsonFile = sourcePath.endsWith('.json') && targetPath.endsWith('.json');
+    const sourceJson = isJsonFile ? parseJsonObject(sourceContent) : null;
+    const targetJson = isJsonFile ? parseJsonObject(targetContent) : null;
+
+    if (sourceJson && targetJson) {
+        const mergedJson = deepMerge(sourceJson, targetJson);
+        tree.overwrite(targetPath, `${JSON.stringify(mergedJson, null, 2)}\n`);
+    } else if (!targetContent.trim()) {
+        tree.overwrite(targetPath, sourceContent);
+    }
+}
+
+function parseJsonObject(value: string): Record<string, unknown> | null
+{
+    try {
+        const parsed = JSON.parse(value);
+        return isObject(parsed) ? parsed : null;
+    } catch {
+        return null;
+    }
+}
+
+function isObject(value: unknown): value is Record<string, unknown>
+{
+    return typeof value === 'object' && value !== null && !Array.isArray(value);
+}
+
+function deepMerge(
+    source: Record<string, unknown>,
+    target: Record<string, unknown>
+): Record<string, unknown>
+{
+    const result: Record<string, unknown> = { ...source };
+
+    for (const [key, targetValue] of Object.entries(target)) {
+        const sourceValue = result[key];
+        if (isObject(sourceValue) && isObject(targetValue)) {
+            result[key] = deepMerge(sourceValue, targetValue);
+            continue;
+        }
+
+        result[key] = targetValue;
+    }
+
+    return result;
 }
