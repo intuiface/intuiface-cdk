@@ -1,10 +1,10 @@
-[**@intuiface/core**](../README.md) • **Docs**
+[**@intuiface/core**](../README.md)
 
 ***
 
 # Interface: IComputorOptions
 
-Options to configure [`@Computor`](../functions/Computor.md) decorator.
+Options to configure [\`@Computor\`](../functions/Computor.md) decorator.
 
 ## Properties
 

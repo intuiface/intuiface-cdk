@@ -1,4 +1,4 @@
-[**@intuiface/components**](../README.md) • **Docs**
+[**@intuiface/components**](../README.md)
 
 ***
 
@@ -432,7 +432,9 @@ Trigger when a key is pressed
 
 #### Parameters
 
-• **keys**: `string`
+##### keys
+
+`string`
 
 #### Returns
 
@@ -472,9 +474,13 @@ Trigger when the text changed
 
 #### Parameters
 
-• **firstParam**: `string`
+##### firstParam
 
-• **secondParam**: `string`
+`string`
+
+##### secondParam
+
+`string`
 
 #### Returns
 
@@ -574,7 +580,9 @@ Set text.
 
 #### Parameters
 
-• **text**: `string`
+##### text
+
+`string`
 
 text to set
 
@@ -620,7 +628,9 @@ Set minimum size for font size adaptation.
 
 #### Parameters
 
-• **size**: `number`
+##### size
+
+`number`
 
 minimum font size
 
@@ -638,7 +648,9 @@ Action to change the font color.
 
 #### Parameters
 
-• **color**: `string`
+##### color
+
+`string`
 
 new font color to set
 
@@ -660,7 +672,9 @@ Action to change the font size.
 
 #### Parameters
 
-• **size**: `number`
+##### size
+
+`number`
 
 new font size to set
 
@@ -682,19 +696,27 @@ Action to change the style.
 
 #### Parameters
 
-• **isBold**: `boolean`
+##### isBold
+
+`boolean`
 
 true to bold
 
-• **isItalic**: `boolean`
+##### isItalic
+
+`boolean`
 
 true to italic
 
-• **isUnderline**: `boolean`
+##### isUnderline
+
+`boolean`
 
 true to underline
 
-• **isLineWrap**: `boolean`
+##### isLineWrap
+
+`boolean`
 
 true to line wrap
 
@@ -716,7 +738,9 @@ Action to change the font.
 
 #### Parameters
 
-• **value**: `unknown`
+##### value
+
+`unknown`
 
 #### Returns
 

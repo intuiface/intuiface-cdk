@@ -1,4 +1,4 @@
-[**@intuiface/components**](../README.md) • **Docs**
+[**@intuiface/components**](../README.md)
 
 ***
 

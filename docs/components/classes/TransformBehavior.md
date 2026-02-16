@@ -1,4 +1,4 @@
-[**@intuiface/components**](../README.md) • **Docs**
+[**@intuiface/components**](../README.md)
 
 ***
 
@@ -64,15 +64,21 @@ Action to translate the matrix.
 
 #### Parameters
 
-• **x**: `number`
+##### x
+
+`number`
 
 translation on X axis
 
-• **y**: `number`
+##### y
+
+`number`
 
 translation on Y axis
 
-• **configuration**: `unknown`
+##### configuration
+
+`unknown`
 
 configuration of the animation
 
@@ -90,15 +96,21 @@ Action to translate the matrix.
 
 #### Parameters
 
-• **x**: `number`
+##### x
+
+`number`
 
 translation on X axis
 
-• **y**: `number`
+##### y
+
+`number`
 
 translation on Y axis
 
-• **configuration**: `unknown`
+##### configuration
+
+`unknown`
 
 configuration of the animation
 
@@ -116,9 +128,13 @@ Action to rotate the matrix.
 
 #### Parameters
 
-• **orientation**: `number`
+##### orientation
 
-• **configuration**: `unknown`
+`number`
+
+##### configuration
+
+`unknown`
 
 configuration of the animation
 
@@ -136,11 +152,15 @@ Action to rotate the matrix.
 
 #### Parameters
 
-• **orientation**: `number`
+##### orientation
+
+`number`
 
 new orientation
 
-• **configuration**: `unknown`
+##### configuration
+
+`unknown`
 
 configuration of the animation
 
@@ -158,15 +178,21 @@ Action to resize the element.
 
 #### Parameters
 
-• **width**: `number`
+##### width
+
+`number`
 
 width to add
 
-• **height**: `number`
+##### height
+
+`number`
 
 height to add
 
-• **configuration**: `unknown`
+##### configuration
+
+`unknown`
 
 configuration of the animation
 
@@ -184,15 +210,21 @@ Action to resize the element.
 
 #### Parameters
 
-• **width**: `number`
+##### width
+
+`number`
 
 new width
 
-• **height**: `number`
+##### height
+
+`number`
 
 new height
 
-• **configuration**: `unknown`
+##### configuration
+
+`unknown`
 
 configuration of the animation
 
@@ -210,11 +242,15 @@ Action to scale the element.
 
 #### Parameters
 
-• **factor**: `number`
+##### factor
+
+`number`
 
 scale factor to apply
 
-• **configuration**: `unknown`
+##### configuration
+
+`unknown`
 
 configuration of the animation
 
@@ -232,11 +268,15 @@ Action to scale the element.
 
 #### Parameters
 
-• **factor**: `number`
+##### factor
+
+`number`
 
 scale factor to apply
 
-• **configuration**: `unknown`
+##### configuration
+
+`unknown`
 
 configuration of the animation
 
@@ -254,27 +294,39 @@ Action to translate, rotate and resize the element.
 
 #### Parameters
 
-• **x**: `number`
+##### x
+
+`number`
 
 translation on X axis
 
-• **y**: `number`
+##### y
+
+`number`
 
 translation on Y axis
 
-• **width**: `number`
+##### width
+
+`number`
 
 new width
 
-• **height**: `number`
+##### height
+
+`number`
 
 new height
 
-• **orientation**: `number`
+##### orientation
+
+`number`
 
 new orientation
 
-• **configuration**: `unknown`
+##### configuration
+
+`unknown`
 
 configuration of the animation
 

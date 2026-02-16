@@ -1,4 +1,4 @@
-[**@intuiface/components**](../README.md) • **Docs**
+[**@intuiface/components**](../README.md)
 
 ***
 
@@ -12,7 +12,9 @@ Base element view component
 
 ## Type Parameters
 
-• **T** *extends* `IntuifaceElement`
+### T
+
+`T` *extends* `IntuifaceElement`
 
 
 ## Help

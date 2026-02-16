@@ -1,22 +1,24 @@
-[**@intuiface/core**](../README.md) • **Docs**
+[**@intuiface/core**](../README.md)
 
 ***
 
 # Function: Parameter()
 
-> **Parameter**(`options`?): [`Function`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function)
+> **Parameter**(`options?`): [`Function`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Function)
 
 The `@Parameter` decorator enables you to declare an action's parameter or a trigger's parameter.
 
 ## Parameters
 
-• **options?**: [`IParameterOptions`](../interfaces/IParameterOptions.md)
+### options?
+
+[`IParameterOptions`](../interfaces/IParameterOptions.md)
 
 options of the parameter (display name, description, ...)
 
 ## Returns
 
-[`Function`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function)
+[`Function`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Function)
 
 ## Examples
 

@@ -1,4 +1,4 @@
-[**@intuiface/components**](../README.md) • **Docs**
+[**@intuiface/components**](../README.md)
 
 ***
 
@@ -36,7 +36,9 @@ Action to change the source.
 
 #### Parameters
 
-• **source**: `string`
+##### source
+
+`string`
 
 source to set
 

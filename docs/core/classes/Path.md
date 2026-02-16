@@ -1,4 +1,4 @@
-[**@intuiface/core**](../README.md) • **Docs**
+[**@intuiface/core**](../README.md)
 
 ***
 
@@ -16,17 +16,19 @@ Class to use to describe any king of path that can be used as URL
 
 ### convertFrom()
 
-> `static` **convertFrom**(`value`): [`Path`](Path.md)
+> `static` **convertFrom**(`value`): `Path`
 
 Convert a value to a Path
 
 #### Parameters
 
-• **value**: `string`
+##### value
+
+`string`
 
 #### Returns
 
-[`Path`](Path.md)
+`Path`
 
 ***
 
@@ -38,7 +40,9 @@ Check if we can convert value to Path
 
 #### Parameters
 
-• **value**: `string`
+##### value
+
+`string`
 
 #### Returns
 
@@ -70,7 +74,9 @@ Check if the type can be converted
 
 #### Parameters
 
-• **type**: `unknown`
+##### type
+
+`unknown`
 
 #### Returns
 
@@ -90,7 +96,9 @@ Function to convert a Path to another type
 
 #### Parameters
 
-• **type**: `unknown`
+##### type
+
+`unknown`
 
 #### Returns
 

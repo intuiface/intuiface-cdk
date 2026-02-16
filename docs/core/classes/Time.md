@@ -1,4 +1,4 @@
-[**@intuiface/core**](../README.md) • **Docs**
+[**@intuiface/core**](../README.md)
 
 ***
 
@@ -14,43 +14,49 @@ Class to use to describe a time duration.
 
 ## Constructors
 
-### new Time()
+### Constructor
 
-> **new Time**(`hours`, `minutes`, `seconds`): [`Time`](Time.md)
+> **new Time**(`hours`, `minutes`, `seconds`): `Time`
 
 Create a new time with given hours, minutes and seconds.
 
 #### Parameters
 
-• **hours**: `number`
+##### hours
+
+`number`
 
 hours of the time
 
-• **minutes**: `number`
+##### minutes
+
+`number`
 
 minutes of the time
 
-• **seconds**: `number`
+##### seconds
+
+`number`
 
 seconds of the time
 
 #### Returns
 
-[`Time`](Time.md)
+`Time`
 
 ## Properties
 
-### Zero
+### ZERO
 
-> `readonly` `static` **Zero**: [`Time`](Time.md)
+> `readonly` `static` **ZERO**: `Time`
 
 Instance of time representing an empty duration of zero.
 
 ***
 
-### One
+### ONE
 
-> `readonly` `static` **One**: [`Time`](Time.md)
+> `readonly` `static` **ONE**: `Time`
 
 Instance of time representing a duration of 1 second.
 
@@ -122,19 +128,21 @@ seconds of the time
 
 ### convertFrom()
 
-> `static` **convertFrom**(`value`): [`Time`](Time.md)
+> `static` **convertFrom**(`value`): `Time`
 
 Convert a value to a Time
 
 #### Parameters
 
-• **value**: `unknown`
+##### value
+
+`unknown`
 
 Value can be converted from `string` or `number`. If `string`, it's parsed with the format `hh:mm:ss.ms`. If `number`, it's considered as a number of seconds.
 
 #### Returns
 
-[`Time`](Time.md)
+`Time`
 
 ***
 
@@ -146,7 +154,9 @@ Check if we can convert value to Time
 
 #### Parameters
 
-• **value**: `unknown`
+##### value
+
+`unknown`
 
 #### Returns
 
@@ -156,29 +166,33 @@ Check if we can convert value to Time
 
 ### fromSeconds()
 
-> `static` **fromSeconds**(`value`): [`Time`](Time.md)
+> `static` **fromSeconds**(`value`): `Time`
 
 Convert from seconds to time
 
 #### Parameters
 
-• **value**: `number`
+##### value
+
+`number`
 
 #### Returns
 
-[`Time`](Time.md)
+`Time`
 
 ***
 
 ### toString()
 
-> **toString**(`withoutMilliseconds`): `string`
+> **toString**(`withoutMilliseconds?`): `string`
 
 Convert time to string
 
 #### Parameters
 
-• **withoutMilliseconds**: `boolean` = `false`
+##### withoutMilliseconds?
+
+`boolean` = `false`
 
 show milliseconds in string result
 
@@ -200,7 +214,9 @@ Check if the type can be converted
 
 #### Parameters
 
-• **type**: `unknown`
+##### type
+
+`unknown`
 
 #### Returns
 
@@ -220,7 +236,9 @@ Function to convert a Time to another type
 
 #### Parameters
 
-• **type**: `unknown`
+##### type
+
+`unknown`
 
 #### Returns
 

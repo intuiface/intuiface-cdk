@@ -1,4 +1,4 @@
-[**@intuiface/components**](../README.md) • **Docs**
+[**@intuiface/components**](../README.md)
 
 ***
 
@@ -120,9 +120,13 @@ Function to call when a property in the element changed to notify listeners
 
 #### Parameters
 
-• **propertyKey**: `string`
+##### propertyKey
 
-• **value**: `any`
+`string`
+
+##### value
+
+`any`
 
 #### Returns
 
@@ -138,7 +142,9 @@ Function to subscribe to properties changes of the element
 
 #### Parameters
 
-• **listener**: `PropertiesListener`
+##### listener
+
+`PropertiesListener`
 
 #### Returns
 
@@ -154,7 +160,9 @@ function to unsubscribe from properties changes of the element
 
 #### Parameters
 
-• **listener**: `PropertiesListener`
+##### listener
+
+`PropertiesListener`
 
 #### Returns
 
@@ -170,9 +178,13 @@ function to subscribe to one property changed
 
 #### Parameters
 
-• **property**: `string`
+##### property
 
-• **listener**: `PropertyListener`
+`string`
+
+##### listener
+
+`PropertyListener`
 
 #### Returns
 
@@ -188,9 +200,13 @@ function to unsubscribe from one property changed
 
 #### Parameters
 
-• **property**: `string`
+##### property
 
-• **listener**: `PropertyListener`
+`string`
+
+##### listener
+
+`PropertyListener`
 
 #### Returns
 

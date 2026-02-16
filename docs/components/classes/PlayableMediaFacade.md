@@ -1,4 +1,4 @@
-[**@intuiface/components**](../README.md) • **Docs**
+[**@intuiface/components**](../README.md)
 
 ***
 
@@ -36,7 +36,9 @@ Set current time to the playable element.
 
 #### Parameters
 
-• **currentTime**: `number`
+##### currentTime
+
+`number`
 
 current time to set
 
@@ -90,7 +92,9 @@ Change volume
 
 #### Parameters
 
-• **volume**: `number`
+##### volume
+
+`number`
 
 #### Returns
 
@@ -138,7 +142,9 @@ Listen playable ready event.
 
 #### Parameters
 
-• **callback**: [`Function`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function)
+##### callback
+
+[`Function`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Function)
 
 callback to call when event is emited
 
@@ -160,7 +166,9 @@ Unlisten playable ready event.
 
 #### Parameters
 
-• **callback**: [`Function`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function)
+##### callback
+
+[`Function`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Function)
 
 callback to remove
 
@@ -182,7 +190,9 @@ Listen to seeked event
 
 #### Parameters
 
-• **callback**: [`Function`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function)
+##### callback
+
+[`Function`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Function)
 
 callback to call
 
@@ -200,7 +210,9 @@ Unlisten to seeked event
 
 #### Parameters
 
-• **callback**: [`Function`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function)
+##### callback
+
+[`Function`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Function)
 
 callback to remove
 
@@ -218,7 +230,9 @@ Listen to ended event
 
 #### Parameters
 
-• **callback**: [`Function`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function)
+##### callback
+
+[`Function`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Function)
 
 callback to call when event is emitted
 
@@ -240,7 +254,9 @@ Unlisten to ended event.
 
 #### Parameters
 
-• **callback**: [`Function`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function)
+##### callback
+
+[`Function`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Function)
 
 callback to remove
 

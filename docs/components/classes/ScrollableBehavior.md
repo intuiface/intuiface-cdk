@@ -1,4 +1,4 @@
-[**@intuiface/components**](../README.md) • **Docs**
+[**@intuiface/components**](../README.md)
 
 ***
 
@@ -180,17 +180,21 @@ Soft move speed
 
 ### addSource()
 
-> **addSource**(`source`, `index`): `void`
+> **addSource**(`source`, `index?`): `void`
 
 Add a source
 
 #### Parameters
 
-• **source**: `IntuifaceElement`
+##### source
+
+`IntuifaceElement`
 
 : source to add
 
-• **index**: `number` = `undefined`
+##### index?
+
+`number` = `undefined`
 
 #### Returns
 
@@ -210,7 +214,9 @@ Remove a source
 
 #### Parameters
 
-• **source**: `IntuifaceElement`
+##### source
+
+`IntuifaceElement`
 
 : source to remove
 
@@ -226,23 +232,27 @@ Remove a source
 
 ### requestItems()
 
-> **requestItems**(`start`, `count`): [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)\<`void`\>
+> **requestItems**(`start`, `count`): [`Promise`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)\<`void`\>
 
 Requests items of the collection
 
 #### Parameters
 
-• **start**: `number`
+##### start
+
+`number`
 
 start index of the requested items
 
-• **count**: `number`
+##### count
+
+`number`
 
 number of requested items
 
 #### Returns
 
-[`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)\<`void`\>
+[`Promise`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)\<`void`\>
 
 #### Inherited from
 
@@ -258,7 +268,9 @@ Gets the start index in overall items for the given source
 
 #### Parameters
 
-• **source**: `IntuifaceElement`
+##### source
+
+`IntuifaceElement`
 
 soure to find
 
@@ -292,7 +304,9 @@ Scroll to a given offset in pixels
 
 #### Parameters
 
-• **offset**: `number`
+##### offset
+
+`number`
 
 #### Returns
 

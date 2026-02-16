@@ -1,10 +1,10 @@
-[**@intuiface/core**](../README.md) • **Docs**
+[**@intuiface/core**](../README.md)
 
 ***
 
 # Interface: IPropertyOptions
 
-Options used to configure [`@Property`](../functions/Property.md) decorator
+Options used to configure [\`@Property\`](../functions/Property.md) decorator
 
 ## Properties
 

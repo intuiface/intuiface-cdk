@@ -1,4 +1,4 @@
-[**@intuiface/core**](../README.md) • **Docs**
+[**@intuiface/core**](../README.md)
 
 ***
 
@@ -6,7 +6,7 @@
 
 An `IntuifaceElement` represents the base of any kind of element that compose an Intuiface experience: asset, collection, interface asset, layer, scene, experience...
 
-All these elements extend `IntuifaceElement` and use the appropriate decorator to make them usable in the experience, such as [`@Asset`](../functions/Asset.md) or [`@Collection`](../functions/Collection.md).
+All these elements extend `IntuifaceElement` and use the appropriate decorator to make them usable in the experience, such as [\`@Asset\`](../functions/Asset.md) or [\`@Collection\`](../functions/Collection.md).
 
 Each element or collection has the same life cycle :\
 1 - Constructor : Can be use to declare properties, set default values.\
@@ -35,7 +35,7 @@ Container of this element
 
 ### parent
 
-> **parent**: [`IntuifaceElement`](IntuifaceElement.md)
+> **parent**: `IntuifaceElement`
 
 Parent of this element.
 
@@ -57,9 +57,13 @@ Function to call when a property in the element changed to notify listeners
 
 #### Parameters
 
-• **propertyKey**: `string`
+##### propertyKey
 
-• **value**: `any`
+`string`
+
+##### value
+
+`any`
 
 #### Returns
 
@@ -79,7 +83,9 @@ Function to subscribe to properties changes of the element
 
 #### Parameters
 
-• **listener**: `PropertiesListener`
+##### listener
+
+`PropertiesListener`
 
 #### Returns
 
@@ -99,7 +105,9 @@ function to unsubscribe from properties changes of the element
 
 #### Parameters
 
-• **listener**: `PropertiesListener`
+##### listener
+
+`PropertiesListener`
 
 #### Returns
 
@@ -119,9 +127,13 @@ function to subscribe to one property changed
 
 #### Parameters
 
-• **property**: `string`
+##### property
 
-• **listener**: `PropertyListener`
+`string`
+
+##### listener
+
+`PropertyListener`
 
 #### Returns
 
@@ -141,9 +153,13 @@ function to unsubscribe from one property changed
 
 #### Parameters
 
-• **property**: `string`
+##### property
 
-• **listener**: `PropertyListener`
+`string`
+
+##### listener
+
+`PropertyListener`
 
 #### Returns
 
@@ -157,13 +173,15 @@ function to unsubscribe from one property changed
 
 ### initialize()
 
-> **initialize**(`configuration`?): `void`
+> **initialize**(`configuration?`): `void`
 
 Initialize default value of each property.
 
 #### Parameters
 
-• **configuration?**: `any`
+##### configuration?
+
+`any`
 
 : configuration
 

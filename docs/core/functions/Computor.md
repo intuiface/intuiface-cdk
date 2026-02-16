@@ -1,4 +1,4 @@
-[**@intuiface/core**](../README.md) • **Docs**
+[**@intuiface/core**](../README.md)
 
 ***
 
@@ -14,21 +14,29 @@ Inputs values will be passed as arguments of the method in the order they appear
 
 ## Parameters
 
-• **options**: [`IComputorOptions`](../interfaces/IComputorOptions.md)
+### options
+
+[`IComputorOptions`](../interfaces/IComputorOptions.md)
 
 Options to configure the computor
 
 ## Returns
 
-`Function`
+> (`target`, `propertyKey`, `descriptor`): `void`
 
 ### Parameters
 
-• **target**: `any`
+#### target
 
-• **propertyKey**: `string` \| `symbol`
+`any`
 
-• **descriptor**: `PropertyDescriptor`
+#### propertyKey
+
+`string` | `symbol`
+
+#### descriptor
+
+`PropertyDescriptor`
 
 ### Returns
 
