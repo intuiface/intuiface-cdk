@@ -64,6 +64,14 @@ Indicates the direction of propagation:
 'bubbling'
 ```
 
+***
+
+### category?
+
+> `optional` **category**: `string`
+
+Indicates the name of the category in which the trigger will be located in the Composer’s “Trigger category”
+
 
 ## Help
 Found a problem, a bug? Or need some help?  
