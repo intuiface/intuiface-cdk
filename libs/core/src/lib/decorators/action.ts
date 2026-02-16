@@ -21,6 +21,11 @@ export interface IActionOptions
      * If true, validate range of parameter values.
      */
     validate?: boolean;
+
+    /**
+     * Indicates the name of the category in which the action will be located in the Composer’s “Action category”
+     */
+    category?: string;
 }
 
 /**
@@ -108,7 +113,7 @@ export function Action(options?: IActionOptions)
         }
 
         // store all informations in object
-        globalThis.intuiface_ifd_actions[targetName][propertyKey] = {
+        const actionDefinition: Record<string, unknown> = {
             // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
             id: `${globalThis.intuiface_ifd_name}.${propertyKey.toString()}`,
             path: propertyKey,
@@ -116,5 +121,11 @@ export function Action(options?: IActionOptions)
             description: options.description,
             parameters: parameters
         };
+        if (options?.category)
+        {
+            actionDefinition['if.category'] = options.category;
+        }
+
+        globalThis.intuiface_ifd_actions[targetName][propertyKey] = actionDefinition;
     };
 }

@@ -38,6 +38,11 @@ export interface ITriggerOptions
      * @default 'bubbling'
      */
     propagationDirection?: 'bubbling' | 'cascading';
+
+    /**
+     * Indicates the name of the category in which the trigger will be located in the Composer’s “Trigger category”
+     */
+    category?: string;
 }
 
 /**
@@ -103,11 +108,16 @@ export function Trigger(options?: ITriggerOptions)
             properties = globalThis.intuiface_ifd_params[targetName][propertyKey];
         }
         // store trigger
-        globalThis.intuiface_ifd_triggers[targetName][options.name] = {
+        const triggerDefinition: Record<string, unknown> = {
             id: propertyKey,
             title: options.displayName,
             description: options.description,
             properties: properties
         };
+        if (options?.category)
+        {
+            triggerDefinition['if.category'] = options.category;
+        }
+        globalThis.intuiface_ifd_triggers[targetName][options.name] = triggerDefinition;
     };
 }
