@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable prefer-arrow/prefer-arrow-functions */
 import { Rule, SchematicContext, Tree, externalSchematic, chain, apply, url, template, mergeWith, MergeStrategy, move } from '@angular-devkit/schematics';
@@ -157,7 +158,7 @@ function addJsonDependencies(name: string): Rule{
     return (tree: Tree) => {
         const path = 'package.json';
         const file = tree.read(path);
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         const json = JSON.parse(file!.toString());
 
         // read package versions
@@ -214,7 +215,7 @@ function modifyAngularBuildConfig(name: string): Rule {
     return (tree: Tree) => {
         const path = 'angular.json';
         const file = tree.read(path);
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         const json = JSON.parse(file!.toString());
 
 

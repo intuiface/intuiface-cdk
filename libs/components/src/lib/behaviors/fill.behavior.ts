@@ -2,7 +2,7 @@
  * Fill behaviors
  */
 export enum EFillBehavior
-    {
+{
     Fit = 'Fit',
     Fill = 'Fill',
     Deform = 'Deform'
