@@ -1,13 +1,10 @@
-import { Inject, IntuifaceElement } from '@intuiface/core';
+import { IntuifaceElement } from '@intuiface/core';
 import { IndexingBehavior } from './indexing.behavior';
 
 /**
  * Behavior to manage a focusing collection.
  */
-@Inject({
-    behaviors: [IndexingBehavior]
-})
-export class FocusingCollectionBehavior
+export class FocusingCollectionBehavior extends IndexingBehavior
 {
     //#region Properties
 
@@ -28,4 +25,3 @@ export class FocusingCollectionBehavior
 
     //#endregion Properties
 }
-export interface FocusingCollectionBehavior extends IndexingBehavior {}

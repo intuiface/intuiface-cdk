@@ -22,12 +22,12 @@ export class Time implements IConvertibleType {
     /**
      * Instance of time representing an empty duration of zero.
      */
-    public static readonly Zero = Time.convertFrom(0);
+    public static readonly ZERO = Time.convertFrom(0);
 
     /**
      * Instance of time representing a duration of 1 second.
      */
-    public static readonly One = Time.convertFrom(1);
+    public static readonly ONE = Time.convertFrom(1);
 
     //#endregion Static Constants
 

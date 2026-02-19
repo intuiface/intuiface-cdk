@@ -1,10 +1,10 @@
-[**@intuiface/core**](../README.md) • **Docs**
+[**@intuiface/core**](../README.md)
 
 ***
 
 # Interface: IConvertibleType
 
-Type can be convertible by implementing this interface. A convertible type can be used as `type` of a [`@Property`](../functions/Property.md) or [`@arameter`](../functions/Parameter.md) decorators. All value will then be converted in input/output when the property or parameter is used for example by bindings.
+Type can be convertible by implementing this interface. A convertible type can be used as `type` of a [\`@Property\`](../functions/Property.md) or [\`@arameter\`](../functions/Parameter.md) decorators. All value will then be converted in input/output when the property or parameter is used for example by bindings.
 
 ## Methods
 
@@ -28,7 +28,9 @@ Convert a value to type
 
 #### Parameters
 
-• **type**: `unknown`
+##### type
+
+`unknown`
 
 #### Returns
 
@@ -44,7 +46,9 @@ Check if the type can be converted to another type
 
 #### Parameters
 
-• **type**: `unknown`
+##### type
+
+`unknown`
 
 #### Returns
 

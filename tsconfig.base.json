@@ -16,9 +16,9 @@
         "typeRoots": ["node_modules/@types"],
         "lib": ["es2018", "dom"],
         "paths": {
+            "@intuiface/cli": ["libs/cli/src/cli.ts"],
             "@intuiface/components": ["libs/components/src/public-api.ts"],
-            "@intuiface/core": ["libs/core/src/public-api.ts"],
-            "@intuiface/cli": ["libs/cli/src/cli.ts"]
+            "@intuiface/core": ["libs/core/src/public-api.ts"]
         }
     },
     "exclude": ["node_modules", "tmp"],

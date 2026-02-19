@@ -1,32 +1,38 @@
-[**@intuiface/core**](../README.md) • **Docs**
+[**@intuiface/core**](../README.md)
 
 ***
 
 # Function: InternalProperty()
 
-> **InternalProperty**(`options`?): (`target`, `propertyKey`) => `void`
+> **InternalProperty**(`options?`): (`target`, `propertyKey`) => `void`
 
-Decorator similar to [`@Property`](Property.md) but for property not intended to be exposed in Composer.
+Decorator similar to [\`@Property\`](Property.md) but for property not intended to be exposed in Composer.
 
 When using this decorator on a property, it will automatically generate getter and setter that will raise the [Watchable.notifyPropertyChanged](../classes/Watchable.md#notifypropertychanged) event. You can also set the `affectRendering` option to `true` to indicate that any change made on this property affects rendering and should trigger rendering engine update.
 
 ## Parameters
 
-• **options?**
+### options?
 
-• **options.affectRendering?**: `boolean`
+#### affectRendering?
+
+`boolean`
 
 If true, ask visual component update when changed
 
 ## Returns
 
-`Function`
+> (`target`, `propertyKey`): `void`
 
 ### Parameters
 
-• **target**: `unknown`
+#### target
 
-• **propertyKey**: `string`
+`unknown`
+
+#### propertyKey
+
+`string`
 
 ### Returns
 

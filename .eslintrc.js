@@ -8,7 +8,7 @@ module.exports = {
         'prefer-arrow', 
         'import', 
         '@typescript-eslint',
-        '@typescript-eslint/tslint'
+        '@stylistic'
     ],
     ignorePatterns: ["**/config/*.js", "**/.lighthouse/*.js", "node_modules/*", "**/node_modules/*", "**/dist/*", "**/*.mjs", ".eslintrc.js"],
     overrides: [
@@ -82,8 +82,14 @@ module.exports = {
                         "format": ['camelCase']
                     },
                     {
+                        "selector": "classProperty",
+                        "modifiers": ["static", "readonly"],
+                        "format": ["camelCase", "UPPER_CASE"]
+                    },
+                    {
                         "selector": 'classProperty',
-                        "format": ['camelCase']
+                        "format": ['camelCase'],
+                        "leadingUnderscore": "allow"
                     },
                     {
                         "selector": 'classMethod',
@@ -102,22 +108,7 @@ module.exports = {
                         "accessibility": "explicit"
                     }
                 ],
-                "@typescript-eslint/indent": [
-                    "error",
-                    4,
-                    {
-                        "FunctionDeclaration": {
-                            "parameters": "first"
-                        },
-                        "FunctionExpression": {
-                            "parameters": "first"
-                        },
-                        "SwitchCase": 1,
-                        "VariableDeclarator": 2,
-                        "ImportDeclaration": "first"
-                    }
-                ],
-                "@typescript-eslint/member-delimiter-style": [
+                "@stylistic/member-delimiter-style": [
                     "error",
                     {
                         "multiline": {
@@ -131,21 +122,14 @@ module.exports = {
                     }
                 ],
                 "@typescript-eslint/no-misused-new": "error",
+                "@typescript-eslint/no-unsafe-function-type": "off",
                 "@typescript-eslint/no-namespace": "error",
                 "@typescript-eslint/no-var-requires": "error",
                 "@typescript-eslint/prefer-for-of": "error",
                 "@typescript-eslint/prefer-function-type": "error",
                 "@typescript-eslint/prefer-namespace-keyword": "error",
-                "@typescript-eslint/quotes": [
-                    "error",
-                    "single"
-                ],
-                "@typescript-eslint/semi": [
-                    "error",
-                    "always"
-                ],
                 "@typescript-eslint/triple-slash-reference": "error",
-                "@typescript-eslint/type-annotation-spacing": "error",
+                "@stylistic/type-annotation-spacing": "error",
                 "@typescript-eslint/unified-signatures": "error",
                 "@typescript-eslint/no-shadow": ["error"],
                 "@typescript-eslint/no-inferrable-types": [
@@ -155,14 +139,15 @@ module.exports = {
                         "ignoreProperties": true
                     }
                 ],
+                "@typescript-eslint/no-unsafe-declaration-merging": "off",
                 "arrow-body-style": "error",
                 "camelcase": "error",
-                "comma-dangle": "off",
+                "@stylistic/comma-dangle": "off",
                 "complexity": "off",
                 "constructor-super": "error",
                 "curly": "error",
                 "dot-notation": "error",
-                "eol-last": "error",
+                "@stylistic/eol-last": "error",
                 "eqeqeq": [
                     "error",
                     "smart"
@@ -179,12 +164,27 @@ module.exports = {
                     "Undefined"
                 ],
                 "id-match": "error",
+                "@stylistic/indent": [
+                    "error",
+                    4,
+                    {
+                        "SwitchCase": 1,
+                        "VariableDeclarator": 2,
+                        "ImportDeclaration": "first",
+                        "FunctionDeclaration": {
+                            "parameters": "first"
+                        },
+                        "FunctionExpression": {
+                            "parameters": "first"
+                        }
+                    }
+                ],
                 "import/order": "off",
                 "max-classes-per-file": [
                     "error",
                     1
                 ],
-                "max-len": [
+                "@stylistic/max-len": [
                     "error",
                     {
                         "code": 150,
@@ -199,7 +199,7 @@ module.exports = {
                     "error",
                     1000
                 ],
-                "new-parens": "error",
+                "@stylistic/new-parens": "error",
                 "no-bitwise": "off",
                 "no-caller": "error",
                 "no-cond-assign": "error",
@@ -209,11 +209,11 @@ module.exports = {
                 "no-eval": "error",
                 "no-fallthrough": "off",
                 "no-invalid-this": "off",
-                "no-multiple-empty-lines": "error",
+                "@stylistic/no-multiple-empty-lines": "error",
                 "no-new-wrappers": "error",
                 "no-shadow": "off",
                 "no-throw-literal": "error",
-                "no-trailing-spaces": ["error", {
+                "@stylistic/no-trailing-spaces": ["error", {
                     "ignoreComments": true
                 }],
                 "no-undef-init": "error",
@@ -232,12 +232,24 @@ module.exports = {
                 ],
 
                 "prefer-const": "error",
-                "quote-props": [
+                "@stylistic/quote-props": [
                     "error",
                     "consistent-as-needed"
                 ],
+                "@stylistic/quotes": [
+                    "error",
+                    "single",
+                    {
+                        "avoidEscape": true,
+                        "allowTemplateLiterals": true
+                    }
+                ],
                 "radix": ["error", "as-needed"],
-                "space-before-function-paren": [
+                "@stylistic/semi": [
+                    "error",
+                    "always"
+                ],
+                "@stylistic/space-before-function-paren": [
                     "error",
                     {
                         "anonymous": "never",
@@ -245,7 +257,7 @@ module.exports = {
                         "named": "never"
                     }
                 ],
-                "space-in-parens": [
+                "@stylistic/space-in-parens": [
                     "error",
                     "never"
                 ],
@@ -259,6 +271,40 @@ module.exports = {
             files: ["*.js", "*.jsx"],
             extends: ["plugin:@nx/javascript"],
             rules: {}
+        },
+        {
+            files: ["**/decorators/*.ts"],
+            rules: {
+                "@typescript-eslint/naming-convention": [
+                    "error",
+                    {
+                        "selector": "variable",
+                        "format": ["camelCase"]
+                    },
+                    {
+                        "selector": "function",
+                        "format": ["camelCase", "PascalCase"]
+                    },
+                    {
+                        "selector": "parameter",
+                        "format": ["camelCase"],
+                        "leadingUnderscore": "allow"
+                    },
+                    {
+                        "selector": "classProperty",
+                        "format": ["camelCase"],
+                        "leadingUnderscore": "allow"
+                    },
+                    {
+                        "selector": "classMethod",
+                        "format": ["camelCase"]
+                    },
+                    {
+                        "selector": "enumMember",
+                        "format": ["PascalCase"]
+                    }
+                ]
+            }
         },
         {
             files: ["*.spec.ts", "*.spec.tsx", "*.spec.js", "*.spec.jsx"],

@@ -1,4 +1,4 @@
-[**@intuiface/components**](../README.md) • **Docs**
+[**@intuiface/components**](../README.md)
 
 ***
 
@@ -80,7 +80,9 @@ Action to change the background color.
 
 #### Parameters
 
-• **color**: `Color`
+##### color
+
+`Color`
 
 new background color to set
 
@@ -98,7 +100,9 @@ Action to change the outline color.
 
 #### Parameters
 
-• **color**: `Color`
+##### color
+
+`Color`
 
 new outline color to set
 
@@ -116,7 +120,9 @@ Action to change the outline thickness.
 
 #### Parameters
 
-• **thickness**: `number`
+##### thickness
+
+`number`
 
 new outline thickness to set
 

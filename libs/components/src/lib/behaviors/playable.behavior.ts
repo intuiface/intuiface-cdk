@@ -5,7 +5,7 @@ import { PlayableFacade } from './playable.facade';
  * Playable states
  */
 export enum EPlayableState
-    {
+{
     STOPPED = 'Stopped',
     PAUSED = 'Paused',
     PLAYING = 'Playing'
@@ -15,7 +15,7 @@ export enum EPlayableState
  * Poster Type
  */
 export enum EShowControlsBehavior
-    {
+{
     Temporary = 'Temporary',
     Always = 'Always'
 }
@@ -35,12 +35,12 @@ export class PlayableBehavior
     /**
      * Current time.
      */
-    public currentTime: Time = Time.Zero;
+    public currentTime: Time = Time.ZERO;
 
     /**
      * Duration.
      */
-    public duration: Time = Time.One;
+    public duration: Time = Time.ONE;
 
     /**
      * Speed.

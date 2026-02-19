@@ -1,10 +1,10 @@
-[**@intuiface/core**](../README.md) • **Docs**
+[**@intuiface/core**](../README.md)
 
 ***
 
 # Interface: IElementOptions
 
-Options to configure [`@Asset`](../functions/Asset.md) decorator.
+Options to configure [\`@Asset\`](../functions/Asset.md) decorator.
 
 ## Extends
 
@@ -14,7 +14,7 @@ Options to configure [`@Asset`](../functions/Asset.md) decorator.
 
 ### behaviors
 
-> **behaviors**: [`Function`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function)[]
+> **behaviors**: [`Function`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Function)[]
 
 Behaviors to inject on the decorated element.
 

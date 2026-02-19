@@ -12,10 +12,10 @@
   "license": "MIT",
   "schematics": "./src/collection.json",
   "dependencies": {
-    "@angular-architects/module-federation": "^17.0.8",
-    "@angular-devkit/core": "17.3.9",
-    "@angular-devkit/schematics": "17.3.9",
-    "@schematics/angular": "17.3.9"
+    "@angular-architects/module-federation": "^20.0.0",
+    "@angular-devkit/core": "20.3.16",
+    "@angular-devkit/schematics": "20.3.16",
+    "@schematics/angular": "20.3.16"
   },
   "repository": "https://github.com/intuiface/intuiface-cdk"
 }

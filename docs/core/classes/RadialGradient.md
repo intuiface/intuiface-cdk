@@ -1,4 +1,4 @@
-[**@intuiface/core**](../README.md) • **Docs**
+[**@intuiface/core**](../README.md)
 
 ***
 
@@ -14,27 +14,37 @@ Class to use to describe a linear gradient.
 
 ## Constructors
 
-### new RadialGradient()
+### Constructor
 
-> **new RadialGradient**(`originPoint`, `centerPoint`, `radiusX`, `radiusY`, `gradientPoints`): [`RadialGradient`](RadialGradient.md)
+> **new RadialGradient**(`originPoint`, `centerPoint`, `radiusX`, `radiusY`, `gradientPoints`): `RadialGradient`
 
 Constructor
 
 #### Parameters
 
-• **originPoint**: `string`
+##### originPoint
 
-• **centerPoint**: `string`
+`string`
 
-• **radiusX**: `number`
+##### centerPoint
 
-• **radiusY**: `number`
+`string`
 
-• **gradientPoints**: `GradientPoint`[]
+##### radiusX
+
+`number`
+
+##### radiusY
+
+`number`
+
+##### gradientPoints
+
+`GradientPoint`[]
 
 #### Returns
 
-[`RadialGradient`](RadialGradient.md)
+`RadialGradient`
 
 #### Overrides
 
@@ -50,7 +60,9 @@ Check if we can convert a value to a radial gradient
 
 #### Parameters
 
-• **value**: `unknown`
+##### value
+
+`unknown`
 
 #### Returns
 
@@ -64,17 +76,19 @@ Check if we can convert a value to a radial gradient
 
 ### convertFrom()
 
-> `static` **convertFrom**(`value`): [`RadialGradient`](RadialGradient.md)
+> `static` **convertFrom**(`value`): `RadialGradient`
 
 Convert a value to a radial gradient
 
 #### Parameters
 
-• **value**: `unknown`
+##### value
+
+`unknown`
 
 #### Returns
 
-[`RadialGradient`](RadialGradient.md)
+`RadialGradient`
 
 #### Overrides
 
@@ -90,7 +104,9 @@ Check if the color can be converted to a type
 
 #### Parameters
 
-• **type**: `unknown`
+##### type
+
+`unknown`
 
 #### Returns
 
@@ -110,7 +126,9 @@ Function to convert a color to another type
 
 #### Parameters
 
-• **type**: `unknown`
+##### type
+
+`unknown`
 
 #### Returns
 
@@ -130,7 +148,9 @@ Function equals for the color type
 
 #### Parameters
 
-• **color**: [`RadialGradient`](RadialGradient.md)
+##### color
+
+`RadialGradient`
 
 color to compare
 

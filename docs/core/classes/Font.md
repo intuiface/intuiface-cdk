@@ -1,4 +1,4 @@
-[**@intuiface/core**](../README.md) • **Docs**
+[**@intuiface/core**](../README.md)
 
 ***
 
@@ -17,33 +17,41 @@ Note: We use the `Font` class as `type`, but the generic interface `Typeface` is
 
 ## Constructors
 
-### new Font()
+### Constructor
 
-> **new Font**(`family`, `stretch`, `weight`, `style`): [`Font`](Font.md)
+> **new Font**(`family`, `stretch`, `weight`, `style`): `Font`
 
 Constructor
 
 #### Parameters
 
-• **family**: `string`
+##### family
+
+`string`
 
 Family of the font
 
-• **stretch**: `string`
+##### stretch
+
+`string`
 
 Stretch of the font
 
-• **weight**: `string`
+##### weight
+
+`string`
 
 Weight of the font
 
-• **style**: `string`
+##### style
+
+`string`
 
 Style of the font
 
 #### Returns
 
-[`Font`](Font.md)
+`Font`
 
 #### Examples
 
@@ -107,17 +115,19 @@ Style of the font
 
 ### convertFrom()
 
-> `static` **convertFrom**(`value`): [`Font`](Font.md)
+> `static` **convertFrom**(`value`): `Font`
 
 Convert a value to a font
 
 #### Parameters
 
-• **value**: `any`
+##### value
+
+`any`
 
 #### Returns
 
-[`Font`](Font.md)
+`Font`
 
 ***
 
@@ -129,7 +139,9 @@ Check if we can convert value to Font
 
 #### Parameters
 
-• **value**: `any`
+##### value
+
+`any`
 
 #### Returns
 
@@ -145,7 +157,9 @@ Check if the type can be converted
 
 #### Parameters
 
-• **type**: `unknown`
+##### type
+
+`unknown`
 
 #### Returns
 
@@ -165,7 +179,9 @@ Function to convert a Font to another type
 
 #### Parameters
 
-• **type**: `unknown`
+##### type
+
+`unknown`
 
 #### Returns
 
