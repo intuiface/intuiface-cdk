@@ -1,8 +1,8 @@
 {
     "dependencies": {
-        "@intuiface/core": "2.0.2",
-        "@intuiface/components": "2.0.2",
-        "@intuiface/custom-asset": "2.0.2",
+        "@intuiface/core": "2.1.0",
+        "@intuiface/components": "2.1.0",
+        "@intuiface/custom-asset": "2.1.0",
         "@angular-architects/module-federation": "^17.0.8"
     }
 }
