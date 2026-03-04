@@ -1,5 +1,3 @@
-export * from './lib/components.module';
-
 // Base
 export { ElementComponent } from './lib/base/element.component';
 export { CollectionComponent } from './lib/base/collection.component';
@@ -25,15 +23,15 @@ export { ToggleButtonBehavior } from './lib/behaviors/toggle-button.behavior';
 export { TransformBehavior } from './lib/behaviors/transform.behavior';
 
 // Collection Behaviors
-export { CollectionBehavior } from './lib/behaviors/collectionBehaviors/collection.behavior';
-export { AutoScrollBehavior } from './lib/behaviors/collectionBehaviors/auto-scroll.behavior';
-export { FocusingCollectionBehavior } from './lib/behaviors/collectionBehaviors/focusing-collection.behavior';
-export { HomogeneousBehavior } from './lib/behaviors/collectionBehaviors/homogeneous.behavior';
-export { IndexingBehavior } from './lib/behaviors/collectionBehaviors/indexing.behavior';
-export { OpeningCollectionBehavior } from './lib/behaviors/collectionBehaviors/opening-collection.behavior';
-export { EFillDirection, OrientedBehavior } from './lib/behaviors/collectionBehaviors/oriented.behavior';
-export { PannableBehavior } from './lib/behaviors/collectionBehaviors/pannable.behavior';
-export { ScrollableBehavior } from './lib/behaviors/collectionBehaviors/scrollable.behavior';
+export { CollectionBehavior } from './lib/behaviors/collection-behaviors/collection.behavior';
+export { AutoScrollBehavior } from './lib/behaviors/collection-behaviors/auto-scroll.behavior';
+export { FocusingCollectionBehavior } from './lib/behaviors/collection-behaviors/focusing-collection.behavior';
+export { HomogeneousBehavior } from './lib/behaviors/collection-behaviors/homogeneous.behavior';
+export { IndexingBehavior } from './lib/behaviors/collection-behaviors/indexing.behavior';
+export { OpeningCollectionBehavior } from './lib/behaviors/collection-behaviors/opening-collection.behavior';
+export { EFillDirection, OrientedBehavior } from './lib/behaviors/collection-behaviors/oriented.behavior';
+export { PannableBehavior } from './lib/behaviors/collection-behaviors/pannable.behavior';
+export { ScrollableBehavior } from './lib/behaviors/collection-behaviors/scrollable.behavior';
 
 // Service
-export { SelectionService } from './lib/services/selection.service';
+export { SharingService } from './lib/services/sharing.service';

@@ -1,10 +1,10 @@
-[**@intuiface/core**](../README.md) • **Docs**
+[**@intuiface/core**](../README.md)
 
 ***
 
 # Interface: ITriggerOptions
 
-Options to configure [`@Trigger`](../functions/Trigger.md) decorator.
+Options to configure [\`@Trigger\`](../functions/Trigger.md) decorator.
 
 ## Properties
 

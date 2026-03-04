@@ -21,6 +21,7 @@ module.exports = {
     "plugins": [
         "@typescript-eslint",
         "@typescript-eslint/tslint",
+        "@stylistic",
         "import",
         "prefer-arrow"
     ],
@@ -100,7 +101,7 @@ module.exports = {
                 "accessibility": "explicit"
             }
         ],
-        "@typescript-eslint/indent": [
+        "@stylistic/indent": [
             "error",
             4,
             {
@@ -115,7 +116,7 @@ module.exports = {
                 "ImportDeclaration": "first"
             }
         ],
-        "@typescript-eslint/member-delimiter-style": [
+        "@stylistic/member-delimiter-style": [
             "error",
             {
                 "multiline": {
@@ -139,31 +140,31 @@ module.exports = {
         "@typescript-eslint/prefer-for-of": "error",
         "@typescript-eslint/prefer-function-type": "error",
         "@typescript-eslint/prefer-namespace-keyword": "error",
-        "@typescript-eslint/quotes": [
+        "@stylistic/quotes": [
             "error",
             "single"
         ],
-        "@typescript-eslint/semi": [
+        "@stylistic/semi": [
             "error",
             "always"
         ],
         "@typescript-eslint/triple-slash-reference": "error",
-        "@typescript-eslint/type-annotation-spacing": "error",
+        "@stylistic/type-annotation-spacing": "error",
         "@typescript-eslint/unified-signatures": "error",
         "arrow-body-style": "error",
         "camelcase": "error",
-        "comma-dangle": "off",
+        "@stylistic/comma-dangle": "off",
         "complexity": "off",
         "constructor-super": "error",
         "curly": "error",
         "dot-notation": "error",
-        "eol-last": "error",
+        "@stylistic/eol-last": "error",
         "eqeqeq": [
             "error",
             "smart"
         ],
         "guard-for-in": "error",
-        "id-blacklist": [
+        "id-denylist": [
             "error",
             "any",
             "number",
@@ -179,7 +180,7 @@ module.exports = {
             "error",
             1
         ],
-        "max-len": [
+        "@stylistic/max-len": [
             "error",
             {
                 "code": 120,
@@ -193,7 +194,7 @@ module.exports = {
             "error",
             1000
         ],
-        "new-parens": "error",
+        "@stylistic/new-parens": "error",
         "no-bitwise": "off",
         "no-caller": "error",
         "no-cond-assign": "error",
@@ -203,12 +204,12 @@ module.exports = {
         "no-eval": "error",
         "no-fallthrough": "off",
         "no-invalid-this": "off",
-        "no-multiple-empty-lines": "error",
+        "@stylistic/no-multiple-empty-lines": "error",
         "no-new-wrappers": "error",
         "no-shadow": "off",
         "@typescript-eslint/no-shadow": ["error"],
         "no-throw-literal": "error",
-        "no-trailing-spaces": "error",
+        "@stylistic/no-trailing-spaces": "error",
         "no-undef-init": "error",
         "no-underscore-dangle": ["error", {
             "allowAfterThis": true
@@ -224,12 +225,12 @@ module.exports = {
         ],
 
         "prefer-const": "error",
-        "quote-props": [
+        "@stylistic/quote-props": [
             "error",
             "consistent-as-needed"
         ],
         "radix": ["error", "as-needed"],
-        "space-before-function-paren": [
+        "@stylistic/space-before-function-paren": [
             "error",
             {
                 "anonymous": "never",
@@ -237,7 +238,7 @@ module.exports = {
                 "named": "never"
             }
         ],
-        "space-in-parens": [
+        "@stylistic/space-in-parens": [
             "error",
             "never"
         ],

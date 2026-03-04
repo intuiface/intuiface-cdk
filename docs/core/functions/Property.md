@@ -1,28 +1,34 @@
-[**@intuiface/core**](../README.md) • **Docs**
+[**@intuiface/core**](../README.md)
 
 ***
 
 # Function: Property()
 
-> **Property**(`options`?): (`target`, `propertyKey`) => `void`
+> **Property**(`options?`): (`target`, `propertyKey`) => `void`
 
 The `@Property` decorator enable you to declare a Property on your asset that can be used in a Intuiface experience.
 
 ## Parameters
 
-• **options?**: [`IPropertyOptions`](../interfaces/IPropertyOptions.md)
+### options?
+
+[`IPropertyOptions`](../interfaces/IPropertyOptions.md)
 
 options of the property (display name, description, ...)
 
 ## Returns
 
-`Function`
+> (`target`, `propertyKey`): `void`
 
 ### Parameters
 
-• **target**: `any`
+#### target
 
-• **propertyKey**: `string`
+`any`
+
+#### propertyKey
+
+`string`
 
 ### Returns
 

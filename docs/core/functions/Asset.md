@@ -1,31 +1,35 @@
-[**@intuiface/core**](../README.md) • **Docs**
+[**@intuiface/core**](../README.md)
 
 ***
 
 # Function: Asset()
 
-> **Asset**(`options`?): (`cls`) => `any`
+> **Asset**(`options?`): (`cls`) => `any`
 
 The `@Asset` decorator enables you to declare an interface asset that can be used in an Intuiface experience.
 
-The `@Asset` decorator is placed on a class and you can then declare properties, triggers and action using decorators [`@Property`](Property.md), [`@Trigger`](Trigger.md) and [`@Action`](Action.md) inside this class.
+The `@Asset` decorator is placed on a class and you can then declare properties, triggers and action using decorators [\`@Property\`](Property.md), [\`@Trigger\`](Trigger.md) and [\`@Action\`](Action.md) inside this class.
 
 An asset class must extends [IntuifaceElement](../classes/IntuifaceElement.md).
 
 ## Parameters
 
-• **options?**: [`IElementOptions`](../interfaces/IElementOptions.md)
+### options?
+
+[`IElementOptions`](../interfaces/IElementOptions.md)
 
 Options of the asset (name, display name, description, ...) The option 'name' is important to match the class name. And this can be use in a property to declare its type as another class name. 
-For this see [`itemType`](../interfaces/IPropertyOptions.md).
+For this see [\`itemType\`](../interfaces/IPropertyOptions.md).
 
 ## Returns
 
-`Function`
+> (`cls`): `any`
 
 ### Parameters
 
-• **cls**: `any`
+#### cls
+
+`any`
 
 ### Returns
 

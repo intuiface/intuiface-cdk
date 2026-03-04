@@ -1,4 +1,4 @@
-[**@intuiface/core**](../README.md) • **Docs**
+[**@intuiface/core**](../README.md)
 
 ***
 
@@ -14,27 +14,37 @@ Class to use to describe a solid color.
 
 ## Constructors
 
-### new SolidColor()
+### Constructor
 
-> **new SolidColor**(`alpha`, `red`, `green`, `blue`, `format`): [`SolidColor`](SolidColor.md)
+> **new SolidColor**(`alpha`, `red`, `green`, `blue`, `format?`): `SolidColor`
 
 Constructor
 
 #### Parameters
 
-• **alpha**: `string`
+##### alpha
 
-• **red**: `string`
+`string`
 
-• **green**: `string`
+##### red
 
-• **blue**: `string`
+`string`
 
-• **format**: `EColorFormat` = `EColorFormat.HexARGB`
+##### green
+
+`string`
+
+##### blue
+
+`string`
+
+##### format?
+
+`EColorFormat` = `EColorFormat.HexARGB`
 
 #### Returns
 
-[`SolidColor`](SolidColor.md)
+`SolidColor`
 
 #### Overrides
 
@@ -50,7 +60,9 @@ Check if we can convert a value to a solid color
 
 #### Parameters
 
-• **value**: `unknown`
+##### value
+
+`unknown`
 
 #### Returns
 
@@ -64,19 +76,23 @@ Check if we can convert a value to a solid color
 
 ### convertFrom()
 
-> `static` **convertFrom**(`value`, `format`?): [`SolidColor`](SolidColor.md)
+> `static` **convertFrom**(`value`, `format?`): `SolidColor`
 
 Convert a value to a solid color
 
 #### Parameters
 
-• **value**: `unknown`
+##### value
 
-• **format?**: `EColorFormat`
+`unknown`
+
+##### format?
+
+`EColorFormat`
 
 #### Returns
 
-[`SolidColor`](SolidColor.md)
+`SolidColor`
 
 #### Overrides
 
@@ -92,7 +108,9 @@ Check if the color can be converted to a type
 
 #### Parameters
 
-• **type**: `unknown`
+##### type
+
+`unknown`
 
 #### Returns
 
@@ -144,7 +162,9 @@ Function equals for the color type
 
 #### Parameters
 
-• **color**: [`SolidColor`](SolidColor.md)
+##### color
+
+`SolidColor`
 
 color to compare
 
@@ -166,7 +186,9 @@ Function to convert a color to another type
 
 #### Parameters
 
-• **type**: `unknown`
+##### type
+
+`unknown`
 
 #### Returns
 

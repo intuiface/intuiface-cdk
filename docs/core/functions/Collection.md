@@ -1,10 +1,10 @@
-[**@intuiface/core**](../README.md) • **Docs**
+[**@intuiface/core**](../README.md)
 
 ***
 
 # Function: Collection()
 
-> **Collection**(`options`?): (`cls`) => `any`
+> **Collection**(`options?`): (`cls`) => `any`
 
 **`Experimental`**
 
@@ -14,17 +14,21 @@ _**This is experimental as there is currently no way to use a custom collection 
 
 ## Parameters
 
-• **options?**: `ICollectionOptions`
+### options?
+
+`ICollectionOptions`
 
 of the collection (display name, description, ...)
 
 ## Returns
 
-`Function`
+> (`cls`): `any`
 
 ### Parameters
 
-• **cls**: `any`
+#### cls
+
+`any`
 
 ### Returns
 

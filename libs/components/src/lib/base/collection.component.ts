@@ -1,9 +1,8 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Component, ElementRef } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, Renderer2 } from '@angular/core';
 import { ElementComponent } from './element.component';
 import { ElementContainer, IntuifaceCollection, IntuifaceElement } from '@intuiface/core';
-import { SelectionService } from '../services/selection.service';
 import { DomSanitizer } from '@angular/platform-browser';
 
 /**
@@ -19,14 +18,16 @@ export class CollectionComponent<T extends IntuifaceCollection<ElementContainer>
 {
     /**
      * Constructor
-     * @param selectionService
-     * @param domSanitizer
-     * @param elementReference
+     * @param domSanitizer 
+     * @param elementReference 
+     * @param changeDetector 
+     * @param renderer 
      */
     public constructor(
-        protected selectionService: SelectionService,
         protected domSanitizer: DomSanitizer,
-        protected elementReference: ElementRef
+        elementReference: ElementRef,
+        changeDetector: ChangeDetectorRef,
+        protected renderer: Renderer2
     )
     {
         super(elementReference);

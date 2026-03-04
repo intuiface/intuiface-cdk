@@ -1,4 +1,4 @@
-[**@intuiface/core**](../README.md) • **Docs**
+[**@intuiface/core**](../README.md)
 
 ***
 
@@ -16,19 +16,21 @@ _**This is experimental as there is currently no way to use a custom collection 
 
 ## Type Parameters
 
-• **T** *extends* [`ElementContainer`](ElementContainer.md)
+### T
+
+`T` *extends* [`ElementContainer`](ElementContainer.md)
 
 ## Constructors
 
-### new IntuifaceCollection()
+### Constructor
 
-> **new IntuifaceCollection**\<`T`\>(): [`IntuifaceCollection`](IntuifaceCollection.md)\<`T`\>
+> **new IntuifaceCollection**\<`T`\>(): `IntuifaceCollection`\<`T`\>
 
 **`Experimental`**
 
 #### Returns
 
-[`IntuifaceCollection`](IntuifaceCollection.md)\<`T`\>
+`IntuifaceCollection`\<`T`\>
 
 #### Inherited from
 
@@ -146,11 +148,17 @@ Name of the element.
 
 **`Experimental`**
 
+Function to call when a property in the element changed to notify listeners
+
 #### Parameters
 
-• **propertyKey**: `string`
+##### propertyKey
 
-• **value**: `any`
+`string`
+
+##### value
+
+`any`
 
 #### Returns
 
@@ -168,9 +176,13 @@ Name of the element.
 
 **`Experimental`**
 
+Function to subscribe to properties changes of the element
+
 #### Parameters
 
-• **listener**: `PropertiesListener`
+##### listener
+
+`PropertiesListener`
 
 #### Returns
 
@@ -188,9 +200,13 @@ Name of the element.
 
 **`Experimental`**
 
+function to unsubscribe from properties changes of the element
+
 #### Parameters
 
-• **listener**: `PropertiesListener`
+##### listener
+
+`PropertiesListener`
 
 #### Returns
 
@@ -208,11 +224,17 @@ Name of the element.
 
 **`Experimental`**
 
+function to subscribe to one property changed
+
 #### Parameters
 
-• **property**: `string`
+##### property
 
-• **listener**: `PropertyListener`
+`string`
+
+##### listener
+
+`PropertyListener`
 
 #### Returns
 
@@ -230,11 +252,17 @@ Name of the element.
 
 **`Experimental`**
 
+function to unsubscribe from one property changed
+
 #### Parameters
 
-• **property**: `string`
+##### property
 
-• **listener**: `PropertyListener`
+`string`
+
+##### listener
+
+`PropertyListener`
 
 #### Returns
 
@@ -248,23 +276,29 @@ Name of the element.
 
 ### requestItems()
 
-> **requestItems**(`start`, `count`): [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)\<`void`\>
+> **requestItems**(`start`, `count`): [`Promise`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)\<`void`\>
 
 **`Experimental`**
 
+Requests items of the collection
+
 #### Parameters
 
-• **start**: `number`
+##### start
+
+`number`
 
 start index of the requested items
 
-• **count**: `number`
+##### count
+
+`number`
 
 number of requested items
 
 #### Returns
 
-[`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)\<`void`\>
+[`Promise`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)\<`void`\>
 
 ***
 
@@ -274,9 +308,13 @@ number of requested items
 
 **`Experimental`**
 
+Gets the start index in overall items for the given source
+
 #### Parameters
 
-• **source**: [`IntuifaceElement`](IntuifaceElement.md)
+##### source
+
+[`IntuifaceElement`](IntuifaceElement.md)
 
 source to find
 
@@ -288,13 +326,17 @@ source to find
 
 ### initialize()
 
-> **initialize**(`configuration`?): `void`
+> **initialize**(`configuration?`): `void`
 
 **`Experimental`**
 
+Initialize default value of each property.
+
 #### Parameters
 
-• **configuration?**: `any`
+##### configuration?
+
+`any`
 
 : configuration
 
@@ -313,6 +355,8 @@ source to find
 > **dispose**(): `void`
 
 **`Experimental`**
+
+Dispose the element.
 
 #### Returns
 

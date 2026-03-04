@@ -1,8 +1,7 @@
-import { Component, EventEmitter, Input, Output, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild, ElementRef, ChangeDetectorRef, Renderer2 } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { IntuifaceElement } from '@intuiface/core';
-import { CollectionBehavior } from '../behaviors/collectionBehaviors/collection.behavior';
-import { SelectionService } from '../services/selection.service';
+import { CollectionBehavior } from '../behaviors/collection-behaviors/collection.behavior';
 
 /**
  * Component for element's container.
@@ -10,7 +9,8 @@ import { SelectionService } from '../services/selection.service';
 @Component({
     selector: 'intuiface-element-container',
     template: '',
-    styles: ['']
+    styles: [''],
+    standalone: true
 })
 export class ElementContainerComponent {
     //#region Inputs
@@ -73,9 +73,17 @@ export class ElementContainerComponent {
 
     //#region Life Cycle
 
-    public constructor(protected selectionService: SelectionService,
-                       protected sanitizer: DomSanitizer,
-                       protected changeDetector: ChangeDetectorRef) { }
+    /**
+     * Constructor
+     * @param sanitizer 
+     * @param changeDetector 
+     * @param elementReference 
+     * @param renderer 
+     */
+    public constructor(protected sanitizer: DomSanitizer,
+                       protected changeDetector: ChangeDetectorRef,
+                       protected elementReference: ElementRef,
+                       protected renderer: Renderer2) { }
 
 
 }

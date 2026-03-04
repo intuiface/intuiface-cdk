@@ -4,7 +4,7 @@ import { CollectionBehavior } from './collection.behavior';
  * Collection orientations.
  */
 export enum ECollectionOrientation
-    {
+{
     Horizontal = 'Horizontal',
     Vertical = 'Vertical'
 }
@@ -13,7 +13,7 @@ export enum ECollectionOrientation
  * Fill directions.
  */
 export enum EFillDirection
-    {
+{
     LeftToRight = 'LeftToRight',
     RightToLeft = 'RightToLeft',
     TopToBottom = 'TopToBottom',

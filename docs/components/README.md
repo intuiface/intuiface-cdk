@@ -4,7 +4,7 @@
     </a>
 </p>
 
-**@intuiface/components** • **Docs**
+**@intuiface/components**
 
 ***
 
@@ -46,8 +46,7 @@
 - [TextBehavior](classes/TextBehavior.md)
 - [ToggleButtonBehavior](classes/ToggleButtonBehavior.md)
 - [TransformBehavior](classes/TransformBehavior.md)
-- [ComponentsModule](classes/ComponentsModule.md)
-- [SelectionService](classes/SelectionService.md)
+- [SharingService](classes/SharingService.md)
 
 ## Functions
 

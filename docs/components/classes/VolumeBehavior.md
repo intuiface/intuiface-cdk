@@ -1,4 +1,4 @@
-[**@intuiface/components**](../README.md) • **Docs**
+[**@intuiface/components**](../README.md)
 
 ***
 
@@ -16,9 +16,9 @@ Media with volume element
 
 ***
 
-### \_volume
+### volume
 
-> **\_volume**: `number` = `0`
+> **volume**: `number` = `0`
 
 Current volume.
 
@@ -40,7 +40,9 @@ Set volume of the media.
 
 #### Parameters
 
-• **volume**: `number`
+##### volume
+
+`number`
 
 #### Returns
 

@@ -1,10 +1,10 @@
-[**@intuiface/core**](../README.md) • **Docs**
+[**@intuiface/core**](../README.md)
 
 ***
 
 # Interface: IParameterOptions
 
-Options to configure [`@Parameter`](../functions/Parameter.md) decorator.
+Options to configure [\`@Parameter\`](../functions/Parameter.md) decorator.
 
 ## Properties
 

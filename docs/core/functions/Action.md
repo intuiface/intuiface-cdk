@@ -1,22 +1,24 @@
-[**@intuiface/core**](../README.md) • **Docs**
+[**@intuiface/core**](../README.md)
 
 ***
 
 # Function: Action()
 
-> **Action**(`options`?): () => `void`
+> **Action**(`options?`): () => `void`
 
 The `@Action` decorator enables you to declare an Action that can be used by Triggers in Intuiface Composer
 
 ## Parameters
 
-• **options?**: [`IActionOptions`](../interfaces/IActionOptions.md)
+### options?
+
+[`IActionOptions`](../interfaces/IActionOptions.md)
 
 Options to configure the Action (Display name, description...)
 
 ## Returns
 
-`Function`
+> (): `void`
 
 ### Returns
 
@@ -50,7 +52,7 @@ public setVolume(
 }
 ```
 
-Please read the section [`@Parameter`](Parameter.md)  for more information.
+Please read the section [\`@Parameter\`](Parameter.md)  for more information.
 
 
 ## Help

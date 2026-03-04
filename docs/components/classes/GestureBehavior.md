@@ -1,4 +1,4 @@
-[**@intuiface/components**](../README.md) • **Docs**
+[**@intuiface/components**](../README.md)
 
 ***
 
@@ -16,7 +16,9 @@ Gesture detected event.
 
 #### Parameters
 
-• **gestureName**: `string`
+##### gestureName
+
+`string`
 
 #### Returns
 

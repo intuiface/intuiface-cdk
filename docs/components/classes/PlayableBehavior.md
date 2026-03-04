@@ -1,4 +1,4 @@
-[**@intuiface/components**](../README.md) • **Docs**
+[**@intuiface/components**](../README.md)
 
 ***
 
@@ -18,7 +18,7 @@ State.
 
 ### currentTime
 
-> **currentTime**: `Time` = `Time.Zero`
+> **currentTime**: `Time` = `Time.ZERO`
 
 Current time.
 
@@ -26,7 +26,7 @@ Current time.
 
 ### duration
 
-> **duration**: `Time` = `Time.One`
+> **duration**: `Time` = `Time.ONE`
 
 Duration.
 
@@ -160,7 +160,9 @@ Time Changes
 
 #### Parameters
 
-• **time**: `Time`
+##### time
+
+`Time`
 
 #### Returns
 
@@ -260,7 +262,9 @@ Set current time in the media.
 
 #### Parameters
 
-• **position**: `Time`
+##### position
+
+`Time`
 
 #### Returns
 

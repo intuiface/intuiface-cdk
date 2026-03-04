@@ -3,7 +3,7 @@ import { IFont } from '@intuiface/core';
  * Horizontal alignment values for a text.
  */
 export enum ETextHorizontalAlignment
-    {
+{
     LEFT = 'Left',
     CENTER = 'Center',
     RIGHT = 'Right'
@@ -13,7 +13,7 @@ export enum ETextHorizontalAlignment
  * Vertical alignment values for a text.
  */
 export enum ETextVerticalAlignment
-    {
+{
     TOP = 'Top',
     CENTER = 'Center',
     BOTTOM = 'Bottom'
@@ -23,7 +23,7 @@ export enum ETextVerticalAlignment
  * Overflow values for a text.
  */
 export enum ETextOverflow
-    {
+{
     CLIP = 'Clip',
     ELLIPSIS = 'Ellipsis',
     SCROLLBAR = 'Scrollbars'

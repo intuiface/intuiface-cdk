@@ -1,4 +1,4 @@
-[**@intuiface/components**](../README.md) • **Docs**
+[**@intuiface/components**](../README.md)
 
 ***
 
@@ -124,17 +124,21 @@ Resize ratio of opened items.
 
 ### addSource()
 
-> **addSource**(`source`, `index`): `void`
+> **addSource**(`source`, `index?`): `void`
 
 Add a source
 
 #### Parameters
 
-• **source**: `IntuifaceElement`
+##### source
+
+`IntuifaceElement`
 
 : source to add
 
-• **index**: `number` = `undefined`
+##### index?
+
+`number` = `undefined`
 
 #### Returns
 
@@ -154,7 +158,9 @@ Remove a source
 
 #### Parameters
 
-• **source**: `IntuifaceElement`
+##### source
+
+`IntuifaceElement`
 
 : source to remove
 
@@ -170,23 +176,27 @@ Remove a source
 
 ### requestItems()
 
-> **requestItems**(`start`, `count`): [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)\<`void`\>
+> **requestItems**(`start`, `count`): [`Promise`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)\<`void`\>
 
 Requests items of the collection
 
 #### Parameters
 
-• **start**: `number`
+##### start
+
+`number`
 
 start index of the requested items
 
-• **count**: `number`
+##### count
+
+`number`
 
 number of requested items
 
 #### Returns
 
-[`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)\<`void`\>
+[`Promise`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)\<`void`\>
 
 #### Inherited from
 
@@ -202,7 +212,9 @@ Gets the start index in overall items for the given source
 
 #### Parameters
 
-• **source**: `IntuifaceElement`
+##### source
+
+`IntuifaceElement`
 
 soure to find
 
@@ -224,13 +236,21 @@ Open the given item.
 
 #### Parameters
 
-• **index**: `number`
+##### index
 
-• **x**: `number`
+`number`
 
-• **y**: `number`
+##### x
 
-• **orientation**: `number`
+`number`
+
+##### y
+
+`number`
+
+##### orientation
+
+`number`
 
 #### Returns
 
@@ -246,11 +266,17 @@ Open element
 
 #### Parameters
 
-• **element**: `IntuifaceElement`
+##### element
 
-• **x**: `number`
+`IntuifaceElement`
 
-• **y**: `number`
+##### x
+
+`number`
+
+##### y
+
+`number`
 
 #### Returns
 
