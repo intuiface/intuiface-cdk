@@ -10,6 +10,7 @@
     "hideGenerator": true,
     "disableSources": true,
     "hideBreadcrumbs": true,
+    "parametersFormat": "table",
     "githubPages": false,
     "plugin": ["typedoc-plugin-markdown", "typedoc-plugin-mdn-links"],
     "readme": "none",
