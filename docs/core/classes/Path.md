@@ -22,9 +22,9 @@ Convert a value to a Path
 
 #### Parameters
 
-##### value
-
-`string`
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `value` | `string` | - |
 
 #### Returns
 
@@ -40,9 +40,9 @@ Check if we can convert value to Path
 
 #### Parameters
 
-##### value
-
-`string`
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `value` | `string` | - |
 
 #### Returns
 
@@ -74,9 +74,9 @@ Check if the type can be converted
 
 #### Parameters
 
-##### type
-
-`unknown`
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `type` | `unknown` | - |
 
 #### Returns
 
@@ -96,9 +96,9 @@ Function to convert a Path to another type
 
 #### Parameters
 
-##### type
-
-`unknown`
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `type` | `unknown` | - |
 
 #### Returns
 

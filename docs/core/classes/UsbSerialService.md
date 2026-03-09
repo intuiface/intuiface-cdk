@@ -62,14 +62,9 @@ Open the serial port
 
 #### Parameters
 
-##### opts
-
-`any`
-
-:
-{ port: string, pid: number, vid: number,
-baudRate: number, dataBits: number, stopBits: number, parity: number,
-dtr: boolean, rts: boolean, sleepOnPause: boolean}
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `opts` | `any` | : { port: string, pid: number, vid: number, baudRate: number, dataBits: number, stopBits: number, parity: number, dtr: boolean, rts: boolean, sleepOnPause: boolean} |
 
 #### Returns
 
@@ -87,9 +82,9 @@ Write to the serial port
 
 #### Parameters
 
-##### data
-
-`string`
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `data` | `string` | - |
 
 #### Returns
 
@@ -117,9 +112,9 @@ Register a callback to be called when data is received
 
 #### Parameters
 
-##### callbackToRegister
-
-[`Function`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Function)
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `callbackToRegister` | [`Function`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Function) | - |
 
 #### Returns
 

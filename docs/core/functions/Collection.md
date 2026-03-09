@@ -14,11 +14,9 @@ _**This is experimental as there is currently no way to use a custom collection 
 
 ## Parameters
 
-### options?
-
-`ICollectionOptions`
-
-of the collection (display name, description, ...)
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `options?` | `ICollectionOptions` | of the collection (display name, description, ...) |
 
 ## Returns
 
@@ -26,9 +24,9 @@ of the collection (display name, description, ...)
 
 ### Parameters
 
-#### cls
-
-`any`
+| Parameter | Type |
+| ------ | ------ |
+| `cls` | `any` |
 
 ### Returns
 

@@ -80,11 +80,9 @@ Action to change the background color.
 
 #### Parameters
 
-##### color
-
-`Color`
-
-new background color to set
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `color` | `Color` | new background color to set |
 
 #### Returns
 
@@ -100,11 +98,9 @@ Action to change the outline color.
 
 #### Parameters
 
-##### color
-
-`Color`
-
-new outline color to set
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `color` | `Color` | new outline color to set |
 
 #### Returns
 
@@ -120,11 +116,9 @@ Action to change the outline thickness.
 
 #### Parameters
 
-##### thickness
-
-`number`
-
-new outline thickness to set
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `thickness` | `number` | new outline thickness to set |
 
 #### Returns
 

@@ -28,9 +28,9 @@ Convert a value to type
 
 #### Parameters
 
-##### type
-
-`unknown`
+| Parameter | Type |
+| ------ | ------ |
+| `type` | `unknown` |
 
 #### Returns
 
@@ -46,9 +46,9 @@ Check if the type can be converted to another type
 
 #### Parameters
 
-##### type
-
-`unknown`
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `type` | `unknown` | - |
 
 #### Returns
 

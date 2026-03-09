@@ -11,11 +11,9 @@ This is useful for dynamic component creation from a Model
 
 ## Parameters
 
-### args?
-
-`any` = `{}`
-
-: arguments with model property
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `args` | `any` | : arguments with model property |
 
 ## Returns
 
@@ -23,9 +21,9 @@ This is useful for dynamic component creation from a Model
 
 ### Parameters
 
-#### cls
-
-`any`
+| Parameter | Type |
+| ------ | ------ |
+| `cls` | `any` |
 
 ### Returns
 

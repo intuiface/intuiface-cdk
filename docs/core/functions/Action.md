@@ -10,11 +10,9 @@ The `@Action` decorator enables you to declare an Action that can be used by Tri
 
 ## Parameters
 
-### options?
-
-[`IActionOptions`](../interfaces/IActionOptions.md)
-
-Options to configure the Action (Display name, description...)
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `options?` | [`IActionOptions`](../interfaces/IActionOptions.md) | Options to configure the Action (Display name, description...) |
 
 ## Returns
 

@@ -16,21 +16,12 @@ Constructor
 
 #### Parameters
 
-##### sanitizer
-
-`DomSanitizer`
-
-##### changeDetector
-
-`ChangeDetectorRef`
-
-##### elementReference
-
-`ElementRef`
-
-##### renderer
-
-`Renderer2`
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `sanitizer` | `DomSanitizer` | - |
+| `changeDetector` | `ChangeDetectorRef` | - |
+| `elementReference` | `ElementRef` | - |
+| `renderer` | `Renderer2` | - |
 
 #### Returns
 

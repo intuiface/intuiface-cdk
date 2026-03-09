@@ -36,11 +36,9 @@ Action to change the source.
 
 #### Parameters
 
-##### source
-
-`string`
-
-source to set
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `source` | `string` | source to set |
 
 #### Returns
 

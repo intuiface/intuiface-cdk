@@ -148,11 +148,9 @@ Action to change the font color.
 
 #### Parameters
 
-##### color
-
-`string`
-
-new font color to set
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `color` | `string` | new font color to set |
 
 #### Returns
 
@@ -168,11 +166,9 @@ Action to change the font size.
 
 #### Parameters
 
-##### size
-
-`number`
-
-new font size to set
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `size` | `number` | new font size to set |
 
 #### Returns
 
@@ -188,11 +184,9 @@ Action to change the text.
 
 #### Parameters
 
-##### text
-
-`string`
-
-new text to set
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `text` | `string` | new text to set |
 
 #### Returns
 
@@ -208,29 +202,12 @@ Action to change the style.
 
 #### Parameters
 
-##### isBold
-
-`boolean`
-
-true to bold
-
-##### isItalic
-
-`boolean`
-
-true to italic
-
-##### isUnderline
-
-`boolean`
-
-true to underline
-
-##### isLineWrap
-
-`boolean`
-
-true to line wrap
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `isBold` | `boolean` | true to bold |
+| `isItalic` | `boolean` | true to italic |
+| `isUnderline` | `boolean` | true to underline |
+| `isLineWrap` | `boolean` | true to line wrap |
 
 #### Returns
 
@@ -246,9 +223,9 @@ Action to change the font.
 
 #### Parameters
 
-##### value
-
-`unknown`
+| Parameter | Type |
+| ------ | ------ |
+| `value` | `unknown` |
 
 #### Returns
 

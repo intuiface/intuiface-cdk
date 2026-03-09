@@ -160,9 +160,9 @@ Time Changes
 
 #### Parameters
 
-##### time
-
-`Time`
+| Parameter | Type |
+| ------ | ------ |
+| `time` | `Time` |
 
 #### Returns
 
@@ -262,9 +262,9 @@ Set current time in the media.
 
 #### Parameters
 
-##### position
-
-`Time`
+| Parameter | Type |
+| ------ | ------ |
+| `position` | `Time` |
 
 #### Returns
 

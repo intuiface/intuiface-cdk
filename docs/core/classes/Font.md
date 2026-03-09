@@ -25,29 +25,12 @@ Constructor
 
 #### Parameters
 
-##### family
-
-`string`
-
-Family of the font
-
-##### stretch
-
-`string`
-
-Stretch of the font
-
-##### weight
-
-`string`
-
-Weight of the font
-
-##### style
-
-`string`
-
-Style of the font
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `family` | `string` | Family of the font |
+| `stretch` | `string` | Stretch of the font |
+| `weight` | `string` | Weight of the font |
+| `style` | `string` | Style of the font |
 
 #### Returns
 
@@ -121,9 +104,9 @@ Convert a value to a font
 
 #### Parameters
 
-##### value
-
-`any`
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `value` | `any` | - |
 
 #### Returns
 
@@ -139,9 +122,9 @@ Check if we can convert value to Font
 
 #### Parameters
 
-##### value
-
-`any`
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `value` | `any` | - |
 
 #### Returns
 
@@ -157,9 +140,9 @@ Check if the type can be converted
 
 #### Parameters
 
-##### type
-
-`unknown`
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `type` | `unknown` | - |
 
 #### Returns
 
@@ -179,9 +162,9 @@ Function to convert a Font to another type
 
 #### Parameters
 
-##### type
-
-`unknown`
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `type` | `unknown` | - |
 
 #### Returns
 

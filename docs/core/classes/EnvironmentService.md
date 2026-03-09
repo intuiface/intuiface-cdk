@@ -30,11 +30,9 @@ Subscribes to be notified of canPromptInstallApp changes
 
 #### Parameters
 
-##### listener
-
-[`Function`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Function)
-
-listener function
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `listener` | [`Function`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Function) | listener function |
 
 #### Returns
 
@@ -50,11 +48,9 @@ Unsubscribes to be notified of canPromptInstallApp changes
 
 #### Parameters
 
-##### listener
-
-[`Function`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Function)
-
-listener function
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `listener` | [`Function`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Function) | listener function |
 
 #### Returns
 

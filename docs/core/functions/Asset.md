@@ -14,12 +14,9 @@ An asset class must extends [IntuifaceElement](../classes/IntuifaceElement.md).
 
 ## Parameters
 
-### options?
-
-[`IElementOptions`](../interfaces/IElementOptions.md)
-
-Options of the asset (name, display name, description, ...) The option 'name' is important to match the class name. And this can be use in a property to declare its type as another class name. 
-For this see [\`itemType\`](../interfaces/IPropertyOptions.md).
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `options?` | [`IElementOptions`](../interfaces/IElementOptions.md) | Options of the asset (name, display name, description, ...) The option 'name' is important to match the class name. And this can be use in a property to declare its type as another class name. For this see [\`itemType\`](../interfaces/IPropertyOptions.md). |
 
 ## Returns
 
@@ -27,9 +24,9 @@ For this see [\`itemType\`](../interfaces/IPropertyOptions.md).
 
 ### Parameters
 
-#### cls
-
-`any`
+| Parameter | Type |
+| ------ | ------ |
+| `cls` | `any` |
 
 ### Returns
 

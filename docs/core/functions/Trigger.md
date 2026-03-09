@@ -10,11 +10,9 @@ The `@Trigger` decorator enables you to declare a new trigger on your asset that
 
 ## Parameters
 
-### options?
-
-[`ITriggerOptions`](../interfaces/ITriggerOptions.md)
-
-options of the trigger (display name, description, ...)
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `options?` | [`ITriggerOptions`](../interfaces/ITriggerOptions.md) | options of the trigger (display name, description, ...) |
 
 ## Returns
 
@@ -22,17 +20,11 @@ options of the trigger (display name, description, ...)
 
 ### Parameters
 
-#### target
-
-`any`
-
-#### propertyKey
-
-`string` | `symbol`
-
-#### descriptor
-
-`PropertyDescriptor`
+| Parameter | Type |
+| ------ | ------ |
+| `target` | `any` |
+| `propertyKey` | `string` \| `symbol` |
+| `descriptor` | `PropertyDescriptor` |
 
 ### Returns
 

@@ -22,23 +22,11 @@ Create a new time with given hours, minutes and seconds.
 
 #### Parameters
 
-##### hours
-
-`number`
-
-hours of the time
-
-##### minutes
-
-`number`
-
-minutes of the time
-
-##### seconds
-
-`number`
-
-seconds of the time
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `hours` | `number` | hours of the time |
+| `minutes` | `number` | minutes of the time |
+| `seconds` | `number` | seconds of the time |
 
 #### Returns
 
@@ -134,11 +122,9 @@ Convert a value to a Time
 
 #### Parameters
 
-##### value
-
-`unknown`
-
-Value can be converted from `string` or `number`. If `string`, it's parsed with the format `hh:mm:ss.ms`. If `number`, it's considered as a number of seconds.
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `value` | `unknown` | Value can be converted from `string` or `number`. If `string`, it's parsed with the format `hh:mm:ss.ms`. If `number`, it's considered as a number of seconds. |
 
 #### Returns
 
@@ -154,9 +140,9 @@ Check if we can convert value to Time
 
 #### Parameters
 
-##### value
-
-`unknown`
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `value` | `unknown` | - |
 
 #### Returns
 
@@ -172,9 +158,9 @@ Convert from seconds to time
 
 #### Parameters
 
-##### value
-
-`number`
+| Parameter | Type |
+| ------ | ------ |
+| `value` | `number` |
 
 #### Returns
 
@@ -190,11 +176,9 @@ Convert time to string
 
 #### Parameters
 
-##### withoutMilliseconds?
-
-`boolean` = `false`
-
-show milliseconds in string result
+| Parameter | Type | Default value | Description |
+| ------ | ------ | ------ | ------ |
+| `withoutMilliseconds` | `boolean` | `false` | show milliseconds in string result |
 
 #### Returns
 
@@ -214,9 +198,9 @@ Check if the type can be converted
 
 #### Parameters
 
-##### type
-
-`unknown`
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `type` | `unknown` | - |
 
 #### Returns
 
@@ -236,9 +220,9 @@ Function to convert a Time to another type
 
 #### Parameters
 
-##### type
-
-`unknown`
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `type` | `unknown` | - |
 
 #### Returns
 

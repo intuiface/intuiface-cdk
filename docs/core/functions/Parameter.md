@@ -10,11 +10,9 @@ The `@Parameter` decorator enables you to declare an action's parameter or a tri
 
 ## Parameters
 
-### options?
-
-[`IParameterOptions`](../interfaces/IParameterOptions.md)
-
-options of the parameter (display name, description, ...)
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `options?` | [`IParameterOptions`](../interfaces/IParameterOptions.md) | options of the parameter (display name, description, ...) |
 
 ## Returns
 

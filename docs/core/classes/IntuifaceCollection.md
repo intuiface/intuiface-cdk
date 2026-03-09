@@ -16,9 +16,9 @@ _**This is experimental as there is currently no way to use a custom collection 
 
 ## Type Parameters
 
-### T
-
-`T` *extends* [`ElementContainer`](ElementContainer.md)
+| Type Parameter |
+| ------ |
+| `T` *extends* [`ElementContainer`](ElementContainer.md) |
 
 ## Constructors
 
@@ -152,13 +152,10 @@ Function to call when a property in the element changed to notify listeners
 
 #### Parameters
 
-##### propertyKey
-
-`string`
-
-##### value
-
-`any`
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `propertyKey` | `string` | - |
+| `value` | `any` | - |
 
 #### Returns
 
@@ -180,9 +177,9 @@ Function to subscribe to properties changes of the element
 
 #### Parameters
 
-##### listener
-
-`PropertiesListener`
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `listener` | `PropertiesListener` | - |
 
 #### Returns
 
@@ -204,9 +201,9 @@ function to unsubscribe from properties changes of the element
 
 #### Parameters
 
-##### listener
-
-`PropertiesListener`
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `listener` | `PropertiesListener` | - |
 
 #### Returns
 
@@ -228,13 +225,10 @@ function to subscribe to one property changed
 
 #### Parameters
 
-##### property
-
-`string`
-
-##### listener
-
-`PropertyListener`
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `property` | `string` | - |
+| `listener` | `PropertyListener` | - |
 
 #### Returns
 
@@ -256,13 +250,10 @@ function to unsubscribe from one property changed
 
 #### Parameters
 
-##### property
-
-`string`
-
-##### listener
-
-`PropertyListener`
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `property` | `string` | - |
+| `listener` | `PropertyListener` | - |
 
 #### Returns
 
@@ -284,17 +275,10 @@ Requests items of the collection
 
 #### Parameters
 
-##### start
-
-`number`
-
-start index of the requested items
-
-##### count
-
-`number`
-
-number of requested items
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `start` | `number` | start index of the requested items |
+| `count` | `number` | number of requested items |
 
 #### Returns
 
@@ -312,11 +296,9 @@ Gets the start index in overall items for the given source
 
 #### Parameters
 
-##### source
-
-[`IntuifaceElement`](IntuifaceElement.md)
-
-source to find
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `source` | [`IntuifaceElement`](IntuifaceElement.md) | source to find |
 
 #### Returns
 
@@ -334,11 +316,9 @@ Initialize default value of each property.
 
 #### Parameters
 
-##### configuration?
-
-`any`
-
-: configuration
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `configuration?` | `any` | : configuration |
 
 #### Returns
 

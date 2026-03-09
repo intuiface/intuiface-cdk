@@ -32,11 +32,9 @@ Start autoscroll.
 
 #### Parameters
 
-##### delayMode
-
-`string`
-
-delay mode
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `delayMode` | `string` | delay mode |
 
 #### Returns
 

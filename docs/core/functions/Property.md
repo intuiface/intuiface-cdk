@@ -10,11 +10,9 @@ The `@Property` decorator enable you to declare a Property on your asset that ca
 
 ## Parameters
 
-### options?
-
-[`IPropertyOptions`](../interfaces/IPropertyOptions.md)
-
-options of the property (display name, description, ...)
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `options?` | [`IPropertyOptions`](../interfaces/IPropertyOptions.md) | options of the property (display name, description, ...) |
 
 ## Returns
 
@@ -22,13 +20,10 @@ options of the property (display name, description, ...)
 
 ### Parameters
 
-#### target
-
-`any`
-
-#### propertyKey
-
-`string`
+| Parameter | Type |
+| ------ | ------ |
+| `target` | `any` |
+| `propertyKey` | `string` |
 
 ### Returns
 

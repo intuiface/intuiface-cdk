@@ -12,13 +12,10 @@ When using this decorator on a property, it will automatically generate getter a
 
 ## Parameters
 
-### options?
-
-#### affectRendering?
-
-`boolean`
-
-If true, ask visual component update when changed
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `options?` | \{ `affectRendering?`: `boolean`; \} | - |
+| `options.affectRendering?` | `boolean` | If true, ask visual component update when changed |
 
 ## Returns
 
@@ -26,13 +23,10 @@ If true, ask visual component update when changed
 
 ### Parameters
 
-#### target
-
-`unknown`
-
-#### propertyKey
-
-`string`
+| Parameter | Type |
+| ------ | ------ |
+| `target` | `unknown` |
+| `propertyKey` | `string` |
 
 ### Returns
 

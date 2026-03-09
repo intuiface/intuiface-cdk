@@ -16,9 +16,9 @@ Register a Sharing Queue
 
 #### Parameters
 
-##### sharingQueue
-
-`SharingBehavior`
+| Parameter | Type |
+| ------ | ------ |
+| `sharingQueue` | `SharingBehavior` |
 
 #### Returns
 
@@ -34,9 +34,9 @@ Unregister sharing queue
 
 #### Parameters
 
-##### sharingQueue
-
-`SharingBehavior`
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `sharingQueue` | `SharingBehavior` | - |
 
 #### Returns
 
@@ -52,13 +52,10 @@ Add item to sharing queues
 
 #### Parameters
 
-##### item
-
-`Resource`
-
-##### sharingQueue
-
-`string` | `ExportedList`
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `item` | `Resource` | - |
+| `sharingQueue` | `string` \| `ExportedList` | - |
 
 #### Returns
 
@@ -76,13 +73,10 @@ Remove item from sharing queues
 
 #### Parameters
 
-##### item
-
-`Resource`
-
-##### sharingQueue
-
-`string` | `ExportedList`
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `item` | `Resource` | - |
+| `sharingQueue` | `string` \| `ExportedList` | - |
 
 #### Returns
 

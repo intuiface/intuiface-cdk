@@ -12,9 +12,9 @@ Collection component
 
 ## Type Parameters
 
-### T
-
-`T` *extends* `IntuifaceCollection`\<`ElementContainer`\>
+| Type Parameter |
+| ------ |
+| `T` *extends* `IntuifaceCollection`\<`ElementContainer`\> |
 
 ## Constructors
 
@@ -26,21 +26,12 @@ Constructor
 
 #### Parameters
 
-##### domSanitizer
-
-`DomSanitizer`
-
-##### elementReference
-
-`ElementRef`
-
-##### changeDetector
-
-`ChangeDetectorRef`
-
-##### renderer
-
-`Renderer2`
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `domSanitizer` | `DomSanitizer` | - |
+| `elementReference` | `ElementRef` | - |
+| `changeDetector` | `ChangeDetectorRef` | - |
+| `renderer` | `Renderer2` | - |
 
 #### Returns
 
@@ -60,13 +51,10 @@ Track by fn
 
 #### Parameters
 
-##### index
-
-`number`
-
-##### item
-
-`IntuifaceElement`
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `index` | `number` | - |
+| `item` | `IntuifaceElement` | - |
 
 #### Returns
 

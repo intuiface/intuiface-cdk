@@ -6,7 +6,7 @@
 
 `CacheService` enhances the [`Fetch API`](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) with caching strategy, allowing you to store locally request's responses and files and access them even offline.
 
-Cached data is stored through [Cache API](https://developer.mozilla.org/en-US/docs/Web/API/Cache) when using [\`fetch()\`](https://developer.mozilla.org/docs/Web/API/Window/fetch) and on file system (only for Player in-venue, not XP as a Webpage) when using [\`downloadFile()\`](#downloadfile).
+Cached data is stored through [Cache API](https://developer.mozilla.org/en-US/docs/Web/API/Cache) when using [\`fetch()\`](#fetch) and on file system (only for Player in-venue, not XP as a Webpage) when using [\`downloadFile()\`](#downloadfile).
 
 Cache is persistent, which means it is kept between player launches. It can also be scoped to be associated to one experience or available across all. See [CacheScope](../enumerations/CacheScope.md) for details.
 
@@ -20,29 +20,12 @@ Enhanced global [`fetch()`](https://developer.mozilla.org/en-US/docs/Web/API/fet
 
 #### Parameters
 
-##### request
-
-`RequestInfo`
-
-This defines the resource that you wish to fetch. See [`fetch()` parameters](https://developer.mozilla.org/en-US/docs/Web/API/fetch#parameters).
-
-##### init?
-
-`RequestInit`
-
-An object containing any custom settings that you want to apply to the request, such as `headers`, `method`. See [`fetch()` parameters](https://developer.mozilla.org/en-US/docs/Web/API/fetch#parameters).
-
-##### cacheOptions?
-
-[`CacheOptions`](../interfaces/CacheOptions.md)
-
-An object containing cache behaviors for the request.
-
-##### progressCallback?
-
-`DownloadProgressCallback`
-
-Use this callback to trace download progress.
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `request` | `RequestInfo` | This defines the resource that you wish to fetch. See [`fetch()` parameters](https://developer.mozilla.org/en-US/docs/Web/API/fetch#parameters). |
+| `init?` | `RequestInit` | An object containing any custom settings that you want to apply to the request, such as `headers`, `method`. See [`fetch()` parameters](https://developer.mozilla.org/en-US/docs/Web/API/fetch#parameters). |
+| `cacheOptions?` | [`CacheOptions`](../interfaces/CacheOptions.md) | An object containing cache behaviors for the request. |
+| `progressCallback?` | `DownloadProgressCallback` | Use this callback to trace download progress. |
 
 #### Returns
 
@@ -91,29 +74,12 @@ Downloads a file into local cache and returns its local uri
 
 #### Parameters
 
-##### request
-
-`RequestInfo`
-
-This defines the resource that you wish to fetch. See [`fetch()` parameters](https://developer.mozilla.org/en-US/docs/Web/API/fetch#parameters).
-
-##### init?
-
-`RequestInit`
-
-An object containing any custom settings that you want to apply to the request, such as `headers`, `method`. See [`fetch()` parameters](https://developer.mozilla.org/en-US/docs/Web/API/fetch#parameters).
-
-##### cacheOptions?
-
-[`CacheOptions`](../interfaces/CacheOptions.md)
-
-An object containing cache behaviors for the request.
-
-##### progressCallback?
-
-`DownloadProgressCallback`
-
-Use this callback to trace download progress.
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `request` | `RequestInfo` | This defines the resource that you wish to fetch. See [`fetch()` parameters](https://developer.mozilla.org/en-US/docs/Web/API/fetch#parameters). |
+| `init?` | `RequestInit` | An object containing any custom settings that you want to apply to the request, such as `headers`, `method`. See [`fetch()` parameters](https://developer.mozilla.org/en-US/docs/Web/API/fetch#parameters). |
+| `cacheOptions?` | [`CacheOptions`](../interfaces/CacheOptions.md) | An object containing cache behaviors for the request. |
+| `progressCallback?` | `DownloadProgressCallback` | Use this callback to trace download progress. |
 
 #### Returns
 
@@ -161,23 +127,11 @@ Get cache URI for the given url
 
 #### Parameters
 
-##### url
-
-`string`
-
-URL of the resource to search
-
-##### cacheName
-
-`string`
-
-Name of the cache. If `null` or empty, defaults to global cache for interface assets.
-
-##### cacheScope
-
-[`CacheScope`](../enumerations/CacheScope.md)
-
-Scope of the cached resource. Defaults to [CacheScope.Experience](../enumerations/CacheScope.md#experience).
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `url` | `string` | URL of the resource to search |
+| `cacheName` | `string` | Name of the cache. If `null` or empty, defaults to global cache for interface assets. |
+| `cacheScope` | [`CacheScope`](../enumerations/CacheScope.md) | Scope of the cached resource. Defaults to [CacheScope.Experience](../enumerations/CacheScope.md#experience). |
 
 #### Returns
 
@@ -195,17 +149,10 @@ List entries cached in given cache
 
 #### Parameters
 
-##### cacheName
-
-`string`
-
-Name of the cache. If `null` or empty, defaults to global cache for interface assets.
-
-##### cacheScope
-
-[`CacheScope`](../enumerations/CacheScope.md)
-
-Scope of the cache entries to list. Defaults to [CacheScope.Experience](../enumerations/CacheScope.md#experience).
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `cacheName` | `string` | Name of the cache. If `null` or empty, defaults to global cache for interface assets. |
+| `cacheScope` | [`CacheScope`](../enumerations/CacheScope.md) | Scope of the cache entries to list. Defaults to [CacheScope.Experience](../enumerations/CacheScope.md#experience). |
 
 #### Returns
 
@@ -223,23 +170,11 @@ Remove cached data for the given url
 
 #### Parameters
 
-##### url
-
-`string`
-
-URL of the resource to remove
-
-##### cacheName
-
-`string`
-
-Name of the cache. If `null` or empty, defaults to global cache for interface assets.
-
-##### cacheScope
-
-[`CacheScope`](../enumerations/CacheScope.md)
-
-Scope of the cached data to remove. Defaults to [CacheScope.Experience](../enumerations/CacheScope.md#experience).
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `url` | `string` | URL of the resource to remove |
+| `cacheName` | `string` | Name of the cache. If `null` or empty, defaults to global cache for interface assets. |
+| `cacheScope` | [`CacheScope`](../enumerations/CacheScope.md) | Scope of the cached data to remove. Defaults to [CacheScope.Experience](../enumerations/CacheScope.md#experience). |
 
 #### Returns
 
@@ -257,23 +192,11 @@ Delete given cache
 
 #### Parameters
 
-##### cacheName
-
-`string`
-
-Name of the cache. If `null` or empty, defaults to global cache for interface assets.
-
-##### cacheScope
-
-[`CacheScope`](../enumerations/CacheScope.md)
-
-Scope of the cache to delete. Defaults to [CacheScope.Experience](../enumerations/CacheScope.md#experience).
-
-##### failOnError?
-
-`boolean` = `true`
-
-If `true`, throws `Error` when deletion fails. Otherwise catch error silently. Defaults to `true`.
+| Parameter | Type | Default value | Description |
+| ------ | ------ | ------ | ------ |
+| `cacheName` | `string` | `undefined` | Name of the cache. If `null` or empty, defaults to global cache for interface assets. |
+| `cacheScope` | [`CacheScope`](../enumerations/CacheScope.md) | `undefined` | Scope of the cache to delete. Defaults to [CacheScope.Experience](../enumerations/CacheScope.md#experience). |
+| `failOnError` | `boolean` | `true` | If `true`, throws `Error` when deletion fails. Otherwise catch error silently. Defaults to `true`. |
 
 #### Returns
 

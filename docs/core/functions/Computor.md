@@ -14,11 +14,9 @@ Inputs values will be passed as arguments of the method in the order they appear
 
 ## Parameters
 
-### options
-
-[`IComputorOptions`](../interfaces/IComputorOptions.md)
-
-Options to configure the computor
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `options` | [`IComputorOptions`](../interfaces/IComputorOptions.md) | Options to configure the computor |
 
 ## Returns
 
@@ -26,17 +24,11 @@ Options to configure the computor
 
 ### Parameters
 
-#### target
-
-`any`
-
-#### propertyKey
-
-`string` | `symbol`
-
-#### descriptor
-
-`PropertyDescriptor`
+| Parameter | Type |
+| ------ | ------ |
+| `target` | `any` |
+| `propertyKey` | `string` \| `symbol` |
+| `descriptor` | `PropertyDescriptor` |
 
 ### Returns
 

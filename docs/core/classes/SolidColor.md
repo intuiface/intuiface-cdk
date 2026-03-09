@@ -22,25 +22,13 @@ Constructor
 
 #### Parameters
 
-##### alpha
-
-`string`
-
-##### red
-
-`string`
-
-##### green
-
-`string`
-
-##### blue
-
-`string`
-
-##### format?
-
-`EColorFormat` = `EColorFormat.HexARGB`
+| Parameter | Type | Default value |
+| ------ | ------ | ------ |
+| `alpha` | `string` | `undefined` |
+| `red` | `string` | `undefined` |
+| `green` | `string` | `undefined` |
+| `blue` | `string` | `undefined` |
+| `format` | `EColorFormat` | `EColorFormat.HexARGB` |
 
 #### Returns
 
@@ -60,9 +48,9 @@ Check if we can convert a value to a solid color
 
 #### Parameters
 
-##### value
-
-`unknown`
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `value` | `unknown` | - |
 
 #### Returns
 
@@ -82,13 +70,10 @@ Convert a value to a solid color
 
 #### Parameters
 
-##### value
-
-`unknown`
-
-##### format?
-
-`EColorFormat`
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `value` | `unknown` | - |
+| `format?` | `EColorFormat` | - |
 
 #### Returns
 
@@ -108,9 +93,9 @@ Check if the color can be converted to a type
 
 #### Parameters
 
-##### type
-
-`unknown`
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `type` | `unknown` | - |
 
 #### Returns
 
@@ -162,11 +147,9 @@ Function equals for the color type
 
 #### Parameters
 
-##### color
-
-`SolidColor`
-
-color to compare
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `color` | `SolidColor` | color to compare |
 
 #### Returns
 
@@ -186,9 +169,9 @@ Function to convert a color to another type
 
 #### Parameters
 
-##### type
-
-`unknown`
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `type` | `unknown` | - |
 
 #### Returns
 

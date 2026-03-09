@@ -83,15 +83,10 @@ Add a source
 
 #### Parameters
 
-##### source
-
-`IntuifaceElement`
-
-: source to add
-
-##### index?
-
-`number` = `undefined`
+| Parameter | Type | Default value | Description |
+| ------ | ------ | ------ | ------ |
+| `source` | `IntuifaceElement` | `undefined` | : source to add |
+| `index` | `number` | `undefined` | - |
 
 #### Returns
 
@@ -107,11 +102,9 @@ Remove a source
 
 #### Parameters
 
-##### source
-
-`IntuifaceElement`
-
-: source to remove
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `source` | `IntuifaceElement` | : source to remove |
 
 #### Returns
 
@@ -127,17 +120,10 @@ Requests items of the collection
 
 #### Parameters
 
-##### start
-
-`number`
-
-start index of the requested items
-
-##### count
-
-`number`
-
-number of requested items
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `start` | `number` | start index of the requested items |
+| `count` | `number` | number of requested items |
 
 #### Returns
 
@@ -153,11 +139,9 @@ Gets the start index in overall items for the given source
 
 #### Parameters
 
-##### source
-
-`IntuifaceElement`
-
-soure to find
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `source` | `IntuifaceElement` | soure to find |
 
 #### Returns
 

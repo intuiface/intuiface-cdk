@@ -16,9 +16,9 @@ Gesture detected event.
 
 #### Parameters
 
-##### gestureName
-
-`string`
+| Parameter | Type |
+| ------ | ------ |
+| `gestureName` | `string` |
 
 #### Returns
 

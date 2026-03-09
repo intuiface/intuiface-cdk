@@ -40,9 +40,9 @@ Set volume of the media.
 
 #### Parameters
 
-##### volume
-
-`number`
+| Parameter | Type |
+| ------ | ------ |
+| `volume` | `number` |
 
 #### Returns
 

@@ -12,9 +12,9 @@ Base element view component
 
 ## Type Parameters
 
-### T
-
-`T` *extends* `IntuifaceElement`
+| Type Parameter |
+| ------ |
+| `T` *extends* `IntuifaceElement` |
 
 
 ## Help

@@ -22,25 +22,13 @@ Constructor
 
 #### Parameters
 
-##### originPoint
-
-`string`
-
-##### centerPoint
-
-`string`
-
-##### radiusX
-
-`number`
-
-##### radiusY
-
-`number`
-
-##### gradientPoints
-
-`GradientPoint`[]
+| Parameter | Type |
+| ------ | ------ |
+| `originPoint` | `string` |
+| `centerPoint` | `string` |
+| `radiusX` | `number` |
+| `radiusY` | `number` |
+| `gradientPoints` | `GradientPoint`[] |
 
 #### Returns
 
@@ -60,9 +48,9 @@ Check if we can convert a value to a radial gradient
 
 #### Parameters
 
-##### value
-
-`unknown`
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `value` | `unknown` | - |
 
 #### Returns
 
@@ -82,9 +70,9 @@ Convert a value to a radial gradient
 
 #### Parameters
 
-##### value
-
-`unknown`
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `value` | `unknown` | - |
 
 #### Returns
 
@@ -104,9 +92,9 @@ Check if the color can be converted to a type
 
 #### Parameters
 
-##### type
-
-`unknown`
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `type` | `unknown` | - |
 
 #### Returns
 
@@ -126,9 +114,9 @@ Function to convert a color to another type
 
 #### Parameters
 
-##### type
-
-`unknown`
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `type` | `unknown` | - |
 
 #### Returns
 
@@ -148,11 +136,9 @@ Function equals for the color type
 
 #### Parameters
 
-##### color
-
-`RadialGradient`
-
-color to compare
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `color` | `RadialGradient` | color to compare |
 
 #### Returns
 
