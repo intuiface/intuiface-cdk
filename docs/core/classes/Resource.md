@@ -1,4 +1,4 @@
-[**@intuiface/core**](../README.md) • **Docs**
+[**@intuiface/core**](../README.md)
 
 ***
 
@@ -16,21 +16,20 @@ Class to use when a property is using a resource from an experience.
 
 ### convertFrom()
 
-> `static` **convertFrom**(`value`, `propertyOwner`?): [`Resource`](Resource.md)
+> `static` **convertFrom**(`value`, `propertyOwner?`): `Resource`
 
 Convert a value to a Resource
 
 #### Parameters
 
-• **value**: `string`
-
-value to convert
-
-• **propertyOwner?**: `any`
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `value` | `string` | value to convert |
+| `propertyOwner?` | `any` | - |
 
 #### Returns
 
-[`Resource`](Resource.md)
+`Resource`
 
 ***
 
@@ -42,9 +41,9 @@ Check if we can convert value to Resource
 
 #### Parameters
 
-• **value**: `string`
-
-value to convert
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `value` | `string` | value to convert |
 
 #### Returns
 
@@ -76,9 +75,9 @@ Check if the type can be converted
 
 #### Parameters
 
-• **type**: `unknown`
-
-targeted type
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `type` | `unknown` | targeted type |
 
 #### Returns
 
@@ -98,9 +97,9 @@ Function to convert a Resource to another type
 
 #### Parameters
 
-• **type**: `unknown`
-
-targeted type
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `type` | `unknown` | targeted type |
 
 #### Returns
 

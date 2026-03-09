@@ -1,9 +1,7 @@
-import { IndexingBehavior } from './indexing.behavior';
-
 /**
  * Behavior to manage autoscroll in collection.
  */
-export class AutoScrollBehavior extends IndexingBehavior
+export class AutoScrollBehavior
 {
     //#region Properties
 
@@ -15,7 +13,7 @@ export class AutoScrollBehavior extends IndexingBehavior
     /**
      * Duration by item.
      */
-    public itemDuration: number = 5;
+    public autoscrollItemDuration: number = 5;
 
     //#endregion Properties
 

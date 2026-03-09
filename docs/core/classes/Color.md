@@ -1,8 +1,8 @@
-[**@intuiface/core**](../README.md) • **Docs**
+[**@intuiface/core**](../README.md)
 
 ***
 
-# Class: `abstract` Color
+# Abstract Class: Color
 
 Class to type a property that can be a solid color or a gradient.
 
@@ -28,7 +28,9 @@ Check if we can convert a value to a color
 
 #### Parameters
 
-• **value**: `unknown`
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `value` | `unknown` | - |
 
 #### Returns
 
@@ -38,17 +40,19 @@ Check if we can convert a value to a color
 
 ### convertFrom()
 
-> `static` **convertFrom**(`value`): [`Color`](Color.md)
+> `static` **convertFrom**(`value`): `Color`
 
 Convert a value to a color
 
 #### Parameters
 
-• **value**: `unknown`
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `value` | `unknown` | - |
 
 #### Returns
 
-[`Color`](Color.md)
+`Color`
 
 ***
 
@@ -76,9 +80,9 @@ Function equals for the color type
 
 #### Parameters
 
-• **color**: [`Color`](Color.md)
-
-color to compare
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `color` | `Color` | color to compare |
 
 #### Returns
 
@@ -106,7 +110,9 @@ Check if the color can be converted to a type
 
 #### Parameters
 
-• **type**: `unknown`
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `type` | `unknown` | - |
 
 #### Returns
 
@@ -126,7 +132,9 @@ Function to convert a color to another type
 
 #### Parameters
 
-• **type**: `unknown`
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `type` | `unknown` | - |
 
 #### Returns
 

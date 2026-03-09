@@ -1,11 +1,10 @@
-import { Color as ColorType } from '@intuiface/core';
-import { SolidColor } from '@intuiface/core';
+import { Color as ColorType, SolidColor } from '@intuiface/core';
 
 /**
  * Background types
  */
 export enum EBackgroundType
-    {
+{
     Color = 'Color',
     Image = 'Image',
     Video = 'Video',

@@ -1,4 +1,4 @@
-[**@intuiface/components**](../README.md) • **Docs**
+[**@intuiface/components**](../README.md)
 
 ***
 
@@ -36,9 +36,9 @@ Set current time to the playable element.
 
 #### Parameters
 
-• **currentTime**: `number`
-
-current time to set
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `currentTime` | `number` | current time to set |
 
 #### Returns
 
@@ -90,7 +90,9 @@ Change volume
 
 #### Parameters
 
-• **volume**: `number`
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `volume` | `number` | - |
 
 #### Returns
 
@@ -138,9 +140,9 @@ Listen playable ready event.
 
 #### Parameters
 
-• **callback**: [`Function`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function)
-
-callback to call when event is emited
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `callback` | [`Function`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Function) | callback to call when event is emited |
 
 #### Returns
 
@@ -160,9 +162,9 @@ Unlisten playable ready event.
 
 #### Parameters
 
-• **callback**: [`Function`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function)
-
-callback to remove
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `callback` | [`Function`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Function) | callback to remove |
 
 #### Returns
 
@@ -182,9 +184,9 @@ Listen to seeked event
 
 #### Parameters
 
-• **callback**: [`Function`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function)
-
-callback to call
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `callback` | [`Function`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Function) | callback to call |
 
 #### Returns
 
@@ -200,9 +202,9 @@ Unlisten to seeked event
 
 #### Parameters
 
-• **callback**: [`Function`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function)
-
-callback to remove
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `callback` | [`Function`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Function) | callback to remove |
 
 #### Returns
 
@@ -218,9 +220,9 @@ Listen to ended event
 
 #### Parameters
 
-• **callback**: [`Function`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function)
-
-callback to call when event is emitted
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `callback` | [`Function`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Function) | callback to call when event is emitted |
 
 #### Returns
 
@@ -240,9 +242,9 @@ Unlisten to ended event.
 
 #### Parameters
 
-• **callback**: [`Function`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function)
-
-callback to remove
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `callback` | [`Function`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Function) | callback to remove |
 
 #### Returns
 

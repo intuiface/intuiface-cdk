@@ -135,7 +135,7 @@ export type DownloadProgressCallback = (progress: DownloadProgress) => void;
 /**
  * `CacheService` enhances the [`Fetch API`](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) with caching strategy, allowing you to store locally request's responses and files and access them even offline.
  *
- * Cached data is stored through [Cache API](https://developer.mozilla.org/en-US/docs/Web/API/Cache) when using {@link fetch | `fetch()`} and on file system (only for Player in-venue, not XP as a Webpage) when using {@link downloadFile | `downloadFile()`}.
+ * Cached data is stored through [Cache API](https://developer.mozilla.org/en-US/docs/Web/API/Cache) when using {@link CacheService.fetch | `fetch()`} and on file system (only for Player in-venue, not XP as a Webpage) when using {@link CacheService.downloadFile | `downloadFile()`}.
  *
  * Cache is persistent, which means it is kept between player launches. It can also be scoped to be associated to one experience or available across all. See {@link CacheScope} for details.
  *

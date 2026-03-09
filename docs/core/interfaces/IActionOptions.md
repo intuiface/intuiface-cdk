@@ -1,10 +1,10 @@
-[**@intuiface/core**](../README.md) • **Docs**
+[**@intuiface/core**](../README.md)
 
 ***
 
 # Interface: IActionOptions
 
-Options to configure [`@Action`](../functions/Action.md) decorator
+Options to configure [\`@Action\`](../functions/Action.md) decorator
 
 ## Properties
 

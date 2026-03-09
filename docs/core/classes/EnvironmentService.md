@@ -1,4 +1,4 @@
-[**@intuiface/core**](../README.md) • **Docs**
+[**@intuiface/core**](../README.md)
 
 ***
 
@@ -10,11 +10,13 @@ Service to expose information about the environment context in which Player is r
 
 ### canPromptInstallApp
 
-> `get` `static` **canPromptInstallApp**(): `boolean`
+#### Get Signature
+
+> **get** `static` **canPromptInstallApp**(): `boolean`
 
 Indicates if browser is ready to prompt install app
 
-#### Returns
+##### Returns
 
 `boolean`
 
@@ -28,9 +30,9 @@ Subscribes to be notified of canPromptInstallApp changes
 
 #### Parameters
 
-• **listener**: [`Function`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function)
-
-listener function
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `listener` | [`Function`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Function) | listener function |
 
 #### Returns
 
@@ -46,9 +48,9 @@ Unsubscribes to be notified of canPromptInstallApp changes
 
 #### Parameters
 
-• **listener**: [`Function`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function)
-
-listener function
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `listener` | [`Function`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Function) | listener function |
 
 #### Returns
 

@@ -1,4 +1,4 @@
-[**@intuiface/core**](../README.md) • **Docs**
+[**@intuiface/core**](../README.md)
 
 ***
 
@@ -14,25 +14,24 @@ Class to use to describe a linear gradient.
 
 ## Constructors
 
-### new LinearGradient()
+### Constructor
 
-> **new LinearGradient**(`angle`, `startPoint`, `endPoint`, `gradientPoints`): [`LinearGradient`](LinearGradient.md)
+> **new LinearGradient**(`angle`, `startPoint`, `endPoint`, `gradientPoints`): `LinearGradient`
 
 Constructor
 
 #### Parameters
 
-• **angle**: `number`
-
-• **startPoint**: `string`
-
-• **endPoint**: `string`
-
-• **gradientPoints**: `GradientPoint`[]
+| Parameter | Type |
+| ------ | ------ |
+| `angle` | `number` |
+| `startPoint` | `string` |
+| `endPoint` | `string` |
+| `gradientPoints` | `GradientPoint`[] |
 
 #### Returns
 
-[`LinearGradient`](LinearGradient.md)
+`LinearGradient`
 
 #### Overrides
 
@@ -48,7 +47,9 @@ Check if we can convert a value to a linear gradient
 
 #### Parameters
 
-• **value**: `unknown`
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `value` | `unknown` | - |
 
 #### Returns
 
@@ -62,17 +63,19 @@ Check if we can convert a value to a linear gradient
 
 ### convertFrom()
 
-> `static` **convertFrom**(`value`): [`LinearGradient`](LinearGradient.md)
+> `static` **convertFrom**(`value`): `LinearGradient`
 
 Convert a value to a linear gradient
 
 #### Parameters
 
-• **value**: `unknown`
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `value` | `unknown` | - |
 
 #### Returns
 
-[`LinearGradient`](LinearGradient.md)
+`LinearGradient`
 
 #### Overrides
 
@@ -88,7 +91,9 @@ Check if the color can be converted to a type
 
 #### Parameters
 
-• **type**: `unknown`
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `type` | `unknown` | - |
 
 #### Returns
 
@@ -108,7 +113,9 @@ Function to convert a color to another type
 
 #### Parameters
 
-• **type**: `unknown`
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `type` | `unknown` | - |
 
 #### Returns
 
@@ -128,9 +135,9 @@ Function equals for the color type
 
 #### Parameters
 
-• **color**: [`LinearGradient`](LinearGradient.md)
-
-color to compare
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `color` | `LinearGradient` | color to compare |
 
 #### Returns
 

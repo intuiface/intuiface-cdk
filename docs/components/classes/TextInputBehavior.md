@@ -1,4 +1,4 @@
-[**@intuiface/components**](../README.md) • **Docs**
+[**@intuiface/components**](../README.md)
 
 ***
 
@@ -432,7 +432,9 @@ Trigger when a key is pressed
 
 #### Parameters
 
-• **keys**: `string`
+| Parameter | Type |
+| ------ | ------ |
+| `keys` | `string` |
 
 #### Returns
 
@@ -472,9 +474,10 @@ Trigger when the text changed
 
 #### Parameters
 
-• **firstParam**: `string`
-
-• **secondParam**: `string`
+| Parameter | Type |
+| ------ | ------ |
+| `firstParam` | `string` |
+| `secondParam` | `string` |
 
 #### Returns
 
@@ -574,9 +577,9 @@ Set text.
 
 #### Parameters
 
-• **text**: `string`
-
-text to set
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `text` | `string` | text to set |
 
 #### Returns
 
@@ -620,9 +623,9 @@ Set minimum size for font size adaptation.
 
 #### Parameters
 
-• **size**: `number`
-
-minimum font size
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `size` | `number` | minimum font size |
 
 #### Returns
 
@@ -638,9 +641,9 @@ Action to change the font color.
 
 #### Parameters
 
-• **color**: `string`
-
-new font color to set
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `color` | `string` | new font color to set |
 
 #### Returns
 
@@ -660,9 +663,9 @@ Action to change the font size.
 
 #### Parameters
 
-• **size**: `number`
-
-new font size to set
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `size` | `number` | new font size to set |
 
 #### Returns
 
@@ -682,21 +685,12 @@ Action to change the style.
 
 #### Parameters
 
-• **isBold**: `boolean`
-
-true to bold
-
-• **isItalic**: `boolean`
-
-true to italic
-
-• **isUnderline**: `boolean`
-
-true to underline
-
-• **isLineWrap**: `boolean`
-
-true to line wrap
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `isBold` | `boolean` | true to bold |
+| `isItalic` | `boolean` | true to italic |
+| `isUnderline` | `boolean` | true to underline |
+| `isLineWrap` | `boolean` | true to line wrap |
 
 #### Returns
 
@@ -716,7 +710,9 @@ Action to change the font.
 
 #### Parameters
 
-• **value**: `unknown`
+| Parameter | Type |
+| ------ | ------ |
+| `value` | `unknown` |
 
 #### Returns
 

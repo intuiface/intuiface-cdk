@@ -1,30 +1,30 @@
-[**@intuiface/core**](../README.md) • **Docs**
+[**@intuiface/core**](../README.md)
 
 ***
 
 # Function: Trigger()
 
-> **Trigger**(`options`?): (`target`, `propertyKey`, `descriptor`) => `void`
+> **Trigger**(`options?`): (`target`, `propertyKey`, `descriptor`) => `void`
 
 The `@Trigger` decorator enables you to declare a new trigger on your asset that can be used in an Intuiface experience.
 
 ## Parameters
 
-• **options?**: [`ITriggerOptions`](../interfaces/ITriggerOptions.md)
-
-options of the trigger (display name, description, ...)
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `options?` | [`ITriggerOptions`](../interfaces/ITriggerOptions.md) | options of the trigger (display name, description, ...) |
 
 ## Returns
 
-`Function`
+> (`target`, `propertyKey`, `descriptor`): `void`
 
 ### Parameters
 
-• **target**: `any`
-
-• **propertyKey**: `string` \| `symbol`
-
-• **descriptor**: `PropertyDescriptor`
+| Parameter | Type |
+| ------ | ------ |
+| `target` | `any` |
+| `propertyKey` | `string` \| `symbol` |
+| `descriptor` | `PropertyDescriptor` |
 
 ### Returns
 
@@ -50,7 +50,7 @@ public countChanged(
         type: Number // the type of the parameter
     }) count: number): void { } //the parameter
 ```
-Please read the section [`@Parameter`](Parameter.md) for more information.
+Please read the section [\`@Parameter\`](Parameter.md) for more information.
 
 
 ## Help

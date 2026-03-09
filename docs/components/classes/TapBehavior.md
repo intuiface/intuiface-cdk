@@ -1,4 +1,4 @@
-[**@intuiface/components**](../README.md) • **Docs**
+[**@intuiface/components**](../README.md)
 
 ***
 
@@ -16,9 +16,10 @@ Tap event.
 
 #### Parameters
 
-• **x**: `number`
-
-• **y**: `number`
+| Parameter | Type |
+| ------ | ------ |
+| `x` | `number` |
+| `y` | `number` |
 
 #### Returns
 
@@ -34,9 +35,10 @@ Double tap event
 
 #### Parameters
 
-• **x**: `number`
-
-• **y**: `number`
+| Parameter | Type |
+| ------ | ------ |
+| `x` | `number` |
+| `y` | `number` |
 
 #### Returns
 

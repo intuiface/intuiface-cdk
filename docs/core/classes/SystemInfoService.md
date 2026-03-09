@@ -1,4 +1,4 @@
-[**@intuiface/core**](../README.md) • **Docs**
+[**@intuiface/core**](../README.md)
 
 ***
 
@@ -10,7 +10,7 @@ Service to get system information (device id, device name ...etc)
 
 ### getInstance()
 
-> `static` **getInstance**(): [`SystemInfoService`](SystemInfoService.md)
+> `static` **getInstance**(): `SystemInfoService`
 
 Get the instance of the system info service.
 You have to call this method to be able to call other methods to get system information.
@@ -20,7 +20,7 @@ await SystemInfoService.getInstance().getPlatform()
 
 #### Returns
 
-[`SystemInfoService`](SystemInfoService.md)
+`SystemInfoService`
 
 an instance of the system info service
 
@@ -28,13 +28,13 @@ an instance of the system info service
 
 ### getDeviceId()
 
-> **getDeviceId**(): [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)\<`string`\>
+> **getDeviceId**(): [`Promise`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)\<`string`\>
 
 Get the unique ID of the device
 
 #### Returns
 
-[`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)\<`string`\>
+[`Promise`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)\<`string`\>
 
 Device ID
 
@@ -42,13 +42,13 @@ Device ID
 
 ### getDeviceName()
 
-> **getDeviceName**(): [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)\<`string`\>
+> **getDeviceName**(): [`Promise`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)\<`string`\>
 
 Get the device name
 
 #### Returns
 
-[`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)\<`string`\>
+[`Promise`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)\<`string`\>
 
 the device name
 
@@ -56,13 +56,13 @@ the device name
 
 ### getPlatform()
 
-> **getPlatform**(): [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)\<`string`\>
+> **getPlatform**(): [`Promise`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)\<`string`\>
 
 Get the platform (ios, android or web)
 
 #### Returns
 
-[`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)\<`string`\>
+[`Promise`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)\<`string`\>
 
 platform
 
@@ -70,13 +70,13 @@ platform
 
 ### getOS()
 
-> **getOS**(): [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)\<`string`\>
+> **getOS**(): [`Promise`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)\<`string`\>
 
 Get OS
 
 #### Returns
 
-[`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)\<`string`\>
+[`Promise`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)\<`string`\>
 
 Operating system and os version in same string
 

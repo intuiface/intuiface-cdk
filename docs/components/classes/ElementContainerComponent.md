@@ -1,10 +1,31 @@
-[**@intuiface/components**](../README.md) • **Docs**
+[**@intuiface/components**](../README.md)
 
 ***
 
 # Class: ElementContainerComponent
 
 Component for element's container.
+
+## Constructors
+
+### Constructor
+
+> **new ElementContainerComponent**(`sanitizer`, `changeDetector`, `elementReference`, `renderer`): `ElementContainerComponent`
+
+Constructor
+
+#### Parameters
+
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `sanitizer` | `DomSanitizer` | - |
+| `changeDetector` | `ChangeDetectorRef` | - |
+| `elementReference` | `ElementRef` | - |
+| `renderer` | `Renderer2` | - |
+
+#### Returns
+
+`ElementContainerComponent`
 
 ## Properties
 

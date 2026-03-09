@@ -1,4 +1,4 @@
-[**@intuiface/core**](../README.md) • **Docs**
+[**@intuiface/core**](../README.md)
 
 ***
 
@@ -14,27 +14,25 @@ Class to use to describe a linear gradient.
 
 ## Constructors
 
-### new RadialGradient()
+### Constructor
 
-> **new RadialGradient**(`originPoint`, `centerPoint`, `radiusX`, `radiusY`, `gradientPoints`): [`RadialGradient`](RadialGradient.md)
+> **new RadialGradient**(`originPoint`, `centerPoint`, `radiusX`, `radiusY`, `gradientPoints`): `RadialGradient`
 
 Constructor
 
 #### Parameters
 
-• **originPoint**: `string`
-
-• **centerPoint**: `string`
-
-• **radiusX**: `number`
-
-• **radiusY**: `number`
-
-• **gradientPoints**: `GradientPoint`[]
+| Parameter | Type |
+| ------ | ------ |
+| `originPoint` | `string` |
+| `centerPoint` | `string` |
+| `radiusX` | `number` |
+| `radiusY` | `number` |
+| `gradientPoints` | `GradientPoint`[] |
 
 #### Returns
 
-[`RadialGradient`](RadialGradient.md)
+`RadialGradient`
 
 #### Overrides
 
@@ -50,7 +48,9 @@ Check if we can convert a value to a radial gradient
 
 #### Parameters
 
-• **value**: `unknown`
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `value` | `unknown` | - |
 
 #### Returns
 
@@ -64,17 +64,19 @@ Check if we can convert a value to a radial gradient
 
 ### convertFrom()
 
-> `static` **convertFrom**(`value`): [`RadialGradient`](RadialGradient.md)
+> `static` **convertFrom**(`value`): `RadialGradient`
 
 Convert a value to a radial gradient
 
 #### Parameters
 
-• **value**: `unknown`
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `value` | `unknown` | - |
 
 #### Returns
 
-[`RadialGradient`](RadialGradient.md)
+`RadialGradient`
 
 #### Overrides
 
@@ -90,7 +92,9 @@ Check if the color can be converted to a type
 
 #### Parameters
 
-• **type**: `unknown`
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `type` | `unknown` | - |
 
 #### Returns
 
@@ -110,7 +114,9 @@ Function to convert a color to another type
 
 #### Parameters
 
-• **type**: `unknown`
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `type` | `unknown` | - |
 
 #### Returns
 
@@ -130,9 +136,9 @@ Function equals for the color type
 
 #### Parameters
 
-• **color**: [`RadialGradient`](RadialGradient.md)
-
-color to compare
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `color` | `RadialGradient` | color to compare |
 
 #### Returns
 

@@ -4,7 +4,7 @@
     </a>
 </p>
 
-**@intuiface/core** • **Docs**
+**@intuiface/core**
 
 ***
 
@@ -16,7 +16,7 @@ In `@intuiface/core`, we use [TypeScript decorators](https://www.typescriptlang.
 
 `@intuiface/core` also exposes services that will help you access low level information (device's id, name, os...), hardware, cache... in an easy and cross-platform way.
 
-Use the [`@intuiface/interface-asset`](../../libs/tools/schematics/interface-asset-schematics/README.md) to create and initialize your project workspace. Then you can use [IntuifaceElement](/docs/core/classes/IntuifaceElement.md) and [`@Asset`](/docs/core/functions/Asset.md) decorator to declare your interface asset and [`@Property`](/docs/core/functions/Property.md), [`@Trigger`](/docs/core/functions/Trigger.md) and [`@Action`](/docs/core/functions/Action.md) decorators to customize it. See [`@Asset`](/docs/core/functions/Asset.md) example for a squeleton class of a custom interface asset.
+Use the [`@intuiface/interface-asset`](../../libs/tools/schematics/interface-asset-schematics/README.md) to create and initialize your project workspace. Then you can use [IntuifaceElement](/docs/core/classes/IntuifaceElement.md) and [\`@Asset\`](/docs/core/functions/Asset.md) decorator to declare your interface asset and [\`@Property\`](/docs/core/functions/Property.md), [\`@Trigger\`](/docs/core/functions/Trigger.md) and [\`@Action\`](/docs/core/functions/Action.md) decorators to customize it. See [\`@Asset\`](/docs/core/functions/Asset.md) example for a squeleton class of a custom interface asset.
 
 ## Remarks
 

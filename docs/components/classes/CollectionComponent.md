@@ -1,4 +1,4 @@
-[**@intuiface/components**](../README.md) • **Docs**
+[**@intuiface/components**](../README.md)
 
 ***
 
@@ -12,27 +12,30 @@ Collection component
 
 ## Type Parameters
 
-• **T** *extends* `IntuifaceCollection`\<`ElementContainer`\>
+| Type Parameter |
+| ------ |
+| `T` *extends* `IntuifaceCollection`\<`ElementContainer`\> |
 
 ## Constructors
 
-### new CollectionComponent()
+### Constructor
 
-> **new CollectionComponent**\<`T`\>(`selectionService`, `domSanitizer`, `elementReference`): [`CollectionComponent`](CollectionComponent.md)\<`T`\>
+> **new CollectionComponent**\<`T`\>(`domSanitizer`, `elementReference`, `changeDetector`, `renderer`): `CollectionComponent`\<`T`\>
 
 Constructor
 
 #### Parameters
 
-• **selectionService**: [`SelectionService`](SelectionService.md)
-
-• **domSanitizer**: `DomSanitizer`
-
-• **elementReference**: `ElementRef`\<`any`\>
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `domSanitizer` | `DomSanitizer` | - |
+| `elementReference` | `ElementRef` | - |
+| `changeDetector` | `ChangeDetectorRef` | - |
+| `renderer` | `Renderer2` | - |
 
 #### Returns
 
-[`CollectionComponent`](CollectionComponent.md)\<`T`\>
+`CollectionComponent`\<`T`\>
 
 #### Overrides
 
@@ -48,9 +51,10 @@ Track by fn
 
 #### Parameters
 
-• **index**: `number`
-
-• **item**: `IntuifaceElement`
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `index` | `number` | - |
+| `item` | `IntuifaceElement` | - |
 
 #### Returns
 

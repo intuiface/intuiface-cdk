@@ -19,7 +19,7 @@ export class MediaVolumeBehavior
     /**
      * Current volume.
      */
-    public _volume = 0;
+    public volume = 0;
 
     /**
      * Show volume.

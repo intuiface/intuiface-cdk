@@ -1,4 +1,4 @@
-[**@intuiface/components**](../README.md) • **Docs**
+[**@intuiface/components**](../README.md)
 
 ***
 
@@ -77,17 +77,16 @@ List of sources (IntuifaceElement and DataFeed) for this collection
 
 ### addSource()
 
-> **addSource**(`source`, `index`): `void`
+> **addSource**(`source`, `index?`): `void`
 
 Add a source
 
 #### Parameters
 
-• **source**: `IntuifaceElement`
-
-: source to add
-
-• **index**: `number` = `undefined`
+| Parameter | Type | Default value | Description |
+| ------ | ------ | ------ | ------ |
+| `source` | `IntuifaceElement` | `undefined` | : source to add |
+| `index` | `number` | `undefined` | - |
 
 #### Returns
 
@@ -103,9 +102,9 @@ Remove a source
 
 #### Parameters
 
-• **source**: `IntuifaceElement`
-
-: source to remove
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `source` | `IntuifaceElement` | : source to remove |
 
 #### Returns
 
@@ -115,23 +114,20 @@ Remove a source
 
 ### requestItems()
 
-> **requestItems**(`start`, `count`): [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)\<`void`\>
+> **requestItems**(`start`, `count`): [`Promise`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)\<`void`\>
 
 Requests items of the collection
 
 #### Parameters
 
-• **start**: `number`
-
-start index of the requested items
-
-• **count**: `number`
-
-number of requested items
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `start` | `number` | start index of the requested items |
+| `count` | `number` | number of requested items |
 
 #### Returns
 
-[`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)\<`void`\>
+[`Promise`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)\<`void`\>
 
 ***
 
@@ -143,9 +139,9 @@ Gets the start index in overall items for the given source
 
 #### Parameters
 
-• **source**: `IntuifaceElement`
-
-soure to find
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `source` | `IntuifaceElement` | soure to find |
 
 #### Returns
 

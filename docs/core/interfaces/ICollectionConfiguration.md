@@ -1,4 +1,4 @@
-[**@intuiface/core**](../README.md) • **Docs**
+[**@intuiface/core**](../README.md)
 
 ***
 
@@ -10,7 +10,7 @@ Configuration to create any IntuifaceCollection
 
 ### interfaceAssets?
 
-> `optional` **interfaceAssets**: []
+> `optional` **interfaceAssets**: \[\]
 
 List of Interface Assets in the experience
 
@@ -18,7 +18,7 @@ List of Interface Assets in the experience
 
 ### items?
 
-> `optional` **items**: []
+> `optional` **items**: \[\]
 
 Items (children)
 

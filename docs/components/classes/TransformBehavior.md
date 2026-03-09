@@ -1,4 +1,4 @@
-[**@intuiface/components**](../README.md) • **Docs**
+[**@intuiface/components**](../README.md)
 
 ***
 
@@ -64,17 +64,11 @@ Action to translate the matrix.
 
 #### Parameters
 
-• **x**: `number`
-
-translation on X axis
-
-• **y**: `number`
-
-translation on Y axis
-
-• **configuration**: `unknown`
-
-configuration of the animation
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `x` | `number` | translation on X axis |
+| `y` | `number` | translation on Y axis |
+| `configuration` | `unknown` | configuration of the animation |
 
 #### Returns
 
@@ -90,17 +84,11 @@ Action to translate the matrix.
 
 #### Parameters
 
-• **x**: `number`
-
-translation on X axis
-
-• **y**: `number`
-
-translation on Y axis
-
-• **configuration**: `unknown`
-
-configuration of the animation
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `x` | `number` | translation on X axis |
+| `y` | `number` | translation on Y axis |
+| `configuration` | `unknown` | configuration of the animation |
 
 #### Returns
 
@@ -116,11 +104,10 @@ Action to rotate the matrix.
 
 #### Parameters
 
-• **orientation**: `number`
-
-• **configuration**: `unknown`
-
-configuration of the animation
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `orientation` | `number` | - |
+| `configuration` | `unknown` | configuration of the animation |
 
 #### Returns
 
@@ -136,13 +123,10 @@ Action to rotate the matrix.
 
 #### Parameters
 
-• **orientation**: `number`
-
-new orientation
-
-• **configuration**: `unknown`
-
-configuration of the animation
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `orientation` | `number` | new orientation |
+| `configuration` | `unknown` | configuration of the animation |
 
 #### Returns
 
@@ -158,17 +142,11 @@ Action to resize the element.
 
 #### Parameters
 
-• **width**: `number`
-
-width to add
-
-• **height**: `number`
-
-height to add
-
-• **configuration**: `unknown`
-
-configuration of the animation
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `width` | `number` | width to add |
+| `height` | `number` | height to add |
+| `configuration` | `unknown` | configuration of the animation |
 
 #### Returns
 
@@ -184,17 +162,11 @@ Action to resize the element.
 
 #### Parameters
 
-• **width**: `number`
-
-new width
-
-• **height**: `number`
-
-new height
-
-• **configuration**: `unknown`
-
-configuration of the animation
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `width` | `number` | new width |
+| `height` | `number` | new height |
+| `configuration` | `unknown` | configuration of the animation |
 
 #### Returns
 
@@ -210,13 +182,10 @@ Action to scale the element.
 
 #### Parameters
 
-• **factor**: `number`
-
-scale factor to apply
-
-• **configuration**: `unknown`
-
-configuration of the animation
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `factor` | `number` | scale factor to apply |
+| `configuration` | `unknown` | configuration of the animation |
 
 #### Returns
 
@@ -232,13 +201,10 @@ Action to scale the element.
 
 #### Parameters
 
-• **factor**: `number`
-
-scale factor to apply
-
-• **configuration**: `unknown`
-
-configuration of the animation
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `factor` | `number` | scale factor to apply |
+| `configuration` | `unknown` | configuration of the animation |
 
 #### Returns
 
@@ -254,29 +220,14 @@ Action to translate, rotate and resize the element.
 
 #### Parameters
 
-• **x**: `number`
-
-translation on X axis
-
-• **y**: `number`
-
-translation on Y axis
-
-• **width**: `number`
-
-new width
-
-• **height**: `number`
-
-new height
-
-• **orientation**: `number`
-
-new orientation
-
-• **configuration**: `unknown`
-
-configuration of the animation
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `x` | `number` | translation on X axis |
+| `y` | `number` | translation on Y axis |
+| `width` | `number` | new width |
+| `height` | `number` | new height |
+| `orientation` | `number` | new orientation |
+| `configuration` | `unknown` | configuration of the animation |
 
 #### Returns
 

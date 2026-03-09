@@ -1,27 +1,29 @@
-[**@intuiface/components**](../README.md) • **Docs**
+[**@intuiface/components**](../README.md)
 
 ***
 
 # Function: IntuifaceComponent()
 
-> **IntuifaceComponent**(`args`): (`cls`) => `any`
+> **IntuifaceComponent**(`args?`): (`cls`) => `any`
 
 Decorator to link Component (Angular Component) to a Model
 This is useful for dynamic component creation from a Model
 
 ## Parameters
 
-• **args**: `any` = `{}`
-
-: arguments with model property
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `args` | `any` | : arguments with model property |
 
 ## Returns
 
-`Function`
+> (`cls`): `any`
 
 ### Parameters
 
-• **cls**: `any`
+| Parameter | Type |
+| ------ | ------ |
+| `cls` | `any` |
 
 ### Returns
 
