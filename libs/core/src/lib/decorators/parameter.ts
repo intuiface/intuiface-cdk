@@ -99,6 +99,42 @@ export interface IParameterOptions
  *     }) count: number): void { } //the parameter
  * ```
  *
+ * @example A binding converter with parameters
+ * ```ts
+ * /**
+ *  * Currency formatter converter
+ *  *\/
+ * export class CurrencyConverter
+ * {
+ *     @Converter({
+ *         displayName: 'Format currency',
+ *         description: 'Format a number using the selected currency.',
+ *         validate: true
+ *     })
+ *     public static computeOutput(
+ *         @Parameter({
+ *             name: 'amount',
+ *             displayName: 'Amount',
+ *             description: 'Value to format',
+ *             type: Number
+ *         }) amount: number,
+ *         @Parameter({
+ *             name: 'currency',
+ *             displayName: 'Currency',
+ *             description: 'Currency code to apply',
+ *             defaultValue: 'EUR',
+ *             type: String
+ *         }) currency: string): string
+ *     {
+ *         return new Intl.NumberFormat('en-US', {
+ *             style: 'currency',
+ *             currency
+ *         }).format(amount);
+ *     }
+ * }
+ *
+ * ```
+ *
  * @group Decorators
  */
 // eslint-disable-next-line @typescript-eslint/naming-convention
@@ -111,7 +147,9 @@ export function Parameter(options?: IParameterOptions): Function
     ): void =>
     {
         // get target name
-        const targetName = target.constructor.name;
+        const targetName = typeof target === 'function'
+            ? target.name
+            : target.constructor.name;
 
         if (!globalThis.intuiface_ifd_params[targetName]) {
             globalThis.intuiface_ifd_params[targetName] = {};

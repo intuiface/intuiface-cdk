@@ -16,7 +16,7 @@ In `@intuiface/core`, we use [TypeScript decorators](https://www.typescriptlang.
 
 `@intuiface/core` also exposes services that will help you access low level information (device's id, name, os...), hardware, cache... in an easy and cross-platform way.
 
-Use the [`@intuiface/interface-asset`](../../libs/tools/schematics/interface-asset-schematics/README.md) to create and initialize your project workspace. Then you can use [IntuifaceElement](/docs/core/classes/IntuifaceElement.md) and [\`@Asset\`](/docs/core/functions/Asset.md) decorator to declare your interface asset and [\`@Property\`](/docs/core/functions/Property.md), [\`@Trigger\`](/docs/core/functions/Trigger.md) and [\`@Action\`](/docs/core/functions/Action.md) decorators to customize it. See [\`@Asset\`](/docs/core/functions/Asset.md) example for a squeleton class of a custom interface asset.
+Use the [`@intuiface/interface-asset`](../../libs/tools/schematics/interface-asset-schematics/README.md) to create and initialize an interface asset workspace, or [`@intuiface/binding-converter`](../../libs/tools/schematics/binding-converter-schematics/README.md) to create a binding converter workspace. Then you can use [IntuifaceElement](/docs/core/classes/IntuifaceElement.md) and [\`@Asset\`](/docs/core/functions/Asset.md) to declare your interface asset with [\`@Property\`](/docs/core/functions/Property.md), [\`@Trigger\`](/docs/core/functions/Trigger.md), [\`@Action\`](/docs/core/functions/Action.md) and [\`@Parameter\`](/docs/core/functions/Parameter.md) decorators, or [\`@Converter\`](/docs/core/functions/Converter.md) to declare a binding converter using [\`@Parameter\`](/docs/core/functions/Parameter.md).
 
 ## Remarks
 
@@ -39,6 +39,7 @@ Before reading how to create interface assets and declare Properties, Triggers, 
 - [IDisposable](/docs/core/interfaces/IDisposable.md)
 - [IActionOptions](/docs/core/interfaces/IActionOptions.md)
 - [IComputorOptions](/docs/core/interfaces/IComputorOptions.md)
+- [IConverterOptions](/docs/core/interfaces/IConverterOptions.md)
 - [IElementOptions](/docs/core/interfaces/IElementOptions.md)
 - [IParameterOptions](/docs/core/interfaces/IParameterOptions.md)
 - [IPropertyOptions](/docs/core/interfaces/IPropertyOptions.md)
@@ -52,6 +53,7 @@ Before reading how to create interface assets and declare Properties, Triggers, 
 
 - [Action](/docs/core/functions/Action.md)
 - [Computor](/docs/core/functions/Computor.md)
+- [Converter](/docs/core/functions/Converter.md)
 - [Asset](/docs/core/functions/Asset.md)
 - [Collection](/docs/core/functions/Collection.md)
 - [InternalProperty](/docs/core/functions/InternalProperty.md)
