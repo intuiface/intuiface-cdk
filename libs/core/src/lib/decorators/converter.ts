@@ -1,5 +1,5 @@
 /* eslint-disable prefer-arrow/prefer-arrow-functions */
-
+import 'reflect-metadata';
 /**
  * Options to configure {@link Converter | `@Converter`} decorator.
  */
@@ -94,16 +94,21 @@ export function Converter(options?: IConverterOptions)
             globalThis.intuiface_ifd_actions[targetName] = {};
         }
 
+        let returnType = Reflect.getMetadata('design:returntype', target, propertyKey);
+        returnType = returnType?.name.toString().toLowerCase() ?? 'string';
+
         const parameters = globalThis.intuiface_ifd_params[targetName][propertyKey] ?? {};
         const converterDefinition: Record<string, unknown> = {
-            id: `${targetName}.${propertyKey.toString()}`,
+            'id': `${targetName}.${propertyKey.toString()}`,
             'if.converter': true,
-            title: options?.displayName ?? propertyKey.toString(),
-            description: options?.description,
-            path: propertyKey,
-            parameters
+            'title': options?.displayName ?? propertyKey.toString(),
+            'description': options?.description,
+            'path': propertyKey,
+            parameters,
+            'response':{
+                $ref: returnType,
+            }
         };
-
         globalThis.intuiface_ifd_actions[targetName][propertyKey] = converterDefinition;
     };
 }
