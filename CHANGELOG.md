@@ -1,5 +1,23 @@
 # Changelog
 
+## [2.1.0](https://github.com/intuiface/intuiface-cdk/compare/v2.0.2...v2.1.0) (2026-03-12)
+
+
+### Features
+
+* **core:** add category option to Action and Trigger decorators ([b05e3d1](https://github.com/intuiface/intuiface-cdk/commit/b05e3d10b42060d51a506b84666f9080e2596b19))
+* **core:** add category option to Action and Trigger decorators ([ea1b595](https://github.com/intuiface/intuiface-cdk/commit/ea1b595d46aa87b87420b22b7ee117ca1f037ef1))
+
+
+### Bug Fixes
+
+* **interface-asset:** do not fail at project initialization if files are already existing ([#100](https://github.com/intuiface/intuiface-cdk/issues/100)) ([f83c07c](https://github.com/intuiface/intuiface-cdk/commit/f83c07c0724b749cbc502cc91b29c93594650df2))
+
+
+### Dependencies
+
+* update angular to version 20 ([#105](https://github.com/intuiface/intuiface-cdk/issues/105)) ([6bfbf8b](https://github.com/intuiface/intuiface-cdk/commit/6bfbf8b796554ff14981525930da50005a423ca7))
+
 ## [2.0.2](https://github.com/intuiface/intuiface-cdk/compare/v2.0.1...v2.0.2) (2025-04-14)
 
 
