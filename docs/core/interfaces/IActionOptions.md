@@ -6,6 +6,10 @@
 
 Options to configure [\`@Action\`](../functions/Action.md) decorator
 
+## Extended by
+
+- [`IConverterOptions`](IConverterOptions.md)
+
 ## Properties
 
 ### displayName

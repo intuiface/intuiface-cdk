@@ -11,6 +11,7 @@ import chalk from 'chalk';
 import ts from 'typescript';
 
 const isExecException = (error: unknown): error is ExecException => typeof error === 'object' && error !== null && 'code' in error && 'cmd' in error;
+type BuildType = 'interface-asset' | 'binding-converter';
 
 const execPromise = (command: string): Promise<{stdout: string; stderr: string }> => new Promise((resolve, reject) => {
     exec(command, (error, stdout, stderr)=> {
@@ -40,16 +41,20 @@ ifdCmd.command('build')
     .summary('build an interface asset')
     .description('Build an interface asset and generate its descriptor file (*.ifd) to be imported into Intuiface Composer.')
     .requiredOption('-n, --name <name>', 'name of the interface asset\'s main file in the src/* folder (without extension).')
+    .option('-t, --type <type>', 'asset type to build: interface-asset or binding-converter.', 'interface-asset')
     .option('-i, --icon [icon]', 'path to the icon of the IA displayed in Composer Interface Asset panel.')
     .option('-d, --debug', 'build in debug mode.')
-    .addHelpText('afterAll', '\nExample:\n  intuiface-cli build --name MyCustomIA --icon ./icon.png\n')
+    .addHelpText('afterAll', '\nExamples:\n  intuiface-cli build --name MyCustomIA --icon ./icon.png\n  intuiface-cli build --name MyBindingConverter --type binding-converter\n')
     .action((options) =>
     {
         // Check parameters
         if (options.name != null)
         {
+            const buildType = normalizeBuildType(options.type);
+
             // create object to store metadata
             globalThisAny.intuiface_ifd_name = options.name;
+            globalThisAny.intuiface_build_type = buildType;
             globalThisAny.intuiface_ifd_classes = [];
             globalThisAny.intuiface_ifd_properties = {};
             globalThisAny.intuiface_ifd_actions = {};
@@ -67,7 +72,7 @@ ifdCmd.command('build')
                 }
             }
 
-            return loadIA(options.name, options.icon, options.debug);
+            return loadIA(options.name, options.icon, buildType, options.debug);
         }
     });
 
@@ -192,9 +197,9 @@ function transpileTypeScript(tsConfigPath: string, outDir: string, spinner: Ora)
  * import the IA
  */
 // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
-async function loadIA(iaName: string | undefined, icon: string | undefined, debug?: boolean): Promise<void>
+async function loadIA(iaName: string | undefined, icon: string | undefined, buildType: BuildType, debug?: boolean): Promise<void>
 {
-    const spinner = ora({ text: `Build interface asset ${iaName}.` }).start();
+    const spinner = ora({ text: `Build ${buildType} ${iaName}.` }).start();
     spinner.info();
 
     const dir = process.cwd();
@@ -226,44 +231,11 @@ async function loadIA(iaName: string | undefined, icon: string | undefined, debu
             const ia = await import(iaUrl.toString());
 
             spinner.start('Loading interface asset metadata...');
-            const schemas: any = {};
-            const resources: any = {};
-            for (const name of globalThisAny.intuiface_ifd_classes)
-            {
-                schemas[name] = {
-                    id: name,
-                    type: 'object',
-                    description: name,
-                    properties: globalThisAny.intuiface_ifd_properties[name]
-                };
-
-                resources[name] = {
-                    id: name,
-                    methods: globalThisAny.intuiface_ifd_actions[name],
-                    events: globalThisAny.intuiface_ifd_triggers[name]
-                };
-            }
-
-            resources[iaName]['if.interfaceAsset'] = true;
-            resources[iaName].title = globalThisAny.iaTitle;
-            resources[iaName].description = globalThisAny.iaDescription;
-
-            // create the ifd as json object
-            // and add metadata filled from decorators
-            globalThisAny.intuiface_ifd_file = {
-                'version': `v1.0.${Date.now()}`,
-                'name': iaName,
-                'title': globalThisAny.iaTitle,
-                'if.category': globalThisAny.iaCategory,
-                'protocol': 'ts',
-                'basePath': iaName,
-                'if.dependencies': [
-                    `${iaName}.js`,
-                    `${iaName}.module.js`
-                ],
-                'schemas': schemas,
-                'resources': resources
-            };
+            const schemas = buildSchemas(globalThisAny.intuiface_ifd_classes, buildType);
+            spinner.succeed('Build Schema');
+            const resources = buildResources(globalThisAny.intuiface_ifd_classes, buildType);
+            spinner.succeed('Build Resources');
+            globalThisAny.intuiface_ifd_file = buildIFDFile(iaName, buildType, schemas, resources);
 
             let iconName = '';
             if (icon)
@@ -284,7 +256,7 @@ async function loadIA(iaName: string | undefined, icon: string | undefined, debu
                 fs.removeSync(`${dir}/tmp/`);
             }
 
-            spinner.start(`Building interface asset: ${iaName}...`);
+            spinner.start(`Building ${buildType}: ${iaName}...`);
             let webpackOutput;
             if (!debug)
             {
@@ -300,7 +272,7 @@ async function loadIA(iaName: string | undefined, icon: string | undefined, debu
                 console.log();
                 console.log(webpackOutput.stdout);
             }
-            spinner.succeed(`Interface asset '${iaName}' successfully built.`);
+            spinner.succeed(`${buildType} '${iaName}' successfully built.`);
 
             if(icon)
             {
@@ -314,7 +286,7 @@ async function loadIA(iaName: string | undefined, icon: string | undefined, debu
                 spinner.succeed(`Icon ${iconName} copied.`);
             }
 
-            spinner.succeed(`Done! Your interface asset is in 'dist/${iaName}'.\nCopy this folder into "Documents\\Intuiface\\Interface Assets" to use it in Composer.`);
+            spinner.succeed(`Done! Your ${buildType} is in 'dist/${iaName}'.\nCopy this folder into "Documents\\Intuiface\\Interface Assets" to use it in Composer.`);
         }
         spinner.stop();
     }
@@ -346,6 +318,216 @@ async function loadIA(iaName: string | undefined, icon: string | undefined, debu
         cleanBuildFolders(dir, iaName);
         process.exit(-1);
     }
+}
+
+/**
+ * Validates and normalizes the build type received from the CLI.
+ * Falls back to `interface-asset` when the option is missing or empty.
+ * @param buildType Raw build type coming from commander options.
+ * @returns A supported build type used by the build pipeline.
+ */
+// eslint-disable-next-line prefer-arrow/prefer-arrow-functions
+function normalizeBuildType(buildType: string | undefined): BuildType
+{
+    if (buildType == null || buildType === '')
+    {
+        return 'interface-asset';
+    }
+
+    if (buildType === 'interface-asset' || buildType === 'binding-converter')
+    {
+        return buildType;
+    }
+
+    throw new Error(`Unsupported build type '${buildType}'. Expected 'interface-asset' or 'binding-converter'.`);
+}
+
+/**
+ * Resolves the version written to generated descriptors.
+ * Uses the workspace package version when available and falls back to a timestamp-based version.
+ * @returns A version string prefixed with `v`.
+ */
+// eslint-disable-next-line prefer-arrow/prefer-arrow-functions
+function getWorkspaceVersion(): string
+{
+    const packageJsonPath = `${process.cwd()}/package.json`;
+    if (!fs.existsSync(packageJsonPath))
+    {
+        return `v1.0.${Date.now()}`;
+    }
+
+    const packageJson = fs.readJsonSync(packageJsonPath, { throws: false });
+    if (packageJson?.version == null || packageJson.version === '')
+    {
+        return `v1.0.${Date.now()}`;
+    }
+
+    return packageJson.version.startsWith('v')
+        ? packageJson.version
+        : `v${packageJson.version}`;
+}
+
+/**
+ * Resolves the category configured for the current workspace.
+ * Binding converters can provide it from package.json instead of decorator metadata.
+ * @returns The configured category, if any.
+ */
+// eslint-disable-next-line prefer-arrow/prefer-arrow-functions
+function getWorkspaceCategory(): string | undefined
+{
+    const packageJsonPath = `${process.cwd()}/package.json`;
+    if (!fs.existsSync(packageJsonPath))
+    {
+        return undefined;
+    }
+
+    const packageJson = fs.readJsonSync(packageJsonPath, { throws: false });
+    const category = packageJson?.intuiface?.category;
+
+    return typeof category === 'string' && category !== ''
+        ? category
+        : undefined;
+}
+
+/**
+ * Builds the JSON schema section of the generated descriptor from collected class metadata.
+ * Interface assets expose their decorated properties, while binding converters only expose a base object schema.
+ * @param classNames Collected exported class names from the interface asset.
+ * @param buildType Type of artifact currently being generated.
+ * @returns A map of schema definitions indexed by class name.
+ */
+// eslint-disable-next-line prefer-arrow/prefer-arrow-functions
+function buildSchemas(classNames: string[], buildType: BuildType): Record<string, any>
+{
+    const schemas: Record<string, any> = {};
+
+    for (const name of classNames)
+    {
+        const schema: Record<string, unknown> = {
+            id: name,
+            type: 'object',
+            description: name
+        };
+
+        if (buildType === 'interface-asset')
+        {
+            schema.properties = globalThisAny.intuiface_ifd_properties[name];
+        }
+
+        schemas[name] = schema;
+    }
+
+    return schemas;
+}
+
+/**
+ * Builds the resources section of the generated descriptor from collected actions and triggers.
+ * Also marks the primary resource as the exported interface asset or binding converter entry point.
+ * @param classNames Collected exported class names from the interface asset.
+ * @param buildType Type of artifact currently being generated.
+ * @returns A map of resource definitions indexed by class name.
+ */
+// eslint-disable-next-line prefer-arrow/prefer-arrow-functions
+function buildResources(classNames: string[], buildType: BuildType): Record<string, any>
+{
+    const resources: Record<string, any> = {};
+
+    for (const name of classNames)
+    {
+        const methods = globalThisAny.intuiface_ifd_actions[name] ?? {};
+        if (buildType === 'binding-converter')
+        {
+            for (const methodName of Object.keys(methods))
+            {
+                methods[methodName].id = `${name}.${methodName}`;
+            }
+        }
+
+        const resource: Record<string, unknown> = {
+            id: name,
+            methods
+        };
+
+        if (buildType === 'interface-asset')
+        {
+            resource.events = globalThisAny.intuiface_ifd_triggers[name];
+        }
+
+        resources[name] = resource;
+    }
+
+    const primaryResourceName = resources[globalThisAny.intuiface_ifd_name]
+        ? globalThisAny.intuiface_ifd_name
+        : classNames[0];
+    const primaryResource = primaryResourceName ? resources[primaryResourceName] : undefined;
+    if (primaryResource)
+    {
+        primaryResource['if.interfaceAsset'] = true;
+        if (buildType === 'interface-asset')
+        {
+            primaryResource.title = globalThisAny.iaTitle;
+            primaryResource.description = globalThisAny.iaDescription;
+        }
+    }
+
+    return resources;
+}
+
+/**
+ * Creates the final descriptor payload written as `.ifd`.
+ * The descriptor structure differs slightly between interface assets and binding converters.
+ * @param iaName Name of the built asset.
+ * @param buildType Type of artifact currently being generated.
+ * @param schemas Generated schemas section.
+ * @param resources Generated resources section.
+ * @returns The descriptor object ready to be serialized.
+ */
+// eslint-disable-next-line prefer-arrow/prefer-arrow-functions
+function buildIFDFile(
+    iaName: string,
+    buildType: BuildType,
+    schemas: Record<string, any>,
+    resources: Record<string, any>
+): Record<string, any>
+{
+    const category = buildType === 'binding-converter'
+        ? getWorkspaceCategory() ?? globalThisAny.iaCategory
+        : globalThisAny.iaCategory;
+
+    if (buildType === 'binding-converter')
+    {
+        return {
+            'kind': 'discovery#restDescription',
+            'discoveryVersion': 'v1',
+            'id': `${iaName}js:v1`,
+            'name': iaName,
+            'version': getWorkspaceVersion(),
+            'if.category': category,
+            'protocol': 'ts',
+            'basePath': iaName,
+            'if.dependencies': [
+                `${iaName}.js`,
+                `${iaName}.module.js`
+            ],
+            schemas,
+            resources
+        };
+    }
+
+    return {
+        'version': `v1.0.${Date.now()}`,
+        'name': iaName,
+        'title': globalThisAny.iaTitle,
+        'if.category': category,
+        'protocol': 'ts',
+        'basePath': iaName,
+        'if.dependencies': [
+            `${iaName}.js`,
+            `${iaName}.module.js`
+        ],
+        schemas,
+        resources
+    };
 }
 
 /**

@@ -1,7 +1,7 @@
 # intuiface-cli
 
-Intuiface CLI is a command line tool that helps you build interface assets for Intuiface.  
-This CLI will generate Intuiface Descriptor (*.ifd) file and build the Interface Asset (IA) to be able to add it in an Intuiface Experience.
+Intuiface CLI is a command line tool that helps you build Intuiface interface assets and binding converters.  
+This CLI generates an Intuiface Descriptor (`*.ifd`) file and builds the output bundle to be imported into Intuiface Composer.
 
 ## Usage: 
 Command to build an Interface Asset:
@@ -9,10 +9,16 @@ Command to build an Interface Asset:
 npx intuiface-cli build -n IA_File_Name
 ```
 
+Command to build a Binding Converter:
+```sh
+npx intuiface-cli build -n MyBindingConverter -t binding-converter
+```
+
 
 | Option            | Description                                                                                     |
 |--------------------|-------------------------------------------------------------------------------------------------|
 | `-n, --name <name>` | Name of the interface asset's main file in the `src/*` folder (without extension).             |
+| `-t, --type <type>` | Asset type to build: `interface-asset` or `binding-converter`. Default: `interface-asset`.    |
 | `-i, --icon [icon]` | Path to the icon of the IA displayed in Composer Interface Asset panel.                        |
 | `-d, --debug`       | Build in debug mode.                                                                          |
 | `-h, --help`        | Display help for the command.                                                                 |
@@ -44,6 +50,16 @@ npm run build:debug
 ```
 directly in your project. This command will not minimize the output file in order to be easier for debug. Then in the Composer Play Mode, you can use key combination `Ctrl+Shift+I`
 to debug.
+
+### Binding Converter descriptor generation
+When using `--type binding-converter`, the generated `.ifd` follows the binding converter discovery format:
+
+- `kind: "discovery#restDescription"`
+- `discoveryVersion: "v1"`
+- `protocol: "js"`
+- a single bundle dependency by default: `<name>.js`
+
+The generated version is taken from your workspace `package.json` when available.
 
 ## Migration to v2
 For existing project created before the v2 of the `intuiface-cdk`, you can migrate your project.
