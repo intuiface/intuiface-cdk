@@ -462,7 +462,7 @@ function buildResources(classNames: string[], buildType: BuildType): Record<stri
     const primaryResource = primaryResourceName ? resources[primaryResourceName] : undefined;
     if (primaryResource)
     {
-        primaryResource['if.interfaceAsset'] = buildType === 'binding-converter' ? 'true' : true;
+        primaryResource['if.interfaceAsset'] = true;
         if (buildType === 'interface-asset')
         {
             primaryResource.title = globalThisAny.iaTitle;
