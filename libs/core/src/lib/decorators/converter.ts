@@ -1,9 +1,10 @@
 /* eslint-disable prefer-arrow/prefer-arrow-functions */
 import 'reflect-metadata';
+import { IActionOptions } from './action';
 /**
  * Options to configure {@link Converter | `@Converter`} decorator.
  */
-export interface IConverterOptions
+export interface IConverterOptions extends IActionOptions
 {
     /**
      * Name of the converter (if any different) in old ifx.
@@ -14,21 +15,6 @@ export interface IConverterOptions
      * Name of the descriptor (ifd file) in old ifx.
      */
     oldDescriptorName?: string;
-
-    /**
-     * Name displayed in Composer.
-     */
-    displayName: string;
-
-    /**
-     * Description displayed in Composer.
-     */
-    description?: string;
-
-    /**
-     * If true, validate range of parameter values.
-     */
-    validate?: boolean;
 }
 
 /**

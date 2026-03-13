@@ -503,10 +503,11 @@ function buildIFDFile(
             'name': iaName,
             'version': getWorkspaceVersion(),
             'if.category': category,
-            'protocol': 'js',
+            'protocol': 'ts',
             'basePath': iaName,
             'if.dependencies': [
-                `${iaName}.js`
+                `${iaName}.js`,
+                `${iaName}.module.js`
             ],
             schemas,
             resources
