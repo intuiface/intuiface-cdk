@@ -21,10 +21,6 @@ This article describes how to design a binding converter, build it, and generate
 - [Angular Schematics CLI](https://www.npmjs.com/package/@angular-devkit/schematics-cli). Install it using NPM:  
 `npm install -g @angular-devkit/schematics-cli`
 
-## Install
-Install the binding converter schematics:
-    `npm install @intuiface/binding-converter`
-
 ## Usage
 First, inside a new folder, install the `binding-converter` schematics:
 ```
@@ -41,7 +37,7 @@ Please use only alphanumeric characters in the name of your binding converter (n
 
 After installation is complete, restart VSCode if you want the code analyzer running. You can use the command `npm run lint` if you want to run the code analyzer manually.
 
-You can modify the default name of the converter (computeOutput).
+You can modify the default name of the converter function `computeOutput`.
 
 Develop your binding converter using the generated skeleton or read the documentation for [Intuiface Core](/docs/core/README.md), especially the [`@Converter`](/docs/core/functions/Converter.md) and [`@Parameter`](/docs/core/functions/Parameter.md) decorators.
 
