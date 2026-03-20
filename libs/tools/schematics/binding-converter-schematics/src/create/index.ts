@@ -3,6 +3,8 @@
 import { Rule, SchematicContext, Tree, chain, apply, url, template, mergeWith, MergeStrategy } from '@angular-devkit/schematics';
 import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
 import { strings } from '@angular-devkit/core';
+import * as path from 'path';
+import * as fs from 'fs';
 
 /**
  * Schematics to create a binding converter workspace.
@@ -21,9 +23,27 @@ export function createBindingConverter(_options: any): Rule
 
         const rule = chain([
             merged,
+            copyDefaultIcon(),
             installPackageJsonDependencies()
         ]);
         return rule(tree, context) as Rule;
+    };
+}
+
+/**
+ * Copies the default binding converter icon from the files folder
+ * to the project root so the CLI can find it during build.
+ */
+function copyDefaultIcon(): Rule
+{
+    return (tree: Tree) => {
+        const iconSourcePath = path.join(__dirname, '..', '..', 'icon_converter_32.png');
+        if (fs.existsSync(iconSourcePath) && !tree.exists('icon_converter_32.png'))
+        {
+            const iconBuffer = fs.readFileSync(iconSourcePath);
+            tree.create('icon_converter_32.png', iconBuffer);
+        }
+        return tree;
     };
 }
 

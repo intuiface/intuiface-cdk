@@ -11,15 +11,15 @@ npx intuiface-cli build -n IA_File_Name
 
 Command to build a Binding Converter:
 ```sh
-npx intuiface-cli build -n MyBindingConverter -t binding-converter
+npx intuiface-cli build -n BC_File_Name -t binding-converter
 ```
 
 
 | Option            | Description                                                                                     |
 |--------------------|-------------------------------------------------------------------------------------------------|
-| `-n, --name <name>` | Name of the interface asset's main file in the `src/*` folder (without extension).             |
+| `-n, --name <name>` | Name of the interface asset's or binding converter's main file in the `src/*` folder (without extension).             |
 | `-t, --type <type>` | Asset type to build: `interface-asset` or `binding-converter`. Default: `interface-asset`.    |
-| `-i, --icon [icon]` | Path to the icon of the IA displayed in Composer Interface Asset panel.                        |
+| `-i, --icon [icon]` | Path to the icon of the IA or BC displayed in Composer Interface Asset panel.                        |
 | `-d, --debug`       | Build in debug mode.                                                                          |
 | `-h, --help`        | Display help for the command.                                                                 |
 
@@ -30,13 +30,13 @@ npx intuiface-cli help <command>
 ```
 
 ### Adding an icon
-If you want to add an icon to your IA, add an image in your project and reference its path in the `package.json` file editing the `build` script.
+If you want to add an icon to your IA or BC, add an image in your project and reference its path in the `package.json` file editing the `build` script.
 
-`"build": "npx intuiface-cli build -n IA_File_Name -i MyIcon.png` 
+`"build": "npx intuiface-cli build -n [IA_File_Name|BC_File_Name] -i MyIcon.png` 
 
 or
 
-`"build": "npx intuiface-cli build -n IA_File_Name -i ./icons/MyIcon.png`
+`"build": "npx intuiface-cli build -n [IA_File_Name|BC_File_Name] -i ./icons/MyIcon.png`
 
 then run command 
 ```sh
@@ -50,14 +50,6 @@ npm run build:debug
 ```
 directly in your project. This command will not minimize the output file in order to be easier for debug. Then in the Composer Play Mode, you can use key combination `Ctrl+Shift+I`
 to debug.
-
-### Binding Converter descriptor generation
-When using `--type binding-converter`, the generated `.ifd` follows the binding converter discovery format:
-
-- `kind: "discovery#restDescription"`
-- `discoveryVersion: "v1"`
-- `protocol: "js"`
-- a single bundle dependency by default: `<name>.js`
 
 The generated version is taken from your workspace `package.json` when available.
 

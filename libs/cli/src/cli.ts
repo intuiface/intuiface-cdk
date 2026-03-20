@@ -238,12 +238,14 @@ async function loadIA(iaName: string | undefined, icon: string | undefined, buil
             globalThisAny.intuiface_ifd_file = buildIFDFile(iaName, buildType, schemas, resources);
 
             let iconName = '';
-            if (icon)
+            if (icon || buildType === 'binding-converter')
             {
                 // get the icon name from the icon path
-                iconName = icon.substring(icon.lastIndexOf('/') + 1);
+                iconName = icon ? icon.substring(icon.lastIndexOf('/') + 1) : 'icon_converter_32.png';
                 // add the icon to the ifd file
                 globalThisAny.intuiface_ifd_file.icons = { x32: iconName };
+                // If no icon provided for binding converter, use default one
+                icon = icon ? icon : `icon_converter_32.png`;
             }
 
             spinner.start('Writing descriptor file...');
