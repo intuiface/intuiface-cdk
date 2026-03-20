@@ -12,11 +12,11 @@
 
 This library will enables you to create custom interface assets that can be used in your Intuiface experiences.
 
-In `@intuiface/core`, we use [TypeScript decorators](https://www.typescriptlang.org/docs/handbook/decorators.html) to declare Properties, Triggers and Actions exposed in Intuiface Composer. You can find all [available decorators](#Decorators) in this documentation.
+In `@intuiface/core`, we use [TypeScript decorators](https://www.typescriptlang.org/docs/handbook/decorators.html) to declare interface assets, binding converters, Properties, Triggers, Actions and Parameters exposed in Intuiface Composer. You can find all [available decorators](#Decorators) in this documentation.
 
 `@intuiface/core` also exposes services that will help you access low level information (device's id, name, os...), hardware, cache... in an easy and cross-platform way.
 
-Use the [`@intuiface/interface-asset`](../../libs/tools/schematics/interface-asset-schematics/README.md) to create and initialize your project workspace. Then you can use [IntuifaceElement](classes/IntuifaceElement.md) and [\`@Asset\`](functions/Asset.md) decorator to declare your interface asset and [\`@Property\`](functions/Property.md), [\`@Trigger\`](functions/Trigger.md) and [\`@Action\`](functions/Action.md) decorators to customize it. See [\`@Asset\`](functions/Asset.md) example for a squeleton class of a custom interface asset.
+Use the [`@intuiface/interface-asset`](../../libs/tools/schematics/interface-asset-schematics/README.md) to create and initialize an interface asset workspace, or [`@intuiface/binding-converter`](../../libs/tools/schematics/binding-converter-schematics/README.md) to create a binding converter workspace. Then you can use [IntuifaceElement](classes/IntuifaceElement.md) and [\`@Asset\`](functions/Asset.md) decorator to declare your interface asset with [\`@Property\`](functions/Property.md), [\`@Trigger\`](functions/Trigger.md), [\`@Action\`](functions/Action.md) and [\`@Parameter\`](functions/Parameter.md) decorators, or [\`@Converter\`](functions/Converter.md) to declare a binding converter using [\`@Parameter\`](functions/Parameter.md).
 
 ## Remarks
 
@@ -39,6 +39,7 @@ Before reading how to create interface assets and declare Properties, Triggers, 
 - [IDisposable](interfaces/IDisposable.md)
 - [IActionOptions](interfaces/IActionOptions.md)
 - [IComputorOptions](interfaces/IComputorOptions.md)
+- [IConverterOptions](interfaces/IConverterOptions.md)
 - [IElementOptions](interfaces/IElementOptions.md)
 - [IParameterOptions](interfaces/IParameterOptions.md)
 - [IPropertyOptions](interfaces/IPropertyOptions.md)
@@ -52,6 +53,7 @@ Before reading how to create interface assets and declare Properties, Triggers, 
 
 - [Action](functions/Action.md)
 - [Computor](functions/Computor.md)
+- [Converter](functions/Converter.md)
 - [Asset](functions/Asset.md)
 - [Collection](functions/Collection.md)
 - [InternalProperty](functions/InternalProperty.md)

@@ -62,6 +62,41 @@ public countChanged(
     }) count: number): void { } //the parameter
 ```
 
+```ts
+/**
+ * Currency formatter converter
+ */
+export class CurrencyConverter
+{
+    @Converter({
+        displayName: 'Format currency',
+        description: 'Format a number using the selected currency.',
+        validate: true
+    })
+    public static computeOutput(
+        @Parameter({
+            name: 'amount',
+            displayName: 'Amount',
+            description: 'Value to format',
+            type: Number
+        }) amount: number,
+        @Parameter({
+            name: 'currency',
+            displayName: 'Currency',
+            description: 'Currency code to apply',
+            defaultValue: 'EUR',
+            type: String
+        }) currency: string): string
+    {
+        return new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency
+        }).format(amount);
+    }
+}
+
+```
+
 
 ## Help
 Found a problem, a bug? Or need some help?  
