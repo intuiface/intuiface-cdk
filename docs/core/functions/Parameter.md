@@ -69,29 +69,29 @@ public countChanged(
 export class CurrencyConverter
 {
     @Converter({
-        displayName: 'Format currency', // the display name of the converter
-        description: 'Format a number using the selected currency.', // the description of the converter
-        validate: true // boolean for parameter validation
+        displayName: 'Format currency',
+        description: 'Format a number using the selected currency.',
+        validate: true
     })
-    public static computeOutput( // the method name
-        @Parameter({ // declaration of the first parameter
-            name: 'amount', // the name of the parameter (has to match the parameter)
-            displayName: 'Amount', // the display name of the parameter
-            description: 'Value to format', // the description of the parameter
-            type: Number // the type of the parameter
-        }) amount: number, // the declaration of the parameter to use (same name)
-        @Parameter({ // declaration of the second parameter
-            name: 'currency', // the name of the parameter (has to match the parameter)
-            displayName: 'Currency', // the display name of the parameter
-            description: 'Currency code to apply', // the description of the parameter
-            defaultValue: 'EUR', // the default value of the parameter
-            type: String // the type of the parameter
-        }) currency: string): string // the return type
+    public static computeOutput(
+        @Parameter({
+            name: 'amount',
+            displayName: 'Amount',
+            description: 'Value to format',
+            type: Number
+        }) amount: number,
+        @Parameter({
+            name: 'currency',
+            displayName: 'Currency',
+            description: 'Currency code to apply',
+            defaultValue: 'EUR',
+            type: String
+        }) currency: string): string
     {
         return new Intl.NumberFormat('en-US', {
-            style: 'currency', // currency formatting option
-            currency // currency code
-        }).format(amount); // format the amount
+            style: 'currency',
+            currency
+        }).format(amount);
     }
 }
 
