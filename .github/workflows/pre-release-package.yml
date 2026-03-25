@@ -1,0 +1,54 @@
+name: Intuiface-CDK Pre-Release Package
+
+on:
+  push:
+    branches:
+      - 'release-please--branches--master**'
+
+jobs:
+
+  publish-prerelease:
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          registry-url: 'https://registry.npmjs.org'
+          scope: '@intuiface'
+
+      - name: Compute pre-release version
+        id: version
+        run: |
+          BASE_VERSION=$(node -p "require('./package.json').version")
+          SHORT_SHA=$(git rev-parse --short HEAD)
+          PRE_VERSION="${BASE_VERSION}-rc.${SHORT_SHA}"
+          echo "base_version=$BASE_VERSION" >> "$GITHUB_OUTPUT"
+          echo "pre_version=$PRE_VERSION" >> "$GITHUB_OUTPUT"
+          echo "Pre-release version: $PRE_VERSION"
+
+      - name: Set pre-release version in all packages
+        run: node set-prerelease-version.mjs "${{ steps.version.outputs.pre_version }}"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build packages
+        run: npm run build
+
+      - name: Publish core to npmjs packages
+        run: npm publish dist/libs/core --access public --tag next
+
+      - name: Publish components to npmjs packages
+        run: npm publish dist/libs/components --access public --tag next
+
+      - name: Publish cli to npmjs packages
+        run: npm publish dist/libs/cli --access public --tag next
+
+      - name: Publish interface-asset to npmjs packages
+        run: npm publish dist/libs/tools/interface-asset-schematics --access public --tag next
