@@ -3,6 +3,6 @@
         "@intuiface/core": "2.1.0",
         "@intuiface/components": "2.1.0",
         "@intuiface/custom-asset": "2.1.0",
-        "@angular-architects/module-federation": "^17.0.8"
+        "@angular-architects/module-federation": "^20.0.0"
     }
 }
