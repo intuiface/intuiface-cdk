@@ -1,6 +1,7 @@
 {
     "prerelease": true,
     "prerelease-type": "rc",
+    "versioning": "prerelease",
     "group-pull-request-title-pattern": "chore: release ${version}",
     "pull-request-title-pattern": "chore: release ${version}",
     "bump-minor-pre-major": true,
@@ -79,6 +80,7 @@
         {
             "prerelease": true,
             "prerelease-type": "rc",
+            "versioning": "prerelease",
             "extra-files": [
                 {
                     "type": "json",
