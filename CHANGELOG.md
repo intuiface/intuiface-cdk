@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.1.1](https://github.com/intuiface/intuiface-cdk/compare/v2.1.0...v2.1.1) (2026-03-31)
+
+
+### Bug Fixes
+
+* add commit to test prerelease ([1c0fb21](https://github.com/intuiface/intuiface-cdk/commit/1c0fb21943caba9f8918ba3c40ba1ffc8be89a4c))
+
 ## [2.1.0](https://github.com/intuiface/intuiface-cdk/compare/v2.0.2...v2.1.0) (2026-03-12)
 
 
