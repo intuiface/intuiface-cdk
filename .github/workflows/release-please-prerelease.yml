@@ -20,6 +20,7 @@ jobs:
         with:
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
           config-file: release-please-config-prerelease.json
+          manifest-file: .release-please-manifest.json
 
 #   publish-npm-next:
 #     needs: release-please-rc
