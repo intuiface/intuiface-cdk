@@ -1,0 +1,58 @@
+name: Pre-release (rc)
+
+# on:
+#   push:
+#     branches:
+#       - 'release-please--branches--master**'
+
+on:
+    push:
+
+jobs:
+  release-please-rc:
+    runs-on: ubuntu-latest
+    outputs:
+      release_created: ${{ steps.release.outputs.release_created }}
+      tag_name: ${{ steps.release.outputs.tag_name }}
+    steps:
+      - uses: googleapis/release-please-action@v4
+        id: release
+        with:
+          token: ${{ secrets.REPO_ACCESS_TOKEN }}
+          config-file: release-please-config-prerelease.json
+
+#   publish-npm-next:
+#     needs: release-please-rc
+#     runs-on: ubuntu-latest
+#     if: ${{ needs.release-please-rc.outputs.release_created == 'true' }}
+#     permissions:
+#       contents: read
+#       id-token: write
+#     steps:
+#       - uses: actions/checkout@v6
+#         with:
+#           ref: ${{ needs.release-please-rc.outputs.tag_name }}
+
+#       - uses: actions/setup-node@v6
+#         with:
+#           node-version: 24
+#           registry-url: 'https://registry.npmjs.org'
+#           scope: '@intuiface'
+
+#       - name: Install dependencies
+#         run: npm ci
+
+#       - name: Build packages
+#         run: npm run build
+
+#       - name: Publish core (next)
+#         run: npm publish dist/libs/core --access public --tag next
+
+#       - name: Publish components (next)
+#         run: npm publish dist/libs/components --access public --tag next
+
+#       - name: Publish cli (next)
+#         run: npm publish dist/libs/cli --access public --tag next
+
+#       - name: Publish interface-asset (next)
+#         run: npm publish dist/libs/tools/interface-asset-schematics --access public --tag next
