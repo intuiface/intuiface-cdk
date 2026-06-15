@@ -1,7 +1,8 @@
 name: Intuiface-CDK Pre-Release Package
 
 on:
-  push:
+  pull_request:
+    types: [opened, synchronize]
     branches:
       - 'release-please--branches--master**'
 
