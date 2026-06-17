@@ -17,7 +17,7 @@
     "declaration": false,
     "moduleResolution": "bundler",
     "importHelpers": true,
-    "rootDir": "."
+    "rootDir": "./src"
   },
   "exclude": ["node_modules"],
   "include": ["**/src/**/*.ts"]
