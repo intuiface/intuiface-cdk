@@ -58,22 +58,6 @@ Indicates the name of the category in which the action will be located in the Co
 
 [`IActionOptions`](IActionOptions.md).[`category`](IActionOptions.md#category)
 
-***
-
-### oldName?
-
-> `optional` **oldName**: `string`
-
-Name of the converter (if any different) in old ifx.
-
-***
-
-### oldDescriptorName?
-
-> `optional` **oldDescriptorName**: `string`
-
-Name of the descriptor (ifd file) in old ifx.
-
 
 ## Help
 Found a problem, a bug? Or need some help?  
