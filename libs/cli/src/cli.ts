@@ -496,26 +496,6 @@ function buildIFDFile(
         ? getWorkspaceCategory() ?? globalThisAny.iaCategory
         : globalThisAny.iaCategory;
 
-    if (buildType === 'binding-converter')
-    {
-        return {
-            'kind': 'discovery#restDescription',
-            'discoveryVersion': 'v1',
-            'id': `${iaName}js:v1`,
-            'name': iaName,
-            'version': getWorkspaceVersion(),
-            'if.category': category,
-            'protocol': 'ts',
-            'basePath': iaName,
-            'if.dependencies': [
-                `${iaName}.js`,
-                `${iaName}.module.js`
-            ],
-            schemas,
-            resources
-        };
-    }
-
     return {
         'version': `v1.0.${Date.now()}`,
         'name': iaName,

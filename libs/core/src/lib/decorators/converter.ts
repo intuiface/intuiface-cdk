@@ -6,15 +6,7 @@ import { IActionOptions } from './action';
  */
 export interface IConverterOptions extends IActionOptions
 {
-    /**
-     * Name of the converter (if any different) in old ifx.
-     */
-    oldName?: string;
 
-    /**
-     * Name of the descriptor (ifd file) in old ifx.
-     */
-    oldDescriptorName?: string;
 }
 
 /**
@@ -26,8 +18,6 @@ export interface IConverterOptions extends IActionOptions
  * export class UppercaseBC
  * {
  *     @Converter({
- *         oldName: 'Uppercase',
- *         oldDescriptorName: 'TextConverters',
  *         displayName: 'Uppercase',
  *         description: 'Convert text to uppercase.',
  *         validate: true

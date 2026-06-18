@@ -113,18 +113,18 @@ export interface IParameterOptions
  *     })
  *     public static computeOutput(
  *         @Parameter({
- *             name: 'amount',
- *             displayName: 'Amount',
- *             description: 'Value to format',
- *             type: Number
- *         }) amount: number,
+ *             name: 'amount', // the name of the parameter (has to match the parameter)
+ *             displayName: 'Amount', // the display name of the parameter
+ *             description: 'Value to format', // the description of the parameter
+ *             type: Number // the type of the parameter
+ *         }) amount: number, // the declaration of the parameter to use (same name)
  *         @Parameter({
- *             name: 'currency',
- *             displayName: 'Currency',
- *             description: 'Currency code to apply',
- *             defaultValue: 'EUR',
- *             type: String
- *         }) currency: string): string
+ *             name: 'currency', // the name of the parameter (has to match the parameter)
+ *             displayName: 'Currency', // the display name of the parameter
+ *             description: 'Currency code to apply', // the description of the parameter
+ *             defaultValue: 'EUR', // the default value of the parameter
+ *             type: String // the type of the parameter
+ *         }) currency: string): string // the declaration of the parameter to use (same name)
  *     {
  *         return new Intl.NumberFormat('en-US', {
  *             style: 'currency',
