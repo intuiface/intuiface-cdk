@@ -345,31 +345,6 @@ function normalizeBuildType(buildType: string | undefined): BuildType
 }
 
 /**
- * Resolves the version written to generated descriptors.
- * Uses the workspace package version when available and falls back to a timestamp-based version.
- * @returns A version string prefixed with `v`.
- */
-// eslint-disable-next-line prefer-arrow/prefer-arrow-functions
-function getWorkspaceVersion(): string
-{
-    const packageJsonPath = `${process.cwd()}/package.json`;
-    if (!fs.existsSync(packageJsonPath))
-    {
-        return `v1.0.${Date.now()}`;
-    }
-
-    const packageJson = fs.readJsonSync(packageJsonPath, { throws: false });
-    if (packageJson?.version == null || packageJson.version === '')
-    {
-        return `v1.0.${Date.now()}`;
-    }
-
-    return packageJson.version.startsWith('v')
-        ? packageJson.version
-        : `v${packageJson.version}`;
-}
-
-/**
  * Resolves the category configured for the current workspace.
  * Binding converters can provide it from package.json instead of decorator metadata.
  * @returns The configured category, if any.
