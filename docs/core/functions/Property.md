@@ -16,20 +16,21 @@ The `@Property` decorator enable you to declare a Property on your asset that ca
 
 ## Returns
 
-> (`target`, `propertyKey`): `void`
-
-### Parameters
-
-| Parameter | Type |
-| ------ | ------ |
-| `target` | `any` |
-| `propertyKey` | `string` |
-
-### Returns
-
-`void`
+(`target`, `propertyKey`) => `void`
 
 ## Examples
+
+**\`\`\`ts
+@Property(\{
+    displayName: 'Volume', // 'Volume' is the name of the property
+    description: 'Current volume in the media.', // here the description of the property
+    defaultValue: 1, // the default value of the property : 1
+    minValue: 0, // the minimum value : 0
+    maxValue: 1, // the maximum value : 1
+    type: Number // the property is a number (so binding on a text with '0.5' value will be converted in a number value 0.5)
+\})
+public volume: number = 0; // declaration of the property
+\`\`\`**
 
 _**Note**_: the name `volume` is in camelCase as the naming convention. It is important to do the same in your properties declaration.
 
@@ -63,6 +64,8 @@ public set volume(newVolume: number)
 ```
 
 ❗⚠️⚠️⚠️⚠️❗For property type `Array` there is a limitation: if you modify the array with methods like `push`, `pop`, `reduce`, `reverse`, `shift`, `sort`, `splice`... without calling a setter (e.g. `this.myArray = [...]`) bindings will not be updated. To fix that, you can use the method [Watchable.notifyPropertyChanged](../classes/Watchable.md#notifypropertychanged).
+
+**I have an item list declared like this:**
 
 ```ts
 /**

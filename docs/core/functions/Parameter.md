@@ -20,6 +20,8 @@ The `@Parameter` decorator enables you to declare an action's parameter or a tri
 
 ## Examples
 
+**An action with paramters:**
+
 ```ts
 /**
  * Action to set the volume of the media.
@@ -44,6 +46,8 @@ public setVolume(
 }
 
 ```
+
+**A trigger with parameters**
 
 ```ts
 /**

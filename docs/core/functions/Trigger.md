@@ -16,23 +16,27 @@ The `@Trigger` decorator enables you to declare a new trigger on your asset that
 
 ## Returns
 
-> (`target`, `propertyKey`, `descriptor`): `void`
-
-### Parameters
-
-| Parameter | Type |
-| ------ | ------ |
-| `target` | `any` |
-| `propertyKey` | `string` \| `symbol` |
-| `descriptor` | `PropertyDescriptor` |
-
-### Returns
-
-`void`
+(`target`, `propertyKey`, `descriptor`) => `void`
 
 ## Examples
 
+**\`\`\`ts
+/\*\*
+ \* Trigger when button is pressed
+ \*/
+@Trigger(\{
+    name: 'Released', // name of the trigger
+    displayName: 'Is released', // display name in composer
+    description: 'Raised when the button is released.', // description of the trigger
+    propagationMode: EPropagationMode.Standard, // this trigger will be propagating
+    mode: ERoutingMode.BUBBLING // the propagation will bubble to parent elements
+\})
+public raiseButtonReleased(): void \{ \} // the trigger is an empty function
+\`\`\`**
+
 _**Note**_: the name `raiseButtonReleased` is in camelCase as the naming convention. It is important to do the same in your triggers declaration.
+
+**If your trigger has parameter(s), you can specify them with \`@Parameter\` decorator, the same way you declare parameters for actions.**
 
 ```ts
 /**

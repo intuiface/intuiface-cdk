@@ -28,7 +28,7 @@ If `null` or empty, defaults to global cache for interface assets.
 
 ### cacheScope?
 
-> `optional` **cacheScope**: [`CacheScope`](../enumerations/CacheScope.md)
+> `optional` **cacheScope?**: [`CacheScope`](../enumerations/CacheScope.md)
 
 Indicates if cache is shared between experiences or only available for the current running experience. Defaults to `Experience`.  
 `Player` means cache is shared between experiences  
@@ -38,7 +38,7 @@ Indicates if cache is shared between experiences or only available for the curre
 
 ### ignoreSearch?
 
-> `optional` **ignoreSearch**: `boolean`
+> `optional` **ignoreSearch?**: `boolean`
 
 Ignore query parameters. Defaults to `false`.
 
@@ -46,7 +46,7 @@ Ignore query parameters. Defaults to `false`.
 
 ### cacheErrorResponse?
 
-> `optional` **cacheErrorResponse**: `boolean`
+> `optional` **cacheErrorResponse?**: `boolean`
 
 Enable caching an error response. Defaults to `false`.  
 This can be useful for example when resource access requires authentication and you want to clear the cached data if authentication has been denied.
@@ -55,7 +55,7 @@ This can be useful for example when resource access requires authentication and 
 
 ### enabledForXPWeb?
 
-> `optional` **enabledForXPWeb**: `boolean`
+> `optional` **enabledForXPWeb?**: `boolean`
 
 Enable caching for [XP as a Web page](https://support.intuiface.com/hc/en-us/articles/4407120931218-Details-about-Player-Next-Gen-on-the-Web).  
 By default cache is disabled in _XP as a Web page_ and the browser do it according to Cache-Control header in response.  
@@ -66,7 +66,7 @@ _So be careful not to use all user storage_.
 
 ### enabledForComposer?
 
-> `optional` **enabledForComposer**: `boolean`
+> `optional` **enabledForComposer?**: `boolean`
 
 Enable caching in Composer's Play mode. Defaults to `false`.
 

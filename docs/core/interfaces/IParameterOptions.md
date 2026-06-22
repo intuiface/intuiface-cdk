@@ -26,7 +26,7 @@ Name displayed in Composer.
 
 ### description?
 
-> `optional` **description**: `string`
+> `optional` **description?**: `string`
 
 Description displayed in Composer.
 
@@ -34,7 +34,7 @@ Description displayed in Composer.
 
 ### defaultValue?
 
-> `optional` **defaultValue**: `any`
+> `optional` **defaultValue?**: `any`
 
 Default value of the parameter.
 
@@ -42,7 +42,7 @@ Default value of the parameter.
 
 ### minValue?
 
-> `optional` **minValue**: `number`
+> `optional` **minValue?**: `number`
 
 Minimum value for this parameter.
 
@@ -50,7 +50,7 @@ Minimum value for this parameter.
 
 ### maxValue?
 
-> `optional` **maxValue**: `number`
+> `optional` **maxValue?**: `number`
 
 Maximum value for this parameter.
 
@@ -58,7 +58,7 @@ Maximum value for this parameter.
 
 ### type?
 
-> `optional` **type**: `any`
+> `optional` **type?**: `any`
 
 The type of the parameter.
 It's optional but higly recommended fo better binding conversion.

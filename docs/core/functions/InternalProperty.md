@@ -19,18 +19,7 @@ When using this decorator on a property, it will automatically generate getter a
 
 ## Returns
 
-> (`target`, `propertyKey`): `void`
-
-### Parameters
-
-| Parameter | Type |
-| ------ | ------ |
-| `target` | `unknown` |
-| `propertyKey` | `string` |
-
-### Returns
-
-`void`
+(`target`, `propertyKey`) => `void`
 
 
 ## Help
