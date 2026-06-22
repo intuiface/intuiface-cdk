@@ -66,6 +66,8 @@ public countChanged(
     }) count: number): void { } //the parameter
 ```
 
+**A binding converter with parameters**
+
 ```ts
 /**
  * Currency formatter converter

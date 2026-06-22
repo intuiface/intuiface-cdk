@@ -18,21 +18,30 @@ Contrary to `@Asset`, this decorator is meant for static methods used by binding
 
 ## Returns
 
-> (`target`, `propertyKey`, `descriptor`): `void`
-
-### Parameters
-
-| Parameter | Type |
-| ------ | ------ |
-| `target` | `any` |
-| `propertyKey` | `string` \| `symbol` |
-| `descriptor` | `PropertyDescriptor` |
-
-### Returns
-
-`void`
+(`target`, `propertyKey`, `descriptor`) => `void`
 
 ## Example
+
+**\`\`\`ts
+export class UppercaseBC
+\{
+    @Converter(\{
+        displayName: 'Uppercase',
+        description: 'Convert text to uppercase.',
+        validate: true
+    \})
+    public static computeOutput(
+        @Parameter(\{
+            name: 'input',
+            displayName: 'Input',
+            type: String
+        \}) input: string
+    ): string
+    \{
+        return input?.toUpperCase() ?? '';
+    \}
+\}
+\`\`\`**
 
 
 ## Help
