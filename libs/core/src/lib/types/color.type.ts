@@ -4,7 +4,8 @@ import { IConvertibleType } from './convertible.type';
 /**
  * Class to type a property that can be a solid color or a gradient.
  *
- * @example ```ts
+ * @example 
+ * ```ts
  * @Property({
  *     displayName: 'Background color',
  *     defaultValue: SolidColor.TransparentBlack, // the default value of the property

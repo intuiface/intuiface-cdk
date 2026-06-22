@@ -8,14 +8,14 @@ Class to type a property that can be a solid color or a gradient.
 
 ## Example
 
-**\`\`\`ts
-@Property(\{
+```ts
+@Property({
     displayName: 'Background color',
     defaultValue: SolidColor.TransparentBlack, // the default value of the property
     type: Color
-\})
+})
 public backgroundColor: Color;
-\`\`\`**
+```
 
 ## Extended by
 

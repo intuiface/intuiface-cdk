@@ -8,15 +8,15 @@ Class to use to describe a time duration.
 
 ## Example
 
-**\`\`\`ts
-@Property(\{
+```ts
+@Property({
     displayName: 'Remaining time',
     description: 'Remaining time before the end.',
     defaultValue: Time.Zero,
     type: Time
-\})
+})
 public remainingTime: Time;
-\`\`\`**
+```
 
 ## Implements
 

@@ -55,7 +55,7 @@ export interface IParameterOptions
  *
  * @param options options of the parameter (display name, description, ...)
  *
- * @example An action with paramters:
+ * @example An action with parameters:
  * ```ts
  * /**
  *  * Action to set the volume of the media.

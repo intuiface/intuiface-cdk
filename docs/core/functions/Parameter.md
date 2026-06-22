@@ -20,7 +20,7 @@ The `@Parameter` decorator enables you to declare an action's parameter or a tri
 
 ## Examples
 
-**An action with paramters:**
+**An action with parameters:**
 
 ```ts
 /**

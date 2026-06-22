@@ -68,7 +68,8 @@ export interface IPropertyOptions
  * The `@Property` decorator enable you to declare a Property on your asset that can be used in a Intuiface experience.
  * @param options options of the property (display name, description, ...)
  *
- * @example ```ts
+ * @example 
+ * ```ts
  * @Property({
  *     displayName: 'Volume', // 'Volume' is the name of the property
  *     description: 'Current volume in the media.', // here the description of the property
@@ -111,7 +112,8 @@ export interface IPropertyOptions
  * ```
  *
  * ❗⚠️⚠️⚠️⚠️❗For property type `Array` there is a limitation: if you modify the array with methods like `push`, `pop`, `reduce`, `reverse`, `shift`, `sort`, `splice`... without calling a setter (e.g. `this.myArray = [...]`) bindings will not be updated. To fix that, you can use the method {@link Watchable.notifyPropertyChanged}.
- * @example I have an item list declared like this:
+ * @example 
+ * I have an item list declared like this:
  * ```ts
  * /**
  *  * Item List

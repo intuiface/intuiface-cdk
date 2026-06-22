@@ -8,15 +8,15 @@ Class to use to describe any king of path that can be used as URL
 
 ## Example
 
-**\`\`\`ts
-@Property(\{
+```ts
+@Property({
     displayName: 'Source',
     description: 'Source of the data.',
     defaultValue: null,
     type: Path
-\})
+})
 public source: Path;
-\`\`\`**
+```
 
 ## Implements
 

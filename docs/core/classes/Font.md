@@ -8,16 +8,15 @@ Class to use as type of property using font.
 
 ## Example
 
-**\`\`\`ts
-@Property(\{
+```ts
+@Property({
     displayName: 'Title font',
     description: 'Font of the title.',
     defaultValue: null,
     type: Font
-\})
+})
 public titleFont: Typeface;
-\`\`\`**
-
+```
 Note: We use the `Font` class as `type`, but the generic interface `Typeface` is used as type of the `titleFont` field.
 
 ## Implements

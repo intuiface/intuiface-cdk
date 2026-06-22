@@ -24,8 +24,7 @@ Inputs values will be passed as arguments of the method in the order they appear
 
 ## Example
 
-**A method that will be called when \`scale\` or \`width\` changes to compute a width with the applied scaled:**
-
+A method that will be called when `scale` or `width` changes to compute a width with the applied scaled:
 ```ts
    @Property({
        displayName: 'scale',

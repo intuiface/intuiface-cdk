@@ -31,7 +31,8 @@ export interface IActionOptions
 /**
  * The `@Action` decorator enables you to declare an Action that can be used by Triggers in Intuiface Composer
  *
- * @example ```ts
+ * @example 
+ * ```ts
  * /**
  *  * Turn on autoplay.
  *  *\/
@@ -46,7 +47,8 @@ export interface IActionOptions
  * ```
  * _**Note**_: the name "turnOnAutoplay" is in camelCase as the naming convention. It is important to do the same in your actions declaration.
  *
- * @example If your action has parameter(s), you can specify them with `@Parameter` decorator:
+ * @example 
+ * If your action has parameter(s), you can specify them with `@Parameter` decorator:
  * ```ts
  * /**
  *  * Action to set the volume of the media.

@@ -35,8 +35,7 @@ A `Promise` resolved when fetch succeed with the `Response` value.
 
 #### Example
 
-**Fetch a json file with \{@link CacheStrategy.NetworkFirst \| \_network first\_\} strategy:**
-
+Fetch a json file with [network first](../enumerations/CacheStrategy.md#networkfirst) strategy:
 ```ts
 try
 {
@@ -91,8 +90,7 @@ A Promise that resolve to an URI as `string` that can be used as source (i.e. `s
 
 #### Example
 
-**download an image with \{@link CacheStrategy.CacheFirst \| \_cache first\_\} strategy and progress feedback:**
-
+Download an image with [cache first](../enumerations/CacheStrategy.md#cachefirst) strategy and progress feedback:
 ```ts
 try
 {
