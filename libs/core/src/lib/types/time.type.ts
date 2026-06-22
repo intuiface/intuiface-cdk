@@ -3,7 +3,8 @@ import { IConvertibleType } from './convertible.type';
 /**
  * Class to use to describe a time duration.
  *
- * @example ```ts
+ * @example 
+ * ```ts
  * @Property({
  *     displayName: 'Remaining time',
  *     description: 'Remaining time before the end.',

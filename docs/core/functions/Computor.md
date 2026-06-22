@@ -20,22 +20,11 @@ Inputs values will be passed as arguments of the method in the order they appear
 
 ## Returns
 
-> (`target`, `propertyKey`, `descriptor`): `void`
-
-### Parameters
-
-| Parameter | Type |
-| ------ | ------ |
-| `target` | `any` |
-| `propertyKey` | `string` \| `symbol` |
-| `descriptor` | `PropertyDescriptor` |
-
-### Returns
-
-`void`
+(`target`, `propertyKey`, `descriptor`) => `void`
 
 ## Example
 
+A method that will be called when `scale` or `width` changes to compute a width with the applied scaled:
 ```ts
    @Property({
        displayName: 'scale',

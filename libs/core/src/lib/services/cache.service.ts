@@ -155,7 +155,8 @@ export class CacheService {
      * @param progressCallback Use this callback to trace download progress.
      * @returns A `Promise` resolved when fetch succeed with the `Response` value.
      *
-     * @example Fetch a json file with {@link CacheStrategy.NetworkFirst | _network first_} strategy:
+     * @example 
+     * Fetch a json file with {@link CacheStrategy.NetworkFirst | network first} strategy:
      * ```ts
      * try
      * {
@@ -201,7 +202,8 @@ export class CacheService {
      * @param progressCallback Use this callback to trace download progress.
      * @returns A Promise that resolve to an URI as `string` that can be used as source (i.e. `src` attribute) of a {@link HTMLElement} such as `<img>`.
      *
-     * @example download an image with {@link CacheStrategy.CacheFirst | _cache first_} strategy and progress feedback:
+     * @example 
+     * Download an image with {@link CacheStrategy.CacheFirst | cache first} strategy and progress feedback:
      * ```ts
      * try
      * {

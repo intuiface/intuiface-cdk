@@ -8,6 +8,14 @@ Class to use to describe a linear gradient.
 
 ## Example
 
+```ts
+@Property({
+    displayName: 'Background color',
+    type: RadialGradient
+})
+public backgroundColor: RadialGradient;
+```
+
 ## Extends
 
 - [`Color`](Color.md)

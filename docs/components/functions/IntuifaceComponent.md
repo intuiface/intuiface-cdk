@@ -17,17 +17,7 @@ This is useful for dynamic component creation from a Model
 
 ## Returns
 
-> (`cls`): `any`
-
-### Parameters
-
-| Parameter | Type |
-| ------ | ------ |
-| `cls` | `any` |
-
-### Returns
-
-`any`
+(`cls`) => `any`
 
 
 ## Help

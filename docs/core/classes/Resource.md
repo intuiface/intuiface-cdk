@@ -8,6 +8,16 @@ Class to use when a property is using a resource from an experience.
 
 ## Example
 
+```ts
+@Property({
+    displayName: 'Source',
+    description: 'Source of the data.',
+    defaultValue: null,
+    type: Resource
+})
+public source: Resource;
+```
+
 ## Implements
 
 - [`IConvertibleType`](../interfaces/IConvertibleType.md)

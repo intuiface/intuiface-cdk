@@ -18,7 +18,8 @@ export interface IComputorOptions {
  *
  * @param options Options to configure the computor
  *
- * @example A method that will be called when `scale` or `width` changes to compute a width with the applied scaled:
+ * @example 
+ * A method that will be called when `scale` or `width` changes to compute a width with the applied scaled:
  * ```ts
  *    @Property({
  *        displayName: 'scale',

@@ -34,7 +34,8 @@ export interface Typeface
 /**
  * Class to use as type of property using font.
  *
- * @example ```ts
+ * @example 
+ * ```ts
  * @Property({
  *     displayName: 'Title font',
  *     description: 'Font of the title.',

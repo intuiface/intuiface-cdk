@@ -5,7 +5,8 @@ import { SolidColor } from './solid-color.type';
 /**
  * Class to use to describe a linear gradient.
  *
- * @example ```ts
+ * @example 
+ * ```ts
  * @Property({
  *     displayName: 'Background color',
  *     type: RadialGradient

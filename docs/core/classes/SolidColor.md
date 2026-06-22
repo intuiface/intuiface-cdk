@@ -8,6 +8,15 @@ Class to use to describe a solid color.
 
 ## Example
 
+```ts
+@Property({
+    displayName: 'Background color',
+    defaultValue: SolidColor.TransparentBlack, // the default value of the property
+    type: SolidColor
+})
+public backgroundColor: SolidColor;
+```
+
 ## Extends
 
 - [`Color`](Color.md)

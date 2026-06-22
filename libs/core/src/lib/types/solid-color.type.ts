@@ -15,7 +15,8 @@ export enum EColorFormat {
 /**
  * Class to use to describe a solid color.
  *
- * @example ```ts
+ * @example 
+ * ```ts
  * @Property({
  *     displayName: 'Background color',
  *     defaultValue: SolidColor.TransparentBlack, // the default value of the property

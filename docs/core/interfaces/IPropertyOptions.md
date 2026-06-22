@@ -18,7 +18,7 @@ Name of the property displayed in Composer.
 
 ### description?
 
-> `optional` **description**: `string`
+> `optional` **description?**: `string`
 
 Description of the property displayed in Composer.
 
@@ -26,7 +26,7 @@ Description of the property displayed in Composer.
 
 ### defaultValue?
 
-> `optional` **defaultValue**: `any`
+> `optional` **defaultValue?**: `any`
 
 Default value of the property.
 
@@ -34,7 +34,7 @@ Default value of the property.
 
 ### minValue?
 
-> `optional` **minValue**: `number`
+> `optional` **minValue?**: `number`
 
 Minimum value for this property.  
 If specified, any number value smaller than this value will be ignored when and replaced by the minimum.
@@ -43,7 +43,7 @@ If specified, any number value smaller than this value will be ignored when and 
 
 ### maxValue?
 
-> `optional` **maxValue**: `number`
+> `optional` **maxValue?**: `number`
 
 Maximum value for this property.  
 If specified, any number value greater than this value will be ignored when and replaced by the maximum.
@@ -52,7 +52,7 @@ If specified, any number value greater than this value will be ignored when and 
 
 ### readOnly?
 
-> `optional` **readOnly**: `boolean`
+> `optional` **readOnly?**: `boolean`
 
 True if property is read only in Intuiface Composer. The property will only be usable as a binding source.
 
@@ -60,7 +60,7 @@ True if property is read only in Intuiface Composer. The property will only be u
 
 ### type?
 
-> `optional` **type**: `any`
+> `optional` **type?**: `any`
 
 The type of the property.
 It's optional but highly recommended for better binding conversion.
@@ -77,7 +77,7 @@ It can be:
 
 ### itemType?
 
-> `optional` **itemType**: `any`
+> `optional` **itemType?**: `any`
 
 The item type in case the type is `Array`.
 It's optional but useful in interface assets to display item's properties in Intuiface Composer.

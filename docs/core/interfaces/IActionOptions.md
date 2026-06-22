@@ -22,7 +22,7 @@ Name displayed in Composer.
 
 ### description?
 
-> `optional` **description**: `string`
+> `optional` **description?**: `string`
 
 Description displayed in Composer.
 
@@ -30,7 +30,7 @@ Description displayed in Composer.
 
 ### validate?
 
-> `optional` **validate**: `boolean`
+> `optional` **validate?**: `boolean`
 
 If true, validate range of parameter values.
 
@@ -38,7 +38,7 @@ If true, validate range of parameter values.
 
 ### category?
 
-> `optional` **category**: `string`
+> `optional` **category?**: `string`
 
 Indicates the name of the category in which the action will be located in the Composer’s “Action category”
 

@@ -3,7 +3,8 @@ import { IConvertibleType } from './convertible.type';
 /**
  * Class to use to describe any king of path that can be used as URL
  *
- * @example ```ts
+ * @example 
+ * ```ts
  * @Property({
  *     displayName: 'Source',
  *     description: 'Source of the data.',
