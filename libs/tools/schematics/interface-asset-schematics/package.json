@@ -1,6 +1,6 @@
 {
   "name": "@intuiface/interface-asset",
-  "version": "2.0.2",
+  "version": "2.1.0",
   "description": "Schematic to create an interface asset.",
   "scripts": {
     "build": "tsc -p tsconfig.json"
@@ -14,6 +14,6 @@
   "repository": "https://github.com/intuiface/intuiface-cdk",
   "dependencies": {
     "@angular-devkit/core": "^20.3.16",
-    "@angular-devkit/schematics": "^20.3.16"
+    "@angular-devkit/schematics": "^20.3.17"
   }
 }

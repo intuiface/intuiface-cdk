@@ -1,6 +1,6 @@
 {
   "name": "@intuiface/custom-asset",
-  "version": "2.0.2",
+  "version": "2.1.0",
   "description": "Schematic to create a custom asset/collection",
   "scripts": {
     "build": "tsc -p tsconfig.json"
@@ -14,7 +14,7 @@
   "dependencies": {
     "@angular-architects/module-federation": "^20.0.0",
     "@angular-devkit/core": "20.3.16",
-    "@angular-devkit/schematics": "20.3.16",
+    "@angular-devkit/schematics": "20.3.17",
     "@schematics/angular": "20.3.16"
   },
   "repository": "https://github.com/intuiface/intuiface-cdk"
