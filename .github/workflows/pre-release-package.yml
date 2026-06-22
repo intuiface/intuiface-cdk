@@ -37,11 +37,11 @@ jobs:
           echo "pre_version=$PRE_VERSION" >> "$GITHUB_OUTPUT"
           echo "Pre-release version: $PRE_VERSION"
 
+      - name: Install dependencies
+        run: npm ci     
+         
       - name: Set pre-release version in all packages
         run: node set-prerelease-version.mjs "${{ steps.version.outputs.pre_version }}"
-
-      - name: Install dependencies
-        run: npm ci
 
       - name: Build packages
         run: npm run build
