@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.1.1](https://github.com/intuiface/intuiface-cdk/compare/v2.1.0...v2.1.1) (2026-06-22)
+
+
+### Dependencies
+
+* update dependencies ([#112](https://github.com/intuiface/intuiface-cdk/issues/112)) ([57cabf1](https://github.com/intuiface/intuiface-cdk/commit/57cabf1ad7d5f39871f9afda0b35a602bd69b61d))
+
 ## [2.1.0](https://github.com/intuiface/intuiface-cdk/compare/v2.0.2...v2.1.0) (2026-03-12)
 
 
