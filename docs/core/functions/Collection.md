@@ -20,17 +20,7 @@ _**This is experimental as there is currently no way to use a custom collection 
 
 ## Returns
 
-> (`cls`): `any`
-
-### Parameters
-
-| Parameter | Type |
-| ------ | ------ |
-| `cls` | `any` |
-
-### Returns
-
-`any`
+(`cls`) => `any`
 
 
 ## Help

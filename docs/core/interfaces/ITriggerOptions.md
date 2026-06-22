@@ -26,7 +26,7 @@ Name displayed in Composer.
 
 ### description?
 
-> `optional` **description**: `string`
+> `optional` **description?**: `string`
 
 Description displayed in Composer.
 
@@ -34,7 +34,7 @@ Description displayed in Composer.
 
 ### propagationMode?
 
-> `optional` **propagationMode**: `"once"` \| `"none"` \| `"standard"` \| `"untilUsed"`
+> `optional` **propagationMode?**: `"once"` \| `"none"` \| `"standard"` \| `"untilUsed"`
 
 Indicates the mode of propagation:
 - `none`: No propagation.
@@ -52,7 +52,7 @@ Indicates the mode of propagation:
 
 ### propagationDirection?
 
-> `optional` **propagationDirection**: `"bubbling"` \| `"cascading"`
+> `optional` **propagationDirection?**: `"bubbling"` \| `"cascading"`
 
 Indicates the direction of propagation:
 - `bubbling`: trigger will be ascending the experience tree.
@@ -68,7 +68,7 @@ Indicates the direction of propagation:
 
 ### category?
 
-> `optional` **category**: `string`
+> `optional` **category?**: `string`
 
 Indicates the name of the category in which the trigger will be located in the Composer’s “Trigger category”
 

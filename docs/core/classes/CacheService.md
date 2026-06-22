@@ -35,6 +35,8 @@ A `Promise` resolved when fetch succeed with the `Response` value.
 
 #### Example
 
+**Fetch a json file with \{@link CacheStrategy.NetworkFirst \| \_network first\_\} strategy:**
+
 ```ts
 try
 {
@@ -88,6 +90,8 @@ Downloads a file into local cache and returns its local uri
 A Promise that resolve to an URI as `string` that can be used as source (i.e. `src` attribute) of a [HTMLElement](https://developer.mozilla.org/docs/Web/API/HTMLElement) such as `<img>`.
 
 #### Example
+
+**download an image with \{@link CacheStrategy.CacheFirst \| \_cache first\_\} strategy and progress feedback:**
 
 ```ts
 try

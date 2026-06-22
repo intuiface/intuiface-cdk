@@ -20,19 +20,11 @@ An asset class must extends [IntuifaceElement](../classes/IntuifaceElement.md).
 
 ## Returns
 
-> (`cls`): `any`
-
-### Parameters
-
-| Parameter | Type |
-| ------ | ------ |
-| `cls` | `any` |
-
-### Returns
-
-`any`
+(`cls`) => `any`
 
 ## Example
+
+**Skeleton of an interface asset class:**
 
 ```ts
 /**

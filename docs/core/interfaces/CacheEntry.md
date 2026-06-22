@@ -34,7 +34,7 @@ Date of last time entry was updated.
 
 ### cacheUri?
 
-> `optional` **cacheUri**: `string`
+> `optional` **cacheUri?**: `string`
 
 URI of cache entry stored on file system and that can be used as source of HTML elements (such as `<img>`). _Only available when access to file system is possible_ (not for XP as webpage).
 

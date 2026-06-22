@@ -16,15 +16,27 @@ The `@Action` decorator enables you to declare an Action that can be used by Tri
 
 ## Returns
 
-> (): `void`
-
-### Returns
-
-`void`
+() => `void`
 
 ## Examples
 
+**\`\`\`ts
+/\*\*
+ \* Turn on autoplay.
+ \*/
+ @Action(\{
+  displayName: 'Turn Autoplay mode on', // display name of the action
+  description: 'Turn Autoplay mode on.' // description of the action
+ \})
+public turnOnAutoplay(): void
+\{
+   this.isAutoplay = true; // code of the action
+\}
+\`\`\`**
+
 _**Note**_: the name "turnOnAutoplay" is in camelCase as the naming convention. It is important to do the same in your actions declaration.
+
+**If your action has parameter(s), you can specify them with \`@Parameter\` decorator:**
 
 ```ts
 /**

@@ -45,7 +45,7 @@ Category in Composer's Interface Assets panel.
 
 ### displayName?
 
-> `optional` **displayName**: `string`
+> `optional` **displayName?**: `string`
 
 Name displayed in Composer.
 
@@ -53,7 +53,7 @@ Name displayed in Composer.
 
 ### description?
 
-> `optional` **description**: `string`
+> `optional` **description?**: `string`
 
 Description displayed in Composer.
 
