@@ -1,10 +1,7 @@
 name: Intuiface-CDK Pre-Release Package
 
 on:
-  pull_request:
-    types: [opened, synchronize]
-    branches:
-      - 'release-please--branches--master**'
+  workflow_dispatch:
 
 jobs:
 
@@ -15,6 +12,13 @@ jobs:
       contents: read
       id-token: write
     steps:
+      - name: Validate branch name
+        run: |
+          if [[ "${{ github.ref_name }}" != release-please--branches--master* ]]; then
+            echo "Branch '${{ github.ref_name }}' can't be pre-released. Only RC branch from release-please can be published."
+            exit 1
+          fi
+
       - uses: actions/checkout@v6
 
       - uses: actions/setup-node@v6
