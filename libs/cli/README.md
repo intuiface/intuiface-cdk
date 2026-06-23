@@ -1,7 +1,7 @@
 # intuiface-cli
 
-Intuiface CLI is a command line tool that helps you build interface assets for Intuiface.  
-This CLI will generate Intuiface Descriptor (*.ifd) file and build the Interface Asset (IA) to be able to add it in an Intuiface Experience.
+Intuiface CLI is a command line tool that helps you build Intuiface interface assets and binding converters.  
+This CLI generates an Intuiface Descriptor (`*.ifd`) file and builds the output bundle to be imported into Intuiface Composer.
 
 ## Usage: 
 Command to build an Interface Asset:
@@ -9,11 +9,17 @@ Command to build an Interface Asset:
 npx intuiface-cli build -n IA_File_Name
 ```
 
+Command to build a Binding Converter:
+```sh
+npx intuiface-cli build -n BC_File_Name -t binding-converter
+```
+
 
 | Option            | Description                                                                                     |
 |--------------------|-------------------------------------------------------------------------------------------------|
-| `-n, --name <name>` | Name of the interface asset's main file in the `src/*` folder (without extension).             |
-| `-i, --icon [icon]` | Path to the icon of the IA displayed in Composer Interface Asset panel.                        |
+| `-n, --name <name>` | Name of the interface asset's or binding converter's main file in the `src/*` folder (without extension).             |
+| `-t, --type <type>` | Asset type to build: `interface-asset` or `binding-converter`. Default: `interface-asset`.    |
+| `-i, --icon [icon]` | Path to the icon of the IA or BC displayed in Composer Interface Asset panel.                        |
 | `-d, --debug`       | Build in debug mode.                                                                          |
 | `-h, --help`        | Display help for the command.                                                                 |
 
@@ -24,13 +30,13 @@ npx intuiface-cli help <command>
 ```
 
 ### Adding an icon
-If you want to add an icon to your IA, add an image in your project and reference its path in the `package.json` file editing the `build` script.
+If you want to add an icon to your IA or BC, add an image in your project and reference its path in the `package.json` file editing the `build` script.
 
-`"build": "npx intuiface-cli build -n IA_File_Name -i MyIcon.png` 
+`"build": "npx intuiface-cli build -n [IA_File_Name|BC_File_Name] -i MyIcon.png` 
 
 or
 
-`"build": "npx intuiface-cli build -n IA_File_Name -i ./icons/MyIcon.png`
+`"build": "npx intuiface-cli build -n [IA_File_Name|BC_File_Name] -i ./icons/MyIcon.png`
 
 then run command 
 ```sh
@@ -44,6 +50,8 @@ npm run build:debug
 ```
 directly in your project. This command will not minimize the output file in order to be easier for debug. Then in the Composer Play Mode, you can use key combination `Ctrl+Shift+I`
 to debug.
+
+The generated version is taken from your workspace `package.json` when available.
 
 ## Migration to v2
 For existing project created before the v2 of the `intuiface-cdk`, you can migrate your project.

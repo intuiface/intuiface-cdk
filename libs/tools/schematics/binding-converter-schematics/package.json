@@ -1,0 +1,19 @@
+{
+  "name": "@intuiface/binding-converter",
+  "version": "1.0.0",
+  "description": "Schematic to create an binding converter.",
+  "scripts": {
+    "build": "tsc -p tsconfig.json"
+  },
+  "keywords": [
+    "schematics"
+  ],
+  "author": "",
+  "license": "MIT",
+  "schematics": "./src/collection.json",
+  "repository": "https://github.com/intuiface/intuiface-cdk",
+  "dependencies": {
+    "@angular-devkit/core": "^20.3.16",
+    "@angular-devkit/schematics": "^20.3.16"
+  }
+}

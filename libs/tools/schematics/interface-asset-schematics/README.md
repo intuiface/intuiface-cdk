@@ -21,10 +21,6 @@ This article describes how to design an interface asset, build it, and generate 
 - [Angular Schematics CLI](https://www.npmjs.com/package/@angular-devkit/schematics-cli). Install it using NPM:  
 `npm install -g @angular-devkit/schematics-cli`
 
-## Install
-Install the interface asset schematics: 
-    `npm install @intuiface/interface-asset`
-
 ## Usage
 First, inside a new folder, install the `interface-asset` schematics:
 ```

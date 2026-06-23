@@ -6,7 +6,7 @@
 
 # Intuiface CDK
 
-This CDK enables you to create TypeScript-based interface assets for Intuiface experiences. For more about Intuiface, visit https://www.intuiface.com/
+This CDK enables you to create TypeScript-based interface assets or binding converter for Intuiface experiences. For more about Intuiface, visit https://www.intuiface.com/
 
 ## Table of contents
 
@@ -17,14 +17,21 @@ This CDK enables you to create TypeScript-based interface assets for Intuiface e
 
 ## Quick Start
 
-To develop your own interface asset, please make sure you have installed:
+To develop your own interface asset or binding converter, please make sure you have installed:
 - [NodeJS](https://nodejs.org/) so you can use NPM to manage your project’s dependencies. We recommend using the version 22 LTS.
 - [Visual Studio Code](https://code.visualstudio.com/) to code, build, and test your project
 - [Angular Schematics CLI](https://www.npmjs.com/package/@angular-devkit/schematics-cli). Install it using NPM:<br> ```npm install -g @angular-devkit/schematics-cli```
 
 ## Documentation
 
-You can follow the documentation here: [Create an Interface Asset](./libs/tools/schematics/interface-asset-schematics/README.md)
+#### For Interface Asset
+
+  - You can follow the documentation here: [Create an Interface Asset](./libs/tools/schematics/interface-asset-schematics/README.md)
+
+#### For Binding Converter
+
+  - You can follow the documentation here: [Create a Binding Converter](./libs/tools/schematics/binding-converter-schematics/README.md)
+
 
 More information about specific development syntax is here: [Intuiface Core](./libs/core/README.md)
 

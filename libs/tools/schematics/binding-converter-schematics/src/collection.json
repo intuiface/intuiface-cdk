@@ -1,0 +1,10 @@
+{
+  "$schema": "../node_modules/@angular-devkit/schematics/collection-schema.json",
+  "schematics": {    
+    "create": {
+      "description": "Schematic to create a binding converter.",
+      "factory": "./create/index#createBindingConverter",
+      "schema": "./create/schema.json"
+    }
+  }
+}

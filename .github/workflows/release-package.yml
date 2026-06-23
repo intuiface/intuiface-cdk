@@ -69,3 +69,6 @@ jobs:
 
       - name: Publish interface-asset to npmjs packages
         run: npm publish dist/libs/tools/interface-asset-schematics --access public --tag ${{ steps.mode.outputs.tag }}
+
+      - name: Publish binding-converter to npmjs packages
+        run: npm publish dist/libs/tools/binding-converter-schematics --access public --tag ${{ steps.mode.outputs.tag }}

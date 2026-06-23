@@ -103,12 +103,27 @@
                 },
                 {
                     "type": "json",
+                    "path": "/libs/tools/schematics/binding-converter-schematics/package.json",
+                    "jsonpath": "$.version"
+                },
+                {
+                    "type": "json",
                     "path": "/libs/tools/schematics/interface-asset-schematics/src/create/files/package.json",
                     "jsonpath": "$.dependencies['@intuiface/core']"
                 },
                 {
                     "type": "json",
                     "path": "/libs/tools/schematics/interface-asset-schematics/src/create/files/package.json",
+                    "jsonpath": "$.dependencies['@intuiface/cli']"
+                },
+                {
+                    "type": "json",
+                    "path": "/libs/tools/schematics/binding-converter-schematics/src/create/files/package.json",
+                    "jsonpath": "$.dependencies['@intuiface/core']"
+                },
+                {
+                    "type": "json",
+                    "path": "/libs/tools/schematics/binding-converter-schematics/src/create/files/package.json",
                     "jsonpath": "$.dependencies['@intuiface/cli']"
                 },
                 {

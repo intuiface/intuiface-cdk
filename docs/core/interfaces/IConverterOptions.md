@@ -2,13 +2,13 @@
 
 ***
 
-# Interface: IActionOptions
+# Interface: IConverterOptions
 
-Options to configure [\`@Action\`](../functions/Action.md) decorator
+Options to configure [\`@Converter\`](../functions/Converter.md) decorator.
 
-## Extended by
+## Extends
 
-- [`IConverterOptions`](IConverterOptions.md)
+- [`IActionOptions`](IActionOptions.md)
 
 ## Properties
 
@@ -18,6 +18,10 @@ Options to configure [\`@Action\`](../functions/Action.md) decorator
 
 Name displayed in Composer.
 
+#### Inherited from
+
+[`IActionOptions`](IActionOptions.md).[`displayName`](IActionOptions.md#displayname)
+
 ***
 
 ### description?
@@ -25,6 +29,10 @@ Name displayed in Composer.
 > `optional` **description?**: `string`
 
 Description displayed in Composer.
+
+#### Inherited from
+
+[`IActionOptions`](IActionOptions.md).[`description`](IActionOptions.md#description)
 
 ***
 
@@ -34,6 +42,10 @@ Description displayed in Composer.
 
 If true, validate range of parameter values.
 
+#### Inherited from
+
+[`IActionOptions`](IActionOptions.md).[`validate`](IActionOptions.md#validate)
+
 ***
 
 ### category?
@@ -41,6 +53,10 @@ If true, validate range of parameter values.
 > `optional` **category?**: `string`
 
 Indicates the name of the category in which the action will be located in the Composer’s “Action category”
+
+#### Inherited from
+
+[`IActionOptions`](IActionOptions.md).[`category`](IActionOptions.md#category)
 
 
 ## Help

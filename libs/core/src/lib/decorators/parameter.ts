@@ -99,6 +99,42 @@ export interface IParameterOptions
  *     }) count: number): void { } //the parameter
  * ```
  *
+ * @example A binding converter with parameters
+ * ```ts
+ * /**
+ *  * Currency formatter converter
+ *  *\/
+ * export class CurrencyConverter
+ * {
+ *     @Converter({
+ *         displayName: 'Format currency',
+ *         description: 'Format a number using the selected currency.',
+ *         validate: true
+ *     })
+ *     public static computeOutput(
+ *         @Parameter({
+ *             name: 'amount', // the name of the parameter (has to match the parameter)
+ *             displayName: 'Amount', // the display name of the parameter
+ *             description: 'Value to format', // the description of the parameter
+ *             type: Number // the type of the parameter
+ *         }) amount: number, // the declaration of the parameter to use (same name)
+ *         @Parameter({
+ *             name: 'currency', // the name of the parameter (has to match the parameter)
+ *             displayName: 'Currency', // the display name of the parameter
+ *             description: 'Currency code to apply', // the description of the parameter
+ *             defaultValue: 'EUR', // the default value of the parameter
+ *             type: String // the type of the parameter
+ *         }) currency: string): string // the declaration of the parameter to use (same name)
+ *     {
+ *         return new Intl.NumberFormat('en-US', {
+ *             style: 'currency',
+ *             currency
+ *         }).format(amount);
+ *     }
+ * }
+ *
+ * ```
+ *
  * @group Decorators
  */
 // eslint-disable-next-line @typescript-eslint/naming-convention
@@ -111,7 +147,9 @@ export function Parameter(options?: IParameterOptions): Function
     ): void =>
     {
         // get target name
-        const targetName = target.constructor.name;
+        const targetName = typeof target === 'function'
+            ? target.name
+            : target.constructor.name;
 
         if (!globalThis.intuiface_ifd_params[targetName]) {
             globalThis.intuiface_ifd_params[targetName] = {};

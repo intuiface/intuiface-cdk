@@ -1,0 +1,27 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "$id": "binding-converter",
+  "title": "binding converter options schema",
+  "type": "object",
+  "description": "Initialize a new binding converter project",
+  "properties": {
+    "bindingConverterName": {
+      "type": "string",
+      "description": "The name of the binding converter",
+      "x-prompt": "What is your binding converter name?",
+      "$default": {
+        "$source": "argv",
+        "index": 0
+      }
+    },
+    "bindingConverterCategory": {
+      "type": "string",
+      "description": "The category in Composer's Binding Converter panel",
+      "x-prompt": "What is the category in Composer's Binding Converter panel?",
+      "$default": {
+        "$source": "argv",
+        "index": 1
+      }
+    }
+  }
+}

@@ -1,0 +1,49 @@
+{
+    "name": "binding-converter-schematics",
+    "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+    "sourceRoot": "libs/tools/schematics/binding-converter-schematics/src",
+    "projectType": "library",
+    "prefix": "intuiface",
+    "generators": {},
+    "targets": {
+        "build": {
+            "executor": "@nx/js:tsc",
+            "options": {
+                "outputPath": "dist/libs/tools/binding-converter-schematics",
+                "tsConfig": "libs/tools/schematics/binding-converter-schematics/tsconfig.json",
+                "packageJson": "libs/tools/schematics/binding-converter-schematics/package.json",
+                "main": "libs/tools/schematics/binding-converter-schematics/src/create/index.ts",
+                "assets": [
+                    "libs/tools/schematics/binding-converter-schematics/*.md",
+                    {
+                        "glob": "**/*",
+                        "input": "libs/tools/schematics/binding-converter-schematics/src/",
+                        "output": "/src/",
+                        "ignore": ["**/index.ts"]
+                    },
+                    {
+                        "glob": ".eslintrc.js",
+                        "input": "libs/tools/schematics/binding-converter-schematics/src/",
+                        "output": "/src/"
+                    },
+                    {
+                        "glob": ".vscode/*",
+                        "input": "libs/tools/schematics/binding-converter-schematics/src/",
+                        "output": "/src/"
+                    },
+                    {
+                        "glob": ".gitignore",
+                        "input": "libs/tools/schematics/binding-converter-schematics/src/",
+                        "output": "/src/"
+                    }
+                ]
+            },
+            "configurations": {
+                "production": {
+                    "tsConfig": "libs/tools/schematics/binding-converter-schematics/tsconfig.json"
+                }
+            },
+            "outputs": ["{options.outputPath}"]
+        }
+    }
+}
