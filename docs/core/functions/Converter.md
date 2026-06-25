@@ -10,6 +10,8 @@ The `@Converter` decorator enables you to declare a binding converter method tha
 
 Contrary to `@Asset`, this decorator is meant for static methods used by bindings and will automatically register the enclosing class in the generated `.ifd`.
 
+Disclaimer: If you have more than one parameter, the first parameter will be the input of the binding in the player
+
 ## Parameters
 
 | Parameter | Type |
