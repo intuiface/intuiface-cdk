@@ -1,12 +1,16 @@
 /* eslint-disable prefer-arrow/prefer-arrow-functions */
-import 'reflect-metadata';
 import { IActionOptions } from './action';
 /**
  * Options to configure {@link Converter | `@Converter`} decorator.
  */
 export interface IConverterOptions extends IActionOptions
 {
-
+    /**
+     * The return type of the converter.
+     * If the converter returns a promise, the type of the resolved value should be specified.
+     * e.g `Promise<String>` should be specified as `String`.
+     */
+    returnType: any;
 }
 
 /**
@@ -18,9 +22,10 @@ export interface IConverterOptions extends IActionOptions
  * export class UppercaseBC
  * {
  *     @Converter({
- *         displayName: 'Uppercase',
- *         description: 'Convert text to uppercase.',
- *         validate: true
+ *         displayName: 'Uppercase', // display name of the converter
+ *         description: 'Convert text to uppercase.', // description of the converter
+ *         returnType: String, // return type of the converter 
+ *         validate: true // boolean for parameter validation
  *     })
  *     public static computeOutput(
  *         @Parameter({
@@ -70,7 +75,7 @@ export function Converter(options?: IConverterOptions)
             globalThis.intuiface_ifd_actions[targetName] = {};
         }
 
-        let returnType = Reflect.getMetadata('design:returntype', target, propertyKey);
+        let returnType = options?.returnType;
         returnType = returnType?.name.toString().toLowerCase() ?? 'string';
 
         const parameters = globalThis.intuiface_ifd_params[targetName][propertyKey] ?? {};

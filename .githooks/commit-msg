@@ -5,7 +5,7 @@
 
 const examples = "Valid message pattern: <TYPE>[(<SCOPE>)]!?: <SUBJECT> \n" +
   "Valid types : 'feat', 'feature', 'fix', 'perf', 'refactor', 'style', 'test', 'build', 'docs', 'chore', 'ci', 'revert', 'Merge', 'deps' \n" +
-  "Valid scopes: 'core', 'components', 'interface-asset', 'custom-asset', 'intuiface-cdk', 'cli', 'intuiface-cli', '*' \n" +
+  "Valid scopes: 'core', 'components', 'interface-asset', 'custom-asset', 'intuiface-cdk', 'cli', 'intuiface-cli', 'binding-converter', '*' \n" +
   "For more information, go to https://www.conventionalcommits.org/ \n" + 
   "-                                 \n";
 
