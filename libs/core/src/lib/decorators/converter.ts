@@ -18,6 +18,8 @@ export interface IConverterOptions extends IActionOptions
  *
  * Contrary to `@Asset`, this decorator is meant for static methods used by bindings and will automatically register the enclosing class in the generated `.ifd`.
  *
+ * Disclaimer: If you have more than one parameter, the first parameter will be the input of the binding in the player
+ *
  * @example ```ts
  * export class UppercaseBC
  * {
@@ -78,14 +80,16 @@ export function Converter(options?: IConverterOptions)
         let returnType = options?.returnType;
         returnType = returnType?.name.toString().toLowerCase() ?? 'string';
 
-        const parameters = globalThis.intuiface_ifd_params[targetName][propertyKey] ?? {};
+        // We need to reverse the parameters because they are stored in reverse order in the globalThis.intuiface_ifd_params object
+        let parameters = globalThis.intuiface_ifd_params[targetName][propertyKey];
+        parameters = Object.fromEntries(Object.entries(parameters).reverse());
         const converterDefinition: Record<string, unknown> = {
             'id': `${targetName}.${propertyKey.toString()}`,
             'if.converter': true,
             'title': options?.displayName ?? propertyKey.toString(),
             'description': options?.description,
             'path': propertyKey,
-            parameters,
+            'parameters': parameters,
             'response':{
                 $ref: returnType,
             }
