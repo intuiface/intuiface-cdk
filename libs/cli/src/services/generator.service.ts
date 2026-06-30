@@ -54,6 +54,19 @@ export function getPublishedPackageVersion(): string
 }
 
 // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
+export function getWorkspaceNodeVersion(): string
+{
+    return process.version.replace(/^v/, '');
+}
+
+// eslint-disable-next-line prefer-arrow/prefer-arrow-functions
+export function getWorkspaceNodeEngineRange(): string
+{
+    const [major] = getWorkspaceNodeVersion().split('.');
+    return `>=${major} <${Number(major) + 1}`;
+}
+
+// eslint-disable-next-line prefer-arrow/prefer-arrow-functions
 export function createWorkspacePackageJson(workspaceName: string): Record<string, unknown>
 {
     const version = getPublishedPackageVersion();
@@ -61,6 +74,9 @@ export function createWorkspacePackageJson(workspaceName: string): Record<string
         name: workspaceName,
         version: '1.0.0',
         private: true,
+        engines: {
+            node: getWorkspaceNodeEngineRange()
+        },
         scripts: {
             'build': 'npx intuiface-cli build --all',
             'build:debug': 'npx intuiface-cli build --all --debug'
