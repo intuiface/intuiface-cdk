@@ -1,4 +1,5 @@
 /* eslint-disable prefer-arrow/prefer-arrow-functions */
+/* eslint-disable camelcase */
 import 'reflect-metadata';
 import { IActionOptions } from './action';
 /**
@@ -80,7 +81,7 @@ export function Converter(options?: IConverterOptions)
             'title': options?.displayName ?? propertyKey.toString(),
             'description': options?.description,
             'path': propertyKey,
-            parameters,
+            'parameters': parameters,
             'response':{
                 $ref: returnType,
             }
