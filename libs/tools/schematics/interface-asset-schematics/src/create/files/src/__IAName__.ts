@@ -35,7 +35,7 @@ export class <%= IAName %> extends IntuifaceElement {
     /**
      * A private property example
      */
-    private _privateStr: string = null;
+    private _privateStr: string = '';
 
     //#endregion Private Properties
 
