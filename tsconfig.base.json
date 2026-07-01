@@ -14,7 +14,7 @@
         "target": "ES2022",
         "useDefineForClassFields": false,
         "typeRoots": ["node_modules/@types"],
-        "lib": ["es2018", "dom"],
+        "lib": ["es2020", "dom"],
         "paths": {
             "@intuiface/cli": ["libs/cli/src/cli.ts"],
             "@intuiface/components": ["libs/components/src/public-api.ts"],

@@ -3,5 +3,5 @@
   "dest": "../../dist/libs/core",
   "lib": {
     "entryFile": "src/public-api.ts"
-  }
+  },
 }
