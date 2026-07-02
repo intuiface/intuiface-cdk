@@ -3,6 +3,13 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { WorkspaceItem } from '../types.js';
 
+/**
+ * Minimum Node.js major version required by the Intuiface CLI and generated workspaces.
+ * This is the single source of truth — it drives .nvmrc content, package.json engines,
+ * and the startup version check in cli.ts.
+ */
+export const MIN_NODE_MAJOR = 22;
+
 // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
 export function renderWorkspaceItemSource(item: WorkspaceItem): string
 {
@@ -56,14 +63,15 @@ export function getPublishedPackageVersion(): string
 // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
 export function getWorkspaceNodeVersion(): string
 {
-    return process.version.replace(/^v/, '');
+    // Returns the pinned minimum major version so generated .nvmrc is stable
+    // regardless of which Node the developer happened to run the CLI with.
+    return `${MIN_NODE_MAJOR}`;
 }
 
 // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
 export function getWorkspaceNodeEngineRange(): string
 {
-    const [major] = getWorkspaceNodeVersion().split('.');
-    return `>=${major} <${Number(major) + 1}`;
+    return `>=${MIN_NODE_MAJOR}`;
 }
 
 // eslint-disable-next-line prefer-arrow/prefer-arrow-functions

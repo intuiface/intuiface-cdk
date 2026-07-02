@@ -6,6 +6,14 @@ import { runBuildCommand } from './commands/build.command.js';
 import { initializeWorkspace } from './commands/init.command.js';
 import { addInterfaceAsset, addBindingConverter } from './commands/add.command.js';
 import { runMigrateCommand } from './commands/migrate.command.js';
+import { MIN_NODE_MAJOR } from './services/generator.service.js';
+
+const nodeMajor = Number(process.version.replace(/^v/, '').split('.')[0]);
+if (nodeMajor < MIN_NODE_MAJOR)
+{
+    process.stderr.write(`Error: Intuiface CLI requires Node.js >= ${MIN_NODE_MAJOR}. Currently running ${process.version}.\n`);
+    process.exit(1);
+}
 
 const usage = 'Intuiface CLI helps you build interface assets for Intuiface.\nTo see help for a specific command, you can run:\n  intuiface-cli help <command>\n  intuiface-cli <command> --help';
 
