@@ -24,6 +24,16 @@ Name displayed in Composer.
 
 ***
 
+### returnType
+
+> **returnType**: `any`
+
+The return type of the converter.
+If the converter returns a promise, the type of the resolved value should be specified.
+e.g `Promise<String>` should be specified as `String`.
+
+***
+
 ### description?
 
 > `optional` **description?**: `string`

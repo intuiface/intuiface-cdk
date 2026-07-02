@@ -49,6 +49,9 @@ export function migrateProject(): void
                 tsconfig.compilerOptions.outDir = `./dist/${iaName}`;
                 tsconfig.compilerOptions.target = 'ES2022';
                 tsconfig.compilerOptions.useDefineForClassFields = false;
+                tsconfig.compilerOptions.rootDir = '.';
+                tsconfig.compilerOptions.moduleResolution = 'bundler';
+                delete tsconfig.compilerOptions.downlevelIteration;
                 tsconfig.include = ['**/src/**/*.ts'];
                 fs.writeFileSync(`${dir}/tsconfig.json`, JSON.stringify(tsconfig, null, 2));
                 spinner.succeed();

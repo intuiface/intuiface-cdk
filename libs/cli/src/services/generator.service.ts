@@ -29,6 +29,7 @@ export function buildWorkspaceTsConfig(): string
         compilerOptions: {
             experimentalDecorators: true,
             emitDecoratorMetadata: true,
+            rootDir: './src',
             outDir: './dist',
             noImplicitAny: true,
             target: 'ES2022',
@@ -39,8 +40,7 @@ export function buildWorkspaceTsConfig(): string
             allowSyntheticDefaultImports: true,
             esModuleInterop: true,
             declaration: false,
-            downlevelIteration: true,
-            moduleResolution: 'node',
+            moduleResolution: 'bundler',
             importHelpers: true
         },
         exclude: ['node_modules'],

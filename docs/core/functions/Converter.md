@@ -10,6 +10,8 @@ The `@Converter` decorator enables you to declare a binding converter method tha
 
 Contrary to `@Asset`, this decorator is meant for static methods used by bindings and will automatically register the enclosing class in the generated `.ifd`.
 
+Disclaimer: If you have more than one parameter, the first parameter will be the input of the binding in the player
+
 ## Parameters
 
 | Parameter | Type |
@@ -26,9 +28,10 @@ Contrary to `@Asset`, this decorator is meant for static methods used by binding
 export class UppercaseBC
 \{
     @Converter(\{
-        displayName: 'Uppercase',
-        description: 'Convert text to uppercase.',
-        validate: true
+        displayName: 'Uppercase', // display name of the converter
+        description: 'Convert text to uppercase.', // description of the converter
+        returnType: String, // return type of the converter 
+        validate: true // boolean for parameter validation
     \})
     public static computeOutput(
         @Parameter(\{
