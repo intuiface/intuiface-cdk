@@ -4,7 +4,7 @@ import chalk from 'chalk';
 import ora from 'ora';
 import { askWorkspaceInitQuestions } from '../services/prompt.service.js';
 import { addWorkspaceItem } from '../services/item.service.js';
-import { buildWorkspaceTsConfig, createWorkspacePackageJson, getWorkspaceNodeVersion } from '../services/generator.service.js';
+import { buildWorkspaceTsConfig, createWorkspacePackageJson, getWorkspaceNodeVersion, scaffoldWorkspaceTemplate } from '../services/generator.service.js';
 import { getWorkspaceConfigFileName } from '../services/workspace.service.js';
 import { execPromise, isExecException } from '../utils/exec.js';
 
@@ -61,11 +61,13 @@ function initializeWorkspaceFiles(workspaceName: string): void
     fs.writeFileSync(path.join(dir, 'tsconfig.json'), buildWorkspaceTsConfig(), 'utf8');
     console.log(`${chalk.blue('UPDATE')} tsconfig.json`);
 
-    fs.writeFileSync(path.join(dir, '.gitignore'), 'dist/\ntmp/\nnode_modules/\n', 'utf8');
-    console.log(`${chalk.blue('CREATE')} .gitignore`);
-
     fs.writeFileSync(path.join(dir, '.nvmrc'), `${getWorkspaceNodeVersion()}\n`, 'utf8');
     console.log(`${chalk.blue('CREATE')} .nvmrc`);
+
+    for (const generatedFile of scaffoldWorkspaceTemplate(workspaceName, dir))
+    {
+        console.log(`${chalk.green('CREATE')} ${generatedFile.relativePath} (${generatedFile.bytes} bytes)`);
+    }
 
     fs.ensureDirSync(path.join(dir, 'src', 'interface-assets'));
     fs.ensureDirSync(path.join(dir, 'src', 'binding-converters'));

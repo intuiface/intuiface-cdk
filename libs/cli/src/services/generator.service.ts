@@ -10,6 +10,11 @@ import { WorkspaceItem } from '../types.js';
  */
 export const MIN_NODE_MAJOR = 22;
 
+interface TemplateRenderContext
+{
+    [key: string]: string;
+}
+
 interface GeneratedTemplateFile
 {
     relativePath: string;
@@ -43,14 +48,27 @@ export function scaffoldWorkspaceItemFromTemplate(item: WorkspaceItem, destinati
     }
 
     fs.ensureDirSync(destinationDir);
-    return copyTemplateDirectory(templateDir, destinationDir, item, '');
+    return copyTemplateDirectory(templateDir, destinationDir, createWorkspaceItemTemplateContext(item), '');
+}
+
+// eslint-disable-next-line prefer-arrow/prefer-arrow-functions
+export function scaffoldWorkspaceTemplate(workspaceName: string, destinationDir: string): GeneratedTemplateFile[]
+{
+    const templateDir = getWorkspaceTemplateDirectory();
+    if (!fs.existsSync(templateDir))
+    {
+        throw new Error(`Workspace template directory was not found at '${templateDir}'.`);
+    }
+
+    fs.ensureDirSync(destinationDir);
+    return copyTemplateDirectory(templateDir, destinationDir, createWorkspaceTemplateContext(workspaceName), '');
 }
 
 // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
 function copyTemplateDirectory(
     sourceDir: string,
     destinationDir: string,
-    item: WorkspaceItem,
+    context: TemplateRenderContext,
     relativeDir: string
 ): GeneratedTemplateFile[]
 {
@@ -58,7 +76,7 @@ function copyTemplateDirectory(
 
     for (const sourceName of fs.readdirSync(sourceDir))
     {
-        const renderedName = renderTemplateValue(sourceName, item);
+        const renderedName = renderTemplateValue(sourceName, context);
         const sourcePath = path.join(sourceDir, sourceName);
         const relativePath = path.join(relativeDir, renderedName);
         const destinationPath = path.join(destinationDir, renderedName);
@@ -66,17 +84,17 @@ function copyTemplateDirectory(
         if (fs.statSync(sourcePath).isDirectory())
         {
             fs.ensureDirSync(destinationPath);
-            generatedFiles.push(...copyTemplateDirectory(sourcePath, destinationPath, item, relativePath));
+            generatedFiles.push(...copyTemplateDirectory(sourcePath, destinationPath, context, relativePath));
             continue;
         }
 
         if (isTextTemplateFile(sourcePath))
         {
             const sourceText = fs.readFileSync(sourcePath, 'utf8');
-            const renderedText = renderTemplateValue(sourceText, item);
+            const renderedText = renderTemplateValue(sourceText, context);
             fs.writeFileSync(destinationPath, renderedText, 'utf8');
             generatedFiles.push({
-                relativePath,
+                relativePath: relativePath,
                 bytes: Buffer.byteLength(renderedText, 'utf8')
             });
             continue;
@@ -84,12 +102,31 @@ function copyTemplateDirectory(
 
         fs.copyFileSync(sourcePath, destinationPath);
         generatedFiles.push({
-            relativePath,
+            relativePath: relativePath,
             bytes: fs.statSync(destinationPath).size
         });
     }
 
     return generatedFiles;
+}
+
+// eslint-disable-next-line prefer-arrow/prefer-arrow-functions
+function createWorkspaceItemTemplateContext(item: WorkspaceItem): TemplateRenderContext
+{
+    return {
+        ITEM_NAME: item.name,
+        ITEM_CATEGORY: item.category ?? ''
+    };
+}
+
+// eslint-disable-next-line prefer-arrow/prefer-arrow-functions
+function createWorkspaceTemplateContext(workspaceName: string): TemplateRenderContext
+{
+    return {
+        WORKSPACE_NAME: workspaceName,
+        NODE_VERSION: getWorkspaceNodeVersion(),
+        NODE_ENGINE_RANGE: getWorkspaceNodeEngineRange()
+    };
 }
 
 // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
@@ -100,6 +137,13 @@ function getWorkspaceItemTemplateDirectory(itemType: WorkspaceItem['type']): str
 }
 
 // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
+function getWorkspaceTemplateDirectory(): string
+{
+    const serviceDirectory = path.dirname(fileURLToPath(import.meta.url));
+    return path.resolve(serviceDirectory, '..', 'templates', 'workspace');
+}
+
+// eslint-disable-next-line prefer-arrow/prefer-arrow-functions
 function isTextTemplateFile(sourcePath: string): boolean
 {
     const extension = path.extname(sourcePath).toLowerCase();
@@ -107,11 +151,16 @@ function isTextTemplateFile(sourcePath: string): boolean
 }
 
 // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
-function renderTemplateValue(value: string, item: WorkspaceItem): string
+function renderTemplateValue(value: string, context: TemplateRenderContext): string
 {
-    return value
-        .replace(/__ITEM_NAME__/g, item.name)
-        .replace(/__ITEM_CATEGORY__/g, item.category ?? '');
+    let renderedValue = value;
+
+    for (const [key, replacement] of Object.entries(context))
+    {
+        renderedValue = renderedValue.replace(new RegExp(`__${key}__`, 'g'), replacement);
+    }
+
+    return renderedValue;
 }
 
 // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
@@ -180,7 +229,8 @@ export function createWorkspacePackageJson(workspaceName: string): Record<string
         },
         scripts: {
             'build': 'npx intuiface-cli build --all',
-            'build:debug': 'npx intuiface-cli build --all --debug'
+            'build:debug': 'npx intuiface-cli build --all --debug',
+            'lint': 'npx eslint -c .eslintrc.js --ext .ts . --ignore-pattern node_modules --ignore-pattern dist'
         },
         dependencies: {
             '@intuiface/cli': version,
@@ -188,8 +238,16 @@ export function createWorkspacePackageJson(workspaceName: string): Record<string
             'tslib': '^2.6.2'
         },
         devDependencies: {
+            '@stylistic/eslint-plugin': '^1.8.1',
+            '@typescript-eslint/eslint-plugin': '^7.18.0',
+            '@typescript-eslint/eslint-plugin-tslint': '^5.10.1',
+            '@typescript-eslint/parser': '^7.18.0',
             '@types/node': '^22.10.1',
+            'eslint': '^8.57.0',
+            'eslint-plugin-import': '^2.32.0',
+            'eslint-plugin-prefer-arrow': '^1.2.3',
             'ts-loader': '^9.5.1',
+            'tslint': '6.1.3',
             'typescript': '^5.8.0',
             'webpack': '^5.99.0',
             'webpack-cli': '^6.0.1'
