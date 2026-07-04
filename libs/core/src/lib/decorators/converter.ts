@@ -54,35 +54,41 @@ export function Converter(options?: IConverterOptions)
         descriptor: PropertyDescriptor
     ): void =>
     {
+        const globalThisAny = globalThis as any;
         const targetName = typeof target === 'function'
             ? target.name
             : target.constructor.name;
 
-        if (globalThis.intuiface_ifd_classes.indexOf(targetName) === -1)
+        if (options?.category && (globalThisAny.iaCategory == null || globalThisAny.iaCategory === ''))
         {
-            globalThis.intuiface_ifd_classes.push(targetName);
+            globalThisAny.iaCategory = options.category;
         }
 
-        if (!globalThis.intuiface_ifd_properties[targetName])
+        if (globalThisAny.intuiface_ifd_classes.indexOf(targetName) === -1)
         {
-            globalThis.intuiface_ifd_properties[targetName] = {};
+            globalThisAny.intuiface_ifd_classes.push(targetName);
         }
 
-        if (!globalThis.intuiface_ifd_params[targetName])
+        if (!globalThisAny.intuiface_ifd_properties[targetName])
         {
-            globalThis.intuiface_ifd_params[targetName] = {};
+            globalThisAny.intuiface_ifd_properties[targetName] = {};
         }
 
-        if (!globalThis.intuiface_ifd_actions[targetName])
+        if (!globalThisAny.intuiface_ifd_params[targetName])
         {
-            globalThis.intuiface_ifd_actions[targetName] = {};
+            globalThisAny.intuiface_ifd_params[targetName] = {};
+        }
+
+        if (!globalThisAny.intuiface_ifd_actions[targetName])
+        {
+            globalThisAny.intuiface_ifd_actions[targetName] = {};
         }
 
         let returnType = options?.returnType;
         returnType = returnType?.name.toString().toLowerCase() ?? 'string';
 
         // We need to reverse the parameters because they are stored in reverse order in the globalThis.intuiface_ifd_params object
-        let parameters = globalThis.intuiface_ifd_params[targetName][propertyKey];
+        let parameters = globalThisAny.intuiface_ifd_params[targetName][propertyKey];
         parameters = Object.fromEntries(Object.entries(parameters).reverse());
         const converterDefinition: Record<string, unknown> = {
             'id': `${targetName}.${propertyKey.toString()}`,
@@ -95,6 +101,6 @@ export function Converter(options?: IConverterOptions)
                 $ref: returnType,
             }
         };
-        globalThis.intuiface_ifd_actions[targetName][propertyKey] = converterDefinition;
+        globalThisAny.intuiface_ifd_actions[targetName][propertyKey] = converterDefinition;
     };
 }

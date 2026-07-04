@@ -12,7 +12,6 @@ interface DetectedItem
     name: string;
     type: BuildType;
     entry: string;
-    category: string;
     icon?: string;
 }
 
@@ -110,9 +109,7 @@ function detectItemFromBuildScript(buildScript: string, dir: string): DetectedIt
 
     // Entry: standalone schematics projects always place the file at src/<name>.ts
     const entry = `src/${name}.ts`;
-    const category = 'Custom';
-
-    return { name, type, entry, category, icon };
+    return { name, type, entry, icon };
 }
 
 // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
@@ -137,19 +134,12 @@ function migrateStandaloneToWorkspace(dir: string): void
             );
         }
 
-        // Pick up category from package.json intuiface.category if present (binding-converter schematics write it)
-        const categoryFromPackage: string = packageJson?.intuiface?.category;
-        if (categoryFromPackage)
-        {
-            detected.category = categoryFromPackage;
-        }
-
         spinner.succeed(`Detected ${detected.type} '${detected.name}'`);
 
         spinner.start(`Creating ${getWorkspaceConfigFileName()}`);
         const workspaceName: string = packageJson.name ?? path.basename(dir);
-        const { name, type, entry, category, icon } = detected;
-        const workspaceItem: WorkspaceItem = { name, type, entry, category, icon };
+        const { name, type, entry, icon } = detected;
+        const workspaceItem: WorkspaceItem = { name, type, entry, icon };
         const workspaceConfig: WorkspaceConfig = {
             version: 1,
             name: workspaceName,
@@ -220,8 +210,7 @@ function migratePreV2(dir: string): void
             const workspaceItem: WorkspaceItem = {
                 name: iaName,
                 type: 'interface-asset',
-                entry: `src/${iaName}.ts`,
-                category: 'Custom'
+                entry: `src/${iaName}.ts`
             };
             const workspaceConfig: WorkspaceConfig = {
                 version: 1,

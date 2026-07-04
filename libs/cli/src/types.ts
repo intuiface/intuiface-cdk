@@ -7,7 +7,6 @@ export interface WorkspaceItem
     name: string;
     type: BuildType;
     entry: string;
-    category?: string;
     icon?: string;
 }
 
@@ -25,7 +24,6 @@ export interface BuildTarget
     entryFile: string;
     outputDir: string;
     icon?: string;
-    category?: string;
     useGeneratedWebpackConfig: boolean;
 }
 

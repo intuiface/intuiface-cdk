@@ -21,6 +21,11 @@ interface GeneratedTemplateFile
     bytes: number;
 }
 
+interface WorkspaceItemTemplateOptions
+{
+    category?: string;
+}
+
 const TEXT_TEMPLATE_EXTENSIONS = new Set([
     '.ts',
     '.tsx',
@@ -39,7 +44,11 @@ const TEXT_TEMPLATE_EXTENSIONS = new Set([
 ]);
 
 // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
-export function scaffoldWorkspaceItemFromTemplate(item: WorkspaceItem, destinationDir: string): GeneratedTemplateFile[]
+export function scaffoldWorkspaceItemFromTemplate(
+    item: WorkspaceItem,
+    destinationDir: string,
+    options?: WorkspaceItemTemplateOptions
+): GeneratedTemplateFile[]
 {
     const templateDir = getWorkspaceItemTemplateDirectory(item.type);
     if (!fs.existsSync(templateDir))
@@ -48,7 +57,7 @@ export function scaffoldWorkspaceItemFromTemplate(item: WorkspaceItem, destinati
     }
 
     fs.ensureDirSync(destinationDir);
-    return copyTemplateDirectory(templateDir, destinationDir, createWorkspaceItemTemplateContext(item), '');
+    return copyTemplateDirectory(templateDir, destinationDir, createWorkspaceItemTemplateContext(item, options), '');
 }
 
 // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
@@ -111,11 +120,11 @@ function copyTemplateDirectory(
 }
 
 // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
-function createWorkspaceItemTemplateContext(item: WorkspaceItem): TemplateRenderContext
+function createWorkspaceItemTemplateContext(item: WorkspaceItem, options?: WorkspaceItemTemplateOptions): TemplateRenderContext
 {
     return {
         ITEM_NAME: item.name,
-        ITEM_CATEGORY: item.category ?? ''
+        ITEM_CATEGORY: options?.category ?? 'Custom'
     };
 }
 

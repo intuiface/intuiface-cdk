@@ -1,4 +1,3 @@
-import { InitItemOptions } from '../types.js';
 import { addWorkspaceItem } from '../services/item.service.js';
 
 // eslint-disable-next-line prefer-arrow/prefer-arrow-functions

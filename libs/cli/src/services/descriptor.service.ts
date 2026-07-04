@@ -97,14 +97,13 @@ export function buildIFDFile(
     iaName: string,
     buildType: BuildType,
     schemas: Record<string, unknown>,
-    resources: Record<string, any>,
-    categoryOverride?: string
+    resources: Record<string, any>
 ): Record<string, unknown>
 {
     const globalThisAny = globalThis as any;
-    const category = categoryOverride ?? (buildType === 'binding-converter'
+    const category = buildType === 'binding-converter'
         ? getWorkspaceCategory() ?? globalThisAny.iaCategory
-        : globalThisAny.iaCategory);
+        : globalThisAny.iaCategory;
 
     return {
         'version': `v1.0.${Date.now()}`,

@@ -5,8 +5,10 @@ import { validateGeneratedName } from '../utils/validators.js';
 import { scaffoldWorkspaceItemFromTemplate } from './generator.service.js';
 import { readWorkspaceConfig, writeWorkspaceConfig, getWorkspaceConfigFileName } from './workspace.service.js';
 
+type WorkspaceItemCreationInput = WorkspaceItem & { category?: string };
+
 // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
-export function addWorkspaceItem(item: WorkspaceItem): void
+export function addWorkspaceItem(item: WorkspaceItemCreationInput): void
 {
     validateGeneratedName(item.name);
 
@@ -21,12 +23,17 @@ export function addWorkspaceItem(item: WorkspaceItem): void
     const relativeFolder = path.join('src', item.type === 'interface-asset' ? 'interface-assets' : 'binding-converters', item.name);
     const relativeEntry = path.join(relativeFolder, `${item.name}.ts`).replace(/\\/g, '/');
     const itemConfig: WorkspaceItem = {
-        ...item,
+        name: item.name,
+        type: item.type,
         entry: relativeEntry
     };
+    if (item.icon)
+    {
+        itemConfig.icon = item.icon;
+    }
 
     const itemDirectory = path.join(dir, relativeFolder);
-    const generatedFiles = scaffoldWorkspaceItemFromTemplate(itemConfig, itemDirectory);
+    const generatedFiles = scaffoldWorkspaceItemFromTemplate(itemConfig, itemDirectory, { category: item.category });
     const hasEntryFile = generatedFiles.some((generatedFile) => generatedFile.relativePath === `${item.name}.ts`);
     if (!hasEntryFile)
     {

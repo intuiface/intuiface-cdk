@@ -74,7 +74,6 @@ function toBuildTarget(item: WorkspaceItem, iconOverride?: string): BuildTarget
         entryFile: item.entry,
         outputDir: path.join('dist', item.name),
         icon: iconOverride ?? item.icon,
-        category: item.category,
         useGeneratedWebpackConfig: true
     };
 }
@@ -135,7 +134,7 @@ async function buildTarget(target: BuildTarget, debug?: boolean): Promise<void>
         const resources = buildResources(globalThisAny.intuiface_ifd_classes, target.buildType);
         spinner.succeed('Build Resources');
         // eslint-disable-next-line camelcase
-        globalThisAny.intuiface_ifd_file = buildIFDFile(target.name, target.buildType, schemas, resources, target.category);
+        globalThisAny.intuiface_ifd_file = buildIFDFile(target.name, target.buildType, schemas, resources);
 
         const icon = resolveBuildIcon(target.buildType, target.icon, dir);
         let iconName = '';
