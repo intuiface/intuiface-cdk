@@ -230,7 +230,7 @@ export function createWorkspacePackageJson(workspaceName: string): Record<string
         scripts: {
             'build': 'npx intuiface-cli build --all',
             'build:debug': 'npx intuiface-cli build --all --debug',
-            'lint': 'npx eslint -c .eslintrc.js --ext .ts . --ignore-pattern node_modules --ignore-pattern dist'
+            'lint': 'npx eslint -c .eslintrc.cjs --ext .ts . --ignore-pattern node_modules --ignore-pattern dist'
         },
         dependencies: {
             '@intuiface/cli': version,
@@ -239,15 +239,13 @@ export function createWorkspacePackageJson(workspaceName: string): Record<string
         },
         devDependencies: {
             '@stylistic/eslint-plugin': '^1.8.1',
-            '@typescript-eslint/eslint-plugin': '^7.18.0',
-            '@typescript-eslint/eslint-plugin-tslint': '^5.10.1',
-            '@typescript-eslint/parser': '^7.18.0',
+            '@typescript-eslint/eslint-plugin': '^8.61.1',
+            '@typescript-eslint/parser': '^8.61.1',
             '@types/node': '^22.10.1',
             'eslint': '^8.57.0',
             'eslint-plugin-import': '^2.32.0',
             'eslint-plugin-prefer-arrow': '^1.2.3',
             'ts-loader': '^9.5.1',
-            'tslint': '6.1.3',
             'typescript': '^5.8.0',
             'webpack': '^5.99.0',
             'webpack-cli': '^6.0.1'

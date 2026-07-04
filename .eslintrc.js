@@ -10,7 +10,16 @@ module.exports = {
         '@typescript-eslint',
         '@stylistic'
     ],
-    ignorePatterns: ["**/config/*.js", "**/.lighthouse/*.js", "node_modules/*", "**/node_modules/*", "**/dist/*", "**/*.mjs", ".eslintrc.js"],
+    ignorePatterns: [
+        "**/config/*.js",
+        "**/.lighthouse/*.js",
+        "**/node_modules/*",
+        "**/dist/*",
+        "tmp/**",
+        "libs/cli/src/templates/**",
+        "libs/tools/schematics/**/src/create/files/**",
+        "libs/tools/schematics/**/src/workspace-template/**"
+    ],
     overrides: [
         {
             files: ["*.ts", "*.tsx", "*.js", "*.jsx"],
@@ -46,6 +55,7 @@ module.exports = {
                 "@typescript-eslint/member-ordering": "off",
                 "@typescript-eslint/no-empty-function": "off",
                 "@typescript-eslint/no-empty-interface": "off",
+                "@typescript-eslint/no-empty-object-type": "off",
                 "@typescript-eslint/no-explicit-any": "off",
                 "@typescript-eslint/parameter-properties": "off",
                 "@typescript-eslint/no-use-before-define": "off",
@@ -58,17 +68,13 @@ module.exports = {
                 "@typescript-eslint/no-unsafe-argument": "off",
                 "@typescript-eslint/adjacent-overload-signatures": "error",
                 "@typescript-eslint/array-type": "error",
-                "@typescript-eslint/ban-types": [
-                    "error",
-                    {
-                        "extendDefaults": true,
-                        "types": {
-                            "Function": false
-                        }
-                    }
-                ],
                 "@typescript-eslint/naming-convention": [
                     "error",
+                    {
+                        "selector": "variable",
+                        "modifiers": ["const"],
+                        "format": ["camelCase", "UPPER_CASE"]
+                    },
                     {
                         "selector": 'variable',
                         "format": ['camelCase']

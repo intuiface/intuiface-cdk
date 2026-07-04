@@ -20,7 +20,6 @@ module.exports = {
     },
     plugins: [
         '@typescript-eslint',
-        '@typescript-eslint/tslint',
         '@stylistic',
         'import',
         'prefer-arrow'
@@ -29,12 +28,13 @@ module.exports = {
     rules: {
         '@typescript-eslint/adjacent-overload-signatures': 'error',
         '@typescript-eslint/array-type': 'error',
-        '@typescript-eslint/ban-types': [
+        '@typescript-eslint/no-restricted-types': [
             'error',
             {
-                extendDefaults: true,
                 types: {
-                    Function: false
+                    Function: {
+                        message: 'Use a specific function type instead of the broad Function type.'
+                    }
                 }
             }
         ],
@@ -236,27 +236,6 @@ module.exports = {
             'never'
         ],
         'use-isnan': 'error',
-        'valid-typeof': 'off',
-        '@typescript-eslint/tslint/config': [
-            'error',
-            {
-                rules: {
-                    'completed-docs': [true, 'classes', 'enums', 'functions', 'methods', 'namespaces'],
-                    'jsdoc-format': [
-                        true,
-                        'check-multiline-start'
-                    ],
-                    'no-reference-import': true,
-                    whitespace: [
-                        true,
-                        'check-branch',
-                        'check-decl',
-                        'check-operator',
-                        'check-separator',
-                        'check-typecast'
-                    ]
-                }
-            }
-        ]
+        'valid-typeof': 'off'
     }
 };
