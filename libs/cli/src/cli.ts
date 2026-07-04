@@ -27,10 +27,10 @@ ifdCmd.command('build')
     .description('Build an interface asset or binding converter and generate its descriptor file (*.ifd) to be imported into Intuiface Composer.')
     .option('-n, --name <name>', 'name of the interface asset or binding converter to build.')
     .option('-a, --all', 'build all configured workspace items.')
-    .option('-t, --type <type>', 'asset type to build: interface-asset or binding-converter.', 'interface-asset')
-    .option('-i, --icon [icon]', 'relative path to an icon. Prefer setting the icon in workspace config with `add` or `init`.')
     .option('-d, --debug', 'build in debug mode.')
-    .addHelpText('afterAll', '\nExamples:\n  intuiface-cli build --name MyCustomIA\n  intuiface-cli build --name MyBindingConverter --type binding-converter\n  intuiface-cli build --all\n')
+    .option('-t, --type <type>', '(deprecated) asset type to build. Ignored in workspace mode — the type is read from intuiface.workspace.json. Kept for retro-compatibility only.', 'interface-asset')
+    .option('-i, --icon [icon]', '(deprecated) relative path to an icon. Prefer setting the icon in workspace config with `add` or `init`.')
+    .addHelpText('afterAll', '\nExamples:\n  intuiface-cli build --name MyCustomIA\n  intuiface-cli build --name MyBindingConverter\n  intuiface-cli build --all\n')
     .action((options) => runBuildCommand(options));
 
 ifdCmd.command('init')

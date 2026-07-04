@@ -98,8 +98,8 @@ Options:
 |---|---|
 | `-n, --name <name>` | Name of the workspace item to build. |
 | `-a, --all` | Build all items from `intuiface.workspace.json`. |
-| `-t, --type <type>` | Build type: `interface-asset` or `binding-converter`. |
-| `-i, --icon [icon]` | Override icon path for build output. |
+| `-t, --type <type>` | **(deprecated)** Asset type. Ignored in workspace mode — the type is read from `intuiface.workspace.json`. Kept for retro-compatibility only. |
+| `-i, --icon [icon]` | **(deprecated)** Relative path to an icon. Prefer setting the icon in workspace config with `add` or `init`. |
 | `-d, --debug` | Build in debug mode. |
 | `-h, --help` | Show command help. |
 
