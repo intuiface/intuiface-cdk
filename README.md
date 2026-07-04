@@ -6,37 +6,73 @@
 
 # Intuiface CDK
 
-This CDK enables you to create TypeScript-based interface assets or binding converter for Intuiface experiences. For more about Intuiface, visit https://www.intuiface.com/
+This CDK enables you to create TypeScript-based interface assets and binding converters for Intuiface experiences. For more about Intuiface, visit https://www.intuiface.com/
 
 ## Table of contents
 
-- [Quick Start](#quick-start)
+- [Prerequisites](#prerequisites)
 - [Documentation](#documentation)
 - [For CDK developers](#for-cdk-developers)
 - [Help](#help)
 
-## Quick Start
+## Prerequisites
 
-To develop your own interface asset or binding converter, please make sure you have installed:
-- [NodeJS](https://nodejs.org/) so you can use NPM to manage your project’s dependencies. We recommend using the version 22 LTS.
-- [Visual Studio Code](https://code.visualstudio.com/) to code, build, and test your project
-- [Angular Schematics CLI](https://www.npmjs.com/package/@angular-devkit/schematics-cli). Install it using NPM:<br> ```npm install -g @angular-devkit/schematics-cli```
+To develop your own interface assets or binding converters, please make sure you have installed:
+- [NodeJS](https://nodejs.org/) so you can use npm to manage your project dependencies. We recommend version 22 LTS.
+- [Visual Studio Code](https://code.visualstudio.com/) to code, build, and test your project.
 
 ## Documentation
 
-#### For Interface Asset
+### Initialize a workspace
 
-  - You can follow the documentation here: [Create an Interface Asset](./libs/tools/schematics/interface-asset-schematics/README.md)
+Create and enter a new folder:
 
-#### For Binding Converter
+```bash
+mkdir my-intuiface-workspace
+cd my-intuiface-workspace
+```
+Install [`intuiface-cli`](./libs/cli/README.md):
 
-  - You can follow the documentation here: [Create a Binding Converter](./libs/tools/schematics/binding-converter-schematics/README.md)
+```bash
+npm install @intuiface/cli
+```
 
+Run interactive initialization:
 
-More information about specific development syntax is here: [Intuiface Core](./libs/core/README.md)
+```bash
+npx intuiface-cli init
+```
 
-Documentation about Intuiface CLI (`@intuiface/cli`) used to build interface asset: [`intuiface-cli`](./libs/cli/README.md)
+The CLI will prompt for:
+- workspace name,
+- first item type,
+- first item name,
+- category
 
+### Add new items
+
+The interactive `init` flow creates the first item for you.
+
+Then you can add other interface assets or binding converters in your workspace:
+
+```bash
+npx intuiface-cli add interface-asset -n MyInterfaceAsset -c Custom
+npx intuiface-cli add binding-converter -n MyBindingConverter -c Custom
+```
+
+Build everything in the workspace:
+
+```bash
+npx intuiface-cli build --all
+```
+
+### Additional references
+
+- More information about specific development syntax, API/decorator reference: [Intuiface Core](./libs/core/README.md)
+- Main CLI workflow and commands: [intuiface-cli](./libs/cli/README.md)
+- Legacy schematics (deprecated):
+  - [Interface Asset Schematics](./libs/tools/schematics/interface-asset-schematics/README.md)
+  - [Binding Converter Schematics](./libs/tools/schematics/binding-converter-schematics/README.md)
 
 ## For CDK developers 
 

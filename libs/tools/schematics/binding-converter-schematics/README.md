@@ -5,33 +5,45 @@
 </p>
 
 # Binding Converter Schematics
-This article describes how to design a binding converter, build it, and generate an IFD for use in Intuiface Composer.
+This package is deprecated. Please use the CLI workflow (`@intuiface/cli`) for new projects.
+
+This article explains the deprecation status and points to the CLI replacement for creating and building binding converters.
 
 ## Table of contents
 
 - [Prerequisites](#prerequisites)
-- [Install](#install)
-- [Usage](#usage)
+- [CLI replacement](#cli-replacement)
+- [Legacy usage (deprecated)](#legacy-usage-deprecated)
 - [Help](#help)
 
 ## Prerequisites
 
 - [NodeJS](https://nodejs.org/) so you can use NPM to manage your project's dependencies
 - [Visual Studio Code](https://code.visualstudio.com/) to code, build, and test your project
-- [Angular Schematics CLI](https://www.npmjs.com/package/@angular-devkit/schematics-cli). Install it using NPM:  
-`npm install -g @angular-devkit/schematics-cli`
 
-## Usage
-First, inside a new folder, install the `binding-converter` schematics:
+## CLI replacement
+
+Use `intuiface-cli` to initialize and manage a workspace:
+
+```bash
+mkdir my-intuiface-workspace
+cd my-intuiface-workspace
+npx intuiface-cli init -n my-intuiface-workspace
+npx intuiface-cli add binding-converter -n MyBindingConverter -c Custom
+npx intuiface-cli build --all
+```
+
+CLI documentation: [/libs/cli/README.md](/libs/cli/README.md)
+
+## Legacy usage (deprecated)
+
+If you still maintain existing schematics-based projects, the old flow remains:
+
 ```
 npm install @intuiface/binding-converter
-```
-
-Then initialize your binding converter workspace by using the schematics:
-```
 schematics @intuiface/binding-converter:create
 ```
-It will prompt you for the binding converter name and category, then create all files.
+It prompts for the binding converter name and category, then creates files.
 
 Please use only alphanumeric characters in the name of your binding converter (no "-", no special characters, etc). The schematics will accept it but may fail when you try to build your project.
 
@@ -42,10 +54,14 @@ You can modify the name of the converter function,
 
 Develop your binding converter using the generated skeleton or read the documentation for [Intuiface Core](/docs/core/README.md), especially the [`@Converter`](/docs/core/functions/Converter.md) and [`@Parameter`](/docs/core/functions/Parameter.md) decorators.
 
-Then run `npm run build` to build for production or `npm run build:debug` to debug your binding converter. You can use the [Command Line](/libs/cli/README.md).
+Then run `npm run build` to build for production or `npm run build:debug` to debug your binding converter.
 
 ## Migrate project (<2.x) to use `intuiface-cli`
-Intuiface CDK v2.0.0 introduce a new command line tool [`intuiface-cli`](/libs/cli/README.md) to better handle building interface assets and binding converters and generating descriptor files. You can migrate your old project to use the new CLI by following the [migration guide](/libs/cli/README.md#migration-to-v2)
+Intuiface CDK v2.0.0 introduced [`intuiface-cli`](/libs/cli/README.md) to handle workspace initialization, item creation, and descriptor generation. You can migrate old projects with:
+
+```bash
+npx intuiface-cli migrate
+```
 
 ## Help
 

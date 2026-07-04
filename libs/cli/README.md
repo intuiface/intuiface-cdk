@@ -1,71 +1,158 @@
 # intuiface-cli
 
-Intuiface CLI is a command line tool that helps you build Intuiface interface assets and binding converters.  
-This CLI generates an Intuiface Descriptor (`*.ifd`) file and builds the output bundle to be imported into Intuiface Composer.
+Intuiface CLI is the recommended workflow to create, manage, and build Intuiface interface assets and binding converters.
 
-## Usage: 
-Command to build an Interface Asset:
-```sh 
-npx intuiface-cli build -n IA_File_Name
+It can:
+- initialize a workspace,
+- add new workspace items,
+- build one or all items,
+- generate Intuiface Descriptor (`*.ifd`) files,
+- migrate older (<2.x) projects.
+
+## Quick Start
+
+Create and enter a workspace folder:
+
+```bash
+mkdir my-intuiface-workspace
+cd my-intuiface-workspace
 ```
 
-Command to build a Binding Converter:
-```sh
-npx intuiface-cli build -n BC_File_Name -t binding-converter
+Install [`intuiface-cli`](./libs/cli/README.md):
+
+```bash
+npm install @intuiface/cli
 ```
 
+Initialize interactively:
 
-| Option            | Description                                                                                     |
-|--------------------|-------------------------------------------------------------------------------------------------|
-| `-n, --name <name>` | Name of the interface asset's or binding converter's main file in the `src/*` folder (without extension).             |
-| `-t, --type <type>` | Asset type to build: `interface-asset` or `binding-converter`. Default: `interface-asset`.    |
-| `-i, --icon [icon]` | Path to the icon of the IA or BC displayed in Composer Interface Asset panel.                        |
-| `-d, --debug`       | Build in debug mode.                                                                          |
-| `-h, --help`        | Display help for the command.                                                                 |
-
-To see more usage information, use the `help` command:
-```
-npx intuiface-cli help
-npx intuiface-cli help <command>
+```bash
+npx intuiface-cli init
 ```
 
-### Adding an icon
-If you want to add an icon to your IA or BC, add an image in your project and reference its path in the `package.json` file editing the `build` script.
+Or initialize non-interactively:
 
-`"build": "npx intuiface-cli build -n [IA_File_Name|BC_File_Name] -i MyIcon.png` 
-
-or
-
-`"build": "npx intuiface-cli build -n [IA_File_Name|BC_File_Name] -i ./icons/MyIcon.png`
-
-then run command 
-```sh
-npm run build
+```bash
+npx intuiface-cli init -n my-intuiface-workspace
 ```
 
-### Build for debug
-You can run the command 
-```sh
+Add items:
+
+```bash
+npx intuiface-cli add interface-asset -n MyInterfaceAsset -c Custom
+npx intuiface-cli add binding-converter -n MyBindingConverter -c Custom
+```
+
+Build all configured items:
+
+```bash
+npx intuiface-cli build --all
+```
+
+## Commands
+
+### `init`
+Initialize a CLI-managed workspace in the current folder.
+
+Interactive:
+
+```bash
+npx intuiface-cli init
+```
+
+Non-interactive:
+
+```bash
+npx intuiface-cli init -n my-intuiface-workspace
+```
+
+### `add`
+Add items to the current workspace.
+
+Non-interactive examples:
+
+```bash
+npx intuiface-cli add interface-asset -n MyInterfaceAsset -c Custom
+npx intuiface-cli add binding-converter -n MyBindingConverter -c Custom
+```
+
+Tip: `init` includes an interactive first-item creation flow. For additional items, use explicit `add` commands as shown above.
+
+For binding converters, you can optionally provide an icon:
+
+```bash
+npx intuiface-cli add binding-converter -n MyBindingConverter -c Custom -i ./icons/converter.png
+```
+
+### `build`
+Build a single item or all workspace items.
+
+```bash
+npx intuiface-cli build --all
+npx intuiface-cli build --name MyInterfaceAsset
+npx intuiface-cli build --name MyBindingConverter --type binding-converter
+```
+
+Options:
+
+| Option | Description |
+|---|---|
+| `-n, --name <name>` | Name of the workspace item to build. |
+| `-a, --all` | Build all items from `intuiface.workspace.json`. |
+| `-t, --type <type>` | Build type: `interface-asset` or `binding-converter`. |
+| `-i, --icon [icon]` | Override icon path for build output. |
+| `-d, --debug` | Build in debug mode. |
+| `-h, --help` | Show command help. |
+
+#### Debug builds
+
+Use debug mode with flag `--debug` when you want unminified output and easier troubleshooting. Then in the Composer Play Mode, you can use key combination `Ctrl+Shift+I` to debug.
+
+```bash
+npx intuiface-cli build --all --debug
+npx intuiface-cli build --name MyInterfaceAsset --debug
+```
+
+In a CLI-generated workspace, this is also available through:
+
+```bash
 npm run build:debug
 ```
-directly in your project. This command will not minimize the output file in order to be easier for debug. Then in the Composer Play Mode, you can use key combination `Ctrl+Shift+I`
-to debug.
 
-The generated version is taken from your workspace `package.json` when available.
+### `migrate`
+Migrate older projects to the CLI-based workflow.
 
-## Migration to v2
-For existing project created before the v2 of the `intuiface-cdk`, you can migrate your project.
-First, update `@intuiface/core` to use the latest version:
+```bash
+npx intuiface-cli migrate
 ```
+
+#### Migration from v1.x
+For existing project created before the v2.x of the `intuiface-cdk`, you can migrate your project using this recommended migration flow:
+
+First, update `@intuiface/core` to use the latest version:
+```bash
 npm install @intuiface/core@latest
 ```
 Then checks that your project still build or fix the breaking changes.
 
 Now, you can migrate your project to use the new `intuiface-cli`. Install it with the command:
-```sh
+```bash
 npm install @intuiface/cli
 ```
 then use the `migrate` command to automatically upgrade your project to be compatible with CLI:
-```sh
+```bash
 npx intuiface-cli migrate
+```
+
+After migration, validate with:
+
+```bash
+npm run build
+```
+
+## Help
+
+```bash
+npx intuiface-cli help
+npx intuiface-cli help <command>
 ```

@@ -16,7 +16,7 @@ In `@intuiface/core`, we use [TypeScript decorators](https://www.typescriptlang.
 
 `@intuiface/core` also exposes services that will help you access low level information (device's id, name, os...), hardware, cache... in an easy and cross-platform way.
 
-Use the [`@intuiface/interface-asset`](../../libs/tools/schematics/interface-asset-schematics/README.md) to create and initialize an interface asset workspace, or [`@intuiface/binding-converter`](../../libs/tools/schematics/binding-converter-schematics/README.md) to create a binding converter workspace. Then you can use [IntuifaceElement](/docs/core/classes/IntuifaceElement.md) and [\`@Asset\`](/docs/core/functions/Asset.md) decorator to declare your interface asset with [\`@Property\`](/docs/core/functions/Property.md), [\`@Trigger\`](/docs/core/functions/Trigger.md), [\`@Action\`](/docs/core/functions/Action.md) and [\`@Parameter\`](/docs/core/functions/Parameter.md) decorators, or [\`@Converter\`](/docs/core/functions/Converter.md) to declare a binding converter using [\`@Parameter\`](/docs/core/functions/Parameter.md).
+Use `intuiface-cli` to initialize a workspace and add interface assets or binding converters. Then you can use [IntuifaceElement](/docs/core/classes/IntuifaceElement.md) and [\`@Asset\`](/docs/core/functions/Asset.md) decorator to declare your interface asset with [\`@Property\`](/docs/core/functions/Property.md), [\`@Trigger\`](/docs/core/functions/Trigger.md), [\`@Action\`](/docs/core/functions/Action.md) and [\`@Parameter\`](/docs/core/functions/Parameter.md) decorators, or [\`@Converter\`](/docs/core/functions/Converter.md) to declare a binding converter using [\`@Parameter\`](/docs/core/functions/Parameter.md).
 
 ## Remarks
 
