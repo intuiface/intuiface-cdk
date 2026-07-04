@@ -117,7 +117,7 @@ async function buildTarget(target: BuildTarget, debug?: boolean): Promise<void>
         const transpiledEntryPath = resolveTranspiledEntryPath(target.entryFile);
         if (!fs.existsSync(transpiledEntryPath))
         {
-            spinner.fail(`Fail generating IFD file for ${target.name}. Please check the entry file and try again`);
+            spinner.fail(`Fail generating IFD file for ${target.name}. Please check the entry file and try again (${transpiledEntryPath} not found - entry:${target.entryFile}).`);
             process.exit(-3);
         }
         spinner.succeed('TypeScript compiled.');

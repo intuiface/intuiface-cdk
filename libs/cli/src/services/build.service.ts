@@ -151,7 +151,7 @@ export function transpileTypeScript(tsConfigPath: string, outDir: string, spinne
 // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
 export function resolveTranspiledEntryPath(entryFile: string): string
 {
-    const expectedPath = path.join(process.cwd(), 'tmp', entryFile.replace(/\.ts$/, '.js'));
+    const expectedPath = path.join(process.cwd(), 'tmp', entryFile.replace('src/', '').replace(/\.ts$/, '.js'));
     if (fs.existsSync(expectedPath))
     {
         return expectedPath;
