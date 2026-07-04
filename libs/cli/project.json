@@ -17,6 +17,7 @@
             "options": {
                 "commands": [
                     "nx run cli:process-build",
+                    "node -e \"require('fs').cpSync('libs/cli/src/templates','dist/libs/cli/src/templates',{ recursive: true, force: true })\"",
                     "chmod +x dist/libs/cli/src/cli.js || exit 0"
                 ],
                 "parallel": false
