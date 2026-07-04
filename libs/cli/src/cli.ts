@@ -28,9 +28,9 @@ ifdCmd.command('build')
     .option('-n, --name <name>', 'name of the interface asset or binding converter to build.')
     .option('-a, --all', 'build all configured workspace items.')
     .option('-t, --type <type>', 'asset type to build: interface-asset or binding-converter.', 'interface-asset')
-    .option('-i, --icon [icon]', 'path to the icon of the IA displayed in Composer Interface Asset panel.')
+    .option('-i, --icon [icon]', 'relative path to an icon. Prefer setting the icon in workspace config with `add` or `init`.')
     .option('-d, --debug', 'build in debug mode.')
-    .addHelpText('afterAll', '\nExamples:\n  intuiface-cli build --name MyCustomIA --icon ./icon.png\n  intuiface-cli build --name MyBindingConverter --type binding-converter\n  intuiface-cli build --all\n')
+    .addHelpText('afterAll', '\nExamples:\n  intuiface-cli build --name MyCustomIA\n  intuiface-cli build --name MyBindingConverter --type binding-converter\n  intuiface-cli build --all\n')
     .action((options) => runBuildCommand(options));
 
 ifdCmd.command('init')
@@ -44,12 +44,14 @@ ifdCmd.command('init')
 
 const addCmd = ifdCmd.command('add')
     .summary('add a new workspace item')
-    .description('Generate a new interface asset or binding converter in the current Intuiface workspace.');
+    .description('Generate a new interface asset or binding converter in the current Intuiface workspace.')
+    .addHelpText('afterAll', '\nExamples:\n  intuiface-cli add interface-asset -n MyInterfaceAsset -c Custom\n  intuiface-cli add interface-asset -n MyInterfaceAsset -c Custom -i ./icons/asset.png\n  intuiface-cli add binding-converter -n MyBindingConverter -c Custom\n  intuiface-cli add binding-converter -n MyBindingConverter -c Custom -i ./icons/converter.png\n');
 
 addCmd.command('interface-asset')
     .description('Generate a new interface asset in the current workspace.')
     .requiredOption('-n, --name <name>', 'interface asset name.')
     .requiredOption('-c, --category <category>', 'category displayed in Composer.')
+    .option('-i, --icon <icon>', 'relative path to an interface asset icon that will be displayed in Composer Interface Asset panel.')
     .action((options) =>
     {
         addInterfaceAsset(options);
@@ -59,7 +61,7 @@ addCmd.command('binding-converter')
     .description('Generate a new binding converter in the current workspace.')
     .requiredOption('-n, --name <name>', 'binding converter name.')
     .requiredOption('-c, --category <category>', 'category displayed in Composer.')
-    .option('-i, --icon <icon>', 'relative path to a converter icon.')
+    .option('-i, --icon <icon>', 'relative path to an interface asset icon that will be displayed in Composer Interface Asset panel.')
     .action((options) =>
     {
         addBindingConverter(options);

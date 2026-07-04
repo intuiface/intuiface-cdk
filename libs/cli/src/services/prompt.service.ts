@@ -29,21 +29,17 @@ export async function askWorkspaceInitQuestions(defaultWorkspaceName: string): P
         const defaultCategory = 'Custom';
         const category = await askColoredQuestion(rl, 'What is the category in Composer?', defaultCategory);
 
-        let icon: string | undefined;
-        if (itemType === 'binding-converter')
+        const iconInput = (await rl.question(`${chalk.cyan('?')} Icon path (optional, press Enter to skip): `)).trim();
+        const icon = iconInput === '' ? undefined : iconInput;
+        if (icon != null)
         {
-            const iconInput = (await rl.question(`${chalk.cyan('?')} Icon path (optional, press Enter to skip): `)).trim();
-            if (iconInput !== '')
-            {
-                icon = iconInput;
-                console.log(`${chalk.green('✔')} ${chalk.cyan(iconInput)}`);
-            }
-            else
-            {
-                console.log(`${chalk.green('✔')} ${chalk.dim('(skipped)')}`);
-            }
-            console.log();
+            console.log(`${chalk.green('✔')} ${chalk.cyan(icon)}`);
         }
+        else
+        {
+            console.log(`${chalk.green('✔')} ${chalk.dim('(skipped)')}`);
+        }
+        console.log();
 
         return {
             workspaceName: workspaceName,

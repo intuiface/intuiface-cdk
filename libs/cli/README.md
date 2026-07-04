@@ -39,7 +39,7 @@ npx intuiface-cli init -n my-intuiface-workspace
 Add items:
 
 ```bash
-npx intuiface-cli add interface-asset -n MyInterfaceAsset -c Custom
+npx intuiface-cli add interface-asset -n MyInterfaceAsset -c Custom -i icon.png
 npx intuiface-cli add binding-converter -n MyBindingConverter -c Custom
 ```
 
@@ -69,8 +69,6 @@ npx intuiface-cli init -n my-intuiface-workspace
 ### `add`
 Add items to the current workspace.
 
-Non-interactive examples:
-
 ```bash
 npx intuiface-cli add interface-asset -n MyInterfaceAsset -c Custom
 npx intuiface-cli add binding-converter -n MyBindingConverter -c Custom
@@ -78,9 +76,10 @@ npx intuiface-cli add binding-converter -n MyBindingConverter -c Custom
 
 Tip: `init` includes an interactive first-item creation flow. For additional items, use explicit `add` commands as shown above.
 
-For binding converters, you can optionally provide an icon:
+You can also provide an icon for either item type, and it will be saved in the workspace config:
 
 ```bash
+npx intuiface-cli add interface-asset -n MyInterfaceAsset -c Custom -i ./icons/asset.png
 npx intuiface-cli add binding-converter -n MyBindingConverter -c Custom -i ./icons/converter.png
 ```
 
@@ -118,6 +117,8 @@ In a CLI-generated workspace, this is also available through:
 ```bash
 npm run build:debug
 ```
+
+If you still have older projects that expect an icon override during build, `--icon` remains available for retro-compatibility. New projects should rely on the workspace icon saved by `add` or `init`.
 
 ### `migrate`
 Migrate older projects to the CLI-based workflow.
