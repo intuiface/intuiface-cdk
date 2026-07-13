@@ -65,6 +65,11 @@ Before reading how to create interface assets and declare Properties, Triggers, 
 
 - [CacheService](/docs/core/classes/CacheService.md)
 - [EnvironmentService](/docs/core/classes/EnvironmentService.md)
+- [HCMSBase](/docs/core/classes/HCMSBase.md)
+- [HCMSCollection](/docs/core/classes/HCMSCollection.md)
+- [HCMSGroup](/docs/core/classes/HCMSGroup.md)
+- [HCMSItem](/docs/core/classes/HCMSItem.md)
+- [HCMSService](/docs/core/classes/HCMSService.md)
 - [SystemInfoService](/docs/core/classes/SystemInfoService.md)
 - [UsbSerialService](/docs/core/classes/UsbSerialService.md)
 
