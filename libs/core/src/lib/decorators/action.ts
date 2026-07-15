@@ -107,6 +107,11 @@ export function Action(options?: IActionOptions)
         {
             // get them
             parameters = globalThis.intuiface_ifd_params[targetName][propertyKey];
+            // We need to reverse the parameters because they are stored in reverse order in the globalThis.intuiface_ifd_params object
+            if (parameters)
+            {
+                parameters = Object.fromEntries(Object.entries(parameters).reverse());
+            }
         }
 
         if (!globalThis.intuiface_ifd_actions[targetName])
@@ -114,7 +119,7 @@ export function Action(options?: IActionOptions)
             globalThis.intuiface_ifd_actions[targetName] = {};
         }
 
-        // store all informations in object
+        // store all information in object
         const actionDefinition: Record<string, unknown> = {
             // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
             id: `${globalThis.intuiface_ifd_name}.${propertyKey.toString()}`,
