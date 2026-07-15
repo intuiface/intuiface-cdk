@@ -19,18 +19,12 @@ export class HCMSCollection
     /**
      * Identifier of the collection.
      */
-    public get id(): string
-    {
-        return '';
-    }
+    public readonly id: string = '';
 
     /**
      * Display name of the collection.
      */
-    public get name(): string
-    {
-        return '';
-    }
+    public readonly name: string = '';
 
     /**
      * Items currently exposed by the collection.
@@ -44,10 +38,7 @@ export class HCMSCollection
         * }
         * ```
      */
-    public get items(): HCMSItem[]
-    {
-        return [];
-    }
+    public readonly items: HCMSItem[] = [];
 
     /**
      * Clears memoized item projections for this collection.

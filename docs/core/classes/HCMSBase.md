@@ -13,33 +13,21 @@ const base = HCMSService.getBase('catalog');
 console.log(base.id, base.name);
 ```
 
-## Accessors
+## Properties
 
 ### id
 
-#### Get Signature
-
-> **get** **id**(): `string`
+> `readonly` **id**: `string` = `''`
 
 Identifier of the base.
-
-##### Returns
-
-`string`
 
 ***
 
 ### name
 
-#### Get Signature
-
-> **get** **name**(): `string`
+> `readonly` **name**: `string` = `''`
 
 Display name of the base.
-
-##### Returns
-
-`string`
 
 ## Methods
 

@@ -36,33 +36,21 @@ Gets the value of a dynamic property of this group.
 const title = group['title'];
 ```
 
-## Accessors
+## Properties
 
 ### id
 
-#### Get Signature
-
-> **get** **id**(): `string`
+> `readonly` **id**: `string` = `''`
 
 Identifier of the group.
-
-##### Returns
-
-`string`
 
 ***
 
 ### name
 
-#### Get Signature
-
-> **get** **name**(): `string`
+> `readonly` **name**: `string` = `''`
 
 Display name of the group.
-
-##### Returns
-
-`string`
 
 ## Methods
 

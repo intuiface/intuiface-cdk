@@ -19,18 +19,12 @@ export class HCMSGroup
     /**
      * Identifier of the group.
      */
-    public get id(): string
-    {
-        return '';
-    }
+    public readonly id: string = '';
 
     /**
      * Display name of the group.
      */
-    public get name(): string
-    {
-        return '';
-    }
+    public readonly name: string = '';
 
     /**
      * Rebuilds projected dynamic properties for this group.

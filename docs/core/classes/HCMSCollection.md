@@ -18,47 +18,33 @@ if (component && 'items' in component)
 }
 ```
 
-## Accessors
+## Properties
 
 ### id
 
-#### Get Signature
-
-> **get** **id**(): `string`
+> `readonly` **id**: `string` = `''`
 
 Identifier of the collection.
-
-##### Returns
-
-`string`
 
 ***
 
 ### name
 
-#### Get Signature
-
-> **get** **name**(): `string`
+> `readonly` **name**: `string` = `''`
 
 Display name of the collection.
-
-##### Returns
-
-`string`
 
 ***
 
 ### items
 
-#### Get Signature
-
-> **get** **items**(): [`HCMSItem`](HCMSItem.md)[]
+> `readonly` **items**: [`HCMSItem`](HCMSItem.md)[] = `[]`
 
 Items currently exposed by the collection.
    *
    *
 
-##### Example
+#### Example
 
 * ```ts
    * const first = collection.items[0];
@@ -67,10 +53,6 @@ Items currently exposed by the collection.
    *     console.log(first.name, first['description']);
    * }
    * ```
-
-##### Returns
-
-[`HCMSItem`](HCMSItem.md)[]
 
 ## Methods
 

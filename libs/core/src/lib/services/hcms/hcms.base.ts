@@ -15,18 +15,12 @@ export class HCMSBase
     /**
      * Identifier of the base.
      */
-    public get id(): string
-    {
-        return '';
-    }
+    public readonly id: string = '';
 
     /**
      * Display name of the base.
      */
-    public get name(): string
-    {
-        return '';
-    }
+    public readonly name: string = '';
 
     /**
      * Clears memoized component/item projections for this base.
@@ -56,7 +50,7 @@ export class HCMSBase
     * }
     * ```
      */
-    public getComponent(componentId: string): HCMSGroup | HCMSCollection
+    public getComponent(componentId: string): HCMSGroup | HCMSCollection | null
     {
         return null;
     }
