@@ -4,7 +4,7 @@
 
 # Class: HCMSItem
 
-Represents one item of an H-CMS collection.
+Represents one item of an HCMS collection.
 
 Item values are exposed as dynamic properties directly available through
 bracket notation such as `item['propertyName']`.

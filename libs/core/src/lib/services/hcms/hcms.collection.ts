@@ -1,7 +1,7 @@
 import { HCMSItem } from './hcms.item';
 
 /**
- * Represents an H-CMS collection component.
+ * Represents an HCMS collection component.
  *
  * @example
  * ```ts
@@ -13,8 +13,6 @@ import { HCMSItem } from './hcms.item';
  *     });
  * }
  * ```
- *
- * @group Services
  */
 export class HCMSCollection
 {

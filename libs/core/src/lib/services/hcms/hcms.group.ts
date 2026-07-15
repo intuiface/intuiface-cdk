@@ -13,8 +13,6 @@
  *     console.log('Header title:', title);
  * }
  * ```
- *
- * @group Services
  */
 export class HCMSGroup
 {

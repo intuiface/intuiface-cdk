@@ -4,7 +4,7 @@
 
 # Class: HCMSCollection
 
-Represents an H-CMS collection component.
+Represents an HCMS collection component.
 
 ## Example
 

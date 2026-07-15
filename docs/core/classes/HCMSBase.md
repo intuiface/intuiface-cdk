@@ -4,7 +4,7 @@
 
 # Class: HCMSBase
 
-Represents one H-CMS base.
+Represents one HCMS base.
 
 ## Example
 

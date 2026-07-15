@@ -4,7 +4,7 @@
 
 # Class: HCMSService
 
-Service exposing a read-only view of H-CMS bases loaded in Player.
+Service exposing a read-only view of HCMS bases loaded in Player.
 
 Use this service to retrieve a base by id and navigate its components and items.
 
@@ -22,13 +22,13 @@ const component = base.getComponent('my-component-id');
 
 > `static` **getBase**(`baseId`): [`HCMSBase`](HCMSBase.md)
 
-Gets an H-CMS base by id.
+Gets an HCMS base by id.
 
 #### Parameters
 
 | Parameter | Type | Description |
 | ------ | ------ | ------ |
-| `baseId` | `string` | Identifier of the H-CMS base. |
+| `baseId` | `string` | Identifier of the HCMS base. |
 
 #### Returns
 
@@ -66,7 +66,7 @@ components/items and force a rebuild on next access.
 
 | Parameter | Type | Description |
 | ------ | ------ | ------ |
-| `baseId` | `string` | Identifier of the H-CMS base. |
+| `baseId` | `string` | Identifier of the HCMS base. |
 
 #### Returns
 
@@ -77,7 +77,7 @@ The refreshed [HCMSBase](HCMSBase.md) instance.
 #### Example
 
 ```ts
-// Trigger your own sync process first, then refresh memoized projections.
+// Trigger your own sync process first with trigger/action within your experience, then refresh the base in the `HCMSService`.
 const refreshedBase = HCMSService.refreshBase('catalog');
 ```
 

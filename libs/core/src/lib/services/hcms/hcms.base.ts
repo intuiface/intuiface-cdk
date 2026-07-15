@@ -2,15 +2,13 @@ import { HCMSCollection } from './hcms.collection';
 import { HCMSGroup } from './hcms.group';
 
 /**
- * Represents one H-CMS base.
+ * Represents one HCMS base.
  *
  * @example
  * ```ts
  * const base = HCMSService.getBase('catalog');
  * console.log(base.id, base.name);
  * ```
- *
- * @group Services
  */
 export class HCMSBase
 {
