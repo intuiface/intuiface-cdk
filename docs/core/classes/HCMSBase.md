@@ -36,8 +36,6 @@ Display name of the base.
 > **refresh**(): `void`
 
 Clears memoized component/item projections for this base.
-   *
-   *
 
 #### Returns
 
@@ -45,9 +43,9 @@ Clears memoized component/item projections for this base.
 
 #### Example
 
-* ```ts
-   * base.refresh();
-   * ```
+```ts
+base.refresh();
+```
 
 ***
 

@@ -66,8 +66,6 @@ Display name of the group.
 > **refresh**(): `void`
 
 Rebuilds projected dynamic properties for this group.
-   *
-   *
 
 #### Returns
 
@@ -75,9 +73,9 @@ Rebuilds projected dynamic properties for this group.
 
 #### Example
 
-* ```ts
-   * group.refresh();
-   * ```
+```ts
+group.refresh();
+```
 
 #### Inherited from
 

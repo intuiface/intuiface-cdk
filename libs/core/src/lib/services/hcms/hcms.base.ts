@@ -24,11 +24,11 @@ export class HCMSBase
 
     /**
      * Clears memoized component/item projections for this base.
-        *
-        * @example
-        * ```ts
-        * base.refresh();
-        * ```
+     *
+     * @example
+     * ```ts
+     * base.refresh();
+     * ```
      */
     public refresh(): void
     {
@@ -40,15 +40,15 @@ export class HCMSBase
      *
      * @param componentId Identifier of the component in the base root.
      * @returns A {@link HCMSGroup} or {@link HCMSCollection}, or `null` when unknown.
-    *
-    * @example
-    * ```ts
-    * const component = base.getComponent('products');
-    * if (component && 'items' in component)
-    * {
-    *     console.log('Collection size:', component.items.length);
-    * }
-    * ```
+     *
+     * @example
+     * ```ts
+     * const component = base.getComponent('products');
+     * if (component && 'items' in component)
+     * {
+     *     console.log('Collection size:', component.items.length);
+     * }
+     * ```
      */
     public getComponent(componentId: string): HCMSGroup | HCMSCollection | null
     {

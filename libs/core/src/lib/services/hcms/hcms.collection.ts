@@ -28,25 +28,25 @@ export class HCMSCollection
 
     /**
      * Items currently exposed by the collection.
-        *
-        * @example
-        * ```ts
-        * const first = collection.items[0];
-        * if (first)
-        * {
-        *     console.log(first.name, first['description']);
-        * }
-        * ```
+     *
+     * @example
+     * ```ts
+     * const first = collection.items[0];
+     * if (first)
+     * {
+     *     console.log(first.name, first['description']);
+     * }
+     * ```
      */
     public readonly items: HCMSItem[] = [];
 
     /**
      * Clears memoized item projections for this collection.
-        *
-        * @example
-        * ```ts
-        * collection.refresh();
-        * ```
+     *
+     * @example
+     * ```ts
+     * collection.refresh();
+     * ```
      */
     public refresh(): void
     {

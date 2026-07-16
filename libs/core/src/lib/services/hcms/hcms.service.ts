@@ -53,12 +53,12 @@ export class HCMSService
      *
      * @param baseId Identifier of the HCMS base.
      * @returns The refreshed {@link HCMSBase} instance.
-    *
-    * @example
-    * ```ts
-    * // Trigger your own sync process first with trigger/action within your experience, then refresh the base in the `HCMSService`.
-    * const refreshedBase = HCMSService.refreshBase('catalog');
-    * ```
+     *
+     * @example
+     * ```ts
+     * // Trigger your own sync process first with trigger/action within your experience, then refresh the base in the `HCMSService`.
+     * const refreshedBase = HCMSService.refreshBase('catalog');
+     * ```
      */
     public static refreshBase(baseId: string): HCMSBase
     {

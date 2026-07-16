@@ -28,11 +28,11 @@ export class HCMSGroup
 
     /**
      * Rebuilds projected dynamic properties for this group.
-        *
-        * @example
-        * ```ts
-        * group.refresh();
-        * ```
+     *
+     * @example
+     * ```ts
+     * group.refresh();
+     * ```
      */
     public refresh(): void
     {

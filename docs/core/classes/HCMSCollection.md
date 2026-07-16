@@ -41,18 +41,16 @@ Display name of the collection.
 > `readonly` **items**: [`HCMSItem`](HCMSItem.md)[] = `[]`
 
 Items currently exposed by the collection.
-   *
-   *
 
 #### Example
 
-* ```ts
-   * const first = collection.items[0];
-   * if (first)
-   * {
-   *     console.log(first.name, first['description']);
-   * }
-   * ```
+```ts
+const first = collection.items[0];
+if (first)
+{
+    console.log(first.name, first['description']);
+}
+```
 
 ## Methods
 
@@ -61,8 +59,6 @@ Items currently exposed by the collection.
 > **refresh**(): `void`
 
 Clears memoized item projections for this collection.
-   *
-   *
 
 #### Returns
 
@@ -70,9 +66,9 @@ Clears memoized item projections for this collection.
 
 #### Example
 
-* ```ts
-   * collection.refresh();
-   * ```
+```ts
+collection.refresh();
+```
 
 
 ## Help
