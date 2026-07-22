@@ -12,7 +12,7 @@ through bracket notation such as `group['propertyName']`.
 ## Example
 
 ```ts
-const component = base.getComponent('header');
+const component = base.getComponent('my-component-id');
 if (component && !('items' in component))
 {
     const title = component['title'];

@@ -19,5 +19,7 @@
     "cSpell.words": [
       "endregion",
       "Intuiface"
-    ]
+    ],
+    "snyk.advanced.organization": "2d65a172-ce11-4775-82d0-74e92f6598ea",
+    "snyk.advanced.autoSelectOrganization": true
 }

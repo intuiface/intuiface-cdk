@@ -6,7 +6,7 @@ import { HCMSGroup } from './hcms.group';
  *
  * @example
  * ```ts
- * const base = HCMSService.getBase('catalog');
+ * const base = HCMSService.getBase('my-base-id');
  * console.log(base.id, base.name);
  * ```
  */
@@ -43,7 +43,7 @@ export class HCMSBase
      *
      * @example
      * ```ts
-     * const component = base.getComponent('products');
+     * const component = base.getComponent('my-component-id');
      * if (component && 'items' in component)
      * {
      *     console.log('Collection size:', component.items.length);

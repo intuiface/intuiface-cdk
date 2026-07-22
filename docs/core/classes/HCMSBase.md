@@ -9,7 +9,7 @@ Represents one HCMS base.
 ## Example
 
 ```ts
-const base = HCMSService.getBase('catalog');
+const base = HCMSService.getBase('my-base-id');
 console.log(base.id, base.name);
 ```
 
@@ -70,7 +70,7 @@ A [HCMSGroup](HCMSGroup.md) or [HCMSCollection](HCMSCollection.md), or `null` wh
 #### Example
 
 ```ts
-const component = base.getComponent('products');
+const component = base.getComponent('my-component-id');
 if (component && 'items' in component)
 {
     console.log('Collection size:', component.items.length);

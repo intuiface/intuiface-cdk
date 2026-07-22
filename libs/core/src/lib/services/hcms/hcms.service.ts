@@ -31,7 +31,7 @@ export class HCMSService
     *
     * @example
     * ```ts
-    * const base = HCMSService.getBase('catalog');
+    * const base = HCMSService.getBase('my-base-id');
     * console.log(base.id, base.name);
     * ```
      */
@@ -57,7 +57,7 @@ export class HCMSService
      * @example
      * ```ts
      * // Trigger your own sync process first with trigger/action within your experience, then refresh the base in the `HCMSService`.
-     * const refreshedBase = HCMSService.refreshBase('catalog');
+     * const refreshedBase = HCMSService.refreshBase('123xyz456');
      * ```
      */
     public static refreshBase(baseId: string): HCMSBase

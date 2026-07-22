@@ -9,7 +9,7 @@ Represents an HCMS collection component.
 ## Example
 
 ```ts
-const component = base.getComponent('products');
+const component = base.getComponent('my-component-id');
 if (component && 'items' in component)
 {
     component.items.forEach((item) => {

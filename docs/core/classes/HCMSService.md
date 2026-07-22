@@ -47,7 +47,7 @@ Error if the base is not initialized in the running Player context.
 #### Example
 
 ```ts
-const base = HCMSService.getBase('catalog');
+const base = HCMSService.getBase('my-base-id');
 console.log(base.id, base.name);
 ```
 
@@ -78,7 +78,7 @@ The refreshed [HCMSBase](HCMSBase.md) instance.
 
 ```ts
 // Trigger your own sync process first with trigger/action within your experience, then refresh the base in the `HCMSService`.
-const refreshedBase = HCMSService.refreshBase('catalog');
+const refreshedBase = HCMSService.refreshBase('123xyz456');
 ```
 
 
