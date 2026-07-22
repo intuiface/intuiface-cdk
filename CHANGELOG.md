@@ -1,5 +1,28 @@
 # Changelog
 
+## [2.2.0](https://github.com/intuiface/intuiface-cdk/compare/v2.1.0...v2.2.0) (2026-07-22)
+
+
+### Features
+
+* Allow generation of custom binding converter ([#106](https://github.com/intuiface/intuiface-cdk/issues/106)) ([a916c49](https://github.com/intuiface/intuiface-cdk/commit/a916c492fdb8f5d666b14ab950b503b1ce1c743c))
+* **binding-converter:** allow `async` method as converter ([#117](https://github.com/intuiface/intuiface-cdk/issues/117)) ([0771c3b](https://github.com/intuiface/intuiface-cdk/commit/0771c3bfc646dd69ed6aa365a3cb5a11247d1039))
+* **core:** Add HCMS service for content access ([#120](https://github.com/intuiface/intuiface-cdk/issues/120)) ([d55fbf9](https://github.com/intuiface/intuiface-cdk/commit/d55fbf9ccc524ef5ae25efb3cd35ee82061db248))
+
+
+### Bug Fixes
+
+* **binding-converter:** update converter function name to match its class name ([0771c3b](https://github.com/intuiface/intuiface-cdk/commit/0771c3bfc646dd69ed6aa365a3cb5a11247d1039))
+* **binding-converter:** update typescript configuration ([15206b3](https://github.com/intuiface/intuiface-cdk/commit/15206b32562676f8a6cbfa8c96436a794c5f5d39))
+* **core:** Correct action parameter order ([#121](https://github.com/intuiface/intuiface-cdk/issues/121)) ([a3f81c5](https://github.com/intuiface/intuiface-cdk/commit/a3f81c5eb8dc48345f3ceff7674dbaf6210a2b41))
+* **core:** Reverse the parameters in IFD constructor ([0771c3b](https://github.com/intuiface/intuiface-cdk/commit/0771c3bfc646dd69ed6aa365a3cb5a11247d1039))
+* **intuiface-cdk:** update TypeScript configuration  ([#115](https://github.com/intuiface/intuiface-cdk/issues/115)) ([6f4a724](https://github.com/intuiface/intuiface-cdk/commit/6f4a724a9c7392d2da97fe7eaec00bcb0e63953f))
+
+
+### Dependencies
+
+* update dependencies ([#112](https://github.com/intuiface/intuiface-cdk/issues/112)) ([57cabf1](https://github.com/intuiface/intuiface-cdk/commit/57cabf1ad7d5f39871f9afda0b35a602bd69b61d))
+
 ## [2.1.0](https://github.com/intuiface/intuiface-cdk/compare/v2.0.2...v2.1.0) (2026-03-12)
 
 

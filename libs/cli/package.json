@@ -1,6 +1,6 @@
 {
     "name": "@intuiface/cli",
-    "version": "2.1.0",
+    "version": "2.2.0",
     "repository": "https://github.com/intuiface/intuiface-cdk",
     "description": "Intuiface CLI helps you build interface assets for Intuiface",
     "bin": {
