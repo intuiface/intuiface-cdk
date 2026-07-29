@@ -1,7 +1,6 @@
 /**
  * Base options for print operations.
  *
- * @group Services
  */
 export interface PrintCDKOptions {
     /**
@@ -20,6 +19,11 @@ export interface PrintCDKOptions {
     mimeType?: string;
 }
 
+/**
+ * Native printer service.
+ *
+ * @group Services
+ */
 export class PrinterService {
 
     /**
