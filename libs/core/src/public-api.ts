@@ -31,6 +31,10 @@ export { IDisposable } from './lib/base/disposable';
 // Services
 export { EnvironmentService } from './lib/services/environment.service';
 export { UsbSerialService } from './lib/services/usb.serial.service';
+export {
+    PrinterService,
+    PrintCDKOptions
+} from './lib/services/printer.service';
 export { SystemInfoService } from './lib/services/system-info.service';
 export { CacheService, CacheStrategy, CacheOptions, CacheEntry, CacheScope, DownloadProgress, DownloadProgressCallback } from './lib/services/cache.service';
 export { HCMSService } from './lib/services/hcms/hcms.service';
