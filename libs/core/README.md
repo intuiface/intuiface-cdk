@@ -52,6 +52,7 @@ Before reading how to create interface assets and declare Properties, Triggers, 
 - [CacheEntry](/docs/core/interfaces/CacheEntry.md)
 - [CacheOptions](/docs/core/interfaces/CacheOptions.md)
 - [DownloadProgress](/docs/core/interfaces/DownloadProgress.md)
+- [PrintCDKOptions](/docs/core/interfaces/PrintCDKOptions.md)
 
 ## Decorators
 
@@ -70,6 +71,7 @@ Before reading how to create interface assets and declare Properties, Triggers, 
 - [CacheService](/docs/core/classes/CacheService.md)
 - [EnvironmentService](/docs/core/classes/EnvironmentService.md)
 - [HCMSService](/docs/core/classes/HCMSService.md)
+- [PrinterService](/docs/core/classes/PrinterService.md)
 - [SystemInfoService](/docs/core/classes/SystemInfoService.md)
 - [UsbSerialService](/docs/core/classes/UsbSerialService.md)
 
