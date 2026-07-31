@@ -10,6 +10,11 @@
         "sourceMap": false,
         "target": "esnext"
     },
-    "exclude": ["jest.config.ts", "**/src/*.spec.ts", "**/src/*.test.ts"],
-    "include": ["**/src/*.ts"]
+    "exclude": [
+        "jest.config.ts",
+        "**/src/*.spec.ts",
+        "**/src/*.test.ts",
+        "**/src/templates/**/*.ts"
+    ],
+    "include": ["**/src/**/*.ts"]
 }
