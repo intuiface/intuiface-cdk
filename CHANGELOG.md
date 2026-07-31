@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.3.0](https://github.com/intuiface/intuiface-cdk/compare/v2.2.0...v2.3.0) (2026-07-31)
+
+
+### Features
+
+* **core:** Update Printer Service API ([aa49ae0](https://github.com/intuiface/intuiface-cdk/commit/aa49ae0ea5332d220c8ab5c359650c29c64de849))
+
+
+### Bug Fixes
+
+* **core:** Printer Doc ([0ceb688](https://github.com/intuiface/intuiface-cdk/commit/0ceb68802c7cfa12bed583485c95fa1045f8a0ae))
+
 ## [2.2.0](https://github.com/intuiface/intuiface-cdk/compare/v2.1.0...v2.2.0) (2026-07-22)
 
 
