@@ -108,7 +108,12 @@
             "cache": true
         },
         "@nx/eslint:lint": {
-            "inputs": ["default", "{workspaceRoot}/.eslintrc.js"],
+            "inputs": [
+                "default",
+                "^default",
+                "{workspaceRoot}/.eslintrc.js",
+                "{workspaceRoot}/tools/eslint-rules/**/*"
+            ],
             "cache": true
         },
         "@nx/js:tsc": {
@@ -125,5 +130,6 @@
             "preVersionCommand": "npx nx run-many -t build"
         }
     },
-    "analytics": false
+    "analytics": false,
+    "neverConnectToCloud": true
 }

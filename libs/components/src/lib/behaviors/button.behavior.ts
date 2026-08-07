@@ -1,5 +1,3 @@
-import { Color } from '@intuiface/core';
-
 /**
  * Behavior to manage a text.
  */

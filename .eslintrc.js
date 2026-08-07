@@ -46,10 +46,18 @@ module.exports = {
                 "@typescript-eslint/member-ordering": "off",
                 "@typescript-eslint/no-empty-function": "off",
                 "@typescript-eslint/no-empty-interface": "off",
+                "@typescript-eslint/no-empty-object-type": "off",
                 "@typescript-eslint/no-explicit-any": "off",
                 "@typescript-eslint/parameter-properties": "off",
                 "@typescript-eslint/no-use-before-define": "off",
-                "@typescript-eslint/no-unused-vars": ["off"],
+                "@typescript-eslint/no-unused-vars": [
+                    "error",
+                    {
+                        "args": "none",
+                        "caughtErrorsIgnorePattern": "^_",
+                        "varsIgnorePattern": "^_"
+                    }
+                ],
                 "@typescript-eslint/no-unsafe-member-access": "off",
                 "@typescript-eslint/no-unsafe-call": "off",
                 "@typescript-eslint/no-unsafe-assignment": "off",
@@ -58,15 +66,7 @@ module.exports = {
                 "@typescript-eslint/no-unsafe-argument": "off",
                 "@typescript-eslint/adjacent-overload-signatures": "error",
                 "@typescript-eslint/array-type": "error",
-                "@typescript-eslint/ban-types": [
-                    "error",
-                    {
-                        "extendDefaults": true,
-                        "types": {
-                            "Function": false
-                        }
-                    }
-                ],
+                "@typescript-eslint/ban-types": "off",
                 "@typescript-eslint/naming-convention": [
                     "error",
                     {
@@ -241,7 +241,7 @@ module.exports = {
                     "single",
                     {
                         "avoidEscape": true,
-                        "allowTemplateLiterals": true
+                        "allowTemplateLiterals": "always"
                     }
                 ],
                 "radix": ["error", "as-needed"],

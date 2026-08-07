@@ -214,7 +214,6 @@ async function loadIA(iaName: string | undefined, icon: string | undefined, buil
             // Transpile TypeScript programmatically
             transpileTypeScript(`${dir}/tsconfig.json`, `${dir}/tmp/`, spinner);
 
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             if(!fs.existsSync(`${dir}/tmp/${iaName}.js`))
             {
                 spinner.fail(`Fail generating IFD file for ${iaName}. Please check the name is correct and try again`);
@@ -228,7 +227,7 @@ async function loadIA(iaName: string | undefined, icon: string | undefined, buil
             spinner.start('Loading interface asset...');
             // Convert IA path as full URI (with file://) to be able to load it with import
             const iaUrl = pathToFileURL(`${dir}/tmp/${iaName}.js`);
-            const ia = await import(iaUrl.toString());
+            await import(iaUrl.toString());
 
             spinner.start('Loading interface asset metadata...');
             const schemas = buildSchemas(globalThisAny.intuiface_ifd_classes, buildType);
