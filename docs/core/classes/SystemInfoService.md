@@ -58,7 +58,7 @@ the device name
 
 > **getPlatform**(): [`Promise`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)\<`string`\>
 
-Get the platform (ios, android or web)
+Get the platform (ios, android, electron, brightsign, tizen or web)
 
 #### Returns
 
@@ -79,6 +79,15 @@ Get OS
 [`Promise`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)\<`string`\>
 
 Operating system and os version in same string
+OS name can be : 
+- Android
+- iOS
+- macOS
+- Windows
+- BrightSign
+- Linux
+- Tizen
+- Unknown
 
 ***
 
