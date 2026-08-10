@@ -52,8 +52,8 @@ function moveConfigFiles(): Rule
     {
         moveTemplateFile(
             tree,
-            'node_modules/@intuiface/interface-asset/src/workspace-template/eslintrc.js',
-            '.eslintrc.js'
+            'node_modules/@intuiface/interface-asset/src/workspace-template/eslint.config.mjs',
+            'eslint.config.mjs'
         );
         moveTemplateFile(
             tree,
@@ -69,11 +69,6 @@ function moveConfigFiles(): Rule
             tree,
             'node_modules/@intuiface/interface-asset/src/workspace-template/gitignore',
             '.gitignore'
-        );
-        moveTemplateFile(
-            tree,
-            'node_modules/@intuiface/interface-asset/src/workspace-template/eslintignore',
-            '.eslintignore'
         );
     };
 }
