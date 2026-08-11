@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable prefer-arrow/prefer-arrow-functions */
 import { Rule, SchematicContext, Tree, chain, apply, url, template, mergeWith, MergeStrategy } from '@angular-devkit/schematics';
 import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
@@ -23,11 +22,42 @@ export function createBindingConverter(_options: any): Rule
 
         const rule = chain([
             merged,
+            moveConfigFiles,
             copyDefaultIcon(),
             installPackageJsonDependencies()
         ]);
         return rule(tree, context) as Rule;
     };
+}
+
+function moveConfigFiles(): Rule
+{
+    return (tree: Tree) =>
+    {
+        moveTemplateFile(
+            tree,
+            'node_modules/@intuiface/binding-converter/src/workspace-template/eslint.config.mjs',
+            'eslint.config.mjs'
+        );
+    };
+}
+
+function moveTemplateFile(tree: Tree, sourcePath: string, targetPath: string): void
+{
+    if (!tree.exists(sourcePath)) {
+        return;
+    }
+
+    const sourceContent = tree.readText(sourcePath);
+    if (!tree.exists(targetPath)) {
+        tree.rename(sourcePath, targetPath);
+        return;
+    }
+
+    const targetContent = tree.readText(targetPath);
+    if (!targetContent.trim()) {
+        tree.overwrite(targetPath, sourceContent);
+    }
 }
 
 /**

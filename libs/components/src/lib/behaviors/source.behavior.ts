@@ -1,6 +1,3 @@
-import { Action, Property, Trigger, Parameter, Resource } from '@intuiface/core';
-
-
 /**
  * Loading states
  */

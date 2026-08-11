@@ -1,5 +1,4 @@
 import { CollectionBehavior } from './collection.behavior';
-import { Computor, InternalProperty, IntuifaceElement, Property } from '@intuiface/core';
 
 /**
  * Behavior to manage a pannable collection.

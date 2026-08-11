@@ -8,7 +8,7 @@ import { IntuifaceElement } from './element';
  *
  * @experimental
  */
-export class IntuifaceCollection<T extends ElementContainer> extends IntuifaceElement
+export class IntuifaceCollection<_T extends ElementContainer> extends IntuifaceElement
 {
     //#region Fields
 
@@ -92,4 +92,3 @@ export interface ICollectionConfiguration {
      */
     items?: [];
 }
-

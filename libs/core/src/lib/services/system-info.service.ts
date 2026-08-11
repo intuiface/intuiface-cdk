@@ -37,7 +37,7 @@ export class SystemInfoService
     }
 
     /**
-     * Get the platform (ios, android or web)
+     * Get the platform (ios, android, electron, brightsign, tizen or web)
      * @returns platform
      */
     public async getPlatform(): Promise<string> {
@@ -47,6 +47,15 @@ export class SystemInfoService
     /**
      * Get OS
      * @returns Operating system and os version in same string
+     * OS name can be : 
+     * - Android
+     * - iOS
+     * - macOS
+     * - Windows
+     * - BrightSign
+     * - Linux
+     * - Tizen
+     * - Unknown
      */
     public async getOS(): Promise<string> {
         return await new Promise(r => { r(''); });

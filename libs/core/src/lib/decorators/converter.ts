@@ -44,7 +44,6 @@ export interface IConverterOptions extends IActionOptions
  *
  * @group Decorators
  */
-// eslint-disable-next-line @typescript-eslint/naming-convention
 export function Converter(options?: IConverterOptions)
 {
     return (

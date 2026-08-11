@@ -1,9 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable prefer-arrow/prefer-arrow-functions */
 import { Rule, SchematicContext, Tree, externalSchematic, chain, apply, url, template, mergeWith, MergeStrategy, move } from '@angular-devkit/schematics';
 import { strings } from '@angular-devkit/core';
-// eslint-disable-next-line no-restricted-imports
 import { dasherize } from '@angular-devkit/core/src/utils/strings';
 import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
 

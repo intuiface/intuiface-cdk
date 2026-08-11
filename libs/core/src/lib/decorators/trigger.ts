@@ -87,7 +87,6 @@ export interface ITriggerOptions
  *
  * @group Decorators
  */
-// eslint-disable-next-line @typescript-eslint/naming-convention
 export function Trigger(options?: ITriggerOptions)
 {
     return (

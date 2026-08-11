@@ -1,7 +1,3 @@
-/* eslint-disable prefer-arrow/prefer-arrow-functions */
-/* eslint-disable @typescript-eslint/no-empty-function */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-
 /**
  * Options to configure {@link Action | `@Action`} decorator
  */
@@ -78,7 +74,6 @@ export interface IActionOptions
  *
  * @group Decorators
  */
-// eslint-disable-next-line @typescript-eslint/naming-convention
 export function Action(options?: IActionOptions)
 {
     /**
@@ -121,7 +116,6 @@ export function Action(options?: IActionOptions)
 
         // store all information in object
         const actionDefinition: Record<string, unknown> = {
-            // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
             id: `${globalThis.intuiface_ifd_name}.${propertyKey.toString()}`,
             path: propertyKey,
             title: options.displayName,
