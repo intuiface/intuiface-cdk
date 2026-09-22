@@ -6,6 +6,8 @@
 
 - [Cache service](../../../../../docs/core/classes/CacheService.md)
 - [Environment service](../../../../../docs/core/classes/EnvironmentService.md)
+- [HDMI-CEC service](../../../../../docs/core/classes/HdmiCecService.md)
+- [Printer service](../../../../../docs/core/classes/PrinterService.md)
 - [USB serial service](../../../../../docs/core/classes/UsbSerialService.md)
 - [System-info service](../../../../../docs/core/classes/SystemInfoService.md)
 - [HCMS service](../../../../../docs/core/classes/HCMSService.md)

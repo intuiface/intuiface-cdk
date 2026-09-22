@@ -30,6 +30,17 @@ export { IDisposable } from './lib/base/disposable';
 
 // Services
 export { EnvironmentService } from './lib/services/environment.service';
+export { HdmiCecService } from './lib/services/hdmi.cec.service';
+export {
+    HdmiCecError,
+    HdmiCecCheckStatus,
+    HdmiCecDeviceIdentity,
+    HdmiCecDiagnostics,
+    HdmiCecErrorCode,
+    HdmiCecErrorData,
+    HdmiCecStatus,
+    IHdmiCecService
+} from './lib/services/hdmi.cec.types';
 export { UsbSerialService } from './lib/services/usb.serial.service';
 export {
     PrinterService,
