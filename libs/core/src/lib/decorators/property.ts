@@ -1,5 +1,6 @@
 /* eslint-disable prefer-arrow/prefer-arrow-functions */
 import { getTypeAndFormat } from '../types/convertible.type';
+import { IResetValueOptions } from './reset-value';
 
 /**
  * Options used to configure {@link Property | `@Property`} decorator
@@ -37,6 +38,14 @@ export interface IPropertyOptions
      * True if property is read only in Intuiface Composer. The property will only be usable as a binding source.
      */
     readOnly?: boolean;
+
+    /**
+     * Controls whether Player resets this property when Composer requests a reset.
+     * Set `enabled: false` to keep its current value.
+     * Set `enabled: true` to reset it, including when `readOnly` is true.
+     * If omitted, Player uses its default reset behavior.
+     */
+    resetOptions?: IResetValueOptions;
 
     /**
      * The type of the property.

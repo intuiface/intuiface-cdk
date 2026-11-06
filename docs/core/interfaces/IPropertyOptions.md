@@ -58,6 +58,17 @@ True if property is read only in Intuiface Composer. The property will only be u
 
 ***
 
+### resetOptions?
+
+> `optional` **resetOptions?**: [`IResetValueOptions`](IResetValueOptions.md)
+
+Controls whether Player resets this property when Composer requests a reset.
+Set `enabled: false` to keep its current value.
+Set `enabled: true` to reset it, including when `readOnly` is true.
+If omitted, Player uses its default reset behavior.
+
+***
+
 ### type?
 
 > `optional` **type?**: `any`
