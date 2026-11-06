@@ -16,6 +16,7 @@
  */
 export { Property, IPropertyOptions } from './lib/decorators/property';
 export { InternalProperty } from './lib/decorators/internal-property';
+export { ResetValue, IResetValueOptions } from './lib/decorators/reset-value';
 export { Trigger, ITriggerOptions } from './lib/decorators/trigger';
 export { Action, IActionOptions } from './lib/decorators/action';
 export { Converter, IConverterOptions } from './lib/decorators/converter';
