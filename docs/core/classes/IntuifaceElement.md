@@ -16,7 +16,7 @@ Each element or collection has the same life cycle :\
 
 It is important to call the `super()` in each method to ensure the correct behavior of the element.
 
-**Advanced usage:** See [Handle resets in an Interface Asset](https://github.com/intuiface/intuiface-cdk/blob/master/docs/reset.md)
+**Advanced usage:** See [Handle resets in an Interface Asset](/docs/reset.md)
 to choose which values reset and stop work such as timers when a reset occurs.
 
 ## Extends
