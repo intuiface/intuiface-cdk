@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-function */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ChangeDetectorRef, Component, ElementRef, Renderer2 } from '@angular/core';
 import { ElementComponent } from './element.component';
 import { ElementContainer, IntuifaceCollection, IntuifaceElement } from '@intuiface/core';

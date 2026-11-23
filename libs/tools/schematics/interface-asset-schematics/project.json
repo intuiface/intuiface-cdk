@@ -22,9 +22,9 @@
                         "ignore": ["**/index.ts"]
                     },
                     {
-                        "glob": ".eslintrc.js",
-                        "input": "libs/tools/schematics/interface-asset-schematics/src/",
-                        "output": "/src/"
+                        "glob": "eslint.config.mjs",
+                        "input": "libs/tools/schematics/interface-asset-schematics/src/workspace-template/",
+                        "output": "/src/workspace-template/"
                     },
                     {
                         "glob": ".vscode/*",

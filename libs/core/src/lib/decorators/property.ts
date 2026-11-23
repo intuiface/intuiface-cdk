@@ -156,7 +156,6 @@ export interface IPropertyOptions
  *
  * @group Decorators
  */
-// eslint-disable-next-line @typescript-eslint/naming-convention
 export function Property(options?: IPropertyOptions)
 {
     return (target: any, propertyKey: string): void =>
