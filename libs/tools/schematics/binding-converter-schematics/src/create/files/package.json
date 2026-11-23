@@ -36,8 +36,8 @@
     "webpack-cli": "^7.2.2"
   },
   "dependencies": {
-    "@intuiface/core": "2.2.0",
-    "@intuiface/cli": "2.2.0",
+    "@intuiface/core": "2.3.0",
+    "@intuiface/cli": "2.3.0",
     "tslib": "^2.6.2"
   }
 }
