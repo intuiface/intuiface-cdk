@@ -330,6 +330,32 @@ Initialize default value of each property.
 
 ***
 
+### resetFromConfiguration()
+
+> **resetFromConfiguration**(`resetChildren?`): `void`
+
+**`Experimental`**
+
+Reset this element to the values set in Composer or its starting values.
+Calls `beforeResetFromConfiguration()` and `afterResetFromConfiguration()` so your code can
+stop pending work and update other values. Bindings between properties continue to work.
+
+#### Parameters
+
+| Parameter | Type | Default value | Description |
+| ------ | ------ | ------ | ------ |
+| `resetChildren` | `boolean` | `false` | Also reset child elements. Defaults to false. |
+
+#### Returns
+
+`void`
+
+#### Inherited from
+
+[`IntuifaceElement`](IntuifaceElement.md).[`resetFromConfiguration`](IntuifaceElement.md#resetfromconfiguration)
+
+***
+
 ### dispose()
 
 > **dispose**(): `void`

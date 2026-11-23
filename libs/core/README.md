@@ -47,6 +47,7 @@ Before reading how to create interface assets and declare Properties, Triggers, 
 - [IElementOptions](/docs/core/interfaces/IElementOptions.md)
 - [IParameterOptions](/docs/core/interfaces/IParameterOptions.md)
 - [IPropertyOptions](/docs/core/interfaces/IPropertyOptions.md)
+- [IResetValueOptions](/docs/core/interfaces/IResetValueOptions.md)
 - [ITriggerOptions](/docs/core/interfaces/ITriggerOptions.md)
 - [ICollectionConfiguration](/docs/core/interfaces/ICollectionConfiguration.md)
 - [CacheEntry](/docs/core/interfaces/CacheEntry.md)
@@ -64,6 +65,7 @@ Before reading how to create interface assets and declare Properties, Triggers, 
 - [InternalProperty](/docs/core/functions/InternalProperty.md)
 - [Parameter](/docs/core/functions/Parameter.md)
 - [Property](/docs/core/functions/Property.md)
+- [ResetValue](/docs/core/functions/ResetValue.md)
 - [Trigger](/docs/core/functions/Trigger.md)
 
 ## Services

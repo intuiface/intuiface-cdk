@@ -25,6 +25,19 @@ export enum ETranslateDirection {
  */
 export class ElementContainer extends Watchable
 {
+    /**
+     * Called before this container's values reset. Use it to stop timers or other work started by your code.
+     * Always call `super.beforeResetFromConfiguration()` when overriding this method.
+     */
+    protected beforeResetFromConfiguration(): void {}
+
+    /**
+     * Called after this container's values reset, before its element's children reset.
+     * Always call `super.afterResetFromConfiguration()` when overriding this method.
+     * Player does not wait for asynchronous work, such as downloads, started in this method.
+     */
+    protected afterResetFromConfiguration(): void {}
+
     //#region Fields
 
     /**
