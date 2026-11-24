@@ -1,10 +1,11 @@
 import fs from 'fs-extra';
 import path from 'path';
-import ora from 'ora';
+import ora, { type Ora } from 'ora';
 import ts from 'typescript';
 import { BuildType, WorkspaceConfig, WorkspaceItem } from '../types.js';
-import { tryReadWorkspaceConfig, writeWorkspaceConfig, getWorkspaceConfigFileName } from './workspace.service.js';
+import { tryReadWorkspaceConfig, writeWorkspaceConfig, getWorkspaceConfigFileName, getWorkspaceWebpackConfigFileName } from './workspace.service.js';
 import { getPublishedPackageVersion, WORKSPACE_BUILD_DEV_DEPENDENCIES } from './generator.service.js';
+import { migrateWebpackConfigFiles } from './webpack-migration.service.js';
 import { ensureMinimumDependencies, formatDependencyUpdates } from '../utils/dependencies.js';
 
 type MigrationPath = 'already-workspace' | 'pre-v2' | 'standalone-to-workspace' | 'unknown';
@@ -150,12 +151,10 @@ function migrateStandaloneToWorkspace(dir: string): void
         spinner.succeed(dependenciesSummary);
 
         spinner.start('Updating tsconfig.json');
-        const isTsConfigUpdated = updateTsConfigForTypeScript6(dir);
+        const isTsConfigUpdated = updateTsConfigForTypeScript6(dir, packageJson);
         spinner.succeed(isTsConfigUpdated ? 'tsconfig.json updated for TypeScript 6' : 'tsconfig.json already up to date');
 
-        spinner.start('Removing unused webpack config files');
-        removeWebpackConfigFiles(dir);
-        spinner.succeed('Webpack config files removed');
+        moveWebpackConfig(dir, detected.name, spinner);
 
         spinner.indent = 0;
         spinner.succeed(`Migration to workspace mode complete.\nRun 'npm install' and 'npm run build' to install updated dependencies and build.`);
@@ -237,6 +236,10 @@ function migratePreV2(dir: string): void
             tsconfig.compilerOptions.useDefineForClassFields = false;
             tsconfig.compilerOptions.moduleResolution = 'bundler';
             delete tsconfig.compilerOptions.downlevelIteration;
+            if (tsconfig.compilerOptions.types == null && hasNodeTypes(packageJson))
+            {
+                tsconfig.compilerOptions.types = ['node'];
+            }
             tsconfig.include = ['**/src/**/*.ts'];
             fs.writeFileSync(`${legacyDir}/tsconfig.json`, JSON.stringify(tsconfig, null, 2));
             spinner.succeed();
@@ -250,8 +253,9 @@ function migratePreV2(dir: string): void
             }
             fs.removeSync(`${legacyDir}/tsconfig.ifd.json`);
             fs.removeSync(`${legacyDir}/dist`);
-            removeWebpackConfigFiles(legacyDir);
             spinner.succeed();
+
+            moveWebpackConfig(legacyDir, iaName, spinner);
 
             spinner.indent = 0;
             spinner.succeed(`Migration to workspace mode complete.\nRun 'npm install' and 'npm run build' to install updated dependencies and build.`);
@@ -291,11 +295,13 @@ function updateWorkspaceDependencies(packageJson: Record<string, unknown>): stri
 /**
  * Make a 2.x project tsconfig compatible with TypeScript 6 (installed by the migration):
  * - `rootDir` must be explicit (the CLI resolves transpiled entries relative to `./src`),
- * - `moduleResolution: node|node10|classic` and `downlevelIteration` are deprecated.
+ * - `moduleResolution: node|node10|classic` and `downlevelIteration` are deprecated,
+ * - `types` defaults to `[]`: without `"types": ["node"]`, an import of a Node.js module (e.g. `fs`, often a webpack external)
+ *   no longer compiles. It is added when the project depends on `@types/node` and sets no `types`.
  * @returns true if the file was modified.
  */
 // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
-function updateTsConfigForTypeScript6(dir: string): boolean
+function updateTsConfigForTypeScript6(dir: string, packageJson: Record<string, unknown>): boolean
 {
     const tsconfigPath = path.join(dir, 'tsconfig.json');
     if (!fs.existsSync(tsconfigPath))
@@ -332,6 +338,12 @@ function updateTsConfigForTypeScript6(dir: string): boolean
         isModified = true;
     }
 
+    if (compilerOptions.types == null && hasNodeTypes(packageJson))
+    {
+        compilerOptions.types = ['node'];
+        isModified = true;
+    }
+
     if (isModified)
     {
         tsconfig.compilerOptions = compilerOptions;
@@ -341,14 +353,38 @@ function updateTsConfigForTypeScript6(dir: string): boolean
     return isModified;
 }
 
+/**
+ * @returns true when package.json declares `@types/node` (the 2.x schematics added it to devDependencies)
+ */
 // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
-function removeWebpackConfigFiles(dir: string): void
+function hasNodeTypes(packageJson: Record<string, unknown>): boolean
 {
-    for (const file of ['webpack.config.js', 'webpack-debug.config.js'])
+    return ['dependencies', 'devDependencies'].some((section) =>
     {
-        if (fs.existsSync(path.join(dir, file)))
-        {
-            fs.removeSync(path.join(dir, file));
-        }
+        const dependencies = packageJson[section];
+        return dependencies != null && typeof dependencies === 'object' && '@types/node' in dependencies;
+    });
+}
+
+/**
+ * Replace webpack.config.js and webpack-debug.config.js with webpack.config.cjs, moving their customisations (e.g. `externals`).
+ * A file with changes that cannot be moved automatically is kept, with a warning telling what to move by hand.
+ */
+// eslint-disable-next-line prefer-arrow/prefer-arrow-functions
+function moveWebpackConfig(dir: string, itemName: string, spinner: Ora): void
+{
+    const webpackConfigFileName = getWorkspaceWebpackConfigFileName();
+    spinner.start(`Creating ${webpackConfigFileName}`);
+    const migration = migrateWebpackConfigFiles(dir, itemName);
+
+    const created = migration.isWebpackConfigCreated ? `${webpackConfigFileName} created` : `${webpackConfigFileName} kept`;
+    const moved = migration.migrated.length > 0 ? `, with ${migration.migrated.map((name) => `\`${name}\``).join(', ')}` : '';
+    const removed = migration.removedFiles.length > 0 ? ` (${migration.removedFiles.join(' and ')} removed)` : '';
+    spinner.succeed(`${created}${moved}${removed}`);
+
+    for (const keptFile of migration.keptFiles)
+    {
+        const reasons = keptFile.reasons.map((reason) => `     - ${reason}`).join('\n');
+        spinner.warn(`${keptFile.file} kept, move these changes to ${webpackConfigFileName} by hand, then delete it:\n${reasons}`);
     }
 }

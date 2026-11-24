@@ -94,3 +94,76 @@ describe('2.x binding converter project', () =>
         expect(result.output).toContain('Already using workspace mode. No migration needed.');
     });
 });
+
+/**
+ * A 2.x project whose webpack.config.js keeps a Node.js module out of the bundle (review O1).
+ */
+describe('2.x project with externals in webpack.config.js', () =>
+{
+    let dir: string;
+
+    /** Built JavaScript of an item, all chunks together. */
+    const readBundle = (name: string): string => fs.readdirSync(path.join(dir, 'dist', name))
+        .filter((file) => file.endsWith('.js'))
+        .map((file) => fs.readFileSync(path.join(dir, 'dist', name, file), 'utf8'))
+        .join('\n');
+
+    beforeAll(() =>
+    {
+        assertBuiltPackages();
+        dir = createE2EDir('migrate-externals');
+        scaffoldSchematicProject(dir, 'FileConverter', 'Files');
+
+        const webpackConfigPath = path.join(dir, 'webpack.config.js');
+        const webpackConfig = fs.readFileSync(webpackConfigPath, 'utf8').replace(/\r\n/g, '\n');
+        fs.writeFileSync(webpackConfigPath, webpackConfig.replace(
+            `entry: './src/FileConverter.ts'`,
+            `entry: './src/FileConverter.ts',\n    // Provided by the player\n    externals: {\n        fs: 'commonjs fs'\n    }`
+        ));
+        const sourcePath = path.join(dir, 'src', 'FileConverter.ts');
+        const source = fs.readFileSync(sourcePath, 'utf8');
+        fs.writeFileSync(sourcePath, `import fs from 'fs';\n${source.replace(/return .*;/, `return fs.existsSync(String(input)) ? 'yes' : 'no';`)}`);
+    });
+
+    afterAll(() =>
+    {
+        removeE2EDir(dir);
+    });
+
+    it('does not compile with TypeScript 6 before migrating: @types/node is no longer loaded by default', () =>
+    {
+        // A real 2.x project still builds with its TypeScript 5. These tests run with the TypeScript 6 that migrate installs.
+        const result = runCli(dir, 'build', '-n', 'FileConverter', '-t', 'binding-converter');
+
+        expect(result.status).not.toBe(0);
+        expect(result.output).toContain(`Cannot find name 'fs'`);
+    });
+
+    it('moves the externals to webpack.config.cjs', () =>
+    {
+        const result = runCli(dir, 'migrate');
+
+        expect(result.status, result.output).toBe(0);
+        expect(result.output).toContain('webpack.config.cjs created, with `externals` (webpack.config.js and webpack-debug.config.js removed)');
+        expect(fs.existsSync(path.join(dir, 'webpack.config.js'))).toBe(false);
+        expect(fs.existsSync(path.join(dir, 'webpack-debug.config.js'))).toBe(false);
+        expect(fs.readFileSync(path.join(dir, 'webpack.config.cjs'), 'utf8').replace(/\r\n/g, '\n')).toContain([
+            '    // Moved from webpack.config.js by intuiface-cli migrate',
+            '    // Provided by the player',
+            '    config.externals = {',
+            `        fs: 'commonjs fs'`,
+            '    };'
+        ].join('\n'));
+        expect(fs.readJsonSync(path.join(dir, 'tsconfig.json')).compilerOptions.types).toEqual(['node']);
+    });
+
+    it('builds the same bundle once migrated', () =>
+    {
+        const result = runCli(dir, 'build', '--all');
+
+        expect(result.status, result.output).toBe(0);
+        expect(result.output).toContain('(customised by webpack.config.cjs)');
+        expect(result.output).not.toContain('is not used to build a workspace');
+        expect(readBundle('FileConverter')).toContain('require("fs")');
+    });
+});

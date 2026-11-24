@@ -109,7 +109,9 @@ describe('generator.service', () =>
                 rootDir: './src',
                 useDefineForClassFields: false,
                 moduleResolution: 'bundler',
-                importHelpers: true
+                importHelpers: true,
+                // TypeScript 6 no longer loads @types/node by default (installed in every workspace)
+                types: ['node']
             });
             expect(tsconfig.include).toEqual(['**/src/**/*.ts']);
         });
@@ -145,7 +147,8 @@ describe('generator.service', () =>
                 '.gitignore',
                 '.vscode/extensions.json',
                 '.vscode/settings.json',
-                'eslint.config.mjs'
+                'eslint.config.mjs',
+                'webpack.config.cjs'
             ]);
             for (const file of generatedFiles)
             {
@@ -155,10 +158,10 @@ describe('generator.service', () =>
 
         it('creates the files once and keeps them on a second run', () =>
         {
-            expect(scaffoldWorkspaceTemplate('my-workspace', dir).map((file) => file.action)).toEqual(['create', 'create', 'create', 'create']);
+            expect(scaffoldWorkspaceTemplate('my-workspace', dir).map((file) => file.action)).toEqual(['create', 'create', 'create', 'create', 'create']);
             const firstRun = fs.readFileSync(path.join(dir, '.vscode', 'settings.json'), 'utf8');
 
-            expect(scaffoldWorkspaceTemplate('my-workspace', dir).map((file) => file.action)).toEqual(['keep', 'keep', 'keep', 'keep']);
+            expect(scaffoldWorkspaceTemplate('my-workspace', dir).map((file) => file.action)).toEqual(['keep', 'keep', 'keep', 'keep', 'keep']);
             expect(fs.readFileSync(path.join(dir, '.vscode', 'settings.json'), 'utf8')).toBe(firstRun);
         });
 

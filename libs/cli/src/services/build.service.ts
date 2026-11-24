@@ -181,26 +181,106 @@ export function resolveBuildIcon(buildType: BuildType, icon: string | undefined,
     return undefined;
 }
 
-// eslint-disable-next-line prefer-arrow/prefer-arrow-functions
-export function writeGeneratedWebpackConfig(target: BuildTarget, dir: string, tmpDir: string): string
+export interface GeneratedWebpackConfigOptions
 {
-    const webpackConfigPath = path.join(tmpDir, `webpack.${target.name}.cjs`);
+    /** Debug build: development mode with inline source maps. */
+    debug?: boolean;
+    /** Workspace customisation (webpack.config.cjs) applied to the generated configuration. */
+    customizationPath?: string;
+}
+
+/**
+ * Write the webpack configuration of an item in `tmpDir`: production (`webpack.<name>.cjs`) or debug (`webpack-debug.<name>.cjs`).
+ * With a customisation, the file exports a function that passes the generated configuration to it, and webpack builds
+ * the configuration it returns.
+ * @returns the path of the configuration file
+ */
+// eslint-disable-next-line prefer-arrow/prefer-arrow-functions
+export function writeGeneratedWebpackConfig(target: BuildTarget, dir: string, tmpDir: string, options: GeneratedWebpackConfigOptions = {}): string
+{
+    const debug = options.debug === true;
+    const webpackConfigPath = path.join(tmpDir, `${debug ? 'webpack-debug' : 'webpack'}.${target.name}.cjs`);
     const outputPath = path.resolve(dir, target.outputDir);
     const entryPath = path.resolve(dir, target.entryFile);
-    const webpackConfig = `const ModuleFederationPlugin = require('webpack').container.ModuleFederationPlugin;\n\nmodule.exports = {\n  mode: 'production',\n  module: {\n    rules: [{\n      test: /\\.tsx?$/,\n      use: 'ts-loader',\n      exclude: /node_modules/\n    }]\n  },\n  output: {\n    publicPath: 'auto',\n    path: ${JSON.stringify(outputPath)}\n  },\n  resolve: {\n    extensions: ['.tsx', '.ts', '.js']\n  },\n  plugins: [\n    new ModuleFederationPlugin({\n      name: ${JSON.stringify(target.name)},\n      filename: ${JSON.stringify(`${target.name}.js`)},\n      exposes: {\n        ${JSON.stringify(`./${target.name}`)}: {\n          import: ${JSON.stringify(entryPath)},\n          name: ${JSON.stringify(`${target.name}.module`)}\n        }\n      },\n      shared: {\n        '@intuiface/core': {\n          singleton: true,\n          strictVersion: false\n        }\n      }\n    })\n  ],\n  entry: ${JSON.stringify(entryPath)}\n};\n`;
+    const lines = [
+        `const ModuleFederationPlugin = require('webpack').container.ModuleFederationPlugin;`,
+        '',
+        'const config = {',
+        `  mode: ${debug ? `'development'` : `'production'`},`,
+        ...(debug ? [`  devtool: 'inline-source-map',`] : []),
+        '  module: {',
+        '    rules: [{',
+        '      test: /\\.tsx?$/,',
+        `      use: 'ts-loader',`,
+        '      exclude: /node_modules/',
+        '    }]',
+        '  },',
+        '  output: {',
+        `    publicPath: 'auto',`,
+        `    path: ${JSON.stringify(outputPath)}`,
+        '  },',
+        '  resolve: {',
+        `    extensions: ['.tsx', '.ts', '.js']`,
+        '  },',
+        '  plugins: [',
+        '    new ModuleFederationPlugin({',
+        `      name: ${JSON.stringify(target.name)},`,
+        `      filename: ${JSON.stringify(`${target.name}.js`)},`,
+        '      exposes: {',
+        `        ${JSON.stringify(`./${target.name}`)}: {`,
+        `          import: ${JSON.stringify(entryPath)},`,
+        `          name: ${JSON.stringify(`${target.name}.module`)}`,
+        '        }',
+        '      },',
+        '      shared: {',
+        `        '@intuiface/core': {`,
+        '          singleton: true,',
+        '          strictVersion: false',
+        '        }',
+        '      }',
+        '    })',
+        '  ],',
+        `  entry: ${JSON.stringify(entryPath)}`,
+        '};',
+        '',
+        ...(options.customizationPath
+            ? createCustomizationExport(target, options.customizationPath, debug)
+            : ['module.exports = config;']),
+        ''
+    ];
 
-    fs.writeFileSync(webpackConfigPath, webpackConfig, 'utf8');
+    fs.writeFileSync(webpackConfigPath, lines.join('\n'), 'utf8');
     return webpackConfigPath;
 }
 
+/**
+ * Export of a generated webpack configuration customised by the workspace webpack.config.cjs:
+ * `(config, { item, debug }) => config`, which may also change `config` in place or be async.
+ */
 // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
-export function writeGeneratedWebpackDebugConfig(target: BuildTarget, dir: string, tmpDir: string): string
+function createCustomizationExport(target: BuildTarget, customizationPath: string, debug: boolean): string[]
 {
-    const webpackConfigPath = path.join(tmpDir, `webpack-debug.${target.name}.cjs`);
-    const outputPath = path.resolve(dir, target.outputDir);
-    const entryPath = path.resolve(dir, target.entryFile);
-    const webpackConfig = `const ModuleFederationPlugin = require('webpack').container.ModuleFederationPlugin;\n\nmodule.exports = {\n  mode: 'development',\n  devtool: 'inline-source-map',\n  module: {\n    rules: [{\n      test: /\\.tsx?$/,\n      use: 'ts-loader',\n      exclude: /node_modules/\n    }]\n  },\n  output: {\n    publicPath: 'auto',\n    path: ${JSON.stringify(outputPath)}\n  },\n  resolve: {\n    extensions: ['.tsx', '.ts', '.js']\n  },\n  plugins: [\n    new ModuleFederationPlugin({\n      name: ${JSON.stringify(target.name)},\n      filename: ${JSON.stringify(`${target.name}.js`)},\n      exposes: {\n        ${JSON.stringify(`./${target.name}`)}: {\n          import: ${JSON.stringify(entryPath)},\n          name: ${JSON.stringify(`${target.name}.module`)}\n        }\n      },\n      shared: {\n        '@intuiface/core': {\n          singleton: true,\n          strictVersion: false\n        }\n      }\n    })\n  ],\n  entry: ${JSON.stringify(entryPath)}\n};\n`;
-
-    fs.writeFileSync(webpackConfigPath, webpackConfig, 'utf8');
-    return webpackConfigPath;
+    const item = { name: target.name, type: target.buildType, entry: target.entryFile.replace(/\\/g, '/') };
+    const fileName = JSON.stringify(path.basename(customizationPath));
+    return [
+        `const customizationPath = ${JSON.stringify(customizationPath)};`,
+        `const item = ${JSON.stringify(item)};`,
+        '',
+        'module.exports = async () =>',
+        '{',
+        '  const customize = require(customizationPath);',
+        `  if (typeof customize !== 'function')`,
+        '  {',
+        `    throw new Error(${fileName} + ' must export a function: module.exports = (config, { item, debug }) => config;');`,
+        '  }',
+        '',
+        `  const customized = await customize(config, { item: item, debug: ${debug} });`,
+        '  const result = customized === undefined ? config : customized;',
+        `  if (result === null || typeof result !== 'object' || Array.isArray(result))`,
+        '  {',
+        `    throw new Error('The function of ' + ${fileName} + ' must return the webpack configuration of ' + item.name + '.');`,
+        '  }',
+        '  return result;',
+        '};'
+    ];
 }

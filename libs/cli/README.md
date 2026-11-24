@@ -76,7 +76,7 @@ When it is not run in a terminal (in a script or CI), `init` only writes the wor
 - `package.json` keeps its values and scripts and gets the missing workspace ones. Dependencies are added, or raised when their version is lower than the workspace one, and never downgraded. If it already has a different `build` script, `init` keeps it and prints a warning.
 - JSON files (`tsconfig.json`, `.vscode/settings.json`, `.vscode/extensions.json`) get the settings they do not have. Their own values win, and files with comments are left unchanged.
 - `.gitignore` gets the entries it does not have.
-- Other existing files (`eslint.config.mjs`, `.nvmrc`) are kept.
+- Other existing files (`eslint.config.mjs`, `webpack.config.cjs`, `.nvmrc`) are kept.
 
 ### `add`
 Add items to the current workspace.
@@ -145,6 +145,31 @@ npm run build:debug -- -n MyInterfaceAsset
 
 If you still have older projects that expect an icon override during build, `--icon` remains available for retro-compatibility. New projects should rely on the workspace icon saved by `add` or `init`.
 
+#### Customising webpack
+
+In a workspace, `build` generates the webpack configuration of each item (entry, output in `dist/<name>`, TypeScript loader, Module Federation). To change it, edit `webpack.config.cjs`, created by `init` at the root of the workspace. Its function gets the generated configuration of each item and returns the configuration to build it with:
+
+```js
+module.exports = (config, { item, debug }) =>
+{
+    // Modules provided at runtime by the player (Node.js, Electron, BrightSign) must not be bundled
+    config.externals = {
+        'fs': 'commonjs fs',
+        '@brightsign/deviceinfo': 'commonjs @brightsign/deviceinfo'
+    };
+
+    return config;
+};
+```
+
+- `item` is the item being built, as declared in `intuiface.workspace.json` (`name`, `type`, `entry`): use it to change a single item.
+- `debug` is `true` for a debug build (`--debug`, `npm run build:debug`).
+- The function can also change `config` in place and return nothing, or be `async`.
+
+To import Node.js modules (`fs`, `path`, ...) in TypeScript, the workspace `tsconfig.json` loads the Node.js types with `"types": ["node"]`: TypeScript 6 no longer loads the `@types` packages by default.
+
+A workspace does not use `webpack.config.js` or `webpack-debug.config.js`: `build` warns when it finds one. `migrate` moves their changes to `webpack.config.cjs`.
+
 ### `migrate`
 Migrate older projects to the CLI-based workflow.
 
@@ -153,6 +178,14 @@ npx intuiface-cli migrate
 ```
 
 `migrate` raises the build dependencies (`typescript`, `webpack`, `webpack-cli`, `ts-loader`) and `@intuiface/cli`/`@intuiface/core` when their version is lower than the one the workspace needs. A newer version is kept.
+
+As TypeScript 6 no longer loads the `@types` packages by default, `migrate` adds `"types": ["node"]` to `tsconfig.json` when the project depends on `@types/node` and its `tsconfig.json` sets no `types`.
+
+`migrate` replaces `webpack.config.js` and `webpack-debug.config.js` with `webpack.config.cjs` (see [Customising webpack](#customising-webpack)):
+
+- What the schematics generated (entry, output, TypeScript loader, Module Federation) is dropped: the workspace generates it.
+- Every other change, such as `externals`, `target`, `resolve.fallback`, other plugins or loader rules, is copied with its comments into the function of `webpack.config.cjs`. The changes of `webpack-debug.config.js` only apply to debug builds (`if (debug)`).
+- The files are only read, never run. A file with a change that cannot be moved automatically (for example different `ModuleFederationPlugin` options, another `entry`, or a configuration exported as a function) is kept, and `migrate` lists what to move by hand. Delete it once done: until then, `build` warns that it is not used.
 
 #### Migration from v1.x
 For existing project created before the v2.x of the `intuiface-cdk`, you can migrate your project using this recommended migration flow:

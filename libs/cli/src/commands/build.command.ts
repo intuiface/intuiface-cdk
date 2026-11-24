@@ -6,7 +6,14 @@ import ora from 'ora';
 import { BuildTarget, BuildType, WorkspaceItem } from '../types.js';
 import { ADD_ITEM_EXAMPLES } from '../utils/examples.js';
 import { execPromise, isExecException } from '../utils/exec.js';
-import { tryReadWorkspaceConfig, getRequiredWorkspaceItem, getWorkspaceConfigFileName } from '../services/workspace.service.js';
+import {
+    tryReadWorkspaceConfig,
+    getRequiredWorkspaceItem,
+    getWorkspaceConfigFileName,
+    findLegacyWebpackConfigFiles,
+    findWorkspaceWebpackConfig,
+    getWorkspaceWebpackConfigFileName
+} from '../services/workspace.service.js';
 import { validateIconPath } from '../utils/validators.js';
 import {
     cleanBuildFolders,
@@ -14,8 +21,7 @@ import {
     transpileTypeScript,
     resolveTranspiledEntryPath,
     resolveBuildIcon,
-    writeGeneratedWebpackConfig,
-    writeGeneratedWebpackDebugConfig
+    writeGeneratedWebpackConfig
 } from '../services/build.service.js';
 import { buildSchemas, buildResources, buildIFDFile, writeIFDFile } from '../services/descriptor.service.js';
 
@@ -26,6 +32,8 @@ export async function runBuildCommand(options: { name?: string; all?: boolean; t
     const workspaceConfig = tryReadWorkspaceConfig(dir);
     if (workspaceConfig)
     {
+        warnAboutLegacyWebpackConfigFiles(dir);
+
         const itemName = options.name;
         let targets: BuildTarget[];
         // --name wins over --all: the generated `build` script passes --all, and `npm run build -- -n X` must build X only
@@ -95,6 +103,21 @@ function validateBuildIcons(targets: BuildTarget[], dir: string): void
         {
             validateIconPath(target.icon, dir, target.name);
         }
+    }
+}
+
+/**
+ * A workspace builds with a generated webpack configuration, customised by webpack.config.cjs:
+ * a webpack.config.js left from a 2.x project is not used, which the developer may not expect.
+ */
+// eslint-disable-next-line prefer-arrow/prefer-arrow-functions
+function warnAboutLegacyWebpackConfigFiles(dir: string): void
+{
+    const legacyFiles = findLegacyWebpackConfigFiles(dir);
+    if (legacyFiles.length > 0)
+    {
+        ora().warn(`${legacyFiles.join(' and ')} ${legacyFiles.length > 1 ? 'are' : 'is'} not used to build a workspace. `
+            + `Move ${legacyFiles.length > 1 ? 'their' : 'its'} changes to ${getWorkspaceWebpackConfigFileName()}, then delete ${legacyFiles.length > 1 ? 'them' : 'it'}.`);
     }
 }
 
@@ -181,22 +204,18 @@ async function buildTarget(target: BuildTarget, debug?: boolean): Promise<void>
         spinner.start('Writing descriptor file...');
         await writeIFDFile(target.name, target.outputDir, globalThisAny.intuiface_ifd_file, spinner);
 
-        spinner.start(`Building ${target.buildType}: ${target.name}...`);
         let webpackOutput;
         if (target.useGeneratedWebpackConfig)
         {
-            const webpackConfigPath = debug
-                ? writeGeneratedWebpackDebugConfig(target, dir, tmpDir)
-                : writeGeneratedWebpackConfig(target, dir, tmpDir);
+            const customizationPath = findWorkspaceWebpackConfig(dir);
+            spinner.start(`Building ${target.buildType}: ${target.name}${customizationPath ? ` (customised by ${getWorkspaceWebpackConfigFileName()})` : ''}...`);
+            const webpackConfigPath = writeGeneratedWebpackConfig(target, dir, tmpDir, { debug, customizationPath });
             webpackOutput = await execPromise(`npx webpack --config "${webpackConfigPath}"`);
-        }
-        else if (!debug)
-        {
-            webpackOutput = await execPromise(`npx webpack --config ${dir}/webpack.config.js`);
         }
         else
         {
-            webpackOutput = await execPromise(`npx webpack --config ${dir}/webpack-debug.config.js`);
+            spinner.start(`Building ${target.buildType}: ${target.name}...`);
+            webpackOutput = await execPromise(`npx webpack --config ${dir}/${debug ? 'webpack-debug.config.js' : 'webpack.config.js'}`);
         }
 
         if (webpackOutput)

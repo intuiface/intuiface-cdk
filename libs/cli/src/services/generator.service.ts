@@ -308,6 +308,16 @@ function getWorkspaceTemplateDirectory(): string
     return path.resolve(serviceDirectory, '..', 'templates', 'workspace');
 }
 
+/**
+ * @param relativePath path of a file in templates/workspace, e.g. `webpack.config.cjs`
+ * @returns the content of the template file (it has no placeholder)
+ */
+// eslint-disable-next-line prefer-arrow/prefer-arrow-functions
+export function readWorkspaceTemplateFile(relativePath: string): string
+{
+    return fs.readFileSync(path.join(getWorkspaceTemplateDirectory(), relativePath), 'utf8');
+}
+
 // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
 function isTextTemplateFile(sourcePath: string): boolean
 {
@@ -343,6 +353,8 @@ export function buildWorkspaceTsConfig(): string
             useDefineForClassFields: false,
             module: 'es2020',
             lib: ['es2020', 'dom'],
+            // TypeScript 6 loads no @types package by default: Node.js modules (e.g. `fs`, made webpack externals) need these types
+            types: ['node'],
             allowJs: true,
             allowSyntheticDefaultImports: true,
             esModuleInterop: true,

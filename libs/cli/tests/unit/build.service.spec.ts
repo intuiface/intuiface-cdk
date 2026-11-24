@@ -1,4 +1,5 @@
 import fs from 'fs-extra';
+import { createRequire } from 'module';
 import path from 'path';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import {
@@ -7,12 +8,11 @@ import {
     resolveBuildIcon,
     resolveTranspiledEntryPath,
     transpileTypeScript,
-    writeGeneratedWebpackConfig,
-    writeGeneratedWebpackDebugConfig
+    writeGeneratedWebpackConfig
 } from '../../src/services/build.service.js';
 import { buildWorkspaceTsConfig } from '../../src/services/generator.service.js';
 import { BuildTarget } from '../../src/types.js';
-import { createTempDir, removeTempDir, useCwd, writeFiles } from '../helpers/test-utils.js';
+import { createTempDir, removeTempDir, repoRoot, useCwd, writeFiles } from '../helpers/test-utils.js';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const globalThisAny = globalThis as any;
@@ -20,7 +20,19 @@ const globalThisAny = globalThis as any;
 const createSpinner = (): { fail: ReturnType<typeof vi.fn>; text: string; indent: number } => ({ fail: vi.fn(), text: '', indent: 0 });
 
 /**
+ * tsconfig of a workspace. The tests run in the OS temp folder: its `types` (`node`) are found in the repository node_modules.
+ */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const workspaceTsConfig = (): any =>
+{
+    const tsconfig = JSON.parse(buildWorkspaceTsConfig());
+    tsconfig.compilerOptions.typeRoots = [path.join(repoRoot, 'node_modules', '@types')];
+    return tsconfig;
+};
+
+/**
  * Evaluate a generated webpack config (CommonJS) with a stubbed `webpack` module.
+ * The workspace customisation (an absolute path to webpack.config.cjs) is really required.
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const loadWebpackConfig = (configPath: string): any =>
@@ -33,8 +45,13 @@ const loadWebpackConfig = (configPath: string): any =>
         }
     }
 
+    const nodeRequire = createRequire(configPath);
     const stubRequire = (id: string): unknown =>
     {
+        if (path.isAbsolute(id) && path.basename(id) === 'webpack.config.cjs')
+        {
+            return nodeRequire(id);
+        }
         if (id !== 'webpack')
         {
             throw new Error(`Unexpected require('${id}')`);
@@ -44,6 +61,16 @@ const loadWebpackConfig = (configPath: string): any =>
     const module = { exports: {} };
     new Function('require', 'module', 'exports', fs.readFileSync(configPath, 'utf8'))(stubRequire, module, module.exports);
     return module.exports;
+};
+
+/**
+ * The configuration webpack builds: webpack-cli calls an exported function, and waits for its promise.
+ */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const resolveWebpackConfig = async (configPath: string): Promise<any> =>
+{
+    const exported = loadWebpackConfig(configPath);
+    return typeof exported === 'function' ? await exported({ WEBPACK_BUILD: true }, {}) : exported;
 };
 
 describe('build.service', () =>
@@ -147,7 +174,7 @@ describe('build.service', () =>
     {
         beforeEach(() =>
         {
-            writeFiles(dir, { 'tsconfig.json': buildWorkspaceTsConfig() });
+            writeFiles(dir, { 'tsconfig.json': workspaceTsConfig() });
         });
 
         it('transpiles the workspace into the output folder, keeping the src/ layout', () =>
@@ -181,7 +208,7 @@ describe('build.service', () =>
                 'src/interface-assets/Alpha/data.json': `{ "count": 1 }\n`,
                 'src/shared/shared.ts': `export const shared = (): number => 1;\n`
             });
-            const tsconfig = JSON.parse(buildWorkspaceTsConfig());
+            const tsconfig = workspaceTsConfig();
             tsconfig.compilerOptions.resolveJsonModule = true;
             writeFiles(dir, { 'tsconfig.json': tsconfig });
 
@@ -202,7 +229,7 @@ describe('build.service', () =>
             writeFiles(dir, {
                 'src/Alpha.ts': `import path from 'path';\nexport const sep = path.sep;\n`
             });
-            const tsconfig = JSON.parse(buildWorkspaceTsConfig());
+            const tsconfig = workspaceTsConfig();
             tsconfig.compilerOptions.types = [];
             tsconfig.compilerOptions.noImplicitAny = false;
             writeFiles(dir, { 'tsconfig.json': tsconfig });
@@ -343,13 +370,87 @@ describe('build.service', () =>
 
         it('writes a debug config with inline source maps', () =>
         {
-            const configPath = writeGeneratedWebpackDebugConfig(target, dir, path.join(dir, 'tmp'));
+            const configPath = writeGeneratedWebpackConfig(target, dir, path.join(dir, 'tmp'), { debug: true });
             const config = loadWebpackConfig(configPath);
 
             expect(configPath).toBe(path.join(dir, 'tmp', 'webpack-debug.Alpha.cjs'));
             expect(config.mode).toBe('development');
             expect(config.devtool).toBe('inline-source-map');
             expect(config.plugins[0].options.exposes['./Alpha'].name).toBe('Alpha.module');
+        });
+
+        describe('customised by webpack.config.cjs (review O1)', () =>
+        {
+            const writeCustomization = (code: string): string =>
+            {
+                writeFiles(dir, { 'webpack.config.cjs': code });
+                return path.join(dir, 'webpack.config.cjs');
+            };
+
+            it('passes the generated configuration, the item and the build mode, and builds what the function returns', async () =>
+            {
+                const customizationPath = writeCustomization([
+                    'module.exports = (config, { item, debug }) => ({',
+                    '    ...config,',
+                    `    externals: { fs: 'commonjs fs' },`,
+                    '    received: { mode: config.mode, entry: config.entry, plugins: config.plugins.length, item, debug }',
+                    '});'
+                ].join('\n'));
+
+                const production = await resolveWebpackConfig(writeGeneratedWebpackConfig(target, dir, path.join(dir, 'tmp'), { customizationPath }));
+                const debug = await resolveWebpackConfig(writeGeneratedWebpackConfig(target, dir, path.join(dir, 'tmp'), { debug: true, customizationPath: customizationPath }));
+
+                expect(production.externals).toEqual({ fs: 'commonjs fs' });
+                expect(production.output).toEqual({ publicPath: 'auto', path: path.resolve(dir, 'dist', 'Alpha') });
+                expect(production.received).toEqual({
+                    mode: 'production',
+                    entry: path.resolve(dir, target.entryFile),
+                    plugins: 1,
+                    item: { name: 'Alpha', type: 'interface-asset', entry: 'src/interface-assets/Alpha/Alpha.ts' },
+                    debug: false
+                });
+                expect(debug.received).toMatchObject({ mode: 'development', debug: true });
+            });
+
+            it('builds the configuration changed in place when the function returns nothing', async () =>
+            {
+                const customizationPath = writeCustomization(`module.exports = (config) => { config.target = 'electron-renderer'; };\n`);
+
+                const config = await resolveWebpackConfig(writeGeneratedWebpackConfig(target, dir, path.join(dir, 'tmp'), { customizationPath }));
+
+                expect(config.target).toBe('electron-renderer');
+                expect(config.mode).toBe('production');
+            });
+
+            it('waits for an async function', async () =>
+            {
+                const customizationPath = writeCustomization(`module.exports = async (config) => ({ ...config, externalsPresets: { node: true } });\n`);
+
+                const config = await resolveWebpackConfig(writeGeneratedWebpackConfig(target, dir, path.join(dir, 'tmp'), { customizationPath }));
+
+                expect(config.externalsPresets).toEqual({ node: true });
+            });
+
+            it('rejects a file that does not export a function', async () =>
+            {
+                const customizationPath = writeCustomization(`module.exports = { externals: { fs: 'commonjs fs' } };\n`);
+
+                await expect(resolveWebpackConfig(writeGeneratedWebpackConfig(target, dir, path.join(dir, 'tmp'), { customizationPath })))
+                    .rejects.toThrow('webpack.config.cjs must export a function: module.exports = (config, { item, debug }) => config;');
+            });
+
+            it('rejects a function that does not return a configuration', async () =>
+            {
+                const customizationPath = writeCustomization('module.exports = () => 42;\n');
+
+                await expect(resolveWebpackConfig(writeGeneratedWebpackConfig(target, dir, path.join(dir, 'tmp'), { customizationPath })))
+                    .rejects.toThrow('The function of webpack.config.cjs must return the webpack configuration of Alpha.');
+            });
+
+            it('exports the generated configuration as is without customisation', () =>
+            {
+                expect(typeof loadWebpackConfig(writeGeneratedWebpackConfig(target, dir, path.join(dir, 'tmp')))).toBe('object');
+            });
         });
 
         it('escapes paths with spaces, apostrophes and backslashes', () =>

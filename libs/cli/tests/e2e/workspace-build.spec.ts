@@ -259,3 +259,86 @@ describe('workspace build (init → add → build --all)', () =>
         });
     });
 });
+
+/**
+ * Items that use modules the player provides (Node.js, Electron, BrightSign) need webpack `externals` (review O1).
+ */
+describe('webpack.config.cjs', () =>
+{
+    let dir: string;
+
+    /** Built JavaScript of an item, all chunks together. */
+    const readBundle = (name: string): string => fs.readdirSync(path.join(dir, 'dist', name))
+        .filter((file) => file.endsWith('.js'))
+        .map((file) => fs.readFileSync(path.join(dir, 'dist', name, file), 'utf8'))
+        .join('\n');
+
+    beforeAll(() =>
+    {
+        assertBuiltPackages();
+        dir = createE2EDir('webpack');
+
+        runCliOrThrow(dir, 'init', '-n', 'webpack-workspace');
+        runCliOrThrow(dir, 'add', 'binding-converter', '-n', 'FileTools', '-c', 'Files');
+        const sourcePath = path.join(dir, 'src', 'binding-converters', 'FileTools', 'FileTools.ts');
+        const source = fs.readFileSync(sourcePath, 'utf8');
+        fs.writeFileSync(sourcePath, `import fs from 'fs';\n${source.replace(`return input?.toString() ?? '';`, `return fs.existsSync(input) ? 'yes' : 'no';`)}`);
+    });
+
+    afterAll(() =>
+    {
+        removeE2EDir(dir);
+    });
+
+    it('is created by init, and changes nothing until it is edited', () =>
+    {
+        expect(fs.readFileSync(path.join(dir, 'webpack.config.cjs'), 'utf8')).toContain('module.exports = (config, { item, debug }) =>');
+
+        const result = runCli(dir, 'build', '--all');
+
+        // webpack 5 does not bundle Node.js modules for the web
+        expect(result.status, result.output).not.toBe(0);
+        expect(result.output).toContain(`Can't resolve 'fs'`);
+        expect(result.output).toContain('(customised by webpack.config.cjs)');
+    });
+
+    it('builds with the externals it sets, for production and debug builds', () =>
+    {
+        fs.writeFileSync(path.join(dir, 'webpack.config.cjs'), [
+            'module.exports = (config, { item, debug }) =>',
+            '{',
+            `    config.externals = { fs: 'commonjs fs' };`,
+            '    if (debug)',
+            '    {',
+            `        config.devtool = 'source-map';`,
+            '    }',
+            '    return config;',
+            '};',
+            ''
+        ].join('\n'));
+
+        const production = runCli(dir, 'build', '--all');
+
+        expect(production.status, production.output).toBe(0);
+        expect(readBundle('FileTools')).toContain('require("fs")');
+        expect(readIfd(dir, 'FileTools')['if.category']).toBe('Files');
+        expect(fs.readdirSync(path.join(dir, 'dist', 'FileTools')).some((file) => file.endsWith('.js.map'))).toBe(false);
+
+        const debug = runCli(dir, 'build', '--all', '--debug');
+
+        expect(debug.status, debug.output).toBe(0);
+        expect(readBundle('FileTools')).toContain('require("fs")');
+        expect(fs.readdirSync(path.join(dir, 'dist', 'FileTools')).some((file) => file.endsWith('.js.map'))).toBe(true);
+    });
+
+    it('reports a file that does not export a function', () =>
+    {
+        fs.writeFileSync(path.join(dir, 'webpack.config.cjs'), `module.exports = { externals: { fs: 'commonjs fs' } };\n`);
+
+        const result = runCli(dir, 'build', '--all');
+
+        expect(result.status).not.toBe(0);
+        expect(result.output).toContain('webpack.config.cjs must export a function: module.exports = (config, { item, debug }) => config;');
+        expect(fs.existsSync(path.join(dir, 'tmp'))).toBe(false);
+    });
+});

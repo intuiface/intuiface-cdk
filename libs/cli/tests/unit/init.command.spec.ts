@@ -93,7 +93,7 @@ describe('init command', () =>
         {
             await initializeWorkspace();
 
-            for (const file of ['package.json', 'intuiface.workspace.json', 'tsconfig.json', '.nvmrc', '.gitignore', 'eslint.config.mjs', '.vscode/settings.json', '.vscode/extensions.json'])
+            for (const file of ['package.json', 'intuiface.workspace.json', 'tsconfig.json', '.nvmrc', '.gitignore', 'eslint.config.mjs', 'webpack.config.cjs', '.vscode/settings.json', '.vscode/extensions.json'])
             {
                 expect(fs.existsSync(path.join(dir, file)), file).toBe(true);
             }
@@ -141,7 +141,7 @@ describe('init command', () =>
             await initializeWorkspace();
 
             const output = getOutput();
-            for (const file of ['package.json', 'intuiface.workspace.json', 'tsconfig.json', '.nvmrc', '.gitignore', 'eslint.config.mjs', '.vscode/settings.json'])
+            for (const file of ['package.json', 'intuiface.workspace.json', 'tsconfig.json', '.nvmrc', '.gitignore', 'eslint.config.mjs', 'webpack.config.cjs', '.vscode/settings.json'])
             {
                 expect(output, file).toMatch(new RegExp(`CREATE.* ${file.replace(/\./g, '\\.')} \\(\\d+ bytes\\)`));
             }
@@ -282,13 +282,15 @@ describe('init command', () =>
         {
             writeFiles(dir, {
                 'eslint.config.mjs': 'export default [];\n',
-                '.nvmrc': '24\n'
+                '.nvmrc': '24\n',
+                'webpack.config.cjs': 'module.exports = (config) => config;\n'
             });
 
             await initializeWorkspace();
 
             expect(readText('eslint.config.mjs')).toBe('export default [];\n');
             expect(readText('.nvmrc')).toBe('24\n');
+            expect(readText('webpack.config.cjs')).toBe('module.exports = (config) => config;\n');
         });
 
         it('completes an existing tsconfig.json', async () =>

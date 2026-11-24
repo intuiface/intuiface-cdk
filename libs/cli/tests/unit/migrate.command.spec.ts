@@ -1,11 +1,61 @@
 import fs from 'fs-extra';
+import ora from 'ora';
 import path from 'path';
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, Mock, vi } from 'vitest';
 import { runMigrateCommand } from '../../src/commands/migrate.command.js';
-import { WORKSPACE_BUILD_DEV_DEPENDENCIES } from '../../src/services/generator.service.js';
+import { readWorkspaceTemplateFile, WORKSPACE_BUILD_DEV_DEPENDENCIES } from '../../src/services/generator.service.js';
 import { cliRoot, createTempDir, mockProcessExit, removeTempDir, useCwd, writeFiles } from '../helpers/test-utils.js';
 
 const cliPackageVersion: string = fs.readJsonSync(path.join(cliRoot, 'package.json')).version;
+
+/** Messages given to a method of the (silent) ora spinners, e.g. `warn`. */
+const spinnerMessages = (method: 'succeed' | 'warn'): string[] => vi.mocked(ora).mock.results
+    .flatMap((result) => (result.value as Record<string, Mock>)[method].mock.calls.map((call) => String(call[0] ?? '')));
+
+/** webpack.config.js of a 2.x interface asset project that keeps Node.js and BrightSign modules out of the bundle. */
+const webpackConfigWithExternals = `const ModuleFederationPlugin = require("webpack").container.ModuleFederationPlugin;
+const path = require('path');
+
+module.exports = {
+    module: {
+        rules: [{
+            test: /\\.tsx?$/,
+            use: 'ts-loader',
+            exclude: /node_modules/
+        }]
+    },
+    output: {
+        publicPath: "auto",
+        path: path.resolve(__dirname, 'dist/MyAsset')
+    },
+    resolve: {
+        extensions: ['.tsx', '.ts', '.js'],
+    },
+    plugins: [
+        new ModuleFederationPlugin({
+            name: "MyAsset",
+            filename: "MyAsset.js",
+            exposes: {
+                "./MyAsset": {
+                    import : "./src/MyAsset.ts",
+                    name: 'MyAsset.module'
+                }
+            },
+            shared: {
+                "@intuiface/core": {
+                    singleton: true,
+                    strictVersion: false
+                }
+            }
+        })
+    ],
+    entry: './src/MyAsset.ts',
+    externals: {
+        fs: 'commonjs fs',
+        '@brightsign/deviceinfo': 'commonjs @brightsign/deviceinfo'
+    }
+};
+`;
 
 /** package.json of a project created by the 2.x interface-asset schematic. */
 const standalonePackageJson = (buildScript: string): Record<string, unknown> => ({
@@ -53,6 +103,7 @@ describe('migrate command', () =>
     {
         dir = createTempDir('cli-migrate');
         restoreCwd = useCwd(dir);
+        vi.mocked(ora).mockClear();
         // npm sets INIT_CWD when the tests run through npm/npx; the pre-v2 migration reads it first
         vi.stubEnv('INIT_CWD', dir);
     });
@@ -107,7 +158,53 @@ describe('migrate command', () =>
             });
             expect(fs.existsSync(path.join(dir, 'webpack.config.js'))).toBe(false);
             expect(fs.existsSync(path.join(dir, 'webpack-debug.config.js'))).toBe(false);
+            expect(fs.readFileSync(path.join(dir, 'webpack.config.cjs'), 'utf8')).toBe(readWorkspaceTemplateFile('webpack.config.cjs'));
             expect(fs.existsSync(path.join(dir, 'src', 'MyAsset.ts'))).toBe(true);
+            expect(spinnerMessages('succeed')).toContain('webpack.config.cjs created (webpack.config.js and webpack-debug.config.js removed)');
+        });
+
+        it('moves the webpack customisations to webpack.config.cjs (review O1)', () =>
+        {
+            writeFiles(dir, {
+                'package.json': standalonePackageJson('npx intuiface-cli build -n MyAsset'),
+                'webpack.config.js': webpackConfigWithExternals,
+                'webpack-debug.config.js': `const baseConfig = require('./webpack.config');\n\nmodule.exports = {\n    ...baseConfig,\n    mode: 'development',\n    devtool: 'inline-source-map'\n};\n`
+            });
+
+            runMigrateCommand();
+
+            expect(fs.existsSync(path.join(dir, 'webpack.config.js'))).toBe(false);
+            expect(fs.existsSync(path.join(dir, 'webpack-debug.config.js'))).toBe(false);
+            expect(fs.readFileSync(path.join(dir, 'webpack.config.cjs'), 'utf8').replace(/\r\n/g, '\n')).toContain([
+                '    // Moved from webpack.config.js by intuiface-cli migrate',
+                '    config.externals = {',
+                `        fs: 'commonjs fs',`,
+                `        '@brightsign/deviceinfo': 'commonjs @brightsign/deviceinfo'`,
+                '    };',
+                '',
+                '    return config;'
+            ].join('\n'));
+            expect(spinnerMessages('succeed')).toContain('webpack.config.cjs created, with `externals` (webpack.config.js and webpack-debug.config.js removed)');
+            expect(spinnerMessages('warn')).toEqual([]);
+        });
+
+        it('keeps a webpack config it cannot move, and tells what to move by hand', () =>
+        {
+            const webpackConfig = 'module.exports = (env) => ({ externals: { fs: \'commonjs fs\' } });\n';
+            writeFiles(dir, {
+                'package.json': standalonePackageJson('npx intuiface-cli build -n MyAsset'),
+                'webpack.config.js': webpackConfig
+            });
+
+            runMigrateCommand();
+
+            expect(fs.readFileSync(path.join(dir, 'webpack.config.js'), 'utf8')).toBe(webpackConfig);
+            expect(fs.existsSync(path.join(dir, 'webpack.config.cjs'))).toBe(true);
+            expect(spinnerMessages('warn')).toEqual([
+                'webpack.config.js kept, move these changes to webpack.config.cjs by hand, then delete it:\n' +
+                '     - `module.exports` is not assigned a configuration object'
+            ]);
+            expect(fs.existsSync(path.join(dir, 'intuiface.workspace.json'))).toBe(true);
         });
 
         it('updates the build scripts and the build toolchain', () =>
@@ -161,6 +258,31 @@ describe('migrate command', () =>
             runMigrateCommand();
 
             expect(fs.readFileSync(path.join(dir, 'tsconfig.json'), 'utf8')).toBe(tsconfig);
+        });
+
+        it('loads @types/node, which TypeScript 6 no longer does by default (imports of Node.js modules)', () =>
+        {
+            const packageJson = standalonePackageJson('npx intuiface-cli build -n MyAsset');
+            (packageJson.devDependencies as Record<string, string>)['@types/node'] = '^22.10.1';
+            writeFiles(dir, { 'package.json': packageJson, 'tsconfig.json': legacyTsConfig });
+
+            runMigrateCommand();
+
+            expect(fs.readJsonSync(path.join(dir, 'tsconfig.json')).compilerOptions.types).toEqual(['node']);
+        });
+
+        it('keeps the types of tsconfig.json', () =>
+        {
+            const packageJson = standalonePackageJson('npx intuiface-cli build -n MyAsset');
+            (packageJson.devDependencies as Record<string, string>)['@types/node'] = '^22.10.1';
+            writeFiles(dir, {
+                'package.json': packageJson,
+                'tsconfig.json': { compilerOptions: { rootDir: './src', moduleResolution: 'bundler', types: ['node', 'jest'] } }
+            });
+
+            runMigrateCommand();
+
+            expect(fs.readJsonSync(path.join(dir, 'tsconfig.json')).compilerOptions.types).toEqual(['node', 'jest']);
         });
 
         it('migrates a binding converter project with its default icon', () =>
@@ -318,6 +440,30 @@ describe('migrate command', () =>
                 expect(fs.existsSync(path.join(dir, removed)), removed).toBe(false);
             }
             expect(fs.existsSync(path.join(dir, 'src', 'OldAsset.ts'))).toBe(true);
+            expect(fs.readFileSync(path.join(dir, 'webpack.config.cjs'), 'utf8')).toBe(readWorkspaceTemplateFile('webpack.config.cjs'));
+        });
+
+        it('moves the webpack customisations to webpack.config.cjs (review O1)', () =>
+        {
+            writePreV2Project(`const ia = await import('./OldAsset.js');\n`);
+            writeFiles(dir, { 'webpack.config.js': `module.exports = {\n    entry: './src/index.js',\n    target: 'electron-renderer'\n};\n` });
+
+            runMigrateCommand();
+
+            expect(fs.existsSync(path.join(dir, 'webpack.config.js'))).toBe(false);
+            expect(fs.readFileSync(path.join(dir, 'webpack.config.cjs'), 'utf8')).toContain(`    config.target = 'electron-renderer';`);
+        });
+
+        it('loads @types/node, which TypeScript 6 no longer does by default', () =>
+        {
+            writePreV2Project(`const ia = await import('./OldAsset.js');\n`);
+            const packageJson = fs.readJsonSync(path.join(dir, 'package.json'));
+            packageJson.devDependencies['@types/node'] = '^22.10.1';
+            writeFiles(dir, { 'package.json': packageJson });
+
+            runMigrateCommand();
+
+            expect(fs.readJsonSync(path.join(dir, 'tsconfig.json')).compilerOptions.types).toEqual(['node']);
         });
 
         it('stops when the asset cannot be found in index_ifd.ts', () =>

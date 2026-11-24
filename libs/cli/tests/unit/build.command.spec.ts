@@ -1,9 +1,14 @@
 import fs from 'fs-extra';
+import ora from 'ora';
 import path from 'path';
-import { afterEach, beforeEach, describe, expect, it } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, Mock, vi } from 'vitest';
 import { runBuildCommand } from '../../src/commands/build.command.js';
 import { writeWorkspaceConfig } from '../../src/services/workspace.service.js';
 import { createTempDir, removeTempDir, silenceConsole, useCwd } from '../helpers/test-utils.js';
+
+/** Messages given to a method of the (silent) ora spinners, e.g. `warn`. */
+const spinnerMessages = (method: 'warn'): string[] => vi.mocked(ora).mock.results
+    .flatMap((result) => (result.value as Record<string, Mock>)[method].mock.calls.map((call) => String(call[0] ?? '')));
 
 /**
  * Option validation of `build`. Builds themselves are covered by the end-to-end tests.
@@ -17,6 +22,7 @@ describe('build command options', () =>
     {
         dir = createTempDir('cli-build-command');
         restoreCwd = useCwd(dir);
+        vi.mocked(ora).mockClear();
     });
 
     afterEach(() =>
@@ -100,6 +106,27 @@ describe('build command options', () =>
             expect(output).toContain('npx intuiface-cli add binding-converter -n MyBindingConverter -c Custom');
             expect(fs.existsSync(path.join(dir, 'tmp'))).toBe(false);
             expect(fs.existsSync(path.join(dir, 'dist'))).toBe(false);
+        });
+
+        it('warns that webpack.config.js is not used in a workspace (review O1)', async () =>
+        {
+            writeWorkspaceConfig(dir, { version: 1, name: 'ws', items: [] });
+            fs.writeFileSync(path.join(dir, 'webpack.config.js'), 'module.exports = {};\n');
+            silenceConsole();
+
+            await runBuildCommand({ all: true });
+
+            expect(spinnerMessages('warn')).toEqual(['webpack.config.js is not used to build a workspace. Move its changes to webpack.config.cjs, then delete it.']);
+        });
+
+        it('does not warn without legacy webpack config', async () =>
+        {
+            writeWorkspaceConfig(dir, { version: 1, name: 'ws', items: [] });
+            silenceConsole();
+
+            await runBuildCommand({ all: true });
+
+            expect(spinnerMessages('warn')).toEqual([]);
         });
 
         it('reports an invalid workspace file', async () =>
