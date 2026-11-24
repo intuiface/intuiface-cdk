@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+import chalk from 'chalk';
 import { Command } from 'commander';
 import { runBuildCommand } from './commands/build.command.js';
 import { initializeWorkspace } from './commands/init.command.js';
@@ -51,28 +52,30 @@ addCmd.command('interface-asset')
     .requiredOption('-n, --name <name>', 'interface asset name.')
     .requiredOption('-c, --category <category>', 'category displayed in Composer.')
     .option('-i, --icon <icon>', 'relative path to an interface asset icon that will be displayed in Composer Interface Asset panel.')
-    .action((options) =>
-    {
-        addInterfaceAsset(options);
-    });
+    .action((options) => addInterfaceAsset(options));
 
 addCmd.command('binding-converter')
     .description('Generate a new binding converter in the current workspace.')
     .requiredOption('-n, --name <name>', 'binding converter name.')
     .requiredOption('-c, --category <category>', 'category displayed in Composer.')
     .option('-i, --icon <icon>', 'relative path to an interface asset icon that will be displayed in Composer Interface Asset panel.')
-    .action((options) =>
-    {
-        addBindingConverter(options);
-    });
+    .action((options) => addBindingConverter(options));
 
 ifdCmd.command('migrate')
     .description('Migrate old project (<2.x) to new CLI.\nRun this command in the root folder of your project.')
     .summary('migrate old project (<2.x) to new CLI.')
-    .action(() =>
-    {
-        runMigrateCommand();
-    });
+    .action(() => runMigrateCommand());
 
 program.showHelpAfterError();
-program.parse();
+
+try
+{
+    await program.parseAsync();
+}
+catch (error)
+{
+    // Commands throw for expected failures (invalid name, missing workspace, ...): report the message only, without a stack trace
+    const message = error instanceof Error ? error.message : String(error);
+    process.stderr.write(`${chalk.red('✖')} ${message}\n`);
+    process.exitCode = 1;
+}
