@@ -101,8 +101,10 @@ export function buildIFDFile(
 ): Record<string, unknown>
 {
     const globalThisAny = globalThis as any;
+    // Binding converters declare their category in `@Converter({ category })`; package.json `intuiface.category`
+    // (written by the 2.x schematic, kept by `migrate`) is only a fallback for converters declared without one.
     const category = buildType === 'binding-converter'
-        ? getWorkspaceCategory() ?? globalThisAny.iaCategory
+        ? globalThisAny.iaCategory ?? getWorkspaceCategory()
         : globalThisAny.iaCategory;
 
     return {
