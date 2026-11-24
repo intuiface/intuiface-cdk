@@ -150,8 +150,23 @@ function createWorkspaceItemTemplateContext(item: WorkspaceItem, options?: Works
         ITEM_NAME: item.name,
         // Member names must be camelCase (workspace lint rule), e.g. a converter method named after its class
         ITEM_NAME_CAMEL: `${item.name.charAt(0).toLowerCase()}${item.name.slice(1)}`,
-        ITEM_CATEGORY: options?.category ?? 'Custom'
+        // Free text inserted between single quotes in the item templates
+        ITEM_CATEGORY: escapeSingleQuotedString(options?.category ?? 'Custom')
     };
+}
+
+/**
+ * Escape a value so it can be inserted in a single-quoted string of a generated TypeScript file
+ * (e.g. a category `Bob's tools` would otherwise produce invalid code).
+ */
+// eslint-disable-next-line prefer-arrow/prefer-arrow-functions
+function escapeSingleQuotedString(value: string): string
+{
+    return value
+        .replace(/\\/g, '\\\\')
+        .replace(/'/g, '\\\'')
+        .replace(/\r/g, '\\r')
+        .replace(/\n/g, '\\n');
 }
 
 // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
