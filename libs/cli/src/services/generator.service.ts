@@ -148,6 +148,8 @@ function createWorkspaceItemTemplateContext(item: WorkspaceItem, options?: Works
 {
     return {
         ITEM_NAME: item.name,
+        // Member names must be camelCase (workspace lint rule), e.g. a converter method named after its class
+        ITEM_NAME_CAMEL: `${item.name.charAt(0).toLowerCase()}${item.name.slice(1)}`,
         ITEM_CATEGORY: options?.category ?? 'Custom'
     };
 }
