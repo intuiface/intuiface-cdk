@@ -193,6 +193,16 @@ describe('CLI commands', () =>
             expectUserError(runCli(dir, 'build', '-n', 'Unknown'), `Cannot find workspace item 'Unknown'.`);
         });
 
+        it('warns that an empty workspace has nothing to build (review O9)', () =>
+        {
+            const result = runCliOrThrow(dir, 'build', '--all');
+
+            expect(result.stdout).toContain('Nothing to build: intuiface.workspace.json has no items yet.');
+            expect(result.stdout).toContain('npx intuiface-cli add interface-asset');
+            expect(fs.existsSync(path.join(dir, 'tmp'))).toBe(false);
+            expect(fs.existsSync(path.join(dir, 'dist'))).toBe(false);
+        });
+
         it('requires a value for --icon (review O7)', () =>
         {
             const result = runCli(dir, 'build', '-n', 'Unknown', '-i');

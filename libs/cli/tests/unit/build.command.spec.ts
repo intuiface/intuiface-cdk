@@ -3,7 +3,7 @@ import path from 'path';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { runBuildCommand } from '../../src/commands/build.command.js';
 import { writeWorkspaceConfig } from '../../src/services/workspace.service.js';
-import { createTempDir, removeTempDir, useCwd } from '../helpers/test-utils.js';
+import { createTempDir, removeTempDir, silenceConsole, useCwd } from '../helpers/test-utils.js';
 
 /**
  * Option validation of `build`. Builds themselves are covered by the end-to-end tests.
@@ -83,6 +83,21 @@ describe('build command options', () =>
 
             await expect(runBuildCommand({ all: true }))
                 .rejects.toThrow(`Cannot find the icon 'icons/beta.png' of 'Beta': there is no file at '${path.join(dir, 'icons', 'beta.png')}'.`);
+            expect(fs.existsSync(path.join(dir, 'tmp'))).toBe(false);
+            expect(fs.existsSync(path.join(dir, 'dist'))).toBe(false);
+        });
+
+        it('warns and points to add when there is no item to build (review O9)', async () =>
+        {
+            writeWorkspaceConfig(dir, { version: 1, name: 'ws', items: [] });
+            const log = silenceConsole();
+
+            await expect(runBuildCommand({ all: true })).resolves.toBeUndefined();
+
+            const output = log.mock.calls.map((call) => String(call[0])).join('\n');
+            expect(output).toContain('⚠ Nothing to build: intuiface.workspace.json has no items yet. Add one with:');
+            expect(output).toContain('npx intuiface-cli add interface-asset -n MyInterfaceAsset -c Custom');
+            expect(output).toContain('npx intuiface-cli add binding-converter -n MyBindingConverter -c Custom');
             expect(fs.existsSync(path.join(dir, 'tmp'))).toBe(false);
             expect(fs.existsSync(path.join(dir, 'dist'))).toBe(false);
         });

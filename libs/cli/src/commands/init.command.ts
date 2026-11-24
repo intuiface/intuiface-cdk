@@ -16,10 +16,7 @@ import {
 import { getWorkspaceConfigFileName, writeWorkspaceConfig } from '../services/workspace.service.js';
 import { formatDependencyUpdates } from '../utils/dependencies.js';
 import { execPromise, isExecException } from '../utils/exec.js';
-
-/** Commands shown as next steps. */
-const ADD_INTERFACE_ASSET_EXAMPLE = 'npx intuiface-cli add interface-asset -n MyInterfaceAsset -c Custom';
-const ADD_BINDING_CONVERTER_EXAMPLE = 'npx intuiface-cli add binding-converter -n MyBindingConverter -c Custom';
+import { ADD_ITEM_EXAMPLES } from '../utils/examples.js';
 
 interface NextStep
 {
@@ -41,7 +38,7 @@ export async function initializeWorkspace(name?: string): Promise<void>
     const { buildCommand } = initializeWorkspaceFiles(workspaceName);
     printNextSteps([
         { description: 'Install the dependencies:', commands: ['npm install'] },
-        { description: 'Add an interface asset or a binding converter:', commands: [ADD_INTERFACE_ASSET_EXAMPLE, ADD_BINDING_CONVERTER_EXAMPLE] },
+        { description: 'Add an interface asset or a binding converter:', commands: [...ADD_ITEM_EXAMPLES] },
         { description: 'Build every item into dist/:', commands: [buildCommand] }
     ]);
 }
@@ -67,7 +64,7 @@ async function initializeWorkspaceInteractive(name?: string): Promise<void>
     printNextSteps([
         { description: `Write your ${firstItem.type} in ${firstItem.entry}.` },
         { description: 'Build every item into dist/:', commands: [buildCommand] },
-        { description: 'Add more items:', commands: [ADD_INTERFACE_ASSET_EXAMPLE, ADD_BINDING_CONVERTER_EXAMPLE] }
+        { description: 'Add more items:', commands: [...ADD_ITEM_EXAMPLES] }
     ]);
 }
 

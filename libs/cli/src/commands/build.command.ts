@@ -1,8 +1,10 @@
 import fs from 'fs-extra';
 import path from 'path';
 import { pathToFileURL } from 'url';
+import chalk from 'chalk';
 import ora from 'ora';
 import { BuildTarget, BuildType, WorkspaceItem } from '../types.js';
+import { ADD_ITEM_EXAMPLES } from '../utils/examples.js';
 import { execPromise, isExecException } from '../utils/exec.js';
 import { tryReadWorkspaceConfig, getRequiredWorkspaceItem, getWorkspaceConfigFileName } from '../services/workspace.service.js';
 import { validateIconPath } from '../utils/validators.js';
@@ -38,6 +40,16 @@ export async function runBuildCommand(options: { name?: string; all?: boolean; t
                 throw new Error(`'--icon' cannot be used to build every item. Set the icon of each item in ${getWorkspaceConfigFileName()}, or build one item with '--name <name> --icon <icon>'.`);
             }
             targets = workspaceConfig.items.map((item) => toBuildTarget(item));
+            if (targets.length === 0)
+            {
+                // Not an error (`npm run build` right after `init`), but say why nothing was built
+                console.log(chalk.yellow(`⚠ Nothing to build: ${getWorkspaceConfigFileName()} has no items yet. Add one with:`));
+                for (const command of ADD_ITEM_EXAMPLES)
+                {
+                    console.log(`    ${chalk.cyan(command)}`);
+                }
+                return;
+            }
         }
         else
         {
