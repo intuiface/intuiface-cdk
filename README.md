@@ -92,6 +92,15 @@ To build the CDK, just run:
 npm run build
 ```
 
+To test the CLI:
+
+```bash
+# unit tests (TypeScript sources, a few seconds)
+npm test
+# end-to-end tests: build core and cli, then run init/add/build/migrate in workspaces under tmp/cli-e2e (a few minutes)
+npm run test:e2e
+```
+
 ## Help
 
 Found a problem, a bug? Or need some help? 

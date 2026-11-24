@@ -43,6 +43,24 @@
         },
         "lint": {
             "executor": "@nx/eslint:lint"
+        },
+        "test": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "vitest run --config libs/cli/vitest.config.mts"
+            }
+        },
+        "e2e": {
+            "executor": "nx:run-commands",
+            "dependsOn": [
+                {
+                    "projects": ["core", "cli"],
+                    "target": "build"
+                }
+            ],
+            "options": {
+                "command": "vitest run --config libs/cli/vitest.e2e.config.mts"
+            }
         }
     }
 }

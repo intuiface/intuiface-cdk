@@ -89,6 +89,7 @@ export default [
             '**/*.mjs',
             'tmp/**',
             'libs/cli/src/templates/**',
+            'libs/cli/tests/fixtures/**',
             'libs/tools/schematics/**/src/*/files/**',
             'libs/tools/schematics/**/src/workspace-template/**'
         ]

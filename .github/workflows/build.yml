@@ -15,3 +15,7 @@ jobs:
         run: npm ci
       - name: Build packages
         run: npm run build
+      - name: Unit tests
+        run: npm test
+      - name: End-to-end tests
+        run: npm run test:e2e

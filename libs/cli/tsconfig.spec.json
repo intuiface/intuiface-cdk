@@ -1,0 +1,13 @@
+{
+    "extends": "./tsconfig.json",
+    "compilerOptions": {
+        "module": "ESNext",
+        "target": "esnext",
+        "types": ["node"],
+        "allowSyntheticDefaultImports": true,
+        "esModuleInterop": true,
+        "noEmit": true
+    },
+    "include": ["tests/**/*.ts", "src/**/*.ts"],
+    "exclude": ["tests/fixtures/**", "src/templates/**"]
+}
