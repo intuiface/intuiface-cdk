@@ -1,7 +1,7 @@
 import fs from 'fs-extra';
 import path from 'path';
 import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it } from 'vitest';
-import { assertBuiltPackages, CliResult, createE2EDir, removeE2EDir, runBin, runCli, runCliOrThrow } from './e2e-utils.js';
+import { assertBuiltPackages, CliResult, createE2EDir, removeE2EDir, runBin, runCli, runCliOrThrow, runCliWithPreload } from './e2e-utils.js';
 
 /**
  * Expect a failure reported as `✖ <message>`, with exit code 1 and no stack trace.
@@ -71,6 +71,37 @@ describe('CLI commands', () =>
 
             expect(result.status).not.toBe(0);
             expect(result.stderr).toContain(`unknown command 'deploy'`);
+        });
+    });
+
+    describe('startup', () =>
+    {
+        const forbidJsdom = path.join(import.meta.dirname, 'forbid-jsdom.mjs');
+
+        it('does not load jsdom outside build (review O12: importing it takes more than a second)', () =>
+        {
+            for (const args of [
+                ['--help'],
+                ['init'],
+                ['add', 'interface-asset', '-n', 'MyAsset', '-c', 'Custom'],
+                ['add', 'binding-converter', '-n', 'MyConverter', '-c', 'Custom'],
+                ['build']
+            ])
+            {
+                const result = runCliWithPreload(dir, forbidJsdom, ...args);
+                expect(result.output, args.join(' ')).not.toContain('jsdom must only be loaded by build');
+            }
+        });
+
+        it('loads jsdom to build (checks the guard of the previous test)', () =>
+        {
+            runCliOrThrow(dir, 'init');
+            runCliOrThrow(dir, 'add', 'interface-asset', '-n', 'MyAsset', '-c', 'Custom');
+
+            const result = runCliWithPreload(dir, forbidJsdom, 'build', '-n', 'MyAsset');
+
+            expect(result.status).not.toBe(0);
+            expect(result.output).toContain('jsdom must only be loaded by build');
         });
     });
 

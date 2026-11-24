@@ -108,7 +108,7 @@ async function buildTarget(target: BuildTarget, debug?: boolean): Promise<void>
 
     try
     {
-        resetBuildMetadata(target);
+        await resetBuildMetadata(target);
 
         spinner.start('Compiling TypeScript...');
         transpileTypeScript(`${dir}/tsconfig.json`, `${dir}/tmp/`, spinner);

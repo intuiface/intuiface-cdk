@@ -1,6 +1,7 @@
 import { spawnSync } from 'child_process';
 import fs from 'fs-extra';
 import path from 'path';
+import { pathToFileURL } from 'url';
 import { createTempDir, repoRoot } from '../helpers/test-utils.js';
 
 /** Built CLI entry point. */
@@ -130,6 +131,12 @@ export const runBin = (cwd: string, packageName: string, binName: string, ...arg
  * Run the built CLI: `intuiface-cli <args>`.
  */
 export const runCli = (cwd: string, ...args: string[]): CliResult => run(process.execPath, [distCliEntry, ...args], cwd);
+
+/**
+ * Run the built CLI with a preloaded module: `node --import <module> intuiface-cli <args>`.
+ */
+export const runCliWithPreload = (cwd: string, preloadPath: string, ...args: string[]): CliResult =>
+    run(process.execPath, ['--import', pathToFileURL(preloadPath).href, distCliEntry, ...args], cwd);
 
 /**
  * Run the CLI and fail with its output when it does not succeed.

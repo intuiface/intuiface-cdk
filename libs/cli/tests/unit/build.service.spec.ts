@@ -109,7 +109,7 @@ describe('build.service', () =>
 
     describe('resetBuildMetadata', () =>
     {
-        it('resets the globals filled by the decorators', () =>
+        it('resets the globals filled by the decorators', async () =>
         {
             Object.assign(globalThisAny, {
                 // eslint-disable-next-line camelcase
@@ -120,7 +120,7 @@ describe('build.service', () =>
                 iaCategory: 'Previous category'
             });
 
-            resetBuildMetadata({ name: 'Next', buildType: 'binding-converter', entryFile: '', outputDir: '', useGeneratedWebpackConfig: true });
+            await resetBuildMetadata({ name: 'Next', buildType: 'binding-converter', entryFile: '', outputDir: '', useGeneratedWebpackConfig: true });
 
             expect(globalThisAny.intuiface_ifd_name).toBe('Next');
             expect(globalThisAny.intuiface_build_type).toBe('binding-converter');
@@ -134,9 +134,9 @@ describe('build.service', () =>
             expect(globalThisAny.iaCategory).toBeUndefined();
         });
 
-        it('provides a browser-like window to the loaded item', () =>
+        it('provides a browser-like window to the loaded item', async () =>
         {
-            resetBuildMetadata({ name: 'Next', buildType: 'interface-asset', entryFile: '', outputDir: '', useGeneratedWebpackConfig: true });
+            await resetBuildMetadata({ name: 'Next', buildType: 'interface-asset', entryFile: '', outputDir: '', useGeneratedWebpackConfig: true });
 
             expect(globalThisAny.window.location.href).toBe('https://web.intuiface.com/');
             expect(globalThisAny.window.document).toBeDefined();

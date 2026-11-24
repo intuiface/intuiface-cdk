@@ -10,9 +10,8 @@ export default defineConfig({
         name: 'cli-e2e',
         include: ['tests/e2e/**/*.spec.ts'],
         environment: 'node',
+        // Test files run in parallel: each one works in its own folders under tmp/cli-e2e
         pool: 'forks',
-        // Workspaces are built one after the other: webpack is CPU-bound and the files share the repository tmp/ folder
-        fileParallelism: false,
         restoreMocks: true,
         testTimeout: 180_000,
         hookTimeout: 180_000

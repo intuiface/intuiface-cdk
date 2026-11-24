@@ -1,6 +1,5 @@
 /* eslint-disable camelcase */
 import fs from 'fs-extra';
-import { JSDOM } from 'jsdom';
 import path from 'path';
 import ts from 'typescript';
 import { BuildTarget, BuildType } from '../types.js';
@@ -27,8 +26,11 @@ export function cleanBuildFolders(dir: string, outputDir: string | undefined): v
 }
 
 // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
-export function resetBuildMetadata(target: BuildTarget): void
+export async function resetBuildMetadata(target: BuildTarget): Promise<void>
 {
+    // Loaded on demand: importing jsdom takes more than a second, and only builds need it (not init, add, help, ...)
+    const { JSDOM } = await import('jsdom');
+
     const globalThisAny = globalThis as any;
     globalThisAny.intuiface_ifd_name = target.name;
     globalThisAny.intuiface_build_type = target.buildType;
