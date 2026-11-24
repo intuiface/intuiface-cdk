@@ -67,6 +67,14 @@ const TEXT_TEMPLATE_EXTENSIONS = new Set([
     '.scss'
 ]);
 
+/**
+ * Template files stored without their leading dot, renamed when copied:
+ * npm never publishes `.gitignore` files, so the template would be missing from the CLI package.
+ */
+const DOTFILE_TEMPLATE_NAMES: Readonly<Record<string, string>> = {
+    gitignore: '.gitignore'
+};
+
 // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
 export function scaffoldWorkspaceItemFromTemplate(
     item: WorkspaceItem,
@@ -109,7 +117,7 @@ function copyTemplateDirectory(
 
     for (const sourceName of fs.readdirSync(sourceDir))
     {
-        const renderedName = renderTemplateValue(sourceName, context);
+        const renderedName = DOTFILE_TEMPLATE_NAMES[sourceName] ?? renderTemplateValue(sourceName, context);
         const sourcePath = path.join(sourceDir, sourceName);
         const relativePath = path.join(relativeDir, renderedName);
         const destinationPath = path.join(destinationDir, renderedName);
