@@ -117,6 +117,7 @@ async function buildTarget(target: BuildTarget, debug?: boolean): Promise<void>
         if (!fs.existsSync(transpiledEntryPath))
         {
             spinner.fail(`Fail generating IFD file for ${target.name}. Please check the entry file and try again (${transpiledEntryPath} not found - entry:${target.entryFile}).`);
+            cleanBuildFolders(dir, target.outputDir);
             process.exit(-3);
         }
         spinner.succeed('TypeScript compiled.');
@@ -179,6 +180,9 @@ async function buildTarget(target: BuildTarget, debug?: boolean): Promise<void>
             await fs.copy(path.resolve(dir, icon), path.join(resolvedOutputDir, iconName));
             spinner.succeed(`Icon ${iconName} copied.`);
         }
+
+        // tmp/ only holds intermediate files (transpiled JS, generated webpack config)
+        fs.removeSync(tmpDir);
 
         spinner.succeed(`Done! Your ${target.buildType} is in '${target.outputDir}'.\nCopy this folder into "Documents\\Intuiface\\Interface Assets" to use it in Composer.`);
         spinner.stop();
