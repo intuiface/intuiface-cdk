@@ -8,3 +8,4 @@
 - [Environment service](../../../../../docs/core/classes/EnvironmentService.md)
 - [USB serial service](../../../../../docs/core/classes/UsbSerialService.md)
 - [System-info service](../../../../../docs/core/classes/SystemInfoService.md)
+- [HCMS service](../../../../../docs/core/classes/HCMSService.md)

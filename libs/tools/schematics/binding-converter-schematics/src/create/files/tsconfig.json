@@ -3,6 +3,7 @@
   "compilerOptions": {
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
+    "rootDir": "./src",
     "outDir": "./dist/<%= bindingConverterName %>/",
     "noImplicitAny": true,
     "target": "ES2022",
@@ -16,8 +17,7 @@
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "declaration": false,
-    "downlevelIteration": true,
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "importHelpers": true
   },
   "exclude": ["node_modules"],

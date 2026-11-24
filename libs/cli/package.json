@@ -1,6 +1,6 @@
 {
     "name": "@intuiface/cli",
-    "version": "2.1.0",
+    "version": "2.3.0",
     "repository": "https://github.com/intuiface/intuiface-cdk",
     "description": "Intuiface CLI helps you build interface assets for Intuiface",
     "bin": {
@@ -9,12 +9,12 @@
     "type": "module",
     "license": "MIT",
     "dependencies": {
-        "chalk": "^5.6.2",
-        "commander": "^13.1.0",
+        "chalk": "^6.0.0",
+        "commander": "^15.0.0",
         "fs-extra": "9.1.0",
-        "jsdom": "^28.1.0",
-        "ora": "^8.2.0",
+        "jsdom": "^30.0.1",
+        "ora": "^9.4.1",
         "tslib": "^2.6.2",
-        "typescript": "^5.8.0"
+        "typescript": "6.0.3"
     }
 }

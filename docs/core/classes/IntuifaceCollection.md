@@ -2,7 +2,7 @@
 
 ***
 
-# Class: IntuifaceCollection\<T\>
+# Class: IntuifaceCollection\<_T\>
 
 **`Experimental`**
 
@@ -18,19 +18,19 @@ _**This is experimental as there is currently no way to use a custom collection 
 
 | Type Parameter |
 | ------ |
-| `T` *extends* [`ElementContainer`](ElementContainer.md) |
+| `_T` *extends* [`ElementContainer`](ElementContainer.md) |
 
 ## Constructors
 
 ### Constructor
 
-> **new IntuifaceCollection**\<`T`\>(): `IntuifaceCollection`\<`T`\>
+> **new IntuifaceCollection**\<`_T`\>(): `IntuifaceCollection`\<`_T`\>
 
 **`Experimental`**
 
 #### Returns
 
-`IntuifaceCollection`\<`T`\>
+`IntuifaceCollection`\<`_T`\>
 
 #### Inherited from
 
@@ -327,6 +327,32 @@ Initialize default value of each property.
 #### Inherited from
 
 [`IntuifaceElement`](IntuifaceElement.md).[`initialize`](IntuifaceElement.md#initialize)
+
+***
+
+### resetFromConfiguration()
+
+> **resetFromConfiguration**(`resetChildren?`): `void`
+
+**`Experimental`**
+
+Reset this element to the values set in Composer or its starting values.
+Calls `beforeResetFromConfiguration()` and `afterResetFromConfiguration()` so your code can
+stop pending work and update other values. Bindings between properties continue to work.
+
+#### Parameters
+
+| Parameter | Type | Default value | Description |
+| ------ | ------ | ------ | ------ |
+| `resetChildren` | `boolean` | `false` | Also reset child elements. Defaults to false. |
+
+#### Returns
+
+`void`
+
+#### Inherited from
+
+[`IntuifaceElement`](IntuifaceElement.md).[`resetFromConfiguration`](IntuifaceElement.md#resetfromconfiguration)
 
 ***
 

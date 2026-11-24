@@ -33,6 +33,10 @@ Before reading how to create interface assets and declare Properties, Triggers, 
 - [IntuifaceCollection](/docs/core/classes/IntuifaceCollection.md)
 - [ElementContainer](/docs/core/classes/ElementContainer.md)
 - [IntuifaceElement](/docs/core/classes/IntuifaceElement.md)
+- [HCMSBase](/docs/core/classes/HCMSBase.md)
+- [HCMSCollection](/docs/core/classes/HCMSCollection.md)
+- [HCMSGroup](/docs/core/classes/HCMSGroup.md)
+- [HCMSItem](/docs/core/classes/HCMSItem.md)
 
 ## Interfaces
 
@@ -43,11 +47,13 @@ Before reading how to create interface assets and declare Properties, Triggers, 
 - [IElementOptions](/docs/core/interfaces/IElementOptions.md)
 - [IParameterOptions](/docs/core/interfaces/IParameterOptions.md)
 - [IPropertyOptions](/docs/core/interfaces/IPropertyOptions.md)
+- [IResetValueOptions](/docs/core/interfaces/IResetValueOptions.md)
 - [ITriggerOptions](/docs/core/interfaces/ITriggerOptions.md)
 - [ICollectionConfiguration](/docs/core/interfaces/ICollectionConfiguration.md)
 - [CacheEntry](/docs/core/interfaces/CacheEntry.md)
 - [CacheOptions](/docs/core/interfaces/CacheOptions.md)
 - [DownloadProgress](/docs/core/interfaces/DownloadProgress.md)
+- [PrintCDKOptions](/docs/core/interfaces/PrintCDKOptions.md)
 
 ## Decorators
 
@@ -59,12 +65,15 @@ Before reading how to create interface assets and declare Properties, Triggers, 
 - [InternalProperty](/docs/core/functions/InternalProperty.md)
 - [Parameter](/docs/core/functions/Parameter.md)
 - [Property](/docs/core/functions/Property.md)
+- [ResetValue](/docs/core/functions/ResetValue.md)
 - [Trigger](/docs/core/functions/Trigger.md)
 
 ## Services
 
 - [CacheService](/docs/core/classes/CacheService.md)
 - [EnvironmentService](/docs/core/classes/EnvironmentService.md)
+- [HCMSService](/docs/core/classes/HCMSService.md)
+- [PrinterService](/docs/core/classes/PrinterService.md)
 - [SystemInfoService](/docs/core/classes/SystemInfoService.md)
 - [UsbSerialService](/docs/core/classes/UsbSerialService.md)
 

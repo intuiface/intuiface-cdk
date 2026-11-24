@@ -33,6 +33,10 @@ Before reading how to create interface assets and declare Properties, Triggers, 
 - [IntuifaceCollection](classes/IntuifaceCollection.md)
 - [ElementContainer](classes/ElementContainer.md)
 - [IntuifaceElement](classes/IntuifaceElement.md)
+- [HCMSBase](classes/HCMSBase.md)
+- [HCMSCollection](classes/HCMSCollection.md)
+- [HCMSGroup](classes/HCMSGroup.md)
+- [HCMSItem](classes/HCMSItem.md)
 
 ## Interfaces
 
@@ -43,11 +47,13 @@ Before reading how to create interface assets and declare Properties, Triggers, 
 - [IElementOptions](interfaces/IElementOptions.md)
 - [IParameterOptions](interfaces/IParameterOptions.md)
 - [IPropertyOptions](interfaces/IPropertyOptions.md)
+- [IResetValueOptions](interfaces/IResetValueOptions.md)
 - [ITriggerOptions](interfaces/ITriggerOptions.md)
 - [ICollectionConfiguration](interfaces/ICollectionConfiguration.md)
 - [CacheEntry](interfaces/CacheEntry.md)
 - [CacheOptions](interfaces/CacheOptions.md)
 - [DownloadProgress](interfaces/DownloadProgress.md)
+- [PrintCDKOptions](interfaces/PrintCDKOptions.md)
 
 ## Decorators
 
@@ -59,12 +65,15 @@ Before reading how to create interface assets and declare Properties, Triggers, 
 - [InternalProperty](functions/InternalProperty.md)
 - [Parameter](functions/Parameter.md)
 - [Property](functions/Property.md)
+- [ResetValue](functions/ResetValue.md)
 - [Trigger](functions/Trigger.md)
 
 ## Services
 
 - [CacheService](classes/CacheService.md)
 - [EnvironmentService](classes/EnvironmentService.md)
+- [HCMSService](classes/HCMSService.md)
+- [PrinterService](classes/PrinterService.md)
 - [SystemInfoService](classes/SystemInfoService.md)
 - [UsbSerialService](classes/UsbSerialService.md)
 

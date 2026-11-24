@@ -16,6 +16,7 @@
  */
 export { Property, IPropertyOptions } from './lib/decorators/property';
 export { InternalProperty } from './lib/decorators/internal-property';
+export { ResetValue, IResetValueOptions } from './lib/decorators/reset-value';
 export { Trigger, ITriggerOptions } from './lib/decorators/trigger';
 export { Action, IActionOptions } from './lib/decorators/action';
 export { Converter, IConverterOptions } from './lib/decorators/converter';
@@ -31,8 +32,17 @@ export { IDisposable } from './lib/base/disposable';
 // Services
 export { EnvironmentService } from './lib/services/environment.service';
 export { UsbSerialService } from './lib/services/usb.serial.service';
+export {
+    PrinterService,
+    PrintCDKOptions
+} from './lib/services/printer.service';
 export { SystemInfoService } from './lib/services/system-info.service';
 export { CacheService, CacheStrategy, CacheOptions, CacheEntry, CacheScope, DownloadProgress, DownloadProgressCallback } from './lib/services/cache.service';
+export { HCMSService } from './lib/services/hcms/hcms.service';
+export { HCMSBase } from './lib/services/hcms/hcms.base';
+export { HCMSGroup } from './lib/services/hcms/hcms.group';
+export { HCMSCollection } from './lib/services/hcms/hcms.collection';
+export { HCMSItem } from './lib/services/hcms/hcms.item';
 
 // types
 export { Path } from './lib/types/path.type';
