@@ -2,9 +2,10 @@ import fs from 'fs-extra';
 import path from 'path';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { initializeWorkspace } from '../../src/commands/init.command.js';
+import { createWorkspacePackageJson, WORKSPACE_BUILD_DEV_DEPENDENCIES } from '../../src/services/generator.service.js';
 import { askWorkspaceInitQuestions } from '../../src/services/prompt.service.js';
 import { execPromise } from '../../src/utils/exec.js';
-import { createTempDir, removeTempDir, silenceConsole, useCwd } from '../helpers/test-utils.js';
+import { createTempDir, removeTempDir, silenceConsole, useCwd, writeFiles } from '../helpers/test-utils.js';
 
 vi.mock('../../src/services/prompt.service.js', () => ({
     askWorkspaceInitQuestions: vi.fn()
@@ -37,6 +38,10 @@ describe('init command', () =>
     let dir: string;
     let restoreCwd: () => void;
     let restoreTty: () => void;
+    let log: ReturnType<typeof silenceConsole>;
+
+    /** Lines printed by the command. */
+    const getOutput = (): string => log.mock.calls.map((call) => String(call[0])).join('\n');
 
     beforeEach(() =>
     {
@@ -44,7 +49,7 @@ describe('init command', () =>
         dir = path.join(rootDir, 'my-workspace');
         fs.ensureDirSync(dir);
         restoreCwd = useCwd(dir);
-        silenceConsole();
+        log = silenceConsole();
     });
 
     afterEach(() =>
@@ -112,6 +117,179 @@ describe('init command', () =>
             await initializeWorkspace();
 
             await expect(initializeWorkspace()).rejects.toThrow(`An Intuiface workspace already exists in '${process.cwd()}'.`);
+        });
+
+        it('reports the files it creates', async () =>
+        {
+            await initializeWorkspace();
+
+            const output = getOutput();
+            for (const file of ['package.json', 'intuiface.workspace.json', 'tsconfig.json', '.nvmrc', '.gitignore', 'eslint.config.mjs', '.vscode/settings.json'])
+            {
+                expect(output, file).toMatch(new RegExp(`CREATE.* ${file.replace(/\./g, '\\.')} \\(\\d+ bytes\\)`));
+            }
+            expect(output).not.toMatch(/UPDATE|SKIP|⚠/);
+        });
+    });
+
+    describe('in a folder with existing files', () =>
+    {
+        beforeEach(() =>
+        {
+            restoreTty = setTty(false);
+        });
+
+        const readText = (file: string): string => fs.readFileSync(path.join(dir, file), 'utf8');
+
+        it('completes an existing package.json and keeps its values', async () =>
+        {
+            writeFiles(dir, {
+                'package.json': {
+                    name: 'existing-name',
+                    version: '0.3.0',
+                    description: 'Mine',
+                    scripts: { test: 'vitest' },
+                    dependencies: { lodash: '^4.17.21' }
+                }
+            });
+
+            await initializeWorkspace('workspace-name');
+
+            const packageJson = fs.readJsonSync(path.join(dir, 'package.json'));
+            const workspacePackageJson = createWorkspacePackageJson('workspace-name');
+            expect(packageJson).toMatchObject({
+                name: 'existing-name',
+                version: '0.3.0',
+                description: 'Mine',
+                private: true,
+                engines: { node: '>=22' },
+                scripts: { test: 'vitest', ...workspacePackageJson.scripts },
+                dependencies: { lodash: '^4.17.21', ...workspacePackageJson.dependencies },
+                devDependencies: workspacePackageJson.devDependencies
+            });
+            expect(Object.keys(packageJson).slice(0, 5)).toEqual(['name', 'version', 'description', 'scripts', 'dependencies']);
+        });
+
+        it('raises lower dependency versions and never downgrades newer ones', async () =>
+        {
+            writeFiles(dir, {
+                'package.json': {
+                    name: 'existing',
+                    dependencies: { '@intuiface/core': '2.1.0', 'typescript': '~5.4.0' },
+                    devDependencies: { 'webpack': '^99.0.0', 'eslint': '^8.57.0', 'ts-loader': 'latest' }
+                }
+            });
+
+            await initializeWorkspace();
+
+            const packageJson = fs.readJsonSync(path.join(dir, 'package.json'));
+            const workspacePackageJson = createWorkspacePackageJson('my-workspace');
+            expect(packageJson.dependencies['@intuiface/core']).toBe(workspacePackageJson.dependencies['@intuiface/core']);
+            expect(packageJson.dependencies.typescript).toBe(WORKSPACE_BUILD_DEV_DEPENDENCIES.typescript);
+            expect(packageJson.devDependencies).not.toHaveProperty('typescript');
+            expect(packageJson.devDependencies.webpack).toBe('^99.0.0');
+            expect(packageJson.devDependencies.eslint).toBe(workspacePackageJson.devDependencies.eslint);
+            expect(packageJson.devDependencies['ts-loader']).toBe('latest');
+
+            const output = getOutput();
+            expect(output).toMatch(/UPDATE.* package\.json/);
+            expect(output).toContain(`typescript ~5.4.0 → ${WORKSPACE_BUILD_DEV_DEPENDENCIES.typescript}`);
+        });
+
+        it('keeps the scripts of an existing package.json and warns about them', async () =>
+        {
+            writeFiles(dir, { 'package.json': { name: 'existing', scripts: { build: 'tsc', lint: 'npx eslint .' } } });
+
+            await initializeWorkspace();
+
+            expect(fs.readJsonSync(path.join(dir, 'package.json')).scripts).toEqual({
+                'build': 'tsc',
+                'lint': 'npx eslint .',
+                'build:debug': 'npx intuiface-cli build --all --debug'
+            });
+            const output = getOutput();
+            expect(output).toContain(`package.json keeps its own 'build' script. The workspace one is 'npx intuiface-cli build --all'.`);
+            expect(output).not.toContain(`'lint' script`);
+        });
+
+        it('stops without writing anything when package.json is invalid', async () =>
+        {
+            writeFiles(dir, { 'package.json': '{ "name": "broken", }' });
+
+            await expect(initializeWorkspace()).rejects.toThrow(/package\.json': it is not a valid JSON object/);
+
+            expect(fs.readdirSync(dir)).toEqual(['package.json']);
+            expect(readText('package.json')).toBe('{ "name": "broken", }');
+        });
+
+        it('merges the VS Code settings and keeps the developer values', async () =>
+        {
+            writeFiles(dir, {
+                '.vscode/settings.json': { 'editor.formatOnSave': true, 'files.eol': '\n' },
+                '.vscode/extensions.json': { recommendations: ['esbenp.prettier-vscode'] }
+            });
+
+            await initializeWorkspace();
+
+            const settings = fs.readJsonSync(path.join(dir, '.vscode', 'settings.json'));
+            expect(settings['editor.formatOnSave']).toBe(true);
+            expect(settings['files.eol']).toBe('\n');
+            expect(settings['typescript.tsdk']).toBe('./node_modules/typescript/lib');
+            expect(fs.readJsonSync(path.join(dir, '.vscode', 'extensions.json'))).toEqual({ recommendations: ['esbenp.prettier-vscode'] });
+        });
+
+        it('keeps a VS Code settings file with comments unchanged', async () =>
+        {
+            const settings = '{\n    // my settings\n    "editor.formatOnSave": true\n}\n';
+            writeFiles(dir, { '.vscode/settings.json': settings });
+
+            await initializeWorkspace();
+
+            expect(readText('.vscode/settings.json')).toBe(settings);
+            expect(getOutput()).toMatch(/SKIP.* \.vscode\/settings\.json \(existing file kept\)/);
+        });
+
+        it('adds the missing entries to an existing .gitignore', async () =>
+        {
+            writeFiles(dir, { '.gitignore': 'node_modules/\n.env\n' });
+
+            await initializeWorkspace();
+
+            expect(readText('.gitignore')).toBe('node_modules/\n.env\n\n# Intuiface workspace\n/dist\n/tmp\n');
+        });
+
+        it('keeps the other existing files', async () =>
+        {
+            writeFiles(dir, {
+                'eslint.config.mjs': 'export default [];\n',
+                '.nvmrc': '24\n'
+            });
+
+            await initializeWorkspace();
+
+            expect(readText('eslint.config.mjs')).toBe('export default [];\n');
+            expect(readText('.nvmrc')).toBe('24\n');
+        });
+
+        it('completes an existing tsconfig.json', async () =>
+        {
+            writeFiles(dir, { 'tsconfig.json': { compilerOptions: { strict: true, target: 'ES2023' } } });
+
+            await initializeWorkspace();
+
+            const tsconfig = fs.readJsonSync(path.join(dir, 'tsconfig.json'));
+            expect(tsconfig.compilerOptions).toMatchObject({ strict: true, target: 'ES2023', rootDir: './src', experimentalDecorators: true });
+            expect(tsconfig.include).toEqual(['**/src/**/*.ts']);
+        });
+
+        it('replaces blank files', async () =>
+        {
+            writeFiles(dir, { 'package.json': '', '.gitignore': '\n' });
+
+            await initializeWorkspace();
+
+            expect(fs.readJsonSync(path.join(dir, 'package.json')).name).toBe('my-workspace');
+            expect(readText('.gitignore')).toMatch(/node_modules/);
         });
     });
 

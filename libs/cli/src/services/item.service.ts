@@ -2,7 +2,7 @@ import path from 'path';
 import chalk from 'chalk';
 import { WorkspaceItem } from '../types.js';
 import { validateGeneratedName } from '../utils/validators.js';
-import { scaffoldWorkspaceItemFromTemplate } from './generator.service.js';
+import { logGeneratedFile, scaffoldWorkspaceItemFromTemplate } from './generator.service.js';
 import { readWorkspaceConfig, writeWorkspaceConfig, getWorkspaceConfigFileName } from './workspace.service.js';
 
 type WorkspaceItemCreationInput = WorkspaceItem & { category?: string };
@@ -51,8 +51,7 @@ export function addWorkspaceItem(item: WorkspaceItemCreationInput): void
 
     for (const generatedFile of generatedFiles)
     {
-        const generatedRelativePath = path.join(relativeFolder, generatedFile.relativePath).replace(/\\/g, '/');
-        console.log(`${chalk.green('CREATE')} ${generatedRelativePath} (${generatedFile.bytes} bytes)`);
+        logGeneratedFile({ ...generatedFile, relativePath: path.join(relativeFolder, generatedFile.relativePath) });
     }
 
     workspaceConfig.items.push(itemConfig);

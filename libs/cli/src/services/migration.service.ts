@@ -5,6 +5,7 @@ import ts from 'typescript';
 import { BuildType, WorkspaceConfig, WorkspaceItem } from '../types.js';
 import { tryReadWorkspaceConfig, writeWorkspaceConfig, getWorkspaceConfigFileName } from './workspace.service.js';
 import { getPublishedPackageVersion, WORKSPACE_BUILD_DEV_DEPENDENCIES } from './generator.service.js';
+import { ensureMinimumDependencies, formatDependencyUpdates } from '../utils/dependencies.js';
 
 type MigrationPath = 'already-workspace' | 'pre-v2' | 'standalone-to-workspace' | 'unknown';
 
@@ -144,9 +145,9 @@ function migrateStandaloneToWorkspace(dir: string): void
         spinner.succeed('package.json scripts updated');
 
         spinner.start('Updating build dependencies');
-        updateWorkspaceDependencies(packageJson);
+        const dependenciesSummary = updateWorkspaceDependencies(packageJson);
         fs.writeJsonSync(path.join(dir, 'package.json'), packageJson, { spaces: 2 });
-        spinner.succeed('Build dependencies updated');
+        spinner.succeed(dependenciesSummary);
 
         spinner.start('Updating tsconfig.json');
         const isTsConfigUpdated = updateTsConfigForTypeScript6(dir);
@@ -223,9 +224,9 @@ function migratePreV2(dir: string): void
             spinner.succeed();
 
             spinner.start('Updating build dependencies');
-            updateWorkspaceDependencies(packageJson);
+            const dependenciesSummary = updateWorkspaceDependencies(packageJson);
             fs.writeFileSync(`${legacyDir}/package.json`, JSON.stringify(packageJson, null, 2));
-            spinner.succeed('Build dependencies updated');
+            spinner.succeed(dependenciesSummary);
 
             spinner.start('Updating tsconfig.json');
             const tsconfigRaw = fs.readFileSync(`${legacyDir}/tsconfig.json`, 'utf8');
@@ -265,29 +266,26 @@ function migratePreV2(dir: string): void
     }
 }
 
+/**
+ * Raise the build toolchain and the Intuiface packages to the versions the workspace mode needs
+ * (older schematics projects have lower ones). Newer versions are kept: a migration never downgrades.
+ * @returns a summary for the console
+ */
 // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
-function updateWorkspaceDependencies(packageJson: any): void
+function updateWorkspaceDependencies(packageJson: Record<string, unknown>): string
 {
-    if (!packageJson.devDependencies)
-    {
-        packageJson.devDependencies = {};
-    }
-
-    // Build-tool versions required by the workspace CLI mode (older schematics projects have lower ones)
-    for (const [dep, version] of Object.entries(WORKSPACE_BUILD_DEV_DEPENDENCIES))
-    {
-        packageJson.devDependencies[dep] = version;
-    }
-
-    // Update intuiface packages to the running published version
     const publishedVersion = getPublishedPackageVersion();
-    if (!packageJson.dependencies)
-    {
-        packageJson.dependencies = {};
-    }
+    const updates = [
+        ...ensureMinimumDependencies(packageJson, 'devDependencies', WORKSPACE_BUILD_DEV_DEPENDENCIES),
+        ...ensureMinimumDependencies(packageJson, 'dependencies', {
+            '@intuiface/cli': publishedVersion,
+            '@intuiface/core': publishedVersion
+        })
+    ];
 
-    packageJson.dependencies['@intuiface/cli'] = publishedVersion;
-    packageJson.dependencies['@intuiface/core'] = publishedVersion;
+    return updates.length > 0
+        ? `Build dependencies updated: ${formatDependencyUpdates(updates)}`
+        : 'Build dependencies already up to date';
 }
 
 /**

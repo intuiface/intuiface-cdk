@@ -205,9 +205,7 @@ describe('migrate command', () =>
             expect(fs.readJsonSync(path.join(dir, 'intuiface.workspace.json')).name).toBe(path.basename(dir));
         });
 
-        // Known bug B1 (PR #119 review): migrate overwrites build dependencies, even newer ones.
-        // Remove `.fails` once only lower versions are bumped.
-        it.fails('does not downgrade a newer build dependency', () =>
+        it('does not downgrade a newer build dependency', () =>
         {
             const packageJson = standalonePackageJson('npx intuiface-cli build -n MyAsset');
             (packageJson.devDependencies as Record<string, string>).webpack = '^99.0.0';
@@ -216,6 +214,34 @@ describe('migrate command', () =>
             runMigrateCommand();
 
             expect(fs.readJsonSync(path.join(dir, 'package.json')).devDependencies.webpack).toBe('^99.0.0');
+        });
+
+        it('keeps the versions of a project that is already up to date', () =>
+        {
+            const packageJson = standalonePackageJson('npx intuiface-cli build -n MyAsset');
+            packageJson.dependencies = { '@intuiface/cli': '^99.0.0', '@intuiface/core': 'latest', 'tslib': '^2.6.2' };
+            packageJson.devDependencies = { ...WORKSPACE_BUILD_DEV_DEPENDENCIES, typescript: '~6.1.0' };
+            writeFiles(dir, { 'package.json': packageJson });
+
+            runMigrateCommand();
+
+            const migrated = fs.readJsonSync(path.join(dir, 'package.json'));
+            expect(migrated.dependencies).toEqual(packageJson.dependencies);
+            expect(migrated.devDependencies).toEqual(packageJson.devDependencies);
+        });
+
+        it('raises a build dependency declared in dependencies without duplicating it', () =>
+        {
+            const packageJson = standalonePackageJson('npx intuiface-cli build -n MyAsset');
+            (packageJson.dependencies as Record<string, string>).typescript = '~5.4.0';
+            delete (packageJson.devDependencies as Record<string, string>).typescript;
+            writeFiles(dir, { 'package.json': packageJson });
+
+            runMigrateCommand();
+
+            const migrated = fs.readJsonSync(path.join(dir, 'package.json'));
+            expect(migrated.dependencies.typescript).toBe(WORKSPACE_BUILD_DEV_DEPENDENCIES.typescript);
+            expect(migrated.devDependencies).not.toHaveProperty('typescript');
         });
     });
 

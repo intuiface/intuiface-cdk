@@ -186,9 +186,7 @@ describe('descriptor.service', () =>
             expect(buildIFDFile('TextTools', 'binding-converter', {}, {})['if.category']).toBe('Legacy');
         });
 
-        // Known bug B2 (PR #119 review): package.json wins over the decorator.
-        // Remove `.fails` once buildIFDFile uses `iaCategory ?? getWorkspaceCategory()`.
-        it.fails('prefers the @Converter category over the package.json one', () =>
+        it('prefers the @Converter category over the package.json one', () =>
         {
             declareBindingConverters('Text Tools');
             writeFiles(dir, { 'package.json': { name: 'ws', intuiface: { category: 'Legacy' } } });

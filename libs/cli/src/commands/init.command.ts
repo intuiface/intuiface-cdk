@@ -4,8 +4,17 @@ import chalk from 'chalk';
 import ora from 'ora';
 import { askWorkspaceInitQuestions } from '../services/prompt.service.js';
 import { addWorkspaceItem } from '../services/item.service.js';
-import { buildWorkspaceTsConfig, createWorkspacePackageJson, getWorkspaceNodeVersion, scaffoldWorkspaceTemplate } from '../services/generator.service.js';
-import { getWorkspaceConfigFileName } from '../services/workspace.service.js';
+import {
+    buildWorkspaceTsConfig,
+    createWorkspacePackageJson,
+    getWorkspaceNodeVersion,
+    logGeneratedFile,
+    scaffoldWorkspaceTemplate,
+    writeWorkspaceFile,
+    writeWorkspacePackageJson
+} from '../services/generator.service.js';
+import { getWorkspaceConfigFileName, writeWorkspaceConfig } from '../services/workspace.service.js';
+import { formatDependencyUpdates } from '../utils/dependencies.js';
 import { execPromise, isExecException } from '../utils/exec.js';
 
 // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
@@ -51,26 +60,35 @@ function initializeWorkspaceFiles(workspaceName: string): void
         throw new Error(`An Intuiface workspace already exists in '${dir}'.`);
     }
 
-    const packageJson = createWorkspacePackageJson(workspaceName);
-    fs.writeJsonSync(path.join(dir, 'package.json'), packageJson, { spaces: 2 });
-    console.log(`${chalk.blue('UPDATE')} package.json (${JSON.stringify(packageJson).length} bytes)`);
+    // Existing files are completed, never overwritten. package.json goes first: an invalid one stops init before anything is written.
+    const packageJsonFile = writeWorkspacePackageJson(dir, workspaceName);
+    logGeneratedFile(packageJsonFile);
+    // Added dependencies are expected in a new workspace, only report the versions raised in an existing package.json
+    const raisedDependencies = packageJsonFile.dependencyUpdates.filter((update) => update.from != null);
+    if (raisedDependencies.length > 0)
+    {
+        console.log(chalk.dim(`       Raised dependencies: ${formatDependencyUpdates(raisedDependencies)}`));
+    }
 
-    fs.writeJsonSync(path.join(dir, getWorkspaceConfigFileName()), { version: 1, name: workspaceName, items: [] }, { spaces: 2 });
-    console.log(`${chalk.blue('UPDATE')} ${getWorkspaceConfigFileName()}`);
+    writeWorkspaceConfig(dir, { version: 1, name: workspaceName, items: [] });
+    logGeneratedFile({ relativePath: getWorkspaceConfigFileName(), bytes: fs.statSync(workspaceConfigPath).size, action: 'create' });
 
-    fs.writeFileSync(path.join(dir, 'tsconfig.json'), buildWorkspaceTsConfig(), 'utf8');
-    console.log(`${chalk.blue('UPDATE')} tsconfig.json`);
-
-    fs.writeFileSync(path.join(dir, '.nvmrc'), `${getWorkspaceNodeVersion()}\n`, 'utf8');
-    console.log(`${chalk.blue('CREATE')} .nvmrc`);
+    logGeneratedFile({ relativePath: 'tsconfig.json', ...writeWorkspaceFile(path.join(dir, 'tsconfig.json'), buildWorkspaceTsConfig()) });
+    logGeneratedFile({ relativePath: '.nvmrc', ...writeWorkspaceFile(path.join(dir, '.nvmrc'), `${getWorkspaceNodeVersion()}\n`) });
 
     for (const generatedFile of scaffoldWorkspaceTemplate(workspaceName, dir))
     {
-        console.log(`${chalk.green('CREATE')} ${generatedFile.relativePath} (${generatedFile.bytes} bytes)`);
+        logGeneratedFile(generatedFile);
     }
 
     fs.ensureDirSync(path.join(dir, 'src', 'interface-assets'));
     fs.ensureDirSync(path.join(dir, 'src', 'binding-converters'));
+
+    const workspaceScripts = createWorkspacePackageJson(workspaceName).scripts;
+    for (const scriptName of packageJsonFile.keptScripts)
+    {
+        console.log(chalk.yellow(`⚠ package.json keeps its own '${scriptName}' script. The workspace one is '${workspaceScripts[scriptName]}'.`));
+    }
     console.log();
 }
 

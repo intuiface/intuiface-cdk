@@ -66,6 +66,13 @@ Non-interactive:
 npx intuiface-cli init -n my-intuiface-workspace
 ```
 
+`init` can run in a folder that already has files (for example a cloned repository): it completes them instead of overwriting them.
+
+- `package.json` keeps its values and scripts and gets the missing workspace ones. Dependencies are added, or raised when their version is lower than the workspace one, and never downgraded. If it already has a different `build` script, `init` keeps it and prints a warning.
+- JSON files (`tsconfig.json`, `.vscode/settings.json`, `.vscode/extensions.json`) get the settings they do not have. Their own values win, and files with comments are left unchanged.
+- `.gitignore` gets the entries it does not have.
+- Other existing files (`eslint.config.mjs`, `.nvmrc`) are kept.
+
 ### `add`
 Add items to the current workspace.
 
@@ -126,6 +133,8 @@ Migrate older projects to the CLI-based workflow.
 ```bash
 npx intuiface-cli migrate
 ```
+
+`migrate` raises the build dependencies (`typescript`, `webpack`, `webpack-cli`, `ts-loader`) and `@intuiface/cli`/`@intuiface/core` when their version is lower than the one the workspace needs. A newer version is kept.
 
 #### Migration from v1.x
 For existing project created before the v2.x of the `intuiface-cdk`, you can migrate your project using this recommended migration flow:

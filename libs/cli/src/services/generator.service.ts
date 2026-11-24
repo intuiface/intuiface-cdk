@@ -1,7 +1,11 @@
+import chalk from 'chalk';
 import fs from 'fs-extra';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { isDeepStrictEqual } from 'util';
 import { WorkspaceItem } from '../types.js';
+import { DependencyUpdate, ensureMinimumDependencies } from '../utils/dependencies.js';
+import { addMissingValues, appendMissingLines, mergeJsonText, parseJsonObject, stringifyJsonLike } from '../utils/merge.js';
 
 /**
  * Minimum Node.js major version required by the Intuiface CLI and generated workspaces.
@@ -39,11 +43,41 @@ interface TemplateRenderContext
     [key: string]: string;
 }
 
-interface GeneratedTemplateFile
+/**
+ * What happened to a generated file: created, merged into an existing file, or existing file kept unchanged.
+ */
+export type GeneratedFileAction = 'create' | 'update' | 'keep';
+
+export interface GeneratedTemplateFile
 {
     relativePath: string;
+    /** Size of the file on disk. */
     bytes: number;
+    action: GeneratedFileAction;
 }
+
+export interface WorkspacePackageJsonFile extends GeneratedTemplateFile
+{
+    /** Dependencies added or raised in an existing package.json. */
+    dependencyUpdates: DependencyUpdate[];
+    /** Workspace scripts that an existing package.json defines differently (its own value is kept). */
+    keptScripts: string[];
+}
+
+export interface WorkspacePackageJson
+{
+    name: string;
+    version: string;
+    private: boolean;
+    engines: Record<string, string>;
+    scripts: Record<string, string>;
+    dependencies: Record<string, string>;
+    devDependencies: Record<string, string>;
+}
+
+type WrittenFile = Omit<GeneratedTemplateFile, 'relativePath'>;
+
+type TemplateFileWriter = (destinationPath: string, content: string | Buffer) => WrittenFile;
 
 interface WorkspaceItemTemplateOptions
 {
@@ -89,9 +123,13 @@ export function scaffoldWorkspaceItemFromTemplate(
     }
 
     fs.ensureDirSync(destinationDir);
-    return copyTemplateDirectory(templateDir, destinationDir, createWorkspaceItemTemplateContext(item, options), '');
+    return copyTemplateDirectory(templateDir, destinationDir, createWorkspaceItemTemplateContext(item, options), '', overwriteFile);
 }
 
+/**
+ * Copy the workspace configuration files (ESLint, VS Code, .gitignore) without losing existing ones:
+ * see {@link writeWorkspaceFile}.
+ */
 // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
 export function scaffoldWorkspaceTemplate(workspaceName: string, destinationDir: string): GeneratedTemplateFile[]
 {
@@ -102,7 +140,88 @@ export function scaffoldWorkspaceTemplate(workspaceName: string, destinationDir:
     }
 
     fs.ensureDirSync(destinationDir);
-    return copyTemplateDirectory(templateDir, destinationDir, createWorkspaceTemplateContext(workspaceName), '');
+    return copyTemplateDirectory(templateDir, destinationDir, createWorkspaceTemplateContext(workspaceName), '', writeWorkspaceFile);
+}
+
+/**
+ * Write a workspace file and keep what the developer already has, as the former schematics did:
+ * - a missing or blank file is written,
+ * - an existing JSON file gets the template values it does not have (its own values win),
+ * - an existing `.gitignore` gets the template entries it does not have,
+ * - any other existing file is kept unchanged.
+ */
+// eslint-disable-next-line prefer-arrow/prefer-arrow-functions
+export function writeWorkspaceFile(destinationPath: string, content: string | Buffer): WrittenFile
+{
+    if (!fs.existsSync(destinationPath))
+    {
+        return overwriteFile(destinationPath, content);
+    }
+
+    const existingContent = fs.readFileSync(destinationPath);
+    if (existingContent.toString('utf8').trim() === '')
+    {
+        return overwriteFile(destinationPath, content);
+    }
+
+    const mergedText = typeof content === 'string'
+        ? mergeTextFile(path.basename(destinationPath), existingContent.toString('utf8'), content)
+        : undefined;
+    if (mergedText == null)
+    {
+        return { action: 'keep', bytes: existingContent.length };
+    }
+
+    fs.writeFileSync(destinationPath, mergedText, 'utf8');
+    return { action: 'update', bytes: Buffer.byteLength(mergedText, 'utf8') };
+}
+
+/**
+ * Print a generated file as the schematics did, e.g. `CREATE .gitignore (52 bytes)`.
+ */
+// eslint-disable-next-line prefer-arrow/prefer-arrow-functions
+export function logGeneratedFile(file: GeneratedTemplateFile): void
+{
+    const relativePath = file.relativePath.replace(/\\/g, '/');
+    switch (file.action)
+    {
+        case 'create':
+            console.log(`${chalk.green('CREATE')} ${relativePath} (${file.bytes} bytes)`);
+            break;
+        case 'update':
+            console.log(`${chalk.blue('UPDATE')} ${relativePath} (${file.bytes} bytes)`);
+            break;
+        default:
+            console.log(`${chalk.dim('SKIP')} ${relativePath} (existing file kept)`);
+            break;
+    }
+}
+
+// eslint-disable-next-line prefer-arrow/prefer-arrow-functions
+function mergeTextFile(fileName: string, existingText: string, templateText: string): string | undefined
+{
+    if (fileName.toLowerCase().endsWith('.json'))
+    {
+        return mergeJsonText(existingText, templateText);
+    }
+
+    if (fileName === '.gitignore')
+    {
+        return appendMissingLines(existingText, templateText, '# Intuiface workspace');
+    }
+
+    return undefined;
+}
+
+// eslint-disable-next-line prefer-arrow/prefer-arrow-functions
+function overwriteFile(destinationPath: string, content: string | Buffer): WrittenFile
+{
+    const action: GeneratedFileAction = fs.existsSync(destinationPath) ? 'update' : 'create';
+    fs.writeFileSync(destinationPath, content);
+    return {
+        action: action,
+        bytes: typeof content === 'string' ? Buffer.byteLength(content, 'utf8') : content.length
+    };
 }
 
 // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
@@ -110,7 +229,8 @@ function copyTemplateDirectory(
     sourceDir: string,
     destinationDir: string,
     context: TemplateRenderContext,
-    relativeDir: string
+    relativeDir: string,
+    writeFile: TemplateFileWriter
 ): GeneratedTemplateFile[]
 {
     const generatedFiles: GeneratedTemplateFile[] = [];
@@ -125,27 +245,14 @@ function copyTemplateDirectory(
         if (fs.statSync(sourcePath).isDirectory())
         {
             fs.ensureDirSync(destinationPath);
-            generatedFiles.push(...copyTemplateDirectory(sourcePath, destinationPath, context, relativePath));
+            generatedFiles.push(...copyTemplateDirectory(sourcePath, destinationPath, context, relativePath, writeFile));
             continue;
         }
 
-        if (isTextTemplateFile(sourcePath))
-        {
-            const sourceText = fs.readFileSync(sourcePath, 'utf8');
-            const renderedText = renderTemplateValue(sourceText, context);
-            fs.writeFileSync(destinationPath, renderedText, 'utf8');
-            generatedFiles.push({
-                relativePath: relativePath,
-                bytes: Buffer.byteLength(renderedText, 'utf8')
-            });
-            continue;
-        }
-
-        fs.copyFileSync(sourcePath, destinationPath);
-        generatedFiles.push({
-            relativePath: relativePath,
-            bytes: fs.statSync(destinationPath).size
-        });
+        const content = isTextTemplateFile(sourcePath)
+            ? renderTemplateValue(fs.readFileSync(sourcePath, 'utf8'), context)
+            : fs.readFileSync(sourcePath);
+        generatedFiles.push({ relativePath, ...writeFile(destinationPath, content) });
     }
 
     return generatedFiles;
@@ -205,7 +312,7 @@ function getWorkspaceTemplateDirectory(): string
 function isTextTemplateFile(sourcePath: string): boolean
 {
     const extension = path.extname(sourcePath).toLowerCase();
-    return TEXT_TEMPLATE_EXTENSIONS.has(extension);
+    return TEXT_TEMPLATE_EXTENSIONS.has(extension) || Object.keys(DOTFILE_TEMPLATE_NAMES).includes(path.basename(sourcePath));
 }
 
 // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
@@ -275,7 +382,7 @@ export function getWorkspaceNodeEngineRange(): string
 }
 
 // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
-export function createWorkspacePackageJson(workspaceName: string): Record<string, unknown>
+export function createWorkspacePackageJson(workspaceName: string): WorkspacePackageJson
 {
     const version = getPublishedPackageVersion();
     return {
@@ -300,5 +407,51 @@ export function createWorkspacePackageJson(workspaceName: string): Record<string
             ...WORKSPACE_LINT_DEV_DEPENDENCIES,
             ...WORKSPACE_BUILD_DEV_DEPENDENCIES
         }
+    };
+}
+
+/**
+ * Write the package.json of a new workspace, or complete the one already in the folder:
+ * - its values are kept, scripts included, and the missing workspace values are added,
+ * - dependencies are added, or raised when lower than the workspace ones, and never downgraded.
+ * @throws when the existing package.json is not a JSON object (nothing is written)
+ */
+// eslint-disable-next-line prefer-arrow/prefer-arrow-functions
+export function writeWorkspacePackageJson(dir: string, workspaceName: string): WorkspacePackageJsonFile
+{
+    const packageJsonPath = path.join(dir, 'package.json');
+    const { dependencies, devDependencies, ...settings } = createWorkspacePackageJson(workspaceName);
+    const isExisting = fs.existsSync(packageJsonPath);
+    const existingText = isExisting ? fs.readFileSync(packageJsonPath, 'utf8') : '';
+    const existing = existingText.trim() === '' ? {} : parseJsonObject(existingText);
+    if (!existing)
+    {
+        throw new Error(`Cannot update '${packageJsonPath}': it is not a valid JSON object.`);
+    }
+
+    const packageJson = addMissingValues(existing, settings);
+    const dependencyUpdates = [
+        ...ensureMinimumDependencies(packageJson, 'dependencies', dependencies),
+        ...ensureMinimumDependencies(packageJson, 'devDependencies', devDependencies)
+    ];
+    const scripts = packageJson.scripts as Record<string, unknown>;
+    const keptScripts = Object.keys(settings.scripts).filter((name) => scripts[name] !== settings.scripts[name]);
+
+    if (isExisting && isDeepStrictEqual(packageJson, existing))
+    {
+        return { relativePath: 'package.json', bytes: Buffer.byteLength(existingText, 'utf8'), action: 'keep', dependencyUpdates: [], keptScripts: keptScripts };
+    }
+
+    const text = existingText.trim() === ''
+        ? `${JSON.stringify(packageJson, null, 2)}\n`
+        : stringifyJsonLike(packageJson, existingText);
+    fs.writeFileSync(packageJsonPath, text, 'utf8');
+
+    return {
+        relativePath: 'package.json',
+        bytes: Buffer.byteLength(text, 'utf8'),
+        action: isExisting ? 'update' : 'create',
+        dependencyUpdates: existingText.trim() === '' ? [] : dependencyUpdates,
+        keptScripts: keptScripts
     };
 }
