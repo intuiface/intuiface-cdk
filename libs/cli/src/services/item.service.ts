@@ -1,14 +1,19 @@
 import path from 'path';
 import chalk from 'chalk';
 import { WorkspaceItem } from '../types.js';
-import { validateGeneratedName } from '../utils/validators.js';
+import { validateGeneratedName, validateIconPath } from '../utils/validators.js';
 import { logGeneratedFile, scaffoldWorkspaceItemFromTemplate } from './generator.service.js';
 import { readWorkspaceConfig, writeWorkspaceConfig, getWorkspaceConfigFileName } from './workspace.service.js';
 
 type WorkspaceItemCreationInput = WorkspaceItem & { category?: string };
 
+/**
+ * Generate an item in the workspace of the current folder and register it in `intuiface.workspace.json`.
+ * Nothing is written when the name is invalid or taken, or when the icon file does not exist.
+ * @returns the item as registered in the workspace
+ */
 // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
-export function addWorkspaceItem(item: WorkspaceItemCreationInput): void
+export function addWorkspaceItem(item: WorkspaceItemCreationInput): WorkspaceItem
 {
     validateGeneratedName(item.name);
 
@@ -18,6 +23,12 @@ export function addWorkspaceItem(item: WorkspaceItemCreationInput): void
     if (workspaceConfig.items.some((existingItem) => existingItem.name === item.name))
     {
         throw new Error(`A workspace item named '${item.name}' already exists.`);
+    }
+
+    // A missing icon would otherwise only fail at the end of the build
+    if (item.icon)
+    {
+        validateIconPath(item.icon, dir);
     }
 
     const relativeFolder = path.join('src', item.type === 'interface-asset' ? 'interface-assets' : 'binding-converters', item.name);
@@ -59,4 +70,5 @@ export function addWorkspaceItem(item: WorkspaceItemCreationInput): void
     writeWorkspaceConfig(dir, workspaceConfig);
     console.log(`${chalk.blue('UPDATE')} ${getWorkspaceConfigFileName()}`);
     console.log();
+    return itemConfig;
 }

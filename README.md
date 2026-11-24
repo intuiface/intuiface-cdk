@@ -47,7 +47,8 @@ The CLI will prompt for:
 - workspace name,
 - first item type,
 - first item name,
-- category
+- category,
+- icon (optional)
 
 ### Add new items
 
@@ -64,6 +65,12 @@ Build everything in the workspace:
 
 ```bash
 npx intuiface-cli build --all
+```
+
+or a single item:
+
+```bash
+npx intuiface-cli build -n MyInterfaceAsset
 ```
 
 ### Additional references

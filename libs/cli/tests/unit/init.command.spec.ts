@@ -112,6 +112,23 @@ describe('init command', () =>
             expect(fs.existsSync(path.join(dir, 'node_modules'))).toBe(false);
         });
 
+        it('prints the next steps: install, add an item, build (review O4)', async () =>
+        {
+            await initializeWorkspace();
+
+            const output = getOutput();
+            const steps = output.slice(output.indexOf('Next steps:'));
+            expect(steps).toMatch(/^Next steps:$/m);
+            const positions = [
+                'npm install',
+                'npx intuiface-cli add interface-asset -n MyInterfaceAsset -c Custom',
+                'npx intuiface-cli add binding-converter -n MyBindingConverter -c Custom',
+                'npm run build'
+            ].map((command) => steps.indexOf(command));
+            expect(positions.every((position) => position > 0), steps).toBe(true);
+            expect([...positions].sort((left, right) => left - right)).toEqual(positions);
+        });
+
         it('refuses to initialize a folder twice', async () =>
         {
             await initializeWorkspace();
@@ -210,6 +227,9 @@ describe('init command', () =>
             const output = getOutput();
             expect(output).toContain(`package.json keeps its own 'build' script. The workspace one is 'npx intuiface-cli build --all'.`);
             expect(output).not.toContain(`'lint' script`);
+            // `npm run build` would run the kept script: the next steps give the workspace command instead
+            expect(output).toMatch(/Build every item into dist\/:\n\s+npx intuiface-cli build --all$/m);
+            expect(output).not.toContain('npm run build');
         });
 
         it('stops without writing anything when package.json is invalid', async () =>
@@ -324,8 +344,24 @@ describe('init command', () =>
             expect(execPromise).toHaveBeenCalledWith('npm install', { cwd: dir });
         });
 
+        it('prints the next steps once the dependencies are installed', async () =>
+        {
+            vi.mocked(askWorkspaceInitQuestions).mockResolvedValue({
+                workspaceName: 'ws',
+                firstItem: { type: 'interface-asset', name: 'FirstAsset', category: 'Custom' }
+            });
+
+            await initializeWorkspace();
+
+            const output = getOutput();
+            expect(output).toContain('Write your interface-asset in src/interface-assets/FirstAsset/FirstAsset.ts.');
+            expect(output).toMatch(/Build every item into dist\/:\n\s+npm run build$/m);
+            expect(output).not.toMatch(/^\s+npm install$/m);
+        });
+
         it('proposes the --name value as default workspace name', async () =>
         {
+            writeFiles(dir, { 'icon.png': 'png' });
             vi.mocked(askWorkspaceInitQuestions).mockResolvedValue({
                 workspaceName: 'from-option',
                 firstItem: { type: 'interface-asset', name: 'FirstAsset', category: 'Custom', icon: 'icon.png' }

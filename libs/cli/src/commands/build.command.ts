@@ -4,7 +4,8 @@ import { pathToFileURL } from 'url';
 import ora from 'ora';
 import { BuildTarget, BuildType, WorkspaceItem } from '../types.js';
 import { execPromise, isExecException } from '../utils/exec.js';
-import { tryReadWorkspaceConfig, getRequiredWorkspaceItem } from '../services/workspace.service.js';
+import { tryReadWorkspaceConfig, getRequiredWorkspaceItem, getWorkspaceConfigFileName } from '../services/workspace.service.js';
+import { validateIconPath } from '../utils/validators.js';
 import {
     cleanBuildFolders,
     resetBuildMetadata,
@@ -19,29 +20,31 @@ import { buildSchemas, buildResources, buildIFDFile, writeIFDFile } from '../ser
 // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
 export async function runBuildCommand(options: { name?: string; all?: boolean; type?: string; icon?: string; debug?: boolean }): Promise<void>
 {
-    const workspaceConfig = tryReadWorkspaceConfig(process.cwd());
+    const dir = process.cwd();
+    const workspaceConfig = tryReadWorkspaceConfig(dir);
     if (workspaceConfig)
     {
         const itemName = options.name;
-        if (!options.all && (itemName == null || itemName === ''))
-        {
-            throw new Error(`Workspace build requires either '--name <name>' or '--all'.`);
-        }
-
         let targets: BuildTarget[];
-        if (options.all)
-        {
-            targets = workspaceConfig.items.map((item) => toBuildTarget(item, options.icon));
-        }
-        else if (itemName != null && itemName !== '')
+        // --name wins over --all: the generated `build` script passes --all, and `npm run build -- -n X` must build X only
+        if (itemName != null && itemName !== '')
         {
             targets = [toBuildTarget(getRequiredWorkspaceItem(workspaceConfig, itemName), options.icon)];
+        }
+        else if (options.all)
+        {
+            if (options.icon)
+            {
+                throw new Error(`'--icon' cannot be used to build every item. Set the icon of each item in ${getWorkspaceConfigFileName()}, or build one item with '--name <name> --icon <icon>'.`);
+            }
+            targets = workspaceConfig.items.map((item) => toBuildTarget(item));
         }
         else
         {
             throw new Error(`Workspace build requires either '--name <name>' or '--all'.`);
         }
 
+        validateBuildIcons(targets, dir);
         for (const target of targets)
         {
             await buildTarget(target, options.debug);
@@ -55,14 +58,32 @@ export async function runBuildCommand(options: { name?: string; all?: boolean; t
     }
 
     const buildType = normalizeBuildType(options.type);
-    await buildTarget({
+    const legacyTarget: BuildTarget = {
         name: options.name,
         buildType: buildType,
         entryFile: `src/${options.name}.ts`,
         outputDir: `dist/${options.name}`,
         icon: options.icon,
         useGeneratedWebpackConfig: false
-    }, options.debug);
+    };
+    validateBuildIcons([legacyTarget], dir);
+    await buildTarget(legacyTarget, options.debug);
+}
+
+/**
+ * Check the icons before building anything: a missing icon would otherwise fail after webpack, and wipe the item output.
+ * @throws when the icon of a target does not exist
+ */
+// eslint-disable-next-line prefer-arrow/prefer-arrow-functions
+function validateBuildIcons(targets: BuildTarget[], dir: string): void
+{
+    for (const target of targets)
+    {
+        if (target.icon)
+        {
+            validateIconPath(target.icon, dir, target.name);
+        }
+    }
 }
 
 // eslint-disable-next-line prefer-arrow/prefer-arrow-functions

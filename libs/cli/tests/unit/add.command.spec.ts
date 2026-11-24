@@ -3,7 +3,7 @@ import path from 'path';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { addBindingConverter, addInterfaceAsset } from '../../src/commands/add.command.js';
 import { readWorkspaceConfig, writeWorkspaceConfig } from '../../src/services/workspace.service.js';
-import { createTempDir, removeTempDir, silenceConsole, useCwd } from '../helpers/test-utils.js';
+import { createTempDir, removeTempDir, silenceConsole, useCwd, writeFiles } from '../helpers/test-utils.js';
 
 describe('add command', () =>
 {
@@ -39,6 +39,8 @@ describe('add command', () =>
 
         it('stores the icon given with --icon', () =>
         {
+            writeFiles(dir, { 'icons/asset.png': 'png' });
+
             addInterfaceAsset({ name: 'MyAsset', category: 'Tools', icon: 'icons/asset.png' });
 
             expect(readWorkspaceConfig(dir).items[0].icon).toBe('icons/asset.png');
@@ -83,6 +85,8 @@ describe('add command', () =>
 
         it('keeps the icon given with --icon instead of the default one', () =>
         {
+            writeFiles(dir, { 'icons/converter.png': 'png' });
+
             addBindingConverter({ name: 'Beta', category: 'Text Tools', icon: 'icons/converter.png' });
 
             expect(readWorkspaceConfig(dir).items[0].icon).toBe('icons/converter.png');
@@ -127,6 +131,35 @@ describe('add command', () =>
         expect(() => addInterfaceAsset({ name: name, category: 'Tools' })).toThrow(`Invalid name '${name}'`);
         expect(fs.existsSync(path.join(dir, 'src'))).toBe(false);
         expect(readWorkspaceConfig(dir).items).toEqual([]);
+    });
+
+    describe('icon (review O6)', () =>
+    {
+        it('rejects a missing icon without writing anything', () =>
+        {
+            expect(() => addInterfaceAsset({ name: 'MyAsset', category: 'Tools', icon: 'icons/missing.png' }))
+                .toThrow(`Cannot find the icon 'icons/missing.png': there is no file at '${path.join(dir, 'icons', 'missing.png')}'.`);
+            expect(() => addBindingConverter({ name: 'Beta', category: 'Tools', icon: 'icons/missing.png' })).toThrow(`Cannot find the icon 'icons/missing.png'`);
+            expect(fs.existsSync(path.join(dir, 'src'))).toBe(false);
+            expect(readWorkspaceConfig(dir).items).toEqual([]);
+        });
+
+        it('rejects a folder', () =>
+        {
+            fs.ensureDirSync(path.join(dir, 'icons'));
+
+            expect(() => addInterfaceAsset({ name: 'MyAsset', category: 'Tools', icon: 'icons' })).toThrow(`Cannot find the icon 'icons'`);
+        });
+
+        it('accepts an icon given with ./ or an absolute path', () =>
+        {
+            writeFiles(dir, { 'icons/asset.png': 'png' });
+
+            addInterfaceAsset({ name: 'Relative', category: 'Tools', icon: './icons/asset.png' });
+            addInterfaceAsset({ name: 'Absolute', category: 'Tools', icon: path.join(dir, 'icons', 'asset.png') });
+
+            expect(readWorkspaceConfig(dir).items.map((item) => item.icon)).toEqual([path.join(dir, 'icons', 'asset.png'), './icons/asset.png']);
+        });
     });
 
     it('fails outside a workspace', () =>

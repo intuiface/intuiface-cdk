@@ -25,12 +25,12 @@ const ifdCmd = program
 ifdCmd.command('build')
     .summary('build one or more workspace items')
     .description('Build an interface asset or binding converter and generate its descriptor file (*.ifd) to be imported into Intuiface Composer.')
-    .option('-n, --name <name>', 'name of the interface asset or binding converter to build.')
+    .option('-n, --name <name>', 'name of the interface asset or binding converter to build. Takes priority over --all.')
     .option('-a, --all', 'build all configured workspace items.')
     .option('-d, --debug', 'build in debug mode.')
     .option('-t, --type <type>', '(deprecated) asset type to build. Ignored in workspace mode — the type is read from intuiface.workspace.json. Kept for retro-compatibility only.', 'interface-asset')
-    .option('-i, --icon [icon]', '(deprecated) relative path to an icon. Prefer setting the icon in workspace config with `add` or `init`.')
-    .addHelpText('afterAll', '\nExamples:\n  intuiface-cli build --name MyCustomIA\n  intuiface-cli build --name MyBindingConverter\n  intuiface-cli build --all\n')
+    .option('-i, --icon <icon>', '(deprecated) relative path to an icon, for the item built with --name. Prefer setting the icon in workspace config with `add` or `init`.')
+    .addHelpText('afterAll', '\nExamples:\n  intuiface-cli build --name MyCustomIA\n  intuiface-cli build --name MyBindingConverter\n  intuiface-cli build --all\n\nIn a workspace, `npm run build` builds every item and `npm run build -- -n MyCustomIA` builds MyCustomIA only.\n')
     .action((options) => runBuildCommand(options));
 
 ifdCmd.command('init')

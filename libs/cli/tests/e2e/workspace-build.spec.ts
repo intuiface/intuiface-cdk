@@ -235,6 +235,19 @@ describe('workspace build (init → add → build --all)', () =>
             expect(fs.existsSync(path.join(dir, 'tmp'))).toBe(false);
         });
 
+        it('builds only the named item when --all is also given, as `npm run build -- -n X` does (review O8)', () =>
+        {
+            const otherItemMarker = path.join(dir, 'dist', 'Gauge', 'marker-o8.txt');
+            fs.writeFileSync(otherItemMarker, 'kept');
+
+            const result = runCli(dir, 'build', '--all', '--name', 'TextTools');
+
+            expect(result.status, result.output).toBe(0);
+            expect(result.output.match(/successfully built\./g), result.output).toEqual([`successfully built.`]);
+            expect(result.output).toContain(`binding-converter 'TextTools' successfully built.`);
+            expect(fs.existsSync(otherItemMarker)).toBe(true);
+        });
+
         it('builds a converter in debug mode with inline source maps', () =>
         {
             const result = runCli(dir, 'build', '-n', 'TextTools', '--debug');

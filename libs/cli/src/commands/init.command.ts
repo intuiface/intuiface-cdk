@@ -17,6 +17,16 @@ import { getWorkspaceConfigFileName, writeWorkspaceConfig } from '../services/wo
 import { formatDependencyUpdates } from '../utils/dependencies.js';
 import { execPromise, isExecException } from '../utils/exec.js';
 
+/** Commands shown as next steps. */
+const ADD_INTERFACE_ASSET_EXAMPLE = 'npx intuiface-cli add interface-asset -n MyInterfaceAsset -c Custom';
+const ADD_BINDING_CONVERTER_EXAMPLE = 'npx intuiface-cli add binding-converter -n MyBindingConverter -c Custom';
+
+interface NextStep
+{
+    description: string;
+    commands?: string[];
+}
+
 // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
 export async function initializeWorkspace(name?: string): Promise<void>
 {
@@ -26,8 +36,14 @@ export async function initializeWorkspace(name?: string): Promise<void>
         return;
     }
 
+    // Without a terminal, init only writes the workspace files: tell the developer how to go on
     const workspaceName = name?.trim() || path.basename(process.cwd());
-    initializeWorkspaceFiles(workspaceName);
+    const { buildCommand } = initializeWorkspaceFiles(workspaceName);
+    printNextSteps([
+        { description: 'Install the dependencies:', commands: ['npm install'] },
+        { description: 'Add an interface asset or a binding converter:', commands: [ADD_INTERFACE_ASSET_EXAMPLE, ADD_BINDING_CONVERTER_EXAMPLE] },
+        { description: 'Build every item into dist/:', commands: [buildCommand] }
+    ]);
 }
 
 // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
@@ -36,9 +52,9 @@ async function initializeWorkspaceInteractive(name?: string): Promise<void>
     const defaultWorkspaceName = name?.trim() || path.basename(process.cwd());
     const responses = await askWorkspaceInitQuestions(defaultWorkspaceName);
 
-    initializeWorkspaceFiles(responses.workspaceName);
+    const { buildCommand } = initializeWorkspaceFiles(responses.workspaceName);
 
-    addWorkspaceItem({
+    const firstItem = addWorkspaceItem({
         name: responses.firstItem.name,
         type: responses.firstItem.type,
         category: responses.firstItem.category,
@@ -47,10 +63,35 @@ async function initializeWorkspaceInteractive(name?: string): Promise<void>
     });
 
     await installWorkspaceDependencies(process.cwd());
+
+    printNextSteps([
+        { description: `Write your ${firstItem.type} in ${firstItem.entry}.` },
+        { description: 'Build every item into dist/:', commands: [buildCommand] },
+        { description: 'Add more items:', commands: [ADD_INTERFACE_ASSET_EXAMPLE, ADD_BINDING_CONVERTER_EXAMPLE] }
+    ]);
 }
 
 // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
-function initializeWorkspaceFiles(workspaceName: string): void
+function printNextSteps(steps: NextStep[]): void
+{
+    console.log(chalk.bold('Next steps:'));
+    steps.forEach((step, index) =>
+    {
+        console.log(`  ${index + 1}. ${step.description}`);
+        for (const command of step.commands ?? [])
+        {
+            console.log(`       ${chalk.cyan(command)}`);
+        }
+    });
+    console.log();
+}
+
+/**
+ * Write the workspace files in the current folder, completing the existing ones.
+ * @returns the command that builds every item: `npm run build`, unless package.json keeps its own `build` script
+ */
+// eslint-disable-next-line prefer-arrow/prefer-arrow-functions
+function initializeWorkspaceFiles(workspaceName: string): { buildCommand: string }
 {
     const dir = process.cwd();
     const workspaceConfigPath = path.join(dir, getWorkspaceConfigFileName());
@@ -90,6 +131,8 @@ function initializeWorkspaceFiles(workspaceName: string): void
         console.log(chalk.yellow(`⚠ package.json keeps its own '${scriptName}' script. The workspace one is '${workspaceScripts[scriptName]}'.`));
     }
     console.log();
+
+    return { buildCommand: packageJsonFile.keptScripts.includes('build') ? workspaceScripts.build : 'npm run build' };
 }
 
 // eslint-disable-next-line prefer-arrow/prefer-arrow-functions

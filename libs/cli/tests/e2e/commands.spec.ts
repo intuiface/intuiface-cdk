@@ -59,7 +59,7 @@ describe('CLI commands', () =>
             const result = runCli(dir, 'build', '--help');
 
             expect(result.status).toBe(0);
-            for (const option of ['--name <name>', '--all', '--debug', '--type <type>', '--icon [icon]'])
+            for (const option of ['--name <name>', '--all', '--debug', '--type <type>', '--icon <icon>'])
             {
                 expect(result.stdout).toContain(option);
             }
@@ -117,6 +117,15 @@ describe('CLI commands', () =>
             expect(fs.existsSync(path.join(dir, '.gitignore'))).toBe(true);
         });
 
+        it('ends with the next steps, as it neither adds an item nor installs dependencies (review O4)', () =>
+        {
+            const result = runCliOrThrow(dir, 'init');
+
+            expect(result.stdout).toMatch(/Next steps:\n.*\n\s+npm install\n/);
+            expect(result.stdout).toContain('npx intuiface-cli add interface-asset -n MyInterfaceAsset -c Custom');
+            expect(result.stdout).toMatch(/^\s+npm run build$/m);
+        });
+
         it('refuses to run twice', () =>
         {
             runCliOrThrow(dir, 'init');
@@ -147,6 +156,15 @@ describe('CLI commands', () =>
             expectUserError(runCli(dir, 'add', 'binding-converter', '-n', 'MyAsset', '-c', 'Custom'), `A workspace item named 'MyAsset' already exists.`);
         });
 
+        it('rejects a missing icon without writing anything (review O6)', () =>
+        {
+            runCliOrThrow(dir, 'init');
+
+            expectUserError(runCli(dir, 'add', 'interface-asset', '-n', 'MyAsset', '-c', 'Custom', '-i', 'icons/missing.png'), `Cannot find the icon 'icons/missing.png'`);
+            expect(fs.existsSync(path.join(dir, 'src', 'interface-assets', 'MyAsset'))).toBe(false);
+            expect(fs.readJsonSync(path.join(dir, 'intuiface.workspace.json')).items).toEqual([]);
+        });
+
         it('requires a category', () =>
         {
             runCliOrThrow(dir, 'init');
@@ -173,6 +191,30 @@ describe('CLI commands', () =>
         it('rejects an unknown item', () =>
         {
             expectUserError(runCli(dir, 'build', '-n', 'Unknown'), `Cannot find workspace item 'Unknown'.`);
+        });
+
+        it('requires a value for --icon (review O7)', () =>
+        {
+            const result = runCli(dir, 'build', '-n', 'Unknown', '-i');
+
+            expect(result.status).not.toBe(0);
+            expect(result.stderr).toContain(`option '-i, --icon <icon>' argument missing`);
+        });
+
+        it('rejects --icon when building every item (review O7)', () =>
+        {
+            expectUserError(runCli(dir, 'build', '--all', '-i', 'icon.png'), `'--icon' cannot be used to build every item.`);
+        });
+
+        it('reports a missing icon before compiling (review O6)', () =>
+        {
+            runCliOrThrow(dir, 'add', 'interface-asset', '-n', 'MyAsset', '-c', 'Custom');
+
+            const result = runCli(dir, 'build', '-n', 'MyAsset', '-i', 'icons/missing.png');
+
+            expectUserError(result, `Cannot find the icon 'icons/missing.png' of 'MyAsset'`);
+            expect(result.output).not.toContain('Compiling TypeScript');
+            expect(fs.existsSync(path.join(dir, 'tmp'))).toBe(false);
         });
 
         it('requires --name outside a workspace', () =>

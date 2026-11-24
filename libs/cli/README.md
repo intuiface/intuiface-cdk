@@ -30,10 +30,11 @@ Initialize interactively:
 npx intuiface-cli init
 ```
 
-Or initialize non-interactively:
+Or initialize non-interactively, then install the workspace dependencies:
 
 ```bash
 npx intuiface-cli init -n my-intuiface-workspace
+npm install
 ```
 
 Add items:
@@ -46,7 +47,7 @@ npx intuiface-cli add binding-converter -n MyBindingConverter -c Custom
 Build all configured items:
 
 ```bash
-npx intuiface-cli build --all
+npm run build
 ```
 
 ## Commands
@@ -60,11 +61,15 @@ Interactive:
 npx intuiface-cli init
 ```
 
+In a terminal, `init` asks for the workspace name and the first item (type, name, category and optional icon), creates it and runs `npm install`. An invalid answer is asked again, and the icon must be an existing file.
+
 Non-interactive:
 
 ```bash
 npx intuiface-cli init -n my-intuiface-workspace
 ```
+
+When it is not run in a terminal (in a script or CI), `init` only writes the workspace files: it creates no item and does not run `npm install`. It ends by printing the next steps: `npm install`, `add` an item, then `npm run build`.
 
 `init` can run in a folder that already has files (for example a cloned repository): it completes them instead of overwriting them.
 
@@ -90,6 +95,8 @@ npx intuiface-cli add interface-asset -n MyInterfaceAsset -c Custom -i ./icons/a
 npx intuiface-cli add binding-converter -n MyBindingConverter -c Custom -i ./icons/converter.png
 ```
 
+The icon path is relative to the workspace folder. `add` fails, and writes nothing, when there is no file at that path.
+
 ### `build`
 Build a single item or all workspace items.
 
@@ -99,16 +106,26 @@ npx intuiface-cli build --name MyInterfaceAsset
 npx intuiface-cli build --name MyBindingConverter --type binding-converter
 ```
 
+In a CLI-generated workspace, `npm run build` builds every item. To build a single item through the same script, pass its name after `--`:
+
+```bash
+npm run build -- -n MyInterfaceAsset
+```
+
+The script runs `build --all`, and `--name` takes priority over `--all`.
+
 Options:
 
 | Option | Description |
 |---|---|
-| `-n, --name <name>` | Name of the workspace item to build. |
+| `-n, --name <name>` | Name of the workspace item to build. Takes priority over `--all`. |
 | `-a, --all` | Build all items from `intuiface.workspace.json`. |
 | `-t, --type <type>` | **(deprecated)** Asset type. Ignored in workspace mode — the type is read from `intuiface.workspace.json`. Kept for retro-compatibility only. |
-| `-i, --icon [icon]` | **(deprecated)** Relative path to an icon. Prefer setting the icon in workspace config with `add` or `init`. |
+| `-i, --icon <icon>` | **(deprecated)** Relative path to an icon, for the item built with `--name`. Cannot be used to build every item. Prefer setting the icon in workspace config with `add` or `init`. |
 | `-d, --debug` | Build in debug mode. |
 | `-h, --help` | Show command help. |
+
+`build` checks that the icons exist before compiling anything.
 
 #### Debug builds
 
@@ -123,6 +140,7 @@ In a CLI-generated workspace, this is also available through:
 
 ```bash
 npm run build:debug
+npm run build:debug -- -n MyInterfaceAsset
 ```
 
 If you still have older projects that expect an icon override during build, `--icon` remains available for retro-compatibility. New projects should rely on the workspace icon saved by `add` or `init`.
