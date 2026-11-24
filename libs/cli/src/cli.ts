@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 
-/* eslint-disable camelcase */
 import { Command } from 'commander';
 import { runBuildCommand } from './commands/build.command.js';
 import { initializeWorkspace } from './commands/init.command.js';

@@ -1,9 +1,10 @@
 import fs from 'fs-extra';
 import path from 'path';
 import ora from 'ora';
+import ts from 'typescript';
 import { BuildType, WorkspaceConfig, WorkspaceItem } from '../types.js';
 import { tryReadWorkspaceConfig, writeWorkspaceConfig, getWorkspaceConfigFileName } from './workspace.service.js';
-import { getPublishedPackageVersion } from './generator.service.js';
+import { getPublishedPackageVersion, WORKSPACE_BUILD_DEV_DEPENDENCIES } from './generator.service.js';
 
 type MigrationPath = 'already-workspace' | 'pre-v2' | 'standalone-to-workspace' | 'unknown';
 
@@ -14,17 +15,6 @@ interface DetectedItem
     entry: string;
     icon?: string;
 }
-
-/**
- * Minimum build-tool dependency versions required by the workspace CLI mode.
- * Older schematics-generated projects will have lower versions that need updating.
- */
-const REQUIRED_BUILD_DEV_DEPENDENCIES: Record<string, string> = {
-    'ts-loader': '^9.5.1',
-    'typescript': '^5.8.0',
-    'webpack': '^5.99.0',
-    'webpack-cli': '^6.0.1'
-};
 
 // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
 export function migrateProject(): void
@@ -158,6 +148,10 @@ function migrateStandaloneToWorkspace(dir: string): void
         fs.writeJsonSync(path.join(dir, 'package.json'), packageJson, { spaces: 2 });
         spinner.succeed('Build dependencies updated');
 
+        spinner.start('Updating tsconfig.json');
+        const isTsConfigUpdated = updateTsConfigForTypeScript6(dir);
+        spinner.succeed(isTsConfigUpdated ? 'tsconfig.json updated for TypeScript 6' : 'tsconfig.json already up to date');
+
         spinner.start('Removing unused webpack config files');
         removeWebpackConfigFiles(dir);
         spinner.succeed('Webpack config files removed');
@@ -279,7 +273,8 @@ function updateWorkspaceDependencies(packageJson: any): void
         packageJson.devDependencies = {};
     }
 
-    for (const [dep, version] of Object.entries(REQUIRED_BUILD_DEV_DEPENDENCIES))
+    // Build-tool versions required by the workspace CLI mode (older schematics projects have lower ones)
+    for (const [dep, version] of Object.entries(WORKSPACE_BUILD_DEV_DEPENDENCIES))
     {
         packageJson.devDependencies[dep] = version;
     }
@@ -293,6 +288,59 @@ function updateWorkspaceDependencies(packageJson: any): void
 
     packageJson.dependencies['@intuiface/cli'] = publishedVersion;
     packageJson.dependencies['@intuiface/core'] = publishedVersion;
+}
+
+/**
+ * Make a 2.x project tsconfig compatible with TypeScript 6 (installed by the migration):
+ * - `rootDir` must be explicit (the CLI resolves transpiled entries relative to `./src`),
+ * - `moduleResolution: node|node10|classic` and `downlevelIteration` are deprecated.
+ * @returns true if the file was modified.
+ */
+// eslint-disable-next-line prefer-arrow/prefer-arrow-functions
+function updateTsConfigForTypeScript6(dir: string): boolean
+{
+    const tsconfigPath = path.join(dir, 'tsconfig.json');
+    if (!fs.existsSync(tsconfigPath))
+    {
+        return false;
+    }
+
+    const parsed = ts.parseConfigFileTextToJson(tsconfigPath, fs.readFileSync(tsconfigPath, 'utf8'));
+    if (parsed.error)
+    {
+        throw new Error(`Cannot parse tsconfig.json: ${ts.flattenDiagnosticMessageText(parsed.error.messageText, '\n')}`);
+    }
+
+    const tsconfig = parsed.config ?? {};
+    const compilerOptions = tsconfig.compilerOptions ?? {};
+    let isModified = false;
+
+    if (compilerOptions.rootDir == null)
+    {
+        compilerOptions.rootDir = './src';
+        isModified = true;
+    }
+
+    const moduleResolution = typeof compilerOptions.moduleResolution === 'string' ? compilerOptions.moduleResolution.toLowerCase() : undefined;
+    if (moduleResolution === 'node' || moduleResolution === 'node10' || moduleResolution === 'classic')
+    {
+        compilerOptions.moduleResolution = 'bundler';
+        isModified = true;
+    }
+
+    if ('downlevelIteration' in compilerOptions)
+    {
+        delete compilerOptions.downlevelIteration;
+        isModified = true;
+    }
+
+    if (isModified)
+    {
+        tsconfig.compilerOptions = compilerOptions;
+        fs.writeFileSync(tsconfigPath, `${JSON.stringify(tsconfig, null, 2)}\n`, 'utf8');
+    }
+
+    return isModified;
 }
 
 // eslint-disable-next-line prefer-arrow/prefer-arrow-functions

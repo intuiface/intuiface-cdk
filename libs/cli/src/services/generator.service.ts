@@ -10,6 +10,30 @@ import { WorkspaceItem } from '../types.js';
  */
 export const MIN_NODE_MAJOR = 22;
 
+/**
+ * Build toolchain of a workspace, aligned with the schematics templates.
+ * Shared by `init` (new workspaces) and `migrate` (existing projects).
+ */
+export const WORKSPACE_BUILD_DEV_DEPENDENCIES: Readonly<Record<string, string>> = {
+    'ts-loader': '^9.6.2',
+    'typescript': '6.0.3',
+    'webpack': '^5.109.2',
+    'webpack-cli': '^7.2.2'
+};
+
+/**
+ * Lint toolchain of a workspace (ESLint 9 flat config, see templates/workspace/eslint.config.mjs).
+ */
+export const WORKSPACE_LINT_DEV_DEPENDENCIES: Readonly<Record<string, string>> = {
+    '@stylistic/eslint-plugin': '^5.10.0',
+    '@typescript-eslint/eslint-plugin': '^8.66.0',
+    '@typescript-eslint/parser': '^8.66.0',
+    'eslint': '^9.39.5',
+    'eslint-plugin-import': '^2.32.0',
+    'eslint-plugin-prefer-arrow': '^1.2.3',
+    'globals': '^17.9.0'
+};
+
 interface TemplateRenderContext
 {
     [key: string]: string;
@@ -186,7 +210,7 @@ export function buildWorkspaceTsConfig(): string
             target: 'ES2022',
             useDefineForClassFields: false,
             module: 'es2020',
-            lib: ['es2018', 'dom'],
+            lib: ['es2020', 'dom'],
             allowJs: true,
             allowSyntheticDefaultImports: true,
             esModuleInterop: true,
@@ -239,7 +263,7 @@ export function createWorkspacePackageJson(workspaceName: string): Record<string
         scripts: {
             'build': 'npx intuiface-cli build --all',
             'build:debug': 'npx intuiface-cli build --all --debug',
-            'lint': 'npx eslint -c .eslintrc.cjs --ext .ts . --ignore-pattern node_modules --ignore-pattern dist'
+            'lint': 'npx eslint .'
         },
         dependencies: {
             '@intuiface/cli': version,
@@ -247,17 +271,9 @@ export function createWorkspacePackageJson(workspaceName: string): Record<string
             'tslib': '^2.6.2'
         },
         devDependencies: {
-            '@stylistic/eslint-plugin': '^1.8.1',
-            '@typescript-eslint/eslint-plugin': '^8.61.1',
-            '@typescript-eslint/parser': '^8.61.1',
-            '@types/node': '^22.10.1',
-            'eslint': '^8.57.0',
-            'eslint-plugin-import': '^2.32.0',
-            'eslint-plugin-prefer-arrow': '^1.2.3',
-            'ts-loader': '^9.5.1',
-            'typescript': '^5.8.0',
-            'webpack': '^5.99.0',
-            'webpack-cli': '^6.0.1'
+            '@types/node': '^24.13.3',
+            ...WORKSPACE_LINT_DEV_DEPENDENCIES,
+            ...WORKSPACE_BUILD_DEV_DEPENDENCIES
         }
     };
 }

@@ -1,5 +1,4 @@
 /* eslint-disable prefer-arrow/prefer-arrow-functions */
-/* eslint-disable camelcase */
 import { IActionOptions } from './action';
 /**
  * Options to configure {@link Converter | `@Converter`} decorator.
