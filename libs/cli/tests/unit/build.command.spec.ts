@@ -4,7 +4,7 @@ import path from 'path';
 import { afterEach, beforeEach, describe, expect, it, Mock, vi } from 'vitest';
 import { runBuildCommand } from '../../src/commands/build.command.js';
 import { writeWorkspaceConfig } from '../../src/services/workspace.service.js';
-import { createTempDir, removeTempDir, silenceConsole, useCwd } from '../helpers/test-utils.js';
+import { createTempDir, getConsoleOutput, removeTempDir, silenceConsole, useCwd } from '../helpers/test-utils.js';
 
 /** Messages given to a method of the (silent) ora spinners, e.g. `warn`. */
 const spinnerMessages = (method: 'warn'): string[] => vi.mocked(ora).mock.results
@@ -100,7 +100,7 @@ describe('build command options', () =>
 
             await expect(runBuildCommand({ all: true })).resolves.toBeUndefined();
 
-            const output = log.mock.calls.map((call) => String(call[0])).join('\n');
+            const output = getConsoleOutput(log);
             expect(output).toContain('⚠ Nothing to build: intuiface.workspace.json has no items yet. Add one with:');
             expect(output).toContain('npx intuiface-cli add interface-asset -n MyInterfaceAsset -c Custom');
             expect(output).toContain('npx intuiface-cli add binding-converter -n MyBindingConverter -c Custom');

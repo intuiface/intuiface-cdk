@@ -1,7 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { createInterface } from 'node:readline/promises';
 import { askWorkspaceInitQuestions } from '../../src/services/prompt.service.js';
-import { createTempDir, removeTempDir, silenceConsole, useCwd, writeFiles } from '../helpers/test-utils.js';
+import { createTempDir, getConsoleOutput, removeTempDir, silenceConsole, useCwd, writeFiles } from '../helpers/test-utils.js';
 
 vi.mock('node:readline/promises', () => ({
     createInterface: vi.fn()
@@ -36,7 +36,7 @@ describe('prompt.service', () =>
     let log: ReturnType<typeof silenceConsole>;
 
     /** Lines printed by the prompt. */
-    const getOutput = (): string => log.mock.calls.map((call) => String(call[0])).join('\n');
+    const getOutput = (): string => getConsoleOutput(log);
 
     beforeEach(() =>
     {

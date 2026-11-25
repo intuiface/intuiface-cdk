@@ -5,7 +5,7 @@ import { initializeWorkspace } from '../../src/commands/init.command.js';
 import { createWorkspacePackageJson, WORKSPACE_BUILD_DEV_DEPENDENCIES } from '../../src/services/generator.service.js';
 import { askWorkspaceInitQuestions } from '../../src/services/prompt.service.js';
 import { execPromise } from '../../src/utils/exec.js';
-import { createTempDir, removeTempDir, silenceConsole, useCwd, writeFiles } from '../helpers/test-utils.js';
+import { createTempDir, escapeRegExp, getConsoleOutput, removeTempDir, silenceConsole, useCwd, writeFiles } from '../helpers/test-utils.js';
 
 vi.mock('../../src/services/prompt.service.js', () => ({
     askWorkspaceInitQuestions: vi.fn()
@@ -41,7 +41,7 @@ describe('init command', () =>
     let log: ReturnType<typeof silenceConsole>;
 
     /** Lines printed by the command. */
-    const getOutput = (): string => log.mock.calls.map((call) => String(call[0])).join('\n');
+    const getOutput = (): string => getConsoleOutput(log);
 
     beforeEach(() =>
     {
@@ -143,7 +143,7 @@ describe('init command', () =>
             const output = getOutput();
             for (const file of ['package.json', 'intuiface.workspace.json', 'tsconfig.json', '.nvmrc', '.gitignore', 'eslint.config.mjs', 'webpack.config.cjs', '.vscode/settings.json'])
             {
-                expect(output, file).toMatch(new RegExp(`CREATE.* ${file.replace(/\./g, '\\.')} \\(\\d+ bytes\\)`));
+                expect(output, file).toMatch(new RegExp(`CREATE.* ${escapeRegExp(file)} \\(\\d+ bytes\\)`));
             }
             expect(output).not.toMatch(/UPDATE|SKIP|⚠/);
         });

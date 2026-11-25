@@ -2,6 +2,7 @@ import fs from 'fs-extra';
 import os from 'os';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { stripVTControlCharacters } from 'util';
 import { vi } from 'vitest';
 
 const helpersDir = path.dirname(fileURLToPath(import.meta.url));
@@ -61,6 +62,19 @@ export const useCwd = (dir: string): (() => void) =>
  * Silence `console.log` (CREATE/UPDATE lines) and return the spy to assert on the output.
  */
 export const silenceConsole = (): ReturnType<typeof vi.spyOn> => vi.spyOn(console, 'log').mockImplementation(() => undefined);
+
+/**
+ * Lines printed through a silenced `console.log`, without color codes.
+ * chalk colors the output when FORCE_COLOR is set, which Nx does on CI.
+ * @param spy spy returned by {@link silenceConsole}
+ */
+export const getConsoleOutput = (spy: ReturnType<typeof silenceConsole>): string =>
+    spy.mock.calls.map((call) => stripVTControlCharacters(String(call[0]))).join('\n');
+
+/**
+ * Escape every RegExp special character of `text`, backslash included, to match it literally.
+ */
+export const escapeRegExp = (text: string): string => text.replace(/[\\^$.*+?()[\]{}|/-]/g, '\\$&');
 
 /**
  * Make `process.exit` throw instead of stopping the test runner.

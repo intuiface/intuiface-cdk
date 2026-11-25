@@ -3,7 +3,7 @@ import path from 'path';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { addBindingConverter, addInterfaceAsset } from '../../src/commands/add.command.js';
 import { readWorkspaceConfig, writeWorkspaceConfig } from '../../src/services/workspace.service.js';
-import { createTempDir, removeTempDir, silenceConsole, useCwd, writeFiles } from '../helpers/test-utils.js';
+import { createTempDir, getConsoleOutput, removeTempDir, silenceConsole, useCwd, writeFiles } from '../helpers/test-utils.js';
 
 describe('add command', () =>
 {
@@ -58,7 +58,7 @@ describe('add command', () =>
         {
             addInterfaceAsset({ name: 'MyAsset', category: 'Tools' });
 
-            const output = consoleLog.mock.calls.map((call) => String(call[0])).join('\n');
+            const output = getConsoleOutput(consoleLog);
             expect(output).toMatch(/CREATE.*src\/interface-assets\/MyAsset\/MyAsset\.ts \(\d+ bytes\)/);
             expect(output).toMatch(/UPDATE.*intuiface\.workspace\.json/);
         });
