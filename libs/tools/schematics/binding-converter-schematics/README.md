@@ -14,6 +14,7 @@ This article explains the deprecation status and points to the CLI replacement f
 - [Prerequisites](#prerequisites)
 - [CLI replacement](#cli-replacement)
 - [Legacy usage (deprecated)](#legacy-usage-deprecated)
+- [Move an existing project to the CLI](#move-an-existing-project-to-the-cli)
 - [Help](#help)
 
 ## Prerequisites
@@ -23,14 +24,28 @@ This article explains the deprecation status and points to the CLI replacement f
 
 ## CLI replacement
 
-Use `intuiface-cli` to initialize and manage a workspace:
+Create new projects with the Intuiface CLI (`@intuiface/cli`). In a terminal, run these commands one at a time:
 
 ```bash
 mkdir my-intuiface-workspace
 cd my-intuiface-workspace
+npm install @intuiface/cli
+npx intuiface-cli init
+```
+
+- `mkdir` and `cd` create an empty folder for your project and go into it.
+- `npm install @intuiface/cli` installs the CLI in this folder. Do not skip it: `npx intuiface-cli` only works in a folder where the CLI is installed.
+- `init` asks for a name for the workspace and for your first item: choose `binding-converter` (or `2`) as its type, then give its name, category and optional icon. It creates the files and installs what the project needs.
+
+Write your binding converter in the `.ts` file `init` created, then build it with `npm run build`: the result goes to the `dist/` folder.
+
+To create the workspace without questions (for example in a script), replace `npx intuiface-cli init` with:
+
+```bash
 npx intuiface-cli init -n my-intuiface-workspace
+npm install
 npx intuiface-cli add binding-converter -n MyBindingConverter -c Custom
-npx intuiface-cli build --all
+npm run build
 ```
 
 CLI documentation: [/libs/cli/README.md](/libs/cli/README.md)
@@ -56,12 +71,18 @@ Develop your binding converter using the generated skeleton or read the document
 
 Then run `npm run build` to build for production or `npm run build:debug` to debug your binding converter.
 
-## Migrate project (<2.x) to use `intuiface-cli`
-Intuiface CDK v2.0.0 introduced [`intuiface-cli`](/libs/cli/README.md) to handle workspace initialization, item creation, and descriptor generation. You can migrate old projects with:
+## Move an existing project to the CLI
+
+A project created with these schematics can be turned into a CLI workspace: it keeps building as before, and you can add more binding converters or interface assets to it. Save a copy of the project (or commit it), then run in its folder:
 
 ```bash
+npm install @intuiface/cli@latest
 npx intuiface-cli migrate
+npm install
+npm run build
 ```
+
+Your code stays where it is. For what `migrate` changes, see [Migrate an existing project](/libs/cli/README.md#migrate-an-existing-project).
 
 ## Help
 

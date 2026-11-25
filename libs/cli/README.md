@@ -7,7 +7,7 @@ It can:
 - add new workspace items,
 - build one or all items,
 - generate Intuiface Descriptor (`*.ifd`) files,
-- migrate older (<2.x) projects.
+- migrate projects created with the schematics or an older CDK ([Migrate an existing project](#migrate-an-existing-project)).
 
 ## Quick Start
 
@@ -18,11 +18,13 @@ mkdir my-intuiface-workspace
 cd my-intuiface-workspace
 ```
 
-Install [`intuiface-cli`](./libs/cli/README.md):
+Install the CLI in this folder:
 
 ```bash
 npm install @intuiface/cli
 ```
+
+Do not skip this step: `npx intuiface-cli` only works in a folder where `@intuiface/cli` is installed.
 
 Initialize interactively:
 
@@ -49,6 +51,74 @@ Build all configured items:
 ```bash
 npm run build
 ```
+
+## What's in a workspace
+
+After `init` and the two `add` commands above, the folder looks like this:
+
+```text
+my-intuiface-workspace/
+├── intuiface.workspace.json       the list of your items (see below)
+├── package.json                   the build, build:debug and lint scripts
+├── webpack.config.cjs             optional build changes (see Customising webpack)
+├── tsconfig.json, eslint.config.mjs, .nvmrc, .gitignore, .vscode/
+├── src/
+│   ├── interface-assets/
+│   │   └── MyInterfaceAsset/
+│   │       └── MyInterfaceAsset.ts           the code of your interface asset
+│   └── binding-converters/
+│       └── MyBindingConverter/
+│           ├── MyBindingConverter.ts         the code of your binding converter
+│           └── icon_converter_32.png
+└── dist/                          created by the build
+    ├── MyInterfaceAsset/
+    └── MyBindingConverter/
+```
+
+You write your code in the `.ts` files of `src/`. The build puts each item in its own folder of `dist/`, with its descriptor (`.ifd`) file.
+
+### The workspace file: `intuiface.workspace.json`
+
+`init` creates this file and `add` adds each new item to it. `build` reads it to know what to build. You do not need to edit it, but you can, for example to change an icon.
+
+```json
+{
+  "version": 1,
+  "name": "my-intuiface-workspace",
+  "items": [
+    {
+      "name": "MyBindingConverter",
+      "type": "binding-converter",
+      "entry": "src/binding-converters/MyBindingConverter/MyBindingConverter.ts",
+      "icon": "src/binding-converters/MyBindingConverter/icon_converter_32.png"
+    },
+    {
+      "name": "MyInterfaceAsset",
+      "type": "interface-asset",
+      "entry": "src/interface-assets/MyInterfaceAsset/MyInterfaceAsset.ts",
+      "icon": "icon.png"
+    }
+  ]
+}
+```
+
+| Field | What it is |
+|---|---|
+| `version` | Version of the file format. Always `1`: do not change it. |
+| `name` | Name of the workspace, given to `init`. |
+| `items` | One entry per interface asset or binding converter. |
+| `items[].name` | Name of the item. Use it to build this item only (`build -n MyInterfaceAsset`). It is also the name of its folder in `dist/`. |
+| `items[].type` | `interface-asset` or `binding-converter`. |
+| `items[].entry` | The main `.ts` file of the item, relative to the workspace folder. |
+| `items[].icon` | Optional. The image displayed for the item in Composer, relative to the workspace folder. |
+
+Paths are relative to the workspace folder (the folder of `intuiface.workspace.json`) and use `/`.
+
+Common changes:
+
+- **Change or add an icon**: set `icon` to the path of the image. `build` stops with an error if there is no file at that path.
+- **Remove an item**: delete its entry from `items`, then delete its folder in `src/` (and in `dist/`).
+- **Change the category shown in Composer**: it is not in this file. Change `category` in the `@Asset` (interface asset) or `@Converter` (binding converter) part of the item's `.ts` file.
 
 ## Commands
 
@@ -171,45 +241,65 @@ To import Node.js modules (`fs`, `path`, ...) in TypeScript, the workspace `tsco
 A workspace does not use `webpack.config.js` or `webpack-debug.config.js`: `build` warns when it finds one. `migrate` moves their changes to `webpack.config.cjs`.
 
 ### `migrate`
-Migrate older projects to the CLI-based workflow.
+Turn an existing project, created with the schematics or with an older CDK, into a workspace. Run it in the project folder:
 
 ```bash
 npx intuiface-cli migrate
 ```
 
-`migrate` raises the build dependencies (`typescript`, `webpack`, `webpack-cli`, `ts-loader`) and `@intuiface/cli`/`@intuiface/core` when their version is lower than the one the workspace needs. A newer version is kept.
+See [Migrate an existing project](#migrate-an-existing-project) for the steps and what it changes.
 
-As TypeScript 6 no longer loads the `@types` packages by default, `migrate` adds `"types": ["node"]` to `tsconfig.json` when the project depends on `@types/node` and its `tsconfig.json` sets no `types`.
+## Migrate an existing project
 
-`migrate` replaces `webpack.config.js` and `webpack-debug.config.js` with `webpack.config.cjs` (see [Customising webpack](#customising-webpack)):
+Before the CLI workspaces, each project held a single interface asset or binding converter. `migrate` turns such a project into a workspace: you can then build it with the CLI, as before, and add more items to it.
 
-- What the schematics generated (entry, output, TypeScript loader, Module Federation) is dropped: the workspace generates it.
-- Every other change, such as `externals`, `target`, `resolve.fallback`, other plugins or loader rules, is copied with its comments into the function of `webpack.config.cjs`. The changes of `webpack-debug.config.js` only apply to debug builds (`if (debug)`).
-- The files are only read, never run. A file with a change that cannot be moved automatically (for example different `ModuleFederationPlugin` options, another `entry`, or a configuration exported as a function) is kept, and `migrate` lists what to move by hand. Delete it once done: until then, `build` warns that it is not used.
+It works with:
 
-#### Migration from v1.x
-For existing project created before the v2.x of the `intuiface-cdk`, you can migrate your project using this recommended migration flow:
+- a project created with the CDK 2.x schematics (`@intuiface/interface-asset` or `@intuiface/binding-converter`). Its `package.json` has a `build` script such as `npx intuiface-cli build -n MyInterfaceAsset`.
+- a project created with the CDK 1.x. It has a `src/index_ifd.ts` file.
 
-First, update `@intuiface/core` to use the latest version:
-```bash
-npm install @intuiface/core@latest
-```
-Then checks that your project still build or fix the breaking changes.
+A project with an `intuiface.workspace.json` file is already a workspace: there is nothing to migrate.
 
-Now, you can migrate your project to use the new `intuiface-cli`. Install it with the command:
-```bash
-npm install @intuiface/cli
-```
-then use the `migrate` command to automatically upgrade your project to be compatible with CLI:
-```bash
-npx intuiface-cli migrate
-```
+### Steps
 
-After migration, validate with:
+1. Save a copy of your project, or commit it if you use Git: `migrate` changes several files.
+2. Open a terminal in the project folder.
+3. CDK 1.x project only: update `@intuiface/core`, then check that the project still builds, and fix the breaking changes if it does not:
+   ```bash
+   npm install @intuiface/core@latest
+   npm run build
+   ```
+4. Install the latest CLI. An older version already in the project does not know how to migrate it:
+   ```bash
+   npm install @intuiface/cli@latest
+   ```
+5. Migrate, install the updated dependencies, and build:
+   ```bash
+   npx intuiface-cli migrate
+   npm install
+   npm run build
+   ```
 
-```bash
-npm run build
-```
+Your project is now a workspace. Add items with [`add`](#add), and `npm run build` builds all of them.
+
+### What `migrate` changes
+
+- **`intuiface.workspace.json`** is created with your item and its icon, if it has one (see [The workspace file](#the-workspace-file-intuifaceworkspacejson)). Your code is not moved: the item's `entry` is its current file, for example `src/MyInterfaceAsset.ts`. Items you add later go to `src/interface-assets/` and `src/binding-converters/`.
+- **`package.json`**: the `build` and `build:debug` scripts now build every item of the workspace. The build tools (`typescript`, `webpack`, `webpack-cli`, `ts-loader`), `@intuiface/cli` and `@intuiface/core` are raised to the versions the workspace needs. A newer version you already use is kept.
+- **`tsconfig.json`** is updated for TypeScript 6, the version the CLI uses. For example, `"types": ["node"]` is added when the project uses the Node.js types (`@types/node`), as TypeScript 6 no longer loads them by default.
+- **`webpack.config.js` and `webpack-debug.config.js`** are replaced with `webpack.config.cjs` (see [Customising webpack](#customising-webpack)):
+  - What the schematics generated (entry, output, TypeScript loader, Module Federation) is dropped: the workspace generates it.
+  - Every other change, such as `externals`, `target`, `resolve.fallback`, other plugins or loader rules, is copied with its comments into the function of `webpack.config.cjs`. The changes of `webpack-debug.config.js` only apply to debug builds (`if (debug)`).
+  - The files are only read, never run. A file with a change that cannot be moved automatically (for example different `ModuleFederationPlugin` options, another `entry`, or a configuration exported as a function) is kept, and `migrate` lists what to move by hand. Delete it once done: until then, `build` warns that it is not used.
+- **CDK 1.x projects only**: the files the 1.x build needed (`src/index_ifd.ts`, `src/index.js`, `tsconfig.ifd.json`) and the `dist/` folder are deleted.
+
+### If `migrate` fails
+
+`Could not detect project type for migration` means `migrate` did not recognise the project, usually because the `build` script of `package.json` was changed. Set it back to `npx intuiface-cli build -n MyInterfaceAsset` (with the name of your item, and `-t binding-converter` at the end for a binding converter), then run `migrate` again.
+
+### Not ready to migrate?
+
+A CDK 2.x project still builds without migrating, with `npm run build`. If `build` warns about TypeScript 6, it lists the changes to make in `tsconfig.json` to keep the project as it is, and the commands to migrate it instead.
 
 ## Help
 

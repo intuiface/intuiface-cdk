@@ -73,6 +73,10 @@ or a single item:
 npx intuiface-cli build -n MyInterfaceAsset
 ```
 
+### Existing projects
+
+A project created with the schematics or with an older CDK can be turned into a workspace with `npx intuiface-cli migrate`: see [Migrate an existing project](./libs/cli/README.md#migrate-an-existing-project).
+
 ### Additional references
 
 - More information about specific development syntax, API/decorator reference: [Intuiface Core](./libs/core/README.md)
