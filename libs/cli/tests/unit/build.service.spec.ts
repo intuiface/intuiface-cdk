@@ -168,6 +168,30 @@ describe('build.service', () =>
             expect(globalThisAny.window.location.href).toBe('https://web.intuiface.com/');
             expect(globalThisAny.window.document).toBeDefined();
         });
+
+        it('gives each item the globals of its own window', async () =>
+        {
+            const nodeSetTimeout = globalThisAny.setTimeout;
+            const nodeConsole = globalThisAny.console;
+            const target: BuildTarget = { name: 'Next', buildType: 'interface-asset', entryFile: '', outputDir: '', useGeneratedWebpackConfig: true };
+
+            await resetBuildMetadata(target);
+            const firstWindow = globalThisAny.window;
+            globalThisAny.document.body.innerHTML = '<div id="previous"></div>';
+            globalThisAny.localStorage.setItem('previous', 'item');
+
+            await resetBuildMetadata(target);
+
+            expect(globalThisAny.window === firstWindow).toBe(false);
+            expect(globalThisAny.document).toBe(globalThisAny.window.document);
+            expect(globalThisAny.self).toBe(globalThisAny.window);
+            expect(globalThisAny.location).toBe(globalThisAny.window.location);
+            expect(globalThisAny.document.createElement('div')).toBeInstanceOf(globalThisAny.window.HTMLElement);
+            expect(globalThisAny.document.getElementById('previous')).toBeNull();
+            expect(globalThisAny.localStorage.getItem('previous')).toBeNull();
+            expect(globalThisAny.setTimeout).toBe(nodeSetTimeout);
+            expect(globalThisAny.console).toBe(nodeConsole);
+        });
     });
 
     describe('transpileTypeScript', () =>

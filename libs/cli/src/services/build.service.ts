@@ -25,6 +25,16 @@ export function cleanBuildFolders(dir: string, outputDir: string | undefined): v
     }
 }
 
+/** Globals copied from a JSDOM window: the next build replaces them with those of its own window. */
+const jsdomGlobalKeys = new Set<string>();
+
+/**
+ * Reset the globals of the build: the metadata the decorators fill, and a browser-like environment (a new JSDOM).
+ *
+ * The item is loaded in this process: `build --all` calls this before each item, so that no item sees the metadata
+ * or the DOM of the previous one.
+ * @param target item to build
+ */
 // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
 export async function resetBuildMetadata(target: BuildTarget): Promise<void>
 {
@@ -43,12 +53,16 @@ export async function resetBuildMetadata(target: BuildTarget): Promise<void>
     globalThisAny.iaDescription = undefined;
     globalThisAny.iaCategory = undefined;
 
-    globalThisAny.window = new JSDOM('', { url: 'https://web.intuiface.com/' }).window;
-    for (const key in globalThisAny.window)
+    // The previous window is not closed: a module of the previous item kept in the import cache may still use it.
+    const jsdomWindow = new JSDOM('', { url: 'https://web.intuiface.com/' }).window;
+    globalThisAny.window = jsdomWindow;
+    for (const key in jsdomWindow)
     {
-        if (Object.prototype.hasOwnProperty.call(globalThisAny.window, key) && globalThisAny[key] === undefined)
+        // Node.js globals (console, setTimeout, crypto, ...) are kept; the globals of the previous window are replaced.
+        if (Object.prototype.hasOwnProperty.call(jsdomWindow, key) && (jsdomGlobalKeys.has(key) || globalThisAny[key] === undefined))
         {
-            globalThisAny[key] = globalThisAny.window[key];
+            globalThisAny[key] = jsdomWindow[key];
+            jsdomGlobalKeys.add(key);
         }
     }
 }
