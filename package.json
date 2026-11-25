@@ -48,6 +48,7 @@
         "@angular/cli": "^22.1.2",
         "@angular/compiler-cli": "^22.1.0",
         "@angular/language-service": "^22.1.0",
+        "@module-federation/runtime": "2.9.2",
         "@nx/angular": "23.1.1",
         "@nx/esbuild": "23.1.1",
         "@nx/eslint": "23.1.1",

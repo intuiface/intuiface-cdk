@@ -3,6 +3,7 @@ import path from 'path';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { cliRoot, fixturesDir } from '../helpers/test-utils.js';
 import { assertBuiltPackages, CliResult, createE2EDir, readIfd, removeE2EDir, runCli, runCliOrThrow, withoutVersion } from './e2e-utils.js';
+import { openPlayerHost, PlayerHost, PlayerHostLoad } from './player-host.js';
 
 const converterIconTemplate = path.join(cliRoot, 'src', 'templates', 'workspace-items', 'binding-converter', 'icon_converter_32.png');
 
@@ -232,6 +233,89 @@ describe('workspace build (init → add → build --all)', () =>
             expect(readIfd(dir, 'Thermostat')['if.category']).toBe('Home');
             expect(readIfd(dir, 'TextConverters')['if.category']).toBe('Text');
             expect(fs.existsSync(path.join(dir, 'dist', 'shared'))).toBe(false);
+        });
+    });
+
+    /**
+     * The built items, loaded as the Intuiface Player loads them: with its Module Federation runtime, and the
+     * @intuiface/core the host shares (see player-host/player-host.mjs). Only the Player itself can check its own core.
+     */
+    describe('in a Player-like host', () =>
+    {
+        const names = ['Gauge', 'TextConverters', 'TextTools', 'Thermostat'];
+        let host: PlayerHost;
+        let loaded: PlayerHostLoad;
+
+        beforeAll(async () =>
+        {
+            host = await openPlayerHost(dir);
+            loaded = await host.loadItems(names);
+        });
+
+        afterAll(async () =>
+        {
+            await host?.close();
+        });
+
+        it('loads every item from its remote entry, <name>.js', () =>
+        {
+            for (const name of names)
+            {
+                expect(host.requestedPaths).toContain(`/dist/${name}/${name}.js`);
+                expect(typeof loaded.modules[name][name], name).toBe('function');
+            }
+            expect(host.errors).toEqual([]);
+        });
+
+        it('uses the @intuiface/core of the host, never the copy each item carries in case the host has none', () =>
+        {
+            expect(loaded.usedExports).toEqual(expect.arrayContaining(['Asset', 'Property', 'Action', 'Trigger', 'Parameter', 'Converter', 'IntuifaceElement']));
+            for (const name of names)
+            {
+                const coreChunks = fs.readdirSync(path.join(dir, 'dist', name))
+                    .filter((file) => file.endsWith('.js') && fs.readFileSync(path.join(dir, 'dist', name, file), 'utf8').includes('intuiface_ifd_classes'));
+
+                expect(coreChunks.length, `${name}: chunk with the copy of the core`).toBeGreaterThan(0);
+                for (const chunk of coreChunks)
+                {
+                    expect(host.requestedPaths, `${name}: ${chunk} must not be loaded`).not.toContain(`/dist/${name}/${chunk}`);
+                }
+            }
+        });
+
+        it('runs the items with the classes of the host core', () =>
+        {
+            const gauge = new loaded.modules.Gauge.Gauge();
+            expect(gauge).toBeInstanceOf(loaded.core.IntuifaceElement);
+            gauge.actionExample(7);
+            expect(gauge.propertyExample).toBe(7);
+
+            // Relative import, and module shared with TextConverters
+            const thermostat = new loaded.modules.Thermostat.Thermostat();
+            thermostat.setTarget(5, 'C');
+            expect(thermostat.displayText).toBe('5°C');
+
+            expect(loaded.modules.TextConverters.TextConverters.toUpper('abc')).toBe('ABC');
+            expect(loaded.modules.TextTools.TextTools.textTools(42)).toBe('42');
+        });
+
+        it('declares triggers whose parameters the Player can read', () =>
+        {
+            // The Player reads the parameter names of a trigger in its source, `(a, b) {`, and maps them by position
+            // to the parameters of the descriptor (`@Parameter` names)
+            for (const name of ['Gauge', 'Thermostat'])
+            {
+                const events: Record<string, { properties?: object }> = readIfd(dir, name).resources[name].events;
+                for (const [trigger, event] of Object.entries(events))
+                {
+                    const source: string = loaded.modules[name][name].prototype[trigger].toString();
+                    const parameters = source.substring(source.indexOf('(') + 1, source.indexOf(')')).split(',')
+                        .map((parameter) => parameter.trim())
+                        .filter((parameter) => parameter !== '');
+
+                    expect(parameters.length, `${name}.${trigger}`).toBe(Object.keys(event.properties ?? {}).length);
+                }
+            }
         });
     });
 
