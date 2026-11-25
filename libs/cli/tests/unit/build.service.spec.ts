@@ -6,8 +6,8 @@ import {
     cleanBuildFolders,
     resetBuildMetadata,
     resolveBuildIcon,
-    resolveTranspiledEntryPath,
     transpileTypeScript,
+    TypeScriptCompilationError,
     writeGeneratedWebpackConfig
 } from '../../src/services/build.service.js';
 import { buildWorkspaceTsConfig } from '../../src/services/generator.service.js';
@@ -172,22 +172,42 @@ describe('build.service', () =>
 
     describe('transpileTypeScript', () =>
     {
+        /** Compile an item of the folder: tsconfig.json and the entry are relative to it, the JavaScript goes to tmp/. */
+        const transpile = (entryFile: string, spinner = createSpinner()): string | undefined =>
+            transpileTypeScript(path.join(dir, 'tsconfig.json'), path.join(dir, entryFile), path.join(dir, 'tmp'), spinner);
+
+        const failMessages = (spinner: ReturnType<typeof createSpinner>): string[] => spinner.fail.mock.calls.map((call) => String(call[0] ?? ''));
+
         beforeEach(() =>
         {
             writeFiles(dir, { 'tsconfig.json': workspaceTsConfig() });
         });
 
-        it('transpiles the workspace into the output folder, keeping the src/ layout', () =>
+        it('compiles the item into the output folder, keeping the src/ layout, and returns its entry', () =>
+        {
+            writeFiles(dir, {
+                'src/interface-assets/Alpha/Alpha.ts': `import { format } from './format';\nexport const alpha = (): string => format(1);\n`,
+                'src/interface-assets/Alpha/format.ts': `export const format = (value: number): string => \`\${value}\`;\n`,
+                'src/binding-converters/Beta/Beta.ts': `export const beta = (): number => 2;\n`
+            });
+
+            const entryPath = transpile('src/interface-assets/Alpha/Alpha.ts');
+
+            expect(entryPath).toBe(path.join(dir, 'tmp', 'interface-assets', 'Alpha', 'Alpha.js'));
+            expect(fs.existsSync(path.join(dir, 'tmp', 'interface-assets', 'Alpha', 'Alpha.js'))).toBe(true);
+            expect(fs.existsSync(path.join(dir, 'tmp', 'interface-assets', 'Alpha', 'format.js'))).toBe(true);
+        });
+
+        it('only emits the files of the item (review O2)', () =>
         {
             writeFiles(dir, {
                 'src/interface-assets/Alpha/Alpha.ts': `export const alpha = (): number => 1;\n`,
                 'src/binding-converters/Beta/Beta.ts': `export const beta = (): number => 2;\n`
             });
 
-            transpileTypeScript(path.join(dir, 'tsconfig.json'), path.join(dir, 'tmp'), createSpinner());
+            transpile('src/interface-assets/Alpha/Alpha.ts');
 
-            expect(fs.existsSync(path.join(dir, 'tmp', 'interface-assets', 'Alpha', 'Alpha.js'))).toBe(true);
-            expect(fs.existsSync(path.join(dir, 'tmp', 'binding-converters', 'Beta', 'Beta.js'))).toBe(true);
+            expect(fs.existsSync(path.join(dir, 'tmp', 'binding-converters'))).toBe(false);
         });
 
         it('adds the .js extension to relative imports and exports (required by Node.js ESM)', () =>
@@ -212,7 +232,7 @@ describe('build.service', () =>
             tsconfig.compilerOptions.resolveJsonModule = true;
             writeFiles(dir, { 'tsconfig.json': tsconfig });
 
-            transpileTypeScript(path.join(dir, 'tsconfig.json'), path.join(dir, 'tmp'), createSpinner());
+            transpile('src/interface-assets/Alpha/Alpha.ts');
 
             const output = fs.readFileSync(path.join(dir, 'tmp', 'interface-assets', 'Alpha', 'Alpha.js'), 'utf8');
             expect(output).toMatch(/import \{ helper \} from ["']\.\/helper\.js["']/);
@@ -222,6 +242,9 @@ describe('build.service', () =>
             expect(output).toMatch(/import data from ["']\.\/data\.json["']/);
             expect(output).toMatch(/export \* from ["']\.\/helper\.js["']/);
             expect(output).toMatch(/export \{ shared as reexported \} from ["']\.\.\/\.\.\/shared\/shared\.js["']/);
+            // The imported files are emitted too, wherever they are
+            expect(fs.existsSync(path.join(dir, 'tmp', 'shared', 'shared.js'))).toBe(true);
+            expect(fs.existsSync(path.join(dir, 'tmp', 'interface-assets', 'Alpha', 'data.json'))).toBe(true);
         });
 
         it('leaves package imports unchanged', () =>
@@ -237,7 +260,7 @@ describe('build.service', () =>
             const spinner = createSpinner();
             try
             {
-                transpileTypeScript(path.join(dir, 'tsconfig.json'), path.join(dir, 'tmp'), spinner);
+                transpile('src/Alpha.ts', spinner);
             }
             catch (_error)
             {
@@ -252,57 +275,175 @@ describe('build.service', () =>
             writeFiles(dir, { 'src/Alpha.ts': `export const alpha: number = 'not a number';\n` });
             const spinner = createSpinner();
 
-            expect(() => transpileTypeScript(path.join(dir, 'tsconfig.json'), path.join(dir, 'tmp'), spinner)).toThrow('TypeScript compilation failed.');
+            expect(() => transpile('src/Alpha.ts', spinner)).toThrow('TypeScript compilation failed.');
 
-            const messages = spinner.fail.mock.calls.map((call) => String(call[0] ?? ''));
-            expect(messages.some((message) => /Alpha\.ts \(1,14\): Type 'string' is not assignable to type 'number'\./.test(message))).toBe(true);
+            expect(failMessages(spinner).some((message) => /Alpha\.ts \(1,14\): Type 'string' is not assignable to type 'number'\./.test(message))).toBe(true);
             expect(spinner.indent).toBe(0);
         });
 
-        it('fails when an error in another item breaks the workspace (one program for all items)', () =>
+        it('compiles an item while another item of the workspace has an error (review O2)', () =>
         {
             writeFiles(dir, {
                 'src/interface-assets/Alpha/Alpha.ts': `export const alpha = 1;\n`,
                 'src/interface-assets/Broken/Broken.ts': `export const broken: number = '';\n`
             });
+            const alphaSpinner = createSpinner();
+            const brokenSpinner = createSpinner();
 
-            expect(() => transpileTypeScript(path.join(dir, 'tsconfig.json'), path.join(dir, 'tmp'), createSpinner())).toThrow('TypeScript compilation failed.');
+            expect(transpile('src/interface-assets/Alpha/Alpha.ts', alphaSpinner)).toBe(path.join(dir, 'tmp', 'interface-assets', 'Alpha', 'Alpha.js'));
+            expect(alphaSpinner.fail).not.toHaveBeenCalled();
+
+            expect(() => transpile('src/interface-assets/Broken/Broken.ts', brokenSpinner)).toThrow('TypeScript compilation failed.');
+            expect(failMessages(brokenSpinner).some((message) => message.includes('Broken.ts (1,14)'))).toBe(true);
+        });
+
+        it('fails for an error in a file the item imports', () =>
+        {
+            writeFiles(dir, {
+                'src/interface-assets/Alpha/Alpha.ts': `import { shared } from '../../shared/shared';\nexport const alpha = shared;\n`,
+                'src/shared/shared.ts': `export const shared: number = '';\n`
+            });
+            const spinner = createSpinner();
+
+            expect(() => transpile('src/interface-assets/Alpha/Alpha.ts', spinner)).toThrow('TypeScript compilation failed.');
+            expect(failMessages(spinner).some((message) => message.includes('shared.ts (1,14)'))).toBe(true);
+        });
+
+        it('checks the item with the declarations of every file of tsconfig.json, as tsc does', () =>
+        {
+            writeFiles(dir, {
+                // Not imported by the item: declares a global type, as a .d.ts file would
+                'src/shared/globals.ts': `declare global\n{\n    const workspaceAnswer: number;\n}\nexport {};\n`,
+                'src/interface-assets/Alpha/Alpha.ts': `export const alpha: number = workspaceAnswer + 1;\n`
+            });
+
+            expect(transpile('src/interface-assets/Alpha/Alpha.ts')).toBe(path.join(dir, 'tmp', 'interface-assets', 'Alpha', 'Alpha.js'));
+            expect(fs.existsSync(path.join(dir, 'tmp', 'shared'))).toBe(false);
+        });
+
+        it('returns no entry when it is not compiled: missing, or not included by tsconfig.json', () =>
+        {
+            writeFiles(dir, {
+                'src/interface-assets/Alpha/Alpha.ts': `export const alpha = 1;\n`,
+                'items/Outside/Outside.ts': `export const outside = 1;\n`
+            });
+
+            expect(transpile('src/interface-assets/Missing/Missing.ts')).toBeUndefined();
+            expect(transpile('items/Outside/Outside.ts')).toBeUndefined();
+            expect(fs.existsSync(path.join(dir, 'tmp'))).toBe(false);
         });
 
         it('reports an invalid tsconfig.json', () =>
         {
-            expect(() => transpileTypeScript(path.join(dir, 'missing-tsconfig.json'), path.join(dir, 'tmp'), createSpinner()))
+            expect(() => transpileTypeScript(path.join(dir, 'missing-tsconfig.json'), path.join(dir, 'src', 'Alpha.ts'), path.join(dir, 'tmp'), createSpinner()))
                 .toThrow(/^Error reading tsconfig\.json:/);
         });
-    });
 
-    describe('resolveTranspiledEntryPath', () =>
-    {
-        it('maps a workspace entry under src/ to tmp/', () =>
+        describe('returns the entry wherever tsconfig.json puts it (review O10)', () =>
         {
-            writeFiles(dir, { 'tmp/interface-assets/Alpha/Alpha.js': '' });
+            beforeEach(() =>
+            {
+                writeFiles(dir, {
+                    'src/interface-assets/Alpha/Alpha.ts': `import { format } from './format';\nexport const alpha = format;\n`,
+                    'src/interface-assets/Alpha/format.ts': `export const format = 'format';\n`,
+                    'src/interface-assets/Beta/Beta.ts': `export const beta = 2;\n`
+                });
+            });
 
-            expect(resolveTranspiledEntryPath('src/interface-assets/Alpha/Alpha.ts')).toBe(path.join(dir, 'tmp', 'interface-assets', 'Alpha', 'Alpha.js'));
+            it('rootDir "." keeps src/ in the output', () =>
+            {
+                const tsconfig = workspaceTsConfig();
+                tsconfig.compilerOptions.rootDir = '.';
+                writeFiles(dir, { 'tsconfig.json': tsconfig });
+
+                const entryPath = transpile('src/interface-assets/Alpha/Alpha.ts');
+
+                expect(entryPath).toBe(path.join(dir, 'tmp', 'src', 'interface-assets', 'Alpha', 'Alpha.js'));
+                expect(fs.existsSync(String(entryPath))).toBe(true);
+            });
+
+            it('without rootDir, TypeScript takes the folder common to the tsconfig.json files', () =>
+            {
+                const tsconfig = workspaceTsConfig();
+                delete tsconfig.compilerOptions.rootDir;
+                writeFiles(dir, { 'tsconfig.json': tsconfig });
+
+                const entryPath = transpile('src/interface-assets/Alpha/Alpha.ts');
+
+                // src/interface-assets/ is common to Alpha and Beta
+                expect(entryPath).toBe(path.join(dir, 'tmp', 'Alpha', 'Alpha.js'));
+                expect(fs.existsSync(String(entryPath))).toBe(true);
+            });
         });
 
-        it('maps a legacy entry src/<name>.ts to tmp/<name>.js', () =>
+        describe('2.x projects (built outside a workspace)', () =>
         {
-            expect(resolveTranspiledEntryPath('src/Alpha.ts')).toBe(path.join(dir, 'tmp', 'Alpha.js'));
-        });
+            /** tsconfig.json written by the 2.x schematics (rootDir "./src" since 2.3). */
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            const schematicTsConfig = (schematic: 'interface-asset' | 'binding-converter'): Record<string, any> =>
+            {
+                const tsconfigPath = path.join(repoRoot, 'libs', 'tools', 'schematics', `${schematic}-schematics`, 'src', 'create', 'files', 'tsconfig.json');
+                return JSON.parse(fs.readFileSync(tsconfigPath, 'utf8').replace(/<%= \w+ %>/g, 'Legacy'));
+            };
 
-        it('falls back to tmp/<file name>.js when TypeScript flattened the output', () =>
-        {
-            writeFiles(dir, { 'tmp/Alpha.js': '' });
+            beforeEach(() =>
+            {
+                writeFiles(dir, {
+                    'src/Legacy.ts': `import { format } from './utils/format';\nexport const legacy = format(1);\n`,
+                    'src/utils/format.ts': `export const format = (value: number): string => String(value);\n`
+                });
+            });
 
-            expect(resolveTranspiledEntryPath('src/interface-assets/Alpha/Alpha.ts')).toBe(path.join(dir, 'tmp', 'Alpha.js'));
-        });
+            it.each(['interface-asset', 'binding-converter'] as const)('emits src/<name>.ts to tmp/<name>.js with the %s schematic tsconfig', (schematic) =>
+            {
+                writeFiles(dir, { 'tsconfig.json': schematicTsConfig(schematic) });
 
-        // Known limitation O10 (PR #119 review): a tsconfig with `rootDir: "."` emits tmp/src/<entry>.js.
-        it.fails('finds the entry emitted with rootDir "."', () =>
-        {
-            writeFiles(dir, { 'tmp/src/interface-assets/Alpha/Alpha.js': '' });
+                expect(transpile('src/Legacy.ts')).toBe(path.join(dir, 'tmp', 'Legacy.js'));
+                expect(fs.existsSync(path.join(dir, 'tmp', 'utils', 'format.js'))).toBe(true);
+            });
 
-            expect(resolveTranspiledEntryPath('src/interface-assets/Alpha/Alpha.ts')).toBe(path.join(dir, 'tmp', 'src', 'interface-assets', 'Alpha', 'Alpha.js'));
+            it('tells a tsconfig.json created before 2.3, with options TypeScript 6 deprecates, from an error of the code', () =>
+            {
+                const compileError = (): unknown =>
+                {
+                    try
+                    {
+                        transpile('src/Legacy.ts');
+                        return undefined;
+                    }
+                    catch (error)
+                    {
+                        return error;
+                    }
+                };
+                const tsconfig = schematicTsConfig('interface-asset');
+                delete tsconfig.compilerOptions.rootDir;
+                Object.assign(tsconfig.compilerOptions, { moduleResolution: 'node', downlevelIteration: true });
+                writeFiles(dir, { 'tsconfig.json': tsconfig });
+
+                const configurationError = compileError();
+
+                expect(configurationError).toBeInstanceOf(TypeScriptCompilationError);
+                expect((configurationError as TypeScriptCompilationError).isTypeScript6ConfigurationError).toBe(true);
+
+                writeFiles(dir, { 'tsconfig.json': schematicTsConfig('interface-asset'), 'src/Legacy.ts': `export const legacy: number = '';\n` });
+
+                const codeError = compileError();
+
+                expect(codeError).toBeInstanceOf(TypeScriptCompilationError);
+                expect((codeError as TypeScriptCompilationError).isTypeScript6ConfigurationError).toBe(false);
+            });
+
+            it('emits src/<name>.ts to tmp/<name>.js without rootDir (schematics before 2.3), with no TypeScript 6 rootDir error', () =>
+            {
+                const tsconfig = schematicTsConfig('interface-asset');
+                delete tsconfig.compilerOptions.rootDir;
+                writeFiles(dir, { 'tsconfig.json': tsconfig });
+                const spinner = createSpinner();
+
+                expect(transpile('src/Legacy.ts', spinner)).toBe(path.join(dir, 'tmp', 'Legacy.js'));
+                expect(spinner.fail).not.toHaveBeenCalled();
+            });
         });
     });
 
@@ -357,7 +498,7 @@ describe('build.service', () =>
             expect(config.devtool).toBeUndefined();
             expect(config.entry).toBe(entryPath);
             expect(config.output).toEqual({ publicPath: 'auto', path: path.resolve(dir, 'dist', 'Alpha') });
-            expect(config.module.rules[0]).toMatchObject({ use: 'ts-loader', exclude: /node_modules/ });
+            expect(config.module.rules[0]).toMatchObject({ use: { loader: 'ts-loader' }, exclude: /node_modules/ });
             expect(config.module.rules[0].test.test('Alpha.ts')).toBe(true);
             expect(config.plugins).toHaveLength(1);
             expect(config.plugins[0].options).toEqual({
@@ -366,6 +507,19 @@ describe('build.service', () =>
                 exposes: { './Alpha': { import: entryPath, name: 'Alpha.module' } },
                 shared: { '@intuiface/core': { singleton: true, strictVersion: false } }
             });
+        });
+
+        it('lets ts-loader only transpile, without decorator metadata, as the CLI has type-checked the item (review O2)', () =>
+        {
+            for (const debug of [false, true])
+            {
+                const config = loadWebpackConfig(writeGeneratedWebpackConfig(target, dir, path.join(dir, 'tmp'), { debug }));
+
+                expect(config.module.rules[0].use).toEqual({
+                    loader: 'ts-loader',
+                    options: { transpileOnly: true, compilerOptions: { emitDecoratorMetadata: false } }
+                });
+            }
         });
 
         it('writes a debug config with inline source maps', () =>

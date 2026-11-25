@@ -4,29 +4,106 @@ import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { repoRoot } from '../helpers/test-utils.js';
 import { assertBuiltPackages, createE2EDir, readIfd, removeE2EDir, runCli, withoutVersion } from './e2e-utils.js';
 
-const bindingConverterSchematicFiles = path.join(repoRoot, 'libs', 'tools', 'schematics', 'binding-converter-schematics', 'src', 'create', 'files');
+type Schematic = 'binding-converter' | 'interface-asset';
 
 /**
- * Create a project as the 2.x binding-converter schematic does (EJS placeholders rendered by hand).
+ * Create a project as the 2.x binding-converter or interface-asset schematic does (EJS placeholders rendered by hand).
  */
-const scaffoldSchematicProject = (dir: string, name: string, category: string): void =>
+const scaffoldSchematicProject = (dir: string, name: string, category: string, schematic: Schematic = 'binding-converter'): void =>
 {
+    const schematicFiles = path.join(repoRoot, 'libs', 'tools', 'schematics', `${schematic}-schematics`, 'src', 'create', 'files');
     const render = (text: string): string => text
         .replace(/<%= camelize\(bindingConverterName\) %>/g, `${name.charAt(0).toLowerCase()}${name.slice(1)}`)
-        .replace(/<%= bindingConverterName %>/g, name)
-        .replace(/<%= bindingConverterCategory %>/g, category);
+        .replace(/<%= (bindingConverterName|IAName) %>/g, name)
+        .replace(/<%= (bindingConverterCategory|IACategory) %>/g, category);
 
     for (const file of ['package.json', 'tsconfig.json', 'webpack.config.js', 'webpack-debug.config.js'])
     {
-        fs.writeFileSync(path.join(dir, file), render(fs.readFileSync(path.join(bindingConverterSchematicFiles, file), 'utf8')));
+        fs.writeFileSync(path.join(dir, file), render(fs.readFileSync(path.join(schematicFiles, file), 'utf8')));
     }
     fs.ensureDirSync(path.join(dir, 'src'));
     fs.writeFileSync(
         path.join(dir, 'src', `${name}.ts`),
-        render(fs.readFileSync(path.join(bindingConverterSchematicFiles, 'src', '__bindingConverterName__.ts'), 'utf8'))
+        render(fs.readFileSync(path.join(schematicFiles, 'src', schematic === 'binding-converter' ? '__bindingConverterName__.ts' : '__IAName__.ts'), 'utf8'))
     );
-    fs.copySync(path.join(bindingConverterSchematicFiles, 'icon_converter_32.png'), path.join(dir, 'icon_converter_32.png'));
+    if (schematic === 'binding-converter')
+    {
+        fs.copySync(path.join(schematicFiles, 'icon_converter_32.png'), path.join(dir, 'icon_converter_32.png'));
+    }
 };
+
+/**
+ * A 2.x interface asset project built without migrating: `build -n <name>` compiles it with the CLI TypeScript
+ * (tmp/<name>.js, for the descriptor), and bundles it with the project webpack.config.js (review O2, O10).
+ */
+describe('2.x interface asset project', () =>
+{
+    let dir: string;
+
+    beforeAll(() =>
+    {
+        assertBuiltPackages();
+        dir = createE2EDir('legacy-asset');
+        scaffoldSchematicProject(dir, 'LegacyAsset', 'Legacy Assets', 'interface-asset');
+
+        // The entry imports a file of a sub folder, emitted next to it in tmp/
+        fs.outputFileSync(path.join(dir, 'src', 'utils', 'defaults.ts'), 'export const DEFAULT_EXAMPLE = 5;\n');
+        const entryPath = path.join(dir, 'src', 'LegacyAsset.ts');
+        const entry = fs.readFileSync(entryPath, 'utf8');
+        fs.writeFileSync(entryPath, `import { DEFAULT_EXAMPLE } from './utils/defaults';\n${entry.replace('defaultValue: 0,', 'defaultValue: DEFAULT_EXAMPLE,')}`);
+    });
+
+    afterAll(() =>
+    {
+        removeE2EDir(dir);
+    });
+
+    it('builds without migrating (legacy mode, project webpack config)', () =>
+    {
+        const result = runCli(dir, 'build', '-n', 'LegacyAsset');
+
+        expect(result.status, result.output).toBe(0);
+        expect(result.output).not.toContain('webpack.config.cjs');
+        const ifd = readIfd(dir, 'LegacyAsset');
+        expect(ifd).toMatchObject({
+            'name': 'LegacyAsset',
+            'if.category': 'Legacy Assets',
+            'if.dependencies': ['LegacyAsset.js', 'LegacyAsset.module.js']
+        });
+        expect(ifd.schemas.LegacyAsset.properties.propertyExample).toMatchObject({ type: 'number', default: 5 });
+        expect(ifd.resources.LegacyAsset.methods.actionExample.id).toBe('LegacyAsset.actionExample');
+        expect(fs.existsSync(path.join(dir, 'dist', 'LegacyAsset', 'LegacyAsset.js'))).toBe(true);
+        expect(fs.existsSync(path.join(dir, 'tmp'))).toBe(false);
+    });
+
+    it('builds in debug mode with webpack-debug.config.js', () =>
+    {
+        const result = runCli(dir, 'build', '-n', 'LegacyAsset', '--debug');
+
+        expect(result.status, result.output).toBe(0);
+        const remoteEntry = fs.readFileSync(path.join(dir, 'dist', 'LegacyAsset', 'LegacyAsset.js'), 'utf8');
+        expect(remoteEntry).toContain('sourceMappingURL=data:application/json');
+    });
+
+    it('still type-checks the whole project with the ts-loader of webpack.config.js', () =>
+    {
+        const unusedPath = path.join(dir, 'src', 'unused.ts');
+        fs.writeFileSync(unusedPath, `export const unused: number = 'not a number';\n`);
+        try
+        {
+            const result = runCli(dir, 'build', '-n', 'LegacyAsset');
+
+            // The CLI compiles the item only; the project ts-loader, left as is, reports the error
+            expect(result.status).not.toBe(0);
+            expect(result.output).toContain('TypeScript compiled.');
+            expect(result.output).toMatch(/unused\.ts[\s\S]*Type 'string' is not assignable to type 'number'/);
+        }
+        finally
+        {
+            fs.removeSync(unusedPath);
+        }
+    });
+});
 
 describe('2.x binding converter project', () =>
 {
@@ -96,11 +173,21 @@ describe('2.x binding converter project', () =>
 });
 
 /**
- * A 2.x project whose webpack.config.js keeps a Node.js module out of the bundle (review O1).
+ * A 2.x project created before 2.3 (tsconfig.json for TypeScript 5), whose webpack.config.js keeps a Node.js module
+ * out of the bundle (review O1).
  */
-describe('2.x project with externals in webpack.config.js', () =>
+describe('2.x project with externals in webpack.config.js, created before 2.3', () =>
 {
     let dir: string;
+    let tsconfigBefore23: string;
+
+    /** Changes of tsconfig.json the build lists to compile with TypeScript 6. */
+    const tsconfigChanges = [
+        'add "rootDir": "./src"',
+        'replace "moduleResolution": "node" with "moduleResolution": "bundler"',
+        'remove "downlevelIteration"',
+        'add "types": ["node"]'
+    ];
 
     /** Built JavaScript of an item, all chunks together. */
     const readBundle = (name: string): string => fs.readdirSync(path.join(dir, 'dist', name))
@@ -123,6 +210,14 @@ describe('2.x project with externals in webpack.config.js', () =>
         const sourcePath = path.join(dir, 'src', 'FileConverter.ts');
         const source = fs.readFileSync(sourcePath, 'utf8');
         fs.writeFileSync(sourcePath, `import fs from 'fs';\n${source.replace(/return .*;/, `return fs.existsSync(String(input)) ? 'yes' : 'no';`)}`);
+
+        // tsconfig.json of the schematics before 2.3
+        const tsconfigPath = path.join(dir, 'tsconfig.json');
+        const tsconfig = fs.readJsonSync(tsconfigPath);
+        delete tsconfig.compilerOptions.rootDir;
+        Object.assign(tsconfig.compilerOptions, { moduleResolution: 'node', downlevelIteration: true });
+        tsconfigBefore23 = `${JSON.stringify(tsconfig, null, 2)}\n`;
+        fs.writeFileSync(tsconfigPath, tsconfigBefore23);
     });
 
     afterAll(() =>
@@ -130,13 +225,45 @@ describe('2.x project with externals in webpack.config.js', () =>
         removeE2EDir(dir);
     });
 
-    it('does not compile with TypeScript 6 before migrating: @types/node is no longer loaded by default', () =>
+    it('does not compile with the TypeScript 6 of the CLI, which invites to migrate or lists the tsconfig.json changes', () =>
     {
-        // A real 2.x project still builds with its TypeScript 5. These tests run with the TypeScript 6 that migrate installs.
         const result = runCli(dir, 'build', '-n', 'FileConverter', '-t', 'binding-converter');
 
         expect(result.status).not.toBe(0);
+        // TypeScript 6 deprecates options, and no longer loads @types/node by default
+        expect(result.output).toContain(`Option 'downlevelIteration' is deprecated`);
         expect(result.output).toContain(`Cannot find name 'fs'`);
+        expect(result.output).toContain('This project was created with an older version of the Intuiface CDK.');
+        // The commands to migrate, each on its own line
+        expect(result.output).toMatch(/run these commands one after the other:\n\n {6}npx intuiface-cli migrate\n {6}npm install\n {6}npm run build\n/);
+        expect(result.output).toContain('Or, to keep the project as it is, make these changes in tsconfig.json, then run the build again:');
+        for (const change of tsconfigChanges)
+        {
+            expect(result.output).toContain(`      - ${change}\n`);
+        }
+        expect(result.output).not.toMatch(/^\s+at /m);
+    });
+
+    it('builds without migrating once tsconfig.json has the listed changes', () =>
+    {
+        // The changes made by hand
+        const tsconfigPath = path.join(dir, 'tsconfig.json');
+        const tsconfig = fs.readJsonSync(tsconfigPath);
+        delete tsconfig.compilerOptions.downlevelIteration;
+        Object.assign(tsconfig.compilerOptions, { rootDir: './src', moduleResolution: 'bundler', types: ['node'] });
+        fs.writeJsonSync(tsconfigPath, tsconfig, { spaces: 2 });
+        try
+        {
+            const result = runCli(dir, 'build', '-n', 'FileConverter', '-t', 'binding-converter');
+
+            expect(result.status, result.output).toBe(0);
+            expect(readBundle('FileConverter')).toContain('require("fs")');
+        }
+        finally
+        {
+            fs.writeFileSync(tsconfigPath, tsconfigBefore23);
+            fs.removeSync(path.join(dir, 'dist'));
+        }
     });
 
     it('moves the externals to webpack.config.cjs', () =>
@@ -154,7 +281,8 @@ describe('2.x project with externals in webpack.config.js', () =>
             `        fs: 'commonjs fs'`,
             '    };'
         ].join('\n'));
-        expect(fs.readJsonSync(path.join(dir, 'tsconfig.json')).compilerOptions.types).toEqual(['node']);
+        expect(fs.readJsonSync(path.join(dir, 'tsconfig.json')).compilerOptions).toMatchObject({ rootDir: './src', moduleResolution: 'bundler', types: ['node'] });
+        expect(fs.readJsonSync(path.join(dir, 'tsconfig.json')).compilerOptions).not.toHaveProperty('downlevelIteration');
     });
 
     it('builds the same bundle once migrated', () =>

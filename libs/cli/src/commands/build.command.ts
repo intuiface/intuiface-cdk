@@ -19,10 +19,11 @@ import {
     cleanBuildFolders,
     resetBuildMetadata,
     transpileTypeScript,
-    resolveTranspiledEntryPath,
     resolveBuildIcon,
-    writeGeneratedWebpackConfig
+    writeGeneratedWebpackConfig,
+    TypeScriptCompilationError
 } from '../services/build.service.js';
+import { describeTsConfigChangesForTypeScript6 } from '../services/migration.service.js';
 import { buildSchemas, buildResources, buildIFDFile, writeIFDFile } from '../services/descriptor.service.js';
 
 // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
@@ -121,6 +122,30 @@ function warnAboutLegacyWebpackConfigFiles(dir: string): void
     }
 }
 
+/**
+ * A 2.x project (outside a workspace) whose tsconfig.json was written for TypeScript 5 does not compile with the
+ * TypeScript 6 of the CLI: invite the developer to migrate the project, or to change tsconfig.json.
+ */
+// eslint-disable-next-line prefer-arrow/prefer-arrow-functions
+function warnAboutTypeScript6TsConfig(dir: string): void
+{
+    const changes = describeTsConfigChangesForTypeScript6(dir);
+    const lines = [
+        'This project was created with an older version of the Intuiface CDK.',
+        'It must be updated before it can be built with this version of intuiface-cli.',
+        '',
+        'Recommended: update the project automatically. In this folder, run these commands one after the other:',
+        '',
+        ...['npx intuiface-cli migrate', 'npm install', 'npm run build'].map((command) => `    ${chalk.cyan(command)}`),
+        '',
+        ...(changes.length > 0
+            ? ['Or, to keep the project as it is, make these changes in tsconfig.json, then run the build again:', ...changes.map((change) => `    - ${change}`)]
+            : ['Or, to keep the project as it is, update tsconfig.json for TypeScript 6 (see https://aka.ms/ts6), then run the build again.'])
+    ];
+    // ora prints the symbol on the first line only: align the next lines with its text
+    ora().warn(lines.map((line, index) => (index === 0 || line === '' ? line : `  ${line}`)).join('\n'));
+}
+
 // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
 function toBuildTarget(item: WorkspaceItem, iconOverride?: string): BuildTarget
 {
@@ -167,12 +192,10 @@ async function buildTarget(target: BuildTarget, debug?: boolean): Promise<void>
         await resetBuildMetadata(target);
 
         spinner.start('Compiling TypeScript...');
-        transpileTypeScript(`${dir}/tsconfig.json`, `${dir}/tmp/`, spinner);
-
-        const transpiledEntryPath = resolveTranspiledEntryPath(target.entryFile);
-        if (!fs.existsSync(transpiledEntryPath))
+        const transpiledEntryPath = transpileTypeScript(path.join(dir, 'tsconfig.json'), path.join(dir, target.entryFile), tmpDir, spinner);
+        if (transpiledEntryPath == null)
         {
-            spinner.fail(`Fail generating IFD file for ${target.name}. Please check the entry file and try again (${transpiledEntryPath} not found - entry:${target.entryFile}).`);
+            spinner.fail(`Fail generating IFD file for ${target.name}. Please check the entry file and try again (${target.entryFile} is not compiled: it must exist and be included by tsconfig.json).`);
             cleanBuildFolders(dir, target.outputDir);
             process.exit(-3);
         }
@@ -246,7 +269,16 @@ async function buildTarget(target: BuildTarget, debug?: boolean): Promise<void>
             spinner.fail();
         }
 
-        if (isExecException(e))
+        if (e instanceof TypeScriptCompilationError)
+        {
+            // The TypeScript errors are already reported
+            spinner.fail(e.message);
+            if (!target.useGeneratedWebpackConfig && e.isTypeScript6ConfigurationError)
+            {
+                warnAboutTypeScript6TsConfig(dir);
+            }
+        }
+        else if (isExecException(e))
         {
             let errorText = `Fail to execute command '${e.cmd}'.\n`;
             if (e.stderr)

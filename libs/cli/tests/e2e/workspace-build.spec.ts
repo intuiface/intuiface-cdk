@@ -31,6 +31,9 @@ describe('workspace build (init → add → build --all)', () =>
         runCliOrThrow(dir, 'add', 'binding-converter', '-n', 'TextConverters', '-c', 'Text');
         fs.copySync(path.join(fixturesDir, 'text-converters'), path.join(dir, 'src', 'binding-converters', 'TextConverters'), { overwrite: true });
 
+        // Imported by Thermostat and TextConverters
+        fs.copySync(path.join(fixturesDir, 'shared'), path.join(dir, 'src', 'shared'));
+
         buildAll = runCli(dir, 'build', '--all');
     });
 
@@ -219,6 +222,19 @@ describe('workspace build (init → add → build --all)', () =>
         });
     });
 
+    describe('module shared by two items', () =>
+    {
+        it('is compiled and bundled with each item that imports it', () =>
+        {
+            // Thermostat and TextConverters import src/shared/categories.ts. build --all loads every item in one Node.js
+            // process: the item built second gets the shared module from the module cache, with the same values.
+            // `build --name Thermostat` below builds it alone, and must give the same descriptor.
+            expect(readIfd(dir, 'Thermostat')['if.category']).toBe('Home');
+            expect(readIfd(dir, 'TextConverters')['if.category']).toBe('Text');
+            expect(fs.existsSync(path.join(dir, 'dist', 'shared'))).toBe(false);
+        });
+    });
+
     describe('build --name', () =>
     {
         it('builds the same descriptor as build --all, and only that item', () =>
@@ -257,6 +273,98 @@ describe('workspace build (init → add → build --all)', () =>
             expect(remoteEntry).toContain('sourceMappingURL=data:application/json');
             expect(readIfd(dir, 'TextTools')['if.category']).toBe('Text Tools');
         });
+    });
+});
+
+/**
+ * Each item is compiled on its own: the CLI type-checks the item files, and ts-loader only transpiles them (review O2).
+ */
+describe('TypeScript compilation of an item', () =>
+{
+    let dir: string;
+
+    /** Built JavaScript of an item, all chunks together. */
+    const readBundle = (name: string): string => fs.readdirSync(path.join(dir, 'dist', name))
+        .filter((file) => file.endsWith('.js'))
+        .map((file) => fs.readFileSync(path.join(dir, 'dist', name, file), 'utf8'))
+        .join('\n');
+
+    beforeAll(() =>
+    {
+        assertBuiltPackages();
+        dir = createE2EDir('compile');
+
+        runCliOrThrow(dir, 'init', '-n', 'compile-workspace');
+        runCliOrThrow(dir, 'add', 'interface-asset', '-n', 'Shapes', '-c', 'Geometry');
+        runCliOrThrow(dir, 'add', 'interface-asset', '-n', 'Broken', '-c', 'Geometry');
+
+        // An interface, imported without `import type`, typing a decorated property
+        const shapesDir = path.join(dir, 'src', 'interface-assets', 'Shapes');
+        fs.writeFileSync(path.join(shapesDir, 'shape.ts'), 'export interface IShape\n{\n    sides: number;\n}\n');
+        const entryPath = path.join(shapesDir, 'Shapes.ts');
+        const entry = fs.readFileSync(entryPath, 'utf8');
+        fs.writeFileSync(entryPath, `import { IShape } from './shape';\n${entry.replace(
+            '    public propertyExample: number = 0;',
+            `    public propertyExample: number = 0;\n\n    @Property({ displayName: 'Shape', type: Object })\n    public shape: IShape = { sides: 3 };`
+        )}`);
+
+        fs.appendFileSync(path.join(dir, 'src', 'interface-assets', 'Broken', 'Broken.ts'), `\nexport const broken: number = 'not a number';\n`);
+    });
+
+    afterAll(() =>
+    {
+        removeE2EDir(dir);
+    });
+
+    it('builds an item while another item has a TypeScript error', () =>
+    {
+        const result = runCli(dir, 'build', '-n', 'Shapes');
+
+        expect(result.status, result.output).toBe(0);
+        expect(readIfd(dir, 'Shapes').schemas.Shapes.properties.shape).toMatchObject({ type: 'object', title: 'Shape' });
+        expect(fs.existsSync(path.join(dir, 'dist', 'Shapes', 'Shapes.js'))).toBe(true);
+    });
+
+    it('bundles without decorator metadata, so an interface typing a decorated member raises no webpack warning', () =>
+    {
+        const result = runCli(dir, 'build', '-n', 'Shapes');
+
+        expect(result.status, result.output).toBe(0);
+        expect(result.output).not.toContain('WARNING');
+        expect(readBundle('Shapes')).not.toContain('design:type');
+    });
+
+    it('reports the error when building the item that has it', () =>
+    {
+        const result = runCli(dir, 'build', '-n', 'Broken');
+
+        expect(result.status).not.toBe(0);
+        expect(result.output).toMatch(/Broken\.ts \(\d+,\d+\): Type 'string' is not assignable to type 'number'\./);
+        expect(result.output).not.toMatch(/Shapes\.ts \(\d+,\d+\)/);
+        expect(fs.existsSync(path.join(dir, 'dist', 'Broken'))).toBe(false);
+    });
+
+    it('fails build --all on the item with the error, and only reports that error', () =>
+    {
+        const result = runCli(dir, 'build', '--all');
+
+        expect(result.status).not.toBe(0);
+        expect(result.output).toMatch(/Broken\.ts \(\d+,\d+\): Type 'string' is not assignable to type 'number'\./);
+        expect(result.output).not.toMatch(/Shapes\.ts \(\d+,\d+\)/);
+        expect(fs.existsSync(path.join(dir, 'dist', 'Broken'))).toBe(false);
+    });
+
+    it('finds the compiled entry whatever the rootDir of tsconfig.json (review O10)', () =>
+    {
+        const tsconfigPath = path.join(dir, 'tsconfig.json');
+        const tsconfig = fs.readJsonSync(tsconfigPath);
+        tsconfig.compilerOptions.rootDir = '.';
+        fs.writeJsonSync(tsconfigPath, tsconfig, { spaces: 2 });
+
+        const result = runCli(dir, 'build', '-n', 'Shapes');
+
+        expect(result.status, result.output).toBe(0);
+        expect(readIfd(dir, 'Shapes').schemas.Shapes.properties.shape).toMatchObject({ type: 'object' });
     });
 });
 

@@ -1,15 +1,17 @@
 import { Converter, Parameter } from '@intuiface/core';
+import { TEXT_CATEGORY } from '../../shared/categories';
 
 /**
  * Binding converter fixture: several converters in one class, with one and two parameters
- * and different return types. Only the first converter sets the category.
+ * and different return types. Only the first converter sets the category, which comes from a module
+ * shared with the Thermostat fixture (src/shared/ in the workspace).
  */
 export class TextConverters
 {
     @Converter({
         displayName: 'Upper case',
         description: 'Convert a text to upper case.',
-        category: 'Text',
+        category: TEXT_CATEGORY,
         returnType: String
     })
     public static toUpper(

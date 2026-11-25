@@ -4,6 +4,7 @@ import path from 'path';
 import { afterEach, beforeEach, describe, expect, it, Mock, vi } from 'vitest';
 import { runMigrateCommand } from '../../src/commands/migrate.command.js';
 import { readWorkspaceTemplateFile, WORKSPACE_BUILD_DEV_DEPENDENCIES } from '../../src/services/generator.service.js';
+import { describeTsConfigChangesForTypeScript6 } from '../../src/services/migration.service.js';
 import { cliRoot, createTempDir, mockProcessExit, removeTempDir, useCwd, writeFiles } from '../helpers/test-utils.js';
 
 const cliPackageVersion: string = fs.readJsonSync(path.join(cliRoot, 'package.json')).version;
@@ -364,6 +365,36 @@ describe('migrate command', () =>
             const migrated = fs.readJsonSync(path.join(dir, 'package.json'));
             expect(migrated.dependencies.typescript).toBe(WORKSPACE_BUILD_DEV_DEPENDENCIES.typescript);
             expect(migrated.devDependencies).not.toHaveProperty('typescript');
+        });
+    });
+
+    describe('tsconfig.json changes for TypeScript 6, listed by build for a 2.x project (outside a workspace)', () =>
+    {
+        it('lists the changes migrate makes', () =>
+        {
+            const packageJson = standalonePackageJson('npx intuiface-cli build -n MyAsset');
+            (packageJson.devDependencies as Record<string, string>)['@types/node'] = '^22.10.1';
+            writeFiles(dir, { 'package.json': packageJson, 'tsconfig.json': legacyTsConfig });
+
+            expect(describeTsConfigChangesForTypeScript6(dir)).toEqual([
+                'add "rootDir": "./src"',
+                'replace "moduleResolution": "node" with "moduleResolution": "bundler"',
+                'remove "downlevelIteration"',
+                'add "types": ["node"]'
+            ]);
+            // Only listed
+            expect(fs.readFileSync(path.join(dir, 'tsconfig.json'), 'utf8')).toBe(legacyTsConfig);
+        });
+
+        it('lists nothing for an up-to-date, missing or invalid tsconfig.json', () =>
+        {
+            expect(describeTsConfigChangesForTypeScript6(dir)).toEqual([]);
+
+            writeFiles(dir, { 'tsconfig.json': { compilerOptions: { rootDir: './src', moduleResolution: 'bundler' } } });
+            expect(describeTsConfigChangesForTypeScript6(dir)).toEqual([]);
+
+            writeFiles(dir, { 'tsconfig.json': '{ "compilerOptions": ' });
+            expect(describeTsConfigChangesForTypeScript6(dir)).toEqual([]);
         });
     });
 

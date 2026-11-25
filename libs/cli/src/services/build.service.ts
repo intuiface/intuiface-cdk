@@ -53,8 +53,22 @@ export async function resetBuildMetadata(target: BuildTarget): Promise<void>
     }
 }
 
+/**
+ * Compile an item to JavaScript in `outDir`, for Node.js to load it and generate its descriptor.
+ *
+ * The program holds every file of tsconfig.json, as `tsc` does: the item sees the same declarations (global types,
+ * ambient modules). But only the files of the item, its entry and the files it imports, are checked and emitted:
+ * an error in another item of the workspace does not stop this one.
+ * @param tsConfigPath tsconfig.json of the project
+ * @param entryFile entry file of the item
+ * @param outDir folder of the JavaScript files
+ * @param spinner spinner reporting the TypeScript errors
+ * @returns the JavaScript file of the entry, wherever tsconfig.json puts it (`rootDir`), or undefined when the entry
+ * is not compiled (it does not exist, or tsconfig.json does not include it)
+ * @throws when the item does not compile
+ */
 // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
-export function transpileTypeScript(tsConfigPath: string, outDir: string, spinner: any): void
+export function transpileTypeScript(tsConfigPath: string, entryFile: string, outDir: string, spinner: any): string | undefined
 {
     const configFile = ts.readConfigFile(tsConfigPath, ts.sys.readFile);
     if (configFile.error)
@@ -62,65 +76,44 @@ export function transpileTypeScript(tsConfigPath: string, outDir: string, spinne
         throw new Error(`Error reading tsconfig.json: ${configFile.error.messageText}`);
     }
 
+    // Without the tsconfig.json path, TypeScript 6 computes the default rootDir from the source files, as TypeScript 5 does:
+    // 2.x projects without rootDir keep the same output layout.
     const parsedCommandLine = ts.parseJsonConfigFileContent(
         configFile.config,
         ts.sys,
         process.cwd()
     );
 
-    const tsProgram = ts.createProgram(parsedCommandLine.fileNames, {
+    const options: ts.CompilerOptions = {
         ...parsedCommandLine.options,
         outDir: outDir,
         skipLibCheck: true
-    });
+    };
+    const host = createCachingCompilerHost(options);
+    const tsProgram = ts.createProgram({ rootNames: parsedCommandLine.fileNames, options: options, host: host });
+    const entrySourceFile = tsProgram.getSourceFile(path.resolve(entryFile));
+    const itemSourceFiles = entrySourceFile ? getItemSourceFiles(tsProgram, entrySourceFile, host) : [];
 
-    const emitResult = tsProgram.emit(undefined, undefined, undefined, undefined, {
-        after: [
-            (context): ts.Transformer<ts.SourceFile> =>
+    let entryOutputPath: string | undefined;
+    let emitSkipped = false;
+    const diagnostics: ts.Diagnostic[] = [...tsProgram.getOptionsDiagnostics(), ...tsProgram.getGlobalDiagnostics()];
+    const transformers: ts.CustomTransformers = { after: [addJsExtensionToRelativeImports] };
+    for (const sourceFile of itemSourceFiles)
+    {
+        const writeFile: ts.WriteFileCallback = (fileName, text, writeByteOrderMark, onError, sourceFiles, data) =>
+        {
+            host.writeFile(fileName, text, writeByteOrderMark, onError, sourceFiles, data);
+            if (sourceFile === entrySourceFile && /\.[cm]?jsx?$/.test(fileName))
             {
-                const visit = (node: ts.Node): ts.Node =>
-                {
-                    if (ts.isImportDeclaration(node) || ts.isExportDeclaration(node))
-                    {
-                        const moduleSpecifier = node.moduleSpecifier;
-                        if (moduleSpecifier && ts.isStringLiteral(moduleSpecifier))
-                        {
-                            const text = moduleSpecifier.text;
-                            if ((text.startsWith('./') || text.startsWith('../')) && !text.endsWith('.js') && !text.endsWith('.json'))
-                            {
-                                const updatedSpecifier = ts.factory.createStringLiteral(`${text}.js`);
-                                if (ts.isImportDeclaration(node))
-                                {
-                                    return ts.factory.updateImportDeclaration(
-                                        node,
-                                        node.modifiers,
-                                        node.importClause,
-                                        updatedSpecifier,
-                                        node.attributes
-                                    );
-                                }
-
-                                return ts.factory.updateExportDeclaration(
-                                    node,
-                                    node.modifiers,
-                                    node.isTypeOnly,
-                                    node.exportClause,
-                                    updatedSpecifier,
-                                    node.attributes
-                                );
-                            }
-                        }
-                    }
-
-                    return ts.visitEachChild(node, visit, context);
-                };
-
-                return (node: ts.SourceFile) => ts.visitNode(node, visit) as ts.SourceFile;
+                entryOutputPath = path.normalize(fileName);
             }
-        ]
-    });
+        };
+        const emitResult = tsProgram.emit(sourceFile, writeFile, undefined, false, transformers);
+        emitSkipped ||= emitResult.emitSkipped;
+        diagnostics.push(...ts.getPreEmitDiagnostics(tsProgram, sourceFile), ...emitResult.diagnostics);
+    }
 
-    const allDiagnostics = ts.getPreEmitDiagnostics(tsProgram).concat(emitResult.diagnostics);
+    const allDiagnostics = ts.sortAndDeduplicateDiagnostics(diagnostics);
     const hasErrors = allDiagnostics.some((diagnostic) => diagnostic.category === ts.DiagnosticCategory.Error);
     if (hasErrors)
     {
@@ -144,24 +137,116 @@ export function transpileTypeScript(tsConfigPath: string, outDir: string, spinne
     });
     spinner.indent = 0;
 
-    if (hasErrors || emitResult.emitSkipped)
+    if (hasErrors || emitSkipped)
     {
-        throw new Error('TypeScript compilation failed.');
+        throw new TypeScriptCompilationError(allDiagnostics);
+    }
+
+    return entryOutputPath;
+}
+
+/**
+ * Errors of a tsconfig.json written for TypeScript 5 (2.x projects) with TypeScript 6: deprecated or removed options
+ * (5101, 5102, 5107, 5108), and Node.js types no longer loaded by default (2580, 2591).
+ */
+const TYPESCRIPT_6_CONFIGURATION_ERROR_CODES = [5101, 5102, 5107, 5108, 2580, 2591];
+
+/**
+ * Failure of {@link transpileTypeScript}, once its errors are reported.
+ */
+export class TypeScriptCompilationError extends Error
+{
+    public constructor(public readonly diagnostics: readonly ts.Diagnostic[])
+    {
+        super('TypeScript compilation failed.');
+        this.name = 'TypeScriptCompilationError';
+    }
+
+    /** True when tsconfig.json needs changes to compile with TypeScript 6. */
+    public get isTypeScript6ConfigurationError(): boolean
+    {
+        return this.diagnostics.some((diagnostic) => TYPESCRIPT_6_CONFIGURATION_ERROR_CODES.includes(diagnostic.code));
     }
 }
 
+/**
+ * Compiler host that parses each file once, for the two programs of {@link transpileTypeScript}.
+ */
 // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
-export function resolveTranspiledEntryPath(entryFile: string): string
+function createCachingCompilerHost(options: ts.CompilerOptions): ts.CompilerHost
 {
-    const expectedPath = path.join(process.cwd(), 'tmp', entryFile.replace('src/', '').replace(/\.ts$/, '.js'));
-    if (fs.existsSync(expectedPath))
+    const host = ts.createCompilerHost(options);
+    const getSourceFile = host.getSourceFile.bind(host);
+    const sourceFiles = new Map<string, ts.SourceFile | undefined>();
+    host.getSourceFile = (fileName, languageVersionOrOptions, onError, shouldCreateNewSourceFile): ts.SourceFile | undefined =>
     {
-        return expectedPath;
-    }
+        if (shouldCreateNewSourceFile || !sourceFiles.has(fileName))
+        {
+            sourceFiles.set(fileName, getSourceFile(fileName, languageVersionOrOptions, onError, shouldCreateNewSourceFile));
+        }
+        return sourceFiles.get(fileName);
+    };
+    return host;
+}
 
-    // In workspace mode, TypeScript may emit directly under tmp/ using only filename.
-    const flattenedPath = path.join(process.cwd(), 'tmp', path.basename(entryFile).replace(/\.ts$/, '.js'));
-    return flattenedPath;
+/**
+ * Source files of an item: its entry and the files it imports, directly or not, found by TypeScript in a program rooted
+ * at the entry. Declaration files and packages are left out: they are not emitted.
+ */
+// eslint-disable-next-line prefer-arrow/prefer-arrow-functions
+function getItemSourceFiles(tsProgram: ts.Program, entrySourceFile: ts.SourceFile, host: ts.CompilerHost): ts.SourceFile[]
+{
+    const itemProgram = ts.createProgram({ rootNames: [entrySourceFile.fileName], options: tsProgram.getCompilerOptions(), host: host });
+    return itemProgram.getSourceFiles()
+        .filter((sourceFile) => !sourceFile.isDeclarationFile && !itemProgram.isSourceFileFromExternalLibrary(sourceFile))
+        .map((sourceFile) => tsProgram.getSourceFile(sourceFile.fileName))
+        .filter((sourceFile): sourceFile is ts.SourceFile => sourceFile != null);
+}
+
+/**
+ * Add `.js` to relative imports and exports of the emitted JavaScript: Node.js ESM requires the extension.
+ */
+// eslint-disable-next-line prefer-arrow/prefer-arrow-functions
+function addJsExtensionToRelativeImports(context: ts.TransformationContext): ts.Transformer<ts.SourceFile>
+{
+    const visit = (node: ts.Node): ts.Node =>
+    {
+        if (ts.isImportDeclaration(node) || ts.isExportDeclaration(node))
+        {
+            const moduleSpecifier = node.moduleSpecifier;
+            if (moduleSpecifier && ts.isStringLiteral(moduleSpecifier))
+            {
+                const text = moduleSpecifier.text;
+                if ((text.startsWith('./') || text.startsWith('../')) && !text.endsWith('.js') && !text.endsWith('.json'))
+                {
+                    const updatedSpecifier = ts.factory.createStringLiteral(`${text}.js`);
+                    if (ts.isImportDeclaration(node))
+                    {
+                        return ts.factory.updateImportDeclaration(
+                            node,
+                            node.modifiers,
+                            node.importClause,
+                            updatedSpecifier,
+                            node.attributes
+                        );
+                    }
+
+                    return ts.factory.updateExportDeclaration(
+                        node,
+                        node.modifiers,
+                        node.isTypeOnly,
+                        node.exportClause,
+                        updatedSpecifier,
+                        node.attributes
+                    );
+                }
+            }
+        }
+
+        return ts.visitEachChild(node, visit, context);
+    };
+
+    return (node: ts.SourceFile) => ts.visitNode(node, visit) as ts.SourceFile;
 }
 
 // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
@@ -211,7 +296,13 @@ export function writeGeneratedWebpackConfig(target: BuildTarget, dir: string, tm
         '  module: {',
         '    rules: [{',
         '      test: /\\.tsx?$/,',
-        `      use: 'ts-loader',`,
+        '      // The CLI has type-checked the item: ts-loader only transpiles its files, so another item does not stop the build.',
+        '      // The player does not read the decorator metadata (design:type, ...): without it, the file-by-file transpilation',
+        '      // does not import the interfaces used in decorated members (webpack warning "export ... was not found").',
+        '      use: {',
+        `        loader: 'ts-loader',`,
+        '        options: { transpileOnly: true, compilerOptions: { emitDecoratorMetadata: false } }',
+        '      },',
         '      exclude: /node_modules/',
         '    }]',
         '  },',

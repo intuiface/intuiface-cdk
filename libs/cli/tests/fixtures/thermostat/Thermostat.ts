@@ -1,15 +1,17 @@
 import { Action, Asset, IntuifaceElement, Parameter, Property, Trigger } from '@intuiface/core';
 import { formatTemperature } from './format';
+import { HOME_CATEGORY } from '../../shared/categories';
 
 /**
  * Interface asset fixture: several property types, an action with two parameters,
  * a trigger with a parameter, and a relative import (rewritten to `./format.js` by the CLI).
+ * Its category comes from a module shared with the TextConverters fixture (src/shared/ in the workspace).
  */
 @Asset({
     name: 'Thermostat',
     displayName: 'Smart thermostat',
     description: 'Controls the room temperature.',
-    category: 'Home',
+    category: HOME_CATEGORY,
     behaviors: []
 })
 export class Thermostat extends IntuifaceElement

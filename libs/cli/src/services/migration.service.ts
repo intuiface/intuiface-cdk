@@ -292,21 +292,65 @@ function updateWorkspaceDependencies(packageJson: Record<string, unknown>): stri
         : 'Build dependencies already up to date';
 }
 
+/** A change of the compiler options of a 2.x tsconfig.json for TypeScript 6. */
+interface TsConfigChange
+{
+    /** What to change, e.g. `remove "downlevelIteration"`. */
+    description: string;
+    apply: (compilerOptions: Record<string, unknown>) => void;
+}
+
 /**
- * Make a 2.x project tsconfig compatible with TypeScript 6 (installed by the migration):
- * - `rootDir` must be explicit (the CLI resolves transpiled entries relative to `./src`),
+ * Changes that make the compiler options of a 2.x project compatible with TypeScript 6 (installed by the migration):
+ * - `rootDir` must be explicit (TypeScript 6 reports TS5011 without it, e.g. in `tsc` and in the editor),
  * - `moduleResolution: node|node10|classic` and `downlevelIteration` are deprecated,
  * - `types` defaults to `[]`: without `"types": ["node"]`, an import of a Node.js module (e.g. `fs`, often a webpack external)
  *   no longer compiles. It is added when the project depends on `@types/node` and sets no `types`.
- * @returns true if the file was modified.
  */
 // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
-function updateTsConfigForTypeScript6(dir: string, packageJson: Record<string, unknown>): boolean
+function getTsConfigChangesForTypeScript6(compilerOptions: Record<string, unknown>, packageJson: Record<string, unknown>): TsConfigChange[]
+{
+    const changes: TsConfigChange[] = [];
+
+    if (compilerOptions.rootDir == null)
+    {
+        changes.push({ description: 'add "rootDir": "./src"', apply: (options) => { options.rootDir = './src'; } });
+    }
+
+    const moduleResolution = typeof compilerOptions.moduleResolution === 'string' ? compilerOptions.moduleResolution : undefined;
+    if (moduleResolution != null && ['node', 'node10', 'classic'].includes(moduleResolution.toLowerCase()))
+    {
+        changes.push({
+            description: `replace "moduleResolution": "${moduleResolution}" with "moduleResolution": "bundler"`,
+            apply: (options) => { options.moduleResolution = 'bundler'; }
+        });
+    }
+
+    if ('downlevelIteration' in compilerOptions)
+    {
+        changes.push({ description: 'remove "downlevelIteration"', apply: (options) => { delete options.downlevelIteration; } });
+    }
+
+    if (compilerOptions.types == null && hasNodeTypes(packageJson))
+    {
+        changes.push({ description: 'add "types": ["node"]', apply: (options) => { options.types = ['node']; } });
+    }
+
+    return changes;
+}
+
+/**
+ * Read tsconfig.json and package.json of a project.
+ * @returns undefined without tsconfig.json
+ * @throws when tsconfig.json cannot be parsed
+ */
+// eslint-disable-next-line prefer-arrow/prefer-arrow-functions
+function readTsConfig(dir: string): { path: string; tsconfig: { compilerOptions?: Record<string, unknown> } } | undefined
 {
     const tsconfigPath = path.join(dir, 'tsconfig.json');
     if (!fs.existsSync(tsconfigPath))
     {
-        return false;
+        return undefined;
     }
 
     const parsed = ts.parseConfigFileTextToJson(tsconfigPath, fs.readFileSync(tsconfigPath, 'utf8'));
@@ -315,42 +359,55 @@ function updateTsConfigForTypeScript6(dir: string, packageJson: Record<string, u
         throw new Error(`Cannot parse tsconfig.json: ${ts.flattenDiagnosticMessageText(parsed.error.messageText, '\n')}`);
     }
 
-    const tsconfig = parsed.config ?? {};
-    const compilerOptions = tsconfig.compilerOptions ?? {};
-    let isModified = false;
+    return { path: tsconfigPath, tsconfig: parsed.config ?? {} };
+}
 
-    if (compilerOptions.rootDir == null)
+/**
+ * Make a 2.x project tsconfig compatible with TypeScript 6 (see {@link getTsConfigChangesForTypeScript6}).
+ * @returns true if the file was modified.
+ */
+// eslint-disable-next-line prefer-arrow/prefer-arrow-functions
+function updateTsConfigForTypeScript6(dir: string, packageJson: Record<string, unknown>): boolean
+{
+    const project = readTsConfig(dir);
+    if (project == null)
     {
-        compilerOptions.rootDir = './src';
-        isModified = true;
+        return false;
     }
 
-    const moduleResolution = typeof compilerOptions.moduleResolution === 'string' ? compilerOptions.moduleResolution.toLowerCase() : undefined;
-    if (moduleResolution === 'node' || moduleResolution === 'node10' || moduleResolution === 'classic')
+    const compilerOptions = project.tsconfig.compilerOptions ?? {};
+    const changes = getTsConfigChangesForTypeScript6(compilerOptions, packageJson);
+    if (changes.length === 0)
     {
-        compilerOptions.moduleResolution = 'bundler';
-        isModified = true;
+        return false;
     }
 
-    if ('downlevelIteration' in compilerOptions)
-    {
-        delete compilerOptions.downlevelIteration;
-        isModified = true;
-    }
+    changes.forEach((change) => change.apply(compilerOptions));
+    project.tsconfig.compilerOptions = compilerOptions;
+    fs.writeFileSync(project.path, `${JSON.stringify(project.tsconfig, null, 2)}\n`, 'utf8');
+    return true;
+}
 
-    if (compilerOptions.types == null && hasNodeTypes(packageJson))
+/**
+ * Changes of tsconfig.json a 2.x project needs to compile with TypeScript 6, as `migrate` makes them, for the developer
+ * to make them by hand.
+ * @returns the description of each change, none when tsconfig.json cannot be read
+ */
+// eslint-disable-next-line prefer-arrow/prefer-arrow-functions
+export function describeTsConfigChangesForTypeScript6(dir: string): string[]
+{
+    try
     {
-        compilerOptions.types = ['node'];
-        isModified = true;
+        const project = readTsConfig(dir);
+        const packageJson = fs.readJsonSync(path.join(dir, 'package.json'), { throws: false }) ?? {};
+        return project == null
+            ? []
+            : getTsConfigChangesForTypeScript6(project.tsconfig.compilerOptions ?? {}, packageJson).map((change) => change.description);
     }
-
-    if (isModified)
+    catch (_error)
     {
-        tsconfig.compilerOptions = compilerOptions;
-        fs.writeFileSync(tsconfigPath, `${JSON.stringify(tsconfig, null, 2)}\n`, 'utf8');
+        return [];
     }
-
-    return isModified;
 }
 
 /**
