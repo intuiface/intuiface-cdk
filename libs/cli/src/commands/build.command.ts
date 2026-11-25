@@ -5,7 +5,7 @@ import chalk from 'chalk';
 import ora from 'ora';
 import { BuildTarget, BuildType, WorkspaceItem } from '../types.js';
 import { ADD_ITEM_EXAMPLES } from '../utils/examples.js';
-import { execPromise, isExecException } from '../utils/exec.js';
+import { isExecException, runWebpack } from '../utils/exec.js';
 import {
     tryReadWorkspaceConfig,
     getRequiredWorkspaceItem,
@@ -233,12 +233,12 @@ async function buildTarget(target: BuildTarget, debug?: boolean): Promise<void>
             const customizationPath = findWorkspaceWebpackConfig(dir);
             spinner.start(`Building ${target.buildType}: ${target.name}${customizationPath ? ` (customised by ${getWorkspaceWebpackConfigFileName()})` : ''}...`);
             const webpackConfigPath = writeGeneratedWebpackConfig(target, dir, tmpDir, { debug, customizationPath });
-            webpackOutput = await execPromise(`npx webpack --config "${webpackConfigPath}"`);
+            webpackOutput = await runWebpack(dir, webpackConfigPath);
         }
         else
         {
             spinner.start(`Building ${target.buildType}: ${target.name}...`);
-            webpackOutput = await execPromise(`npx webpack --config ${dir}/${debug ? 'webpack-debug.config.js' : 'webpack.config.js'}`);
+            webpackOutput = await runWebpack(dir, path.join(dir, debug ? 'webpack-debug.config.js' : 'webpack.config.js'));
         }
 
         if (webpackOutput)

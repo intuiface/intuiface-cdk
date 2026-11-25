@@ -284,13 +284,12 @@ describe('generator.service', () =>
             expect(getSyntaxErrors('Conv.ts', code)).toEqual([]);
         });
 
-        // Known bug B6 (PR #119 review): String.replace() expands `$&` in a string replacement.
-        // Remove `.fails` once renderTemplateValue uses a replacer function.
-        it.fails('keeps a category with replacement patterns verbatim', () =>
+        // String.replace() would expand these replacement patterns
+        it.each(['Price $& more', 'Group $1', 'Cost $$', 'Before $` after'])('keeps the category %s verbatim', (category) =>
         {
-            scaffoldWorkspaceItemFromTemplate({ name: 'MyAsset', type: 'interface-asset', entry: '' }, dir, { category: 'Price $& more' });
+            scaffoldWorkspaceItemFromTemplate({ name: 'MyAsset', type: 'interface-asset', entry: '' }, dir, { category });
 
-            expect(fs.readFileSync(path.join(dir, 'MyAsset.ts'), 'utf8')).toContain(`category: 'Price $& more'`);
+            expect(fs.readFileSync(path.join(dir, 'MyAsset.ts'), 'utf8')).toContain(`category: '${category}'`);
         });
     });
 });

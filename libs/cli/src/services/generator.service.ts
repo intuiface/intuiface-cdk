@@ -332,7 +332,8 @@ function renderTemplateValue(value: string, context: TemplateRenderContext): str
 
     for (const [key, replacement] of Object.entries(context))
     {
-        renderedValue = renderedValue.replace(new RegExp(`__${key}__`, 'g'), replacement);
+        // Plain text substitution: no RegExp built from the key, and no `$&`/`$1` expansion in the replacement
+        renderedValue = renderedValue.split(`__${key}__`).join(replacement);
     }
 
     return renderedValue;
