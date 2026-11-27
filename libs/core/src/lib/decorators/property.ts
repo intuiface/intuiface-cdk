@@ -1,5 +1,6 @@
 /* eslint-disable prefer-arrow/prefer-arrow-functions */
 import { getTypeAndFormat } from '../types/convertible.type';
+import { registerReferencedClass } from './build-registry';
 import { IResetValueOptions } from './reset-value';
 
 /**
@@ -57,7 +58,9 @@ export interface IPropertyOptions
      * - `Array`
      * - Class name of a {@link IConvertibleType | convertible type} (`Color`, `Font`, `Path`, `Resource`, `Time`)
      * - Enum type
-     * - Class name of another class you created
+     * - Class name of another class you created. When this class extends {@link Watchable}, its properties
+     *   (declared with `@Property`, also in its parent classes) are described in the descriptor file (.ifd), without
+     *   the need of {@link Asset | `@Asset`} on it.
      */
     type?: any;
 
@@ -65,7 +68,9 @@ export interface IPropertyOptions
      * The item type in case the type is `Array`.
      * It's optional but useful in interface assets to display item's properties in Intuiface Composer.
      * It can be:
-     *  - Class name
+     *  - Class name of a class you created. When this class extends {@link Watchable}, its properties (declared with
+     *    `@Property`, also in its parent classes) are described in the descriptor file (.ifd), without the need of
+     *    {@link Asset | `@Asset`} on it.
      *  - `String`
      *  - `Number`
      *  - `Boolean`
@@ -142,15 +147,17 @@ export interface IPropertyOptions
  * // call the notify property changed
  * this.notifyPropertyChanged('listItems', this.listItems);
  * ```
- * Also the item class should extends {@link Watchable} and have the decorator {@link Asset}:
+ * Also the item class should extend {@link Watchable}, for the bindings to follow the changes of its properties.
+ * Its properties declared with `@Property` are described in the descriptor file (.ifd), no need of {@link Asset | `@Asset`}:
  * ```ts
- * @Asset({
- *  name: 'ListItem',
- *  behaviors: []
- * }))
  * export class ListItem extends Watchable
  * {
- *      // Declare here properties for this class 
+ *      // Declare here properties for this class
+ *      @Property({
+ *          displayName: 'Label',
+ *          type: String
+ *      })
+ *      public label: string = '';
  * }
  * ```
  *
@@ -194,6 +201,8 @@ export function Property(options?: IPropertyOptions)
         {
             globalThis.intuiface_ifd_properties[targetName][propertyKey].extends =
                 { $ref: options.type.name};
+            // For intuiface-cli to describe the class under this name
+            registerReferencedClass(options.type);
         }
 
         // special case for array
@@ -206,6 +215,8 @@ export function Property(options?: IPropertyOptions)
                 itemType = {
                     $ref: options.itemType.name
                 };
+                // For intuiface-cli to describe the class under this name
+                registerReferencedClass(options.itemType);
             }
             else if (itemType.format === null)
             {

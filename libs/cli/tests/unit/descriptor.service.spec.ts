@@ -2,7 +2,16 @@
 import fs from 'fs-extra';
 import path from 'path';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { addInheritedMembers, buildIFDFile, buildResources, buildSchemas, getWorkspaceCategory, writeIFDFile } from '../../src/services/descriptor.service.js';
+import {
+    addInheritedMembers,
+    addReferencedClasses,
+    buildIFDFile,
+    buildResources,
+    buildSchemas,
+    getWorkspaceCategory,
+    useItemClassDetails,
+    writeIFDFile
+} from '../../src/services/descriptor.service.js';
 import { createTempDir, removeTempDir, resetIfdGlobals, useCwd, writeFiles } from '../helpers/test-utils.js';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -215,6 +224,151 @@ describe('descriptor.service', () =>
             addInheritedMembers();
 
             expect(globalThisAny.intuiface_ifd_properties).toEqual(before);
+        });
+    });
+
+    describe('classes used as type or itemType of a property', () =>
+    {
+        // Watchable classes, recorded by @Property when used as its `type` or `itemType` (`registerReferencedClass`)
+        class Watchable {}
+        class PointLabel extends Watchable {}
+        class Point extends Watchable {}
+        class GeoPoint extends Point {}
+        class Unused extends Watchable {}
+        class Tracker extends Watchable {}
+
+        /** An interface asset Tracker with `track` (itemType GeoPoint) and `origin` (type Point), none of them with @Asset. */
+        const declareTracker = (): void =>
+        {
+            resetIfdGlobals('Tracker', 'interface-asset');
+            Object.assign(globalThisAny.intuiface_ifd_properties, {
+                PointLabel: { text: { type: 'string', title: 'Text' } },
+                Point: { x: { type: 'number', title: 'X' }, y: { type: 'number', title: 'Y' }, label: { title: 'Label', extends: { $ref: 'PointLabel' } } },
+                GeoPoint: { altitude: { type: 'number', title: 'Altitude' } },
+                Unused: { value: { type: 'string', title: 'Value' } },
+                Tracker: {
+                    track: { type: 'array', title: 'Track', readonly: true, items: { $ref: 'GeoPoint' } },
+                    origin: { title: 'Origin', extends: { $ref: 'Point' } },
+                    count: { type: 'number', title: 'Count' }
+                }
+            });
+            Object.assign(globalThisAny.intuiface_ifd_actions, { Point: { reset: { id: 'Tracker.reset', title: 'Reset' } }, Tracker: {} });
+            Object.assign(globalThisAny.intuiface_ifd_triggers, { Tracker: {} });
+            globalThisAny.intuiface_ifd_classes.push('Tracker');
+            globalThisAny.intuiface_ifd_element_classes.Tracker = Tracker;
+            Object.assign(globalThisAny.intuiface_ifd_referenced_classes, { PointLabel, Point, GeoPoint, Unused });
+        };
+
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any -- descriptor entries, read field by field
+        const describeClasses = (): { schemas: Record<string, any>; resources: Record<string, any> } =>
+        {
+            addInheritedMembers();
+            addReferencedClasses();
+            return {
+                schemas: buildSchemas(globalThisAny.intuiface_ifd_classes, 'interface-asset'),
+                resources: buildResources(globalThisAny.intuiface_ifd_classes, 'interface-asset')
+            };
+        };
+
+        it('describes the classes referenced with itemType and type, with the members of their parent classes', () =>
+        {
+            declareTracker();
+
+            const { schemas, resources } = describeClasses();
+
+            expect(schemas.GeoPoint).toEqual({
+                id: 'GeoPoint',
+                type: 'object',
+                description: 'GeoPoint',
+                properties: {
+                    altitude: { type: 'number', title: 'Altitude' },
+                    x: { type: 'number', title: 'X' },
+                    y: { type: 'number', title: 'Y' },
+                    label: { title: 'Label', extends: { $ref: 'PointLabel' } }
+                }
+            });
+            expect(resources.GeoPoint).toEqual({ id: 'GeoPoint', methods: { reset: { id: 'Tracker.reset', title: 'Reset' } }, events: {} });
+            expect(Object.keys(schemas.Point.properties)).toEqual(['x', 'y', 'label']);
+        });
+
+        it('follows the references of a referenced class, and describes each class once', () =>
+        {
+            declareTracker();
+
+            const { schemas, resources } = describeClasses();
+
+            // GeoPoint and Point reference PointLabel; Unused is recorded, but no described class references it
+            expect(globalThisAny.intuiface_ifd_classes).toEqual(['Tracker', 'GeoPoint', 'Point', 'PointLabel']);
+            expect(schemas.PointLabel).toEqual({ id: 'PointLabel', type: 'object', description: 'PointLabel', properties: { text: { type: 'string', title: 'Text' } } });
+            expect(resources.PointLabel).toEqual({ id: 'PointLabel', methods: {}, events: {} });
+            // The class of the item stays the interface asset
+            expect(resources.Tracker['if.interfaceAsset']).toBe(true);
+            expect(resources.Point['if.interfaceAsset']).toBeUndefined();
+        });
+
+        it('gives a class without @Asset the entries @Asset gives it, and leaves a class with @Asset unchanged', () =>
+        {
+            declareTracker();
+            const withoutAsset = describeClasses();
+
+            // Point with @Asset: decorated before Tracker, which imports it, so first in the classes
+            declareTracker();
+            globalThisAny.intuiface_ifd_classes.unshift('Point');
+            globalThisAny.intuiface_ifd_element_classes.Point = Point;
+            globalThisAny.intuiface_ifd_triggers.Point = {};
+            const withAsset = describeClasses();
+
+            expect(withAsset.schemas.Point).toEqual(withoutAsset.schemas.Point);
+            expect(withAsset.resources.Point).toEqual(withoutAsset.resources.Point);
+            expect(globalThisAny.intuiface_ifd_classes).toEqual(['Point', 'Tracker', 'PointLabel', 'GeoPoint']);
+        });
+
+        it('changes nothing without the classes an older @intuiface/core does not record', () =>
+        {
+            declareTracker();
+            delete globalThisAny.intuiface_ifd_referenced_classes;
+
+            const { schemas } = describeClasses();
+
+            expect(Object.keys(schemas)).toEqual(['Tracker']);
+            expect(schemas.Tracker.properties.track.items).toEqual({ $ref: 'GeoPoint' });
+        });
+    });
+
+    describe('title, description and category of the descriptor', () =>
+    {
+        /** @Asset Gauge, then an @Asset class declared after it in the same file: its decorator runs last. */
+        const declareAssetThenItemClass = (): void =>
+        {
+            declareInterfaceAsset();
+            Object.assign(globalThisAny.intuiface_ifd_element_details, {
+                Gauge: { displayName: 'Gauge title', category: 'Dataviz' },
+                GaugeItem: { displayName: 'Gauge item', description: 'An item', category: 'Items' }
+            });
+            // What the decorator of GaugeItem left in the globals
+            Object.assign(globalThisAny, { iaTitle: 'Gauge item', iaDescription: 'An item', iaCategory: 'Items' });
+        };
+
+        it('takes them from the class of the item, whatever the order the decorators ran in', () =>
+        {
+            declareAssetThenItemClass();
+
+            useItemClassDetails();
+
+            const resources = buildResources(globalThisAny.intuiface_ifd_classes, 'interface-asset');
+            const ifd = buildIFDFile('Gauge', 'interface-asset', {}, resources);
+            expect(ifd).toMatchObject({ 'title': 'Gauge title', 'if.category': 'Dataviz' });
+            expect(resources.Gauge).toMatchObject({ title: 'Gauge title', description: undefined });
+        });
+
+        it('keeps the globals without the details an older @intuiface/core does not record', () =>
+        {
+            declareAssetThenItemClass();
+            delete globalThisAny.intuiface_ifd_element_details;
+
+            useItemClassDetails();
+
+            expect(globalThisAny).toMatchObject({ iaTitle: 'Gauge item', iaDescription: 'An item', iaCategory: 'Items' });
         });
     });
 

@@ -288,8 +288,70 @@ describe('workspace build (init → add → build --all)', () =>
             expect(readIfd(dir, 'Barometer').schemas.Barometer.properties.unit).toMatchObject({ title: 'Sensor unit', default: '' });
             expect(readIfd(dir, 'Thermostat').schemas.Thermostat.properties.unit).toMatchObject({ title: 'Unit', default: 'C' });
             expect(Object.keys(readIfd(dir, 'Thermostat').schemas.Thermostat.properties))
-                .toEqual(['target', 'unit', 'heating', 'displayText', 'history', 'sensorName']);
+                .toEqual(['target', 'unit', 'heating', 'displayText', 'history', 'position', 'sensorName']);
             expect(Object.keys(readIfd(dir, 'Thermostat').resources.Thermostat.methods)).toEqual(['setTarget', 'calibrate']);
+        });
+    });
+
+    describe('class used as type or itemType of a property, without @Asset', () =>
+    {
+        it('is described in the descriptor of each item, with the properties of its parent class and the class it references', () =>
+        {
+            // src/shared/point.ts: Point extends Coordinates and references PointLabel, all Watchable, none with @Asset
+            for (const name of ['Barometer', 'Thermostat'])
+            {
+                const ifd = readIfd(dir, name);
+                expect(ifd.schemas.Point, name).toEqual({
+                    id: 'Point',
+                    type: 'object',
+                    description: 'Point',
+                    properties: {
+                        label: { title: 'Label', extends: { $ref: 'PointLabel' } },
+                        x: { type: 'number', title: 'X', default: 0 },
+                        y: { type: 'number', title: 'Y', default: 0 }
+                    }
+                });
+                expect(ifd.resources.Point, name).toEqual({ id: 'Point', methods: {}, events: {} });
+                expect(ifd.schemas.PointLabel, name).toEqual({ id: 'PointLabel', type: 'object', description: 'PointLabel', properties: { text: { type: 'string', title: 'Text' } } });
+                expect(ifd.resources.PointLabel, name).toEqual({ id: 'PointLabel', methods: {}, events: {} });
+                expect(ifd.schemas.Coordinates, name).toBeUndefined();
+                expect(ifd.resources[name]['if.interfaceAsset'], name).toBe(true);
+            }
+            expect(readIfd(dir, 'Barometer').schemas.Barometer.properties.track).toMatchObject({ type: 'array', items: { $ref: 'Point' } });
+            expect(readIfd(dir, 'Thermostat').schemas.Thermostat.properties.position).toEqual({ title: 'Position', extends: { $ref: 'Point' } });
+        });
+
+        it('gets the entries a class with @Asset gets, which are unchanged', () =>
+        {
+            // src/shared/reading.ts keeps @Asset
+            for (const name of ['Barometer', 'Thermostat'])
+            {
+                const ifd = readIfd(dir, name);
+                expect(ifd.schemas.Reading, name).toEqual({
+                    id: 'Reading',
+                    type: 'object',
+                    description: 'Reading',
+                    properties: {
+                        value: { type: 'number', title: 'Value', default: 0 },
+                        time: { type: 'string', title: 'Time' }
+                    }
+                });
+                expect(ifd.resources.Reading, name).toEqual({ id: 'Reading', methods: {}, events: {} });
+            }
+        });
+    });
+
+    describe('title, description and category of the descriptor', () =>
+    {
+        it('are those of the interface asset, also with a class with @Asset declared after it in the same file', () =>
+        {
+            // BarometerLog (@Asset, category 'Logs', with a description) is declared after Barometer: its decorator runs last
+            const ifd = readIfd(dir, 'Barometer');
+
+            expect(ifd).toMatchObject({ 'title': 'Barometer', 'if.category': 'Home' });
+            expect(ifd.resources.Barometer.title).toBe('Barometer');
+            expect(ifd.resources.Barometer).not.toHaveProperty('description');
+            expect(ifd.schemas.BarometerLog).toMatchObject({ id: 'BarometerLog', properties: { entry: { type: 'string', title: 'Entry' } } });
         });
     });
 
@@ -351,6 +413,13 @@ describe('workspace build (init → add → build --all)', () =>
             const thermostat = new loaded.modules.Thermostat.Thermostat();
             thermostat.setTarget(5, 'C');
             expect(thermostat.displayText).toBe('5°C');
+
+            // Point, used as type without @Asset: created by the item, and by the host from its class
+            expect(thermostat.position).toBeInstanceOf(loaded.core.Watchable);
+            const point = new thermostat.position.constructor();
+            point.x = 3;
+            expect(point).toMatchObject({ x: 3, y: 0 });
+            expect(point.label).toBeInstanceOf(loaded.core.Watchable);
 
             expect(loaded.modules.TextConverters.TextConverters.toUpper('abc')).toBe('ABC');
             expect(loaded.modules.TextTools.TextTools.textTools(42)).toBe('42');

@@ -1,6 +1,7 @@
 import { Action, Asset, Parameter, Property, Trigger } from '@intuiface/core';
 import { formatTemperature } from './format';
 import { HOME_CATEGORY } from '../../shared/categories';
+import { Point } from '../../shared/point';
 import { Reading } from '../../shared/reading';
 import { Sensor } from '../../shared/sensor';
 
@@ -57,6 +58,12 @@ export class Thermostat extends Sensor
         itemType: Reading
     })
     public history: Reading[] = [];
+
+    @Property({
+        displayName: 'Position',
+        type: Point
+    })
+    public position: Point = new Point();
 
     @Trigger({
         name: 'targetReached',

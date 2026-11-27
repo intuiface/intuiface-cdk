@@ -88,6 +88,102 @@ function collectMembers(registry: MemberRegistry, ctor: Function, elementName?: 
     return members;
 }
 
+/**
+ * Describe the classes the properties use as `type` (`extends: { $ref }`) or `itemType` (`items: { $ref }`), when they
+ * extend `Watchable`, with or without `@Asset`: a schema and a resource named after the class, with its properties,
+ * actions and triggers and those of its parent classes. They are the entries `@Asset` gives a class, which was needed
+ * before for the class to be described: the Player itself only needs the class to extend `Watchable`.
+ *
+ * The classes are followed from the classes already described (`intuiface_ifd_classes`, with their inherited
+ * members: call {@link addInheritedMembers} first) to the classes their properties reference, and so on. A class is
+ * described once; a class with `@Asset` is already described, and unchanged. A class no described class references is not.
+ *
+ * Needs the classes @intuiface/core records in `intuiface_ifd_referenced_classes` (from the version released with this
+ * CLI): with an older core, nothing changes.
+ */
+// eslint-disable-next-line prefer-arrow/prefer-arrow-functions
+export function addReferencedClasses(): void
+{
+    const globalThisAny = globalThis as any;
+    const referencedClasses: Record<string, unknown> = globalThisAny.intuiface_ifd_referenced_classes ?? {};
+    const classNames: string[] | undefined = globalThisAny.intuiface_ifd_classes;
+    if (classNames == null)
+    {
+        return;
+    }
+
+    const described = new Set(classNames);
+    const toFollow = [...classNames];
+    for (let className = toFollow.shift(); className != null; className = toFollow.shift())
+    {
+        const properties: Record<string, unknown> = globalThisAny.intuiface_ifd_properties?.[className] ?? {};
+        for (const referencedName of Object.values(properties).flatMap(getReferencedClassNames))
+        {
+            const ctor = referencedClasses[referencedName];
+            if (typeof ctor !== 'function' || described.has(referencedName))
+            {
+                continue;
+            }
+
+            for (const registryName of MEMBER_REGISTRIES)
+            {
+                const registry: MemberRegistry = globalThisAny[registryName] ?? {};
+                registry[referencedName] = collectMembers(registry, ctor);
+                globalThisAny[registryName] = registry;
+            }
+            described.add(referencedName);
+            classNames.push(referencedName);
+            toFollow.push(referencedName);
+        }
+    }
+}
+
+/**
+ * @returns the names of the classes a property of the descriptor references: `extends: { $ref }` (`type`) and
+ * `items: { $ref }` (`itemType`)
+ */
+// eslint-disable-next-line prefer-arrow/prefer-arrow-functions
+function getReferencedClassNames(property: unknown): string[]
+{
+    const fields = property as { extends?: { $ref?: unknown }; items?: { $ref?: unknown } } | undefined;
+    return [fields?.extends?.$ref, fields?.items?.$ref].filter((name): name is string => typeof name === 'string' && name !== '');
+}
+
+/**
+ * Take the title, description and category of the descriptor from the class of the item, as `@Asset` (or `@Collection`)
+ * declares them. `@Asset` also sets them on globals, where the last decorator to run wins: a class with `@Asset`
+ * declared after the interface asset, in the same file, replaced its title and category.
+ *
+ * Needs the details @intuiface/core records in `intuiface_ifd_element_details` (from the version released with this
+ * CLI): with an older core, the globals are kept.
+ */
+// eslint-disable-next-line prefer-arrow/prefer-arrow-functions
+export function useItemClassDetails(): void
+{
+    const globalThisAny = globalThis as any;
+    const itemClassName = getItemClassName(globalThisAny.intuiface_ifd_classes ?? []);
+    const details = itemClassName != null ? globalThisAny.intuiface_ifd_element_details?.[itemClassName] : undefined;
+    if (details == null)
+    {
+        return;
+    }
+
+    globalThisAny.iaTitle = details.displayName;
+    globalThisAny.iaDescription = details.description;
+    globalThisAny.iaCategory = details.category;
+}
+
+/**
+ * @returns the class of the item, marked `if.interfaceAsset` in the descriptor: the class named after the item, or else
+ * the first described class
+ */
+// eslint-disable-next-line prefer-arrow/prefer-arrow-functions
+function getItemClassName(classNames: string[]): string | undefined
+{
+    const itemName = (globalThis as any).intuiface_ifd_name;
+    return classNames.includes(itemName) ? itemName : classNames[0];
+}
+
 // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
 export function buildSchemas(classNames: string[], buildType: BuildType): Record<string, unknown>
 {
@@ -143,9 +239,7 @@ export function buildResources(classNames: string[], buildType: BuildType): Reco
         resources[name] = resource;
     }
 
-    const primaryResourceName = resources[globalThisAny.intuiface_ifd_name]
-        ? globalThisAny.intuiface_ifd_name
-        : classNames[0];
+    const primaryResourceName = getItemClassName(classNames);
     const primaryResource = primaryResourceName ? resources[primaryResourceName] : undefined;
 
     if (primaryResource)

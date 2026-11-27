@@ -1,4 +1,6 @@
 /* eslint-disable prefer-arrow/prefer-arrow-functions */
+import { registerElementClass } from './build-registry';
+
 /**
  * Options to configure `@Inject` decorator.
  */
@@ -107,8 +109,7 @@ export function DoNotInjectMethod() {
  *
  * An asset class must extends {@link IntuifaceElement}.
  *
- * @param options Options of the asset (name, display name, description, ...) The option 'name' is important to match the class name. And this can be use in a property to declare its type as another class name. 
- * For this see {@link IPropertyOptions | `itemType`}.
+ * @param options Options of the asset (name, display name, description, ...) The option 'name' is important to match the class name.
  *
  * @example Skeleton of an interface asset class:
  * ```ts
@@ -212,26 +213,10 @@ export function Asset(options?: IElementOptions): (cls: any) => any
             globalThis.intuiface_ifd_actions[targetName] = {};
         }
 
-        registerElementClass(targetName, ctor);
+        // For intuiface-cli: the descriptor lists the members the class inherits from its parent classes (the member
+        // decorators file them under the class that declares them), and takes its title from the class of the item
+        registerElementClass(targetName, ctor, { displayName: options.displayName, description: options.description, category: options.category });
     };
-}
-
-/**
- * Record the class of an element for intuiface-cli: the descriptor of the element also lists the properties, actions and
- * triggers the class inherits from its parent classes, as the Player does. The decorators of a member file it under the
- * class that declares it, so the CLI needs the class to walk its parents.
- *
- * Only when intuiface-cli builds the item: the Player uses its own core.
- * @param name name of the element (`options.name`)
- * @param ctor class of the element
- */
-function registerElementClass(name: string, ctor: Function): void
-{
-    const elementClasses = (globalThis as any).intuiface_ifd_element_classes;
-    if (elementClasses != null)
-    {
-        elementClasses[name] = ctor;
-    }
 }
 
 /**
@@ -271,6 +256,7 @@ export function Collection(options?: ICollectionOptions): (cls: any) => any
             globalThis.intuiface_ifd_actions[targetName] = {};
         }
 
-        registerElementClass(targetName, ctor);
+        // As @Asset; @Collection only sets the category of the descriptor
+        registerElementClass(targetName, ctor, { category: options.category });
     };
 }
