@@ -6,13 +6,9 @@ import { isDeepStrictEqual } from 'util';
 import { WorkspaceItem } from '../types.js';
 import { DependencyUpdate, ensureMinimumDependencies } from '../utils/dependencies.js';
 import { addMissingValues, appendMissingLines, mergeJsonText, parseJsonObject, stringifyJsonLike } from '../utils/merge.js';
+import { MIN_NODE_MAJOR } from '../utils/node-version.js';
 
-/**
- * Minimum Node.js major version required by the Intuiface CLI and generated workspaces.
- * This is the single source of truth — it drives .nvmrc content, package.json engines,
- * and the startup version check in cli.ts.
- */
-export const MIN_NODE_MAJOR = 22;
+export { MIN_NODE_MAJOR };
 
 /**
  * Build toolchain of a workspace, aligned with the schematics templates.

@@ -93,6 +93,14 @@ describe('CLI commands', () =>
             }
         });
 
+        it('checks the Node.js version before loading any package (review R10)', () =>
+        {
+            const result = runCliWithPreload(dir, path.join(import.meta.dirname, 'old-node.mjs'), '--help');
+
+            expect(result.status, result.output).toBe(1);
+            expect(result.stderr).toBe('Error: Intuiface CLI requires Node.js >= 22. Currently running v18.20.0.\n');
+        });
+
         it('loads jsdom to build (checks the guard of the previous test)', () =>
         {
             runCliOrThrow(dir, 'init');
