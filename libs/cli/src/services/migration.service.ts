@@ -70,7 +70,7 @@ function detectMigrationPath(dir: string): MigrationPath
     {
         const packageJson = fs.readJsonSync(packageJsonPath, { throws: false });
         const buildScript: string = packageJson?.scripts?.build ?? '';
-        if (buildScript.includes('intuiface-cli build') && /\s-n\s/.test(buildScript))
+        if (buildScript.includes('intuiface-cli build') && getBuildScriptOption(buildScript, 'name') != null)
         {
             return 'standalone-to-workspace';
         }
@@ -79,20 +79,37 @@ function detectMigrationPath(dir: string): MigrationPath
     return 'unknown';
 }
 
+/**
+ * Options of `intuiface-cli build` read from a 2.x build script, in their short (`-n MyAsset`)
+ * and long (`--name MyAsset`, `--name=MyAsset`) forms, as the 2.x CLI accepts them.
+ */
+const BUILD_SCRIPT_OPTIONS = {
+    name: /(?:^|\s)(?:-n\s+|--name(?:\s+|=))(\S+)/,
+    type: /(?:^|\s)(?:-t\s+|--type(?:\s+|=))(\S+)/,
+    icon: /(?:^|\s)(?:-i\s+|--icon(?:\s+|=))(\S+)/
+};
+
+/**
+ * @returns the value of an option of `intuiface-cli build` in a build script, without surrounding quotes
+ */
+// eslint-disable-next-line prefer-arrow/prefer-arrow-functions
+function getBuildScriptOption(buildScript: string, option: keyof typeof BUILD_SCRIPT_OPTIONS): string | undefined
+{
+    const value = buildScript.match(BUILD_SCRIPT_OPTIONS[option])?.[1].replace(/^(['"])(.*)\1$/, '$2');
+    return value != null && value !== '' ? value : undefined;
+}
+
 // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
 function detectItemFromBuildScript(buildScript: string, dir: string): DetectedItem | undefined
 {
-    const nameMatch = buildScript.match(/(?:^|\s)-n\s+(\S+)/);
-    if (!nameMatch)
+    const name = getBuildScriptOption(buildScript, 'name');
+    if (name == null)
     {
         return undefined;
     }
 
-    const name = nameMatch[1];
-    const typeMatch = buildScript.match(/(?:^|\s)-t\s+(\S+)/);
-    const type: BuildType = typeMatch?.[1] === 'binding-converter' ? 'binding-converter' : 'interface-asset';
-    const iconMatch = buildScript.match(/(?:^|\s)-i\s+(\S+)/);
-    const explicitIcon = iconMatch?.[1];
+    const type: BuildType = getBuildScriptOption(buildScript, 'type') === 'binding-converter' ? 'binding-converter' : 'interface-asset';
+    const explicitIcon = getBuildScriptOption(buildScript, 'icon');
 
     // Detect default binding-converter icon when no explicit icon is set
     const defaultIcon = 'icon_converter_32.png';
@@ -128,6 +145,23 @@ function migrateStandaloneToWorkspace(dir: string): void
 
         spinner.succeed(`Detected ${detected.type} '${detected.name}'`);
 
+        // Files are changed from the least to the most significant for detectMigrationPath: the build script (which
+        // identifies a 2.x project) and then intuiface.workspace.json come last, so a migration that fails on the way
+        // can run again (review R3).
+        spinner.start('Updating tsconfig.json');
+        const isTsConfigUpdated = updateTsConfigForTypeScript6(dir, packageJson);
+        spinner.succeed(isTsConfigUpdated ? 'tsconfig.json updated for TypeScript 6' : 'tsconfig.json already up to date');
+
+        moveWebpackConfig(dir, detected.name, spinner);
+
+        spinner.start('Updating package.json scripts and build dependencies');
+        packageJson.scripts.build = 'npx intuiface-cli build --all';
+        packageJson.scripts['build:debug'] = 'npx intuiface-cli build --all --debug';
+        const dependenciesSummary = updateWorkspaceDependencies(packageJson);
+        fs.writeJsonSync(path.join(dir, 'package.json'), packageJson, { spaces: 2 });
+        spinner.succeed('package.json scripts updated');
+        spinner.succeed(dependenciesSummary);
+
         spinner.start(`Creating ${getWorkspaceConfigFileName()}`);
         const workspaceName: string = packageJson.name ?? path.basename(dir);
         const { name, type, entry, icon } = detected;
@@ -139,22 +173,6 @@ function migrateStandaloneToWorkspace(dir: string): void
         };
         writeWorkspaceConfig(dir, workspaceConfig);
         spinner.succeed(`${getWorkspaceConfigFileName()} created`);
-
-        spinner.start('Updating package.json scripts');
-        packageJson.scripts.build = 'npx intuiface-cli build --all';
-        packageJson.scripts['build:debug'] = 'npx intuiface-cli build --all --debug';
-        spinner.succeed('package.json scripts updated');
-
-        spinner.start('Updating build dependencies');
-        const dependenciesSummary = updateWorkspaceDependencies(packageJson);
-        fs.writeJsonSync(path.join(dir, 'package.json'), packageJson, { spaces: 2 });
-        spinner.succeed(dependenciesSummary);
-
-        spinner.start('Updating tsconfig.json');
-        const isTsConfigUpdated = updateTsConfigForTypeScript6(dir, packageJson);
-        spinner.succeed(isTsConfigUpdated ? 'tsconfig.json updated for TypeScript 6' : 'tsconfig.json already up to date');
-
-        moveWebpackConfig(dir, detected.name, spinner);
 
         spinner.indent = 0;
         spinner.succeed(`Migration to workspace mode complete.\nRun 'npm install' and 'npm run build' to install updated dependencies and build.`);
@@ -171,9 +189,8 @@ function migrateStandaloneToWorkspace(dir: string): void
 // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
 function migratePreV2(dir: string): void
 {
-    // Legacy dir resolution kept for backward compatibility (may run via npm postinstall)
-    const legacyDir = process.env.INIT_CWD ?? dir;
-
+    // `dir` is the folder detectMigrationPath looked at: the migration never reads or changes another one
+    // (it used to prefer INIT_CWD, the folder `npm run` started from, review R4).
     const spinner = ora({ text: 'Migrating project to use intuiface-cli...' }).start();
     spinner.info();
 
@@ -181,85 +198,92 @@ function migratePreV2(dir: string): void
     {
         spinner.indent = 3;
         spinner.start('Extracting information from current code');
-        const indexIFD = fs.readFileSync(`${legacyDir}/src/index_ifd.ts`);
-        const regexp = /const ia = (await import\('.\/(?<importName>\w+).js'\))|(new (?<cstrName>\w+)\(\));/g;
-
-        if (indexIFD)
+        const indexIFD = fs.readFileSync(path.join(dir, 'src', 'index_ifd.ts'), 'utf8');
+        const match = /const ia = (await import\('.\/(?<importName>\w+).js'\))|(new (?<cstrName>\w+)\(\));/.exec(indexIFD);
+        const iaName = match?.groups?.importName ?? match?.groups?.cstrName;
+        if (iaName == null || iaName === '')
         {
-            const match = regexp.exec(indexIFD.toString());
-            let iaName = '';
-            if (match?.groups)
-            {
-                iaName = match.groups.importName ?? match.groups.cstrName;
-            }
-
-            if (iaName == null || iaName === '')
-            {
-                throw new Error('Can\'t find IA name from current workspace.');
-            }
-            spinner.succeed(`Detected interface-asset: '${iaName}'`);
-
-            spinner.start(`Creating ${getWorkspaceConfigFileName()}`);
-            const workspaceName: string = path.basename(legacyDir);
-            const workspaceItem: WorkspaceItem = {
-                name: iaName,
-                type: 'interface-asset',
-                entry: `src/${iaName}.ts`
-            };
-            const workspaceConfig: WorkspaceConfig = {
-                version: 1,
-                name: workspaceName,
-                items: [workspaceItem]
-            };
-            writeWorkspaceConfig(legacyDir, workspaceConfig);
-            spinner.succeed(`${getWorkspaceConfigFileName()} created`);
-
-            spinner.start('Updating package.json scripts');
-            const packageJson = fs.readJsonSync(`${legacyDir}/package.json`, { flag: 'r' });
-            packageJson.scripts.build = 'npx intuiface-cli build --all';
-            packageJson.scripts['build:debug'] = 'npx intuiface-cli build --all --debug';
-            delete packageJson.scripts.cleanDist;
-            delete packageJson.scripts.cleanTmp;
-            spinner.succeed();
-
-            spinner.start('Updating build dependencies');
-            const dependenciesSummary = updateWorkspaceDependencies(packageJson);
-            fs.writeFileSync(`${legacyDir}/package.json`, JSON.stringify(packageJson, null, 2));
-            spinner.succeed(dependenciesSummary);
-
-            spinner.start('Updating tsconfig.json');
-            const tsconfigRaw = fs.readFileSync(`${legacyDir}/tsconfig.json`, 'utf8');
-            const tsconfig = JSON.parse(tsconfigRaw.replace(/,\s*}/g, '}').replace(/,\s*]/g, ']'));
-            tsconfig.compilerOptions.rootDir = './src';
-            tsconfig.compilerOptions.outDir = './dist';
-            tsconfig.compilerOptions.target = 'ES2022';
-            tsconfig.compilerOptions.useDefineForClassFields = false;
-            tsconfig.compilerOptions.moduleResolution = 'bundler';
-            delete tsconfig.compilerOptions.downlevelIteration;
-            if (tsconfig.compilerOptions.types == null && hasNodeTypes(packageJson))
-            {
-                tsconfig.compilerOptions.types = ['node'];
-            }
-            tsconfig.include = ['**/src/**/*.ts'];
-            fs.writeFileSync(`${legacyDir}/tsconfig.json`, JSON.stringify(tsconfig, null, 2));
-            spinner.succeed();
-
-            spinner.start('Removing unused files');
-            fs.removeSync(`${legacyDir}/src/index_ifd.ts`);
-            fs.removeSync(`${legacyDir}/src/index.js`);
-            if (fs.existsSync(`${legacyDir}/src/package.json`))
-            {
-                fs.removeSync(`${legacyDir}/src/package.json`);
-            }
-            fs.removeSync(`${legacyDir}/tsconfig.ifd.json`);
-            fs.removeSync(`${legacyDir}/dist`);
-            spinner.succeed();
-
-            moveWebpackConfig(legacyDir, iaName, spinner);
-
-            spinner.indent = 0;
-            spinner.succeed(`Migration to workspace mode complete.\nRun 'npm install' and 'npm run build' to install updated dependencies and build.`);
+            throw new Error('Can\'t find IA name from current workspace.');
         }
+
+        // Everything that can fail to parse is read before the first change (review R3).
+        // tsconfig.json is read with TypeScript's parser: comments and trailing commas are allowed (review R7).
+        const packageJson = fs.readJsonSync(path.join(dir, 'package.json'));
+        const project = readTsConfig(dir);
+        if (project == null)
+        {
+            throw new Error('tsconfig.json not found.');
+        }
+        spinner.succeed(`Detected interface-asset: '${iaName}'`);
+
+        spinner.start('Updating tsconfig.json');
+        const tsconfig = project.tsconfig as { compilerOptions?: Record<string, unknown>; include?: string[] };
+        const compilerOptions = tsconfig.compilerOptions ?? {};
+        compilerOptions.rootDir = './src';
+        compilerOptions.outDir = './dist';
+        compilerOptions.target = 'ES2022';
+        compilerOptions.useDefineForClassFields = false;
+        compilerOptions.moduleResolution = 'bundler';
+        delete compilerOptions.downlevelIteration;
+        if (compilerOptions.types == null && hasNodeTypes(packageJson))
+        {
+            compilerOptions.types = ['node'];
+        }
+        tsconfig.compilerOptions = compilerOptions;
+        tsconfig.include = ['**/src/**/*.ts'];
+        fs.writeFileSync(project.path, JSON.stringify(tsconfig, null, 2));
+        spinner.succeed();
+
+        moveWebpackConfig(dir, iaName, spinner);
+
+        spinner.start('Updating package.json scripts');
+        packageJson.scripts ??= {};
+        packageJson.scripts.build = 'npx intuiface-cli build --all';
+        packageJson.scripts['build:debug'] = 'npx intuiface-cli build --all --debug';
+        delete packageJson.scripts.cleanDist;
+        delete packageJson.scripts.cleanTmp;
+        spinner.succeed();
+
+        spinner.start('Updating build dependencies');
+        const dependenciesSummary = updateWorkspaceDependencies(packageJson);
+        fs.writeFileSync(path.join(dir, 'package.json'), JSON.stringify(packageJson, null, 2));
+        spinner.succeed(dependenciesSummary);
+
+        spinner.start('Removing unused files');
+        fs.removeSync(path.join(dir, 'src', 'index.js'));
+        fs.removeSync(path.join(dir, 'src', 'package.json'));
+        fs.removeSync(path.join(dir, 'tsconfig.ifd.json'));
+        fs.removeSync(path.join(dir, 'dist'));
+        spinner.succeed();
+
+        // index_ifd.ts identifies a pre-v2 project and intuiface.workspace.json a migrated one: they are changed last,
+        // and the workspace config is removed again when index_ifd.ts cannot be, so a migration that fails on the way
+        // can run again (review R3).
+        spinner.start(`Creating ${getWorkspaceConfigFileName()}`);
+        const workspaceItem: WorkspaceItem = {
+            name: iaName,
+            type: 'interface-asset',
+            entry: `src/${iaName}.ts`
+        };
+        const workspaceConfig: WorkspaceConfig = {
+            version: 1,
+            name: path.basename(dir),
+            items: [workspaceItem]
+        };
+        writeWorkspaceConfig(dir, workspaceConfig);
+        try
+        {
+            fs.removeSync(path.join(dir, 'src', 'index_ifd.ts'));
+        }
+        catch (error)
+        {
+            fs.removeSync(path.join(dir, getWorkspaceConfigFileName()));
+            throw error;
+        }
+        spinner.succeed(`${getWorkspaceConfigFileName()} created`);
+
+        spinner.indent = 0;
+        spinner.succeed(`Migration to workspace mode complete.\nRun 'npm install' and 'npm run build' to install updated dependencies and build.`);
     }
     catch (error)
     {

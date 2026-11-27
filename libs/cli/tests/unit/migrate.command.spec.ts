@@ -105,8 +105,6 @@ describe('migrate command', () =>
         dir = createTempDir('cli-migrate');
         restoreCwd = useCwd(dir);
         vi.mocked(ora).mockClear();
-        // npm sets INIT_CWD when the tests run through npm/npx; the pre-v2 migration reads it first
-        vi.stubEnv('INIT_CWD', dir);
     });
 
     afterEach(() =>
@@ -317,6 +315,55 @@ describe('migrate command', () =>
             }]);
         });
 
+        it('reads the long options of the build script (review R6)', () =>
+        {
+            writeFiles(dir, { 'package.json': standalonePackageJson('npx intuiface-cli build --type binding-converter --icon=./assets/icon.png --name MyConverter') });
+
+            runMigrateCommand();
+
+            expect(fs.readJsonSync(path.join(dir, 'intuiface.workspace.json')).items).toEqual([{
+                name: 'MyConverter',
+                type: 'binding-converter',
+                entry: 'src/MyConverter.ts',
+                icon: './assets/icon.png'
+            }]);
+        });
+
+        it('reads --name=<name> and a quoted value in the build script (review R6)', () =>
+        {
+            writeFiles(dir, { 'package.json': standalonePackageJson('npx intuiface-cli build --name=MyAsset --type "interface-asset"') });
+
+            runMigrateCommand();
+
+            expect(fs.readJsonSync(path.join(dir, 'intuiface.workspace.json')).items).toEqual([{
+                name: 'MyAsset',
+                type: 'interface-asset',
+                entry: 'src/MyAsset.ts'
+            }]);
+        });
+
+        it('changes nothing when tsconfig.json cannot be read, and can run again once it is fixed (review R3)', () =>
+        {
+            writeFiles(dir, {
+                'package.json': standalonePackageJson('npx intuiface-cli build -n MyAsset'),
+                'tsconfig.json': '{ "compilerOptions": ',
+                'webpack.config.js': 'module.exports = {};'
+            });
+            const packageJsonBefore = fs.readFileSync(path.join(dir, 'package.json'), 'utf8');
+            mockProcessExit();
+
+            expect(() => runMigrateCommand()).toThrow('process.exit(-2)');
+            expect(fs.existsSync(path.join(dir, 'intuiface.workspace.json'))).toBe(false);
+            expect(fs.readFileSync(path.join(dir, 'package.json'), 'utf8')).toBe(packageJsonBefore);
+            expect(fs.existsSync(path.join(dir, 'webpack.config.js'))).toBe(true);
+
+            writeFiles(dir, { 'tsconfig.json': legacyTsConfig });
+            runMigrateCommand();
+
+            expect(fs.readJsonSync(path.join(dir, 'intuiface.workspace.json')).items[0].name).toBe('MyAsset');
+            expect(fs.readJsonSync(path.join(dir, 'package.json')).scripts.build).toBe('npx intuiface-cli build --all');
+        });
+
         it('names the workspace after the folder when package.json has no name', () =>
         {
             const packageJson = standalonePackageJson('npx intuiface-cli build -n MyAsset');
@@ -505,6 +552,72 @@ describe('migrate command', () =>
             expect(() => runMigrateCommand()).toThrow('process.exit(-2)');
             expect(fs.existsSync(path.join(dir, 'intuiface.workspace.json'))).toBe(false);
             expect(fs.existsSync(path.join(dir, 'src', 'index_ifd.ts'))).toBe(true);
+        });
+
+        it('reads a tsconfig.json with comments (review R7)', () =>
+        {
+            writePreV2Project(`const ia = await import('./OldAsset.js');\n`);
+            writeFiles(dir, { 'tsconfig.json': '{\n  // compiler options\n  "compilerOptions": {\n    /* old target */\n    "target": "es2017"\n  }\n}\n' });
+
+            runMigrateCommand();
+
+            expect(fs.readJsonSync(path.join(dir, 'tsconfig.json')).compilerOptions).toMatchObject({ target: 'ES2022', rootDir: './src' });
+            expect(fs.readJsonSync(path.join(dir, 'intuiface.workspace.json')).items[0].name).toBe('OldAsset');
+        });
+
+        it('changes nothing when tsconfig.json cannot be read, and can run again once it is fixed (review R3)', () =>
+        {
+            writePreV2Project(`const ia = await import('./OldAsset.js');\n`);
+            writeFiles(dir, { 'tsconfig.json': '{ "compilerOptions": ' });
+            const packageJsonBefore = fs.readFileSync(path.join(dir, 'package.json'), 'utf8');
+            mockProcessExit();
+
+            expect(() => runMigrateCommand()).toThrow('process.exit(-2)');
+            expect(fs.existsSync(path.join(dir, 'intuiface.workspace.json'))).toBe(false);
+            expect(fs.readFileSync(path.join(dir, 'package.json'), 'utf8')).toBe(packageJsonBefore);
+            for (const kept of ['src/index_ifd.ts', 'src/index.js', 'tsconfig.ifd.json', 'webpack.config.js', 'dist'])
+            {
+                expect(fs.existsSync(path.join(dir, kept)), kept).toBe(true);
+            }
+
+            writeFiles(dir, { 'tsconfig.json': '{ "compilerOptions": { "target": "es2017" } }' });
+            runMigrateCommand();
+
+            expect(fs.readJsonSync(path.join(dir, 'intuiface.workspace.json')).items[0].name).toBe('OldAsset');
+            expect(fs.existsSync(path.join(dir, 'src', 'index_ifd.ts'))).toBe(false);
+        });
+
+        it('stops when tsconfig.json is missing, without changing the project (review R3)', () =>
+        {
+            writePreV2Project(`const ia = await import('./OldAsset.js');\n`);
+            fs.removeSync(path.join(dir, 'tsconfig.json'));
+            mockProcessExit();
+
+            expect(() => runMigrateCommand()).toThrow('process.exit(-2)');
+            expect(fs.existsSync(path.join(dir, 'intuiface.workspace.json'))).toBe(false);
+            expect(fs.existsSync(path.join(dir, 'src', 'index_ifd.ts'))).toBe(true);
+        });
+
+        it('migrates the current folder, not the folder npm started from (review R4)', () =>
+        {
+            const npmStartDir = createTempDir('cli-migrate-init-cwd');
+            try
+            {
+                writePreV2Project(`const ia = await import('./OldAsset.js');\n`);
+                writeFiles(npmStartDir, { 'package.json': { name: 'parent', scripts: { migrate: 'cd sub && intuiface-cli migrate' } } });
+                const parentPackageJson = fs.readFileSync(path.join(npmStartDir, 'package.json'), 'utf8');
+                vi.stubEnv('INIT_CWD', npmStartDir);
+
+                runMigrateCommand();
+
+                expect(fs.readJsonSync(path.join(dir, 'intuiface.workspace.json')).items[0].name).toBe('OldAsset');
+                expect(fs.readdirSync(npmStartDir)).toEqual(['package.json']);
+                expect(fs.readFileSync(path.join(npmStartDir, 'package.json'), 'utf8')).toBe(parentPackageJson);
+            }
+            finally
+            {
+                removeTempDir(npmStartDir);
+            }
         });
     });
 });
