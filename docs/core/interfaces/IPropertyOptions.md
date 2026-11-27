@@ -82,7 +82,9 @@ It can be:
 - `Array`
 - Class name of a [convertible type](IConvertibleType.md) (`Color`, `Font`, `Path`, `Resource`, `Time`)
 - Enum type
-- Class name of another class you created
+- Class name of another class you created. When this class extends [Watchable](../classes/Watchable.md), its properties
+  (declared with `@Property`, also in its parent classes) are described in the descriptor file (.ifd), without
+  the need of [\`@Asset\`](../functions/Asset.md) on it.
 
 ***
 
@@ -93,7 +95,9 @@ It can be:
 The item type in case the type is `Array`.
 It's optional but useful in interface assets to display item's properties in Intuiface Composer.
 It can be:
- - Class name
+ - Class name of a class you created. When this class extends [Watchable](../classes/Watchable.md), its properties (declared with
+   `@Property`, also in its parent classes) are described in the descriptor file (.ifd), without the need of
+   [\`@Asset\`](../functions/Asset.md) on it.
  - `String`
  - `Number`
  - `Boolean`
