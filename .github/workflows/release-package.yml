@@ -32,6 +32,9 @@ jobs:
           fi
 
       - uses: actions/checkout@v7
+        with:
+          # The converter icon template (*.png) is stored in Git LFS: without it, the 128-byte pointer is published
+          lfs: true
       - uses: actions/setup-node@v7
         with:
           node-version: 24
@@ -66,9 +69,3 @@ jobs:
 
       - name: Publish cli to npmjs packages
         run: npm publish dist/libs/cli --access public --tag ${{ steps.mode.outputs.tag }}
-
-      - name: Publish interface-asset to npmjs packages
-        run: npm publish dist/libs/tools/interface-asset-schematics --access public --tag ${{ steps.mode.outputs.tag }}
-
-      - name: Publish binding-converter to npmjs packages
-        run: npm publish dist/libs/tools/binding-converter-schematics --access public --tag ${{ steps.mode.outputs.tag }}

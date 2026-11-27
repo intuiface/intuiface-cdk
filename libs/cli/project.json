@@ -17,6 +17,7 @@
             "options": {
                 "commands": [
                     "nx run cli:process-build",
+                    "node -e \"require('fs').cpSync('libs/cli/src/templates','dist/libs/cli/src/templates',{ recursive: true, force: true })\"",
                     "chmod +x dist/libs/cli/src/cli.js || exit 0"
                 ],
                 "parallel": false
@@ -42,6 +43,24 @@
         },
         "lint": {
             "executor": "@nx/eslint:lint"
+        },
+        "test": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "vitest run --config libs/cli/vitest.config.mts"
+            }
+        },
+        "e2e": {
+            "executor": "nx:run-commands",
+            "dependsOn": [
+                {
+                    "projects": ["core", "cli"],
+                    "target": "build"
+                }
+            ],
+            "options": {
+                "command": "vitest run --config libs/cli/vitest.e2e.config.mts"
+            }
         }
     }
 }

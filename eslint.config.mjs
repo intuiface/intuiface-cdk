@@ -13,6 +13,11 @@ const namingConvention = [
     'error',
     {
         selector: 'variable',
+        modifiers: ['const'],
+        format: ['camelCase', 'UPPER_CASE']
+    },
+    {
+        selector: 'variable',
         format: ['camelCase']
     },
     {
@@ -82,7 +87,11 @@ export default [
             '**/node_modules/*',
             '**/dist/*',
             '**/*.mjs',
-            'libs/tools/schematics/**/src/*/files/**'
+            'tmp/**',
+            'libs/cli/src/templates/**',
+            'libs/cli/tests/fixtures/**',
+            'libs/tools/schematics/**/src/*/files/**',
+            'libs/tools/schematics/**/src/workspace-template/**'
         ]
     },
     {
@@ -373,7 +382,7 @@ export default [
     },
     {
         files: [
-            'libs/cli/src/cli.ts',
+            'libs/cli/src/**/*.ts',
             'libs/components/src/lib/base/collection.component.ts',
             'libs/components/src/lib/base/element.component.ts',
             'libs/components/src/lib/behaviors/**/*.ts',

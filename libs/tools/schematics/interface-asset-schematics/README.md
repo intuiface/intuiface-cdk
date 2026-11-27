@@ -5,44 +5,81 @@
 </p>
 
 # Interface Asset Schematics 
-This article describes how to design an interface asset, build it, and generate an IFD for use in Intuiface Composer
+This package is deprecated. Please use the CLI workflow (`@intuiface/cli`) for new projects.
+
+This article explains the deprecation status and points to the CLI replacement for creating and building interface assets.
 
 ## Table of contents
 
 - [Prerequisites](#prerequisites)
-- [Install](#install)
-- [Usage](#usage)
+- [CLI replacement](#cli-replacement)
+- [Legacy usage (deprecated)](#legacy-usage-deprecated)
+- [Move an existing project to the CLI](#move-an-existing-project-to-the-cli)
 - [Help](#help)
 
 ## Prerequisites
 
 - [NodeJS](https://nodejs.org/) so you can use NPM to manage your project’s dependencies
 - [Visual Studio Code](https://code.visualstudio.com/) to code, build, and test your project
-- [Angular Schematics CLI](https://www.npmjs.com/package/@angular-devkit/schematics-cli). Install it using NPM:  
-`npm install -g @angular-devkit/schematics-cli`
 
-## Usage
-First, inside a new folder, install the `interface-asset` schematics:
+## CLI replacement
+
+Create new projects with the Intuiface CLI (`@intuiface/cli`). In a terminal, run these commands one at a time:
+
+```bash
+mkdir my-intuiface-workspace
+cd my-intuiface-workspace
+npm install @intuiface/cli
+npx intuiface-cli init
+```
+
+- `mkdir` and `cd` create an empty folder for your project and go into it.
+- `npm install @intuiface/cli` installs the CLI in this folder. Do not skip it: `npx intuiface-cli` only works in a folder where the CLI is installed.
+- `init` asks for a name for the workspace and for your first interface asset (name, category, optional icon), creates the files and installs what the project needs.
+
+Write your interface asset in the `.ts` file `init` created, then build it with `npm run build`: the result goes to the `dist/` folder.
+
+To create the workspace without questions (for example in a script), replace `npx intuiface-cli init` with:
+
+```bash
+npx intuiface-cli init -n my-intuiface-workspace
+npm install
+npx intuiface-cli add interface-asset -n MyInterfaceAsset -c Custom
+npm run build
+```
+
+CLI documentation: [/libs/cli/README.md](/libs/cli/README.md)
+
+## Legacy usage (deprecated)
+
+If you still maintain existing schematics-based projects, the old flow remains:
+
 ```
 npm install @intuiface/interface-asset
-```
-
-Then initialize your interface asset workspace by using the schematics:  
-```
 schematics @intuiface/interface-asset:create
 ``` 
-It will prompt you for the interface-asset name and then will create all files.
+It prompts for the interface-asset name and creates files.
 
 ⚠️ Please use only alphanumeric characters in the name of your interface-asset (no "-", no special characters, etc). The schematics will accept it but may fail when you try to build your project.
 
 After installation is complete, restart VSCode if you want the code analyzer running. You can use the command `npm run lint` if you want to run the code analyzer manually. We provide automatic linting (code analyzing) in VSCode through the `settings.json` file in the `.vscode` folder.
 
-Develop your interface asset using the skeleton or read the documentation for [Intuiface Core](/docs/core/README.md)
+Develop your interface asset using the skeleton or read the documentation for [Intuiface Core](/docs/core/README.md).
 
-Then run `npm run build` to build for production or `npm run build:debug` to debug your interface asset. You can use the [Command Line](/libs/cli/README.md).
+Then run `npm run build` to build for production or `npm run build:debug` to debug your interface asset.
 
-## Migrate project (<2.x) to use `intuiface-cli`
-Intuiface CDK v2.0.0 introduce a new command line tool [`intuiface-cli`](/libs/cli/README.md) to better handle building interface asset and generating descriptor file. You can migrate your old project to use the new CLI by following the [migration guide](/libs/cli/README.md#migration-to-v2)
+## Move an existing project to the CLI
+
+A project created with these schematics, or with an older CDK, can be turned into a CLI workspace: it keeps building as before, and you can add more interface assets or binding converters to it. Save a copy of the project (or commit it), then run in its folder:
+
+```bash
+npm install @intuiface/cli@latest
+npx intuiface-cli migrate
+npm install
+npm run build
+```
+
+Your code stays where it is. For a project created with the CDK 1.x, and for what `migrate` changes, see [Migrate an existing project](/libs/cli/README.md#migrate-an-existing-project).
 
 ## Help
 

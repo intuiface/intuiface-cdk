@@ -9,6 +9,12 @@
     "type": "module",
     "license": "MIT",
     "dependencies": {
+        "chalk": "^6.0.0",
+        "commander": "^15.0.0",
+        "fs-extra": "9.1.0",
+        "jsdom": "^30.0.1",
+        "ora": "^9.4.1",
+        "tslib": "^2.6.2",
         "typescript": "6.0.3"
     }
 }
