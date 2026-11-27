@@ -66,6 +66,8 @@ export async function resetBuildMetadata(target: BuildTarget): Promise<void>
     globalThisAny.intuiface_ifd_actions = {};
     globalThisAny.intuiface_ifd_params = {};
     globalThisAny.intuiface_ifd_triggers = {};
+    // Classes of the @Asset and @Collection elements, by name, recorded by @intuiface/core (see addInheritedMembers)
+    globalThisAny.intuiface_ifd_element_classes = {};
     globalThisAny.iaTitle = undefined;
     globalThisAny.iaDescription = undefined;
     globalThisAny.iaCategory = undefined;

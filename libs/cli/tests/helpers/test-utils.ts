@@ -130,6 +130,8 @@ export const resetIfdGlobals = (name: string, buildType: 'interface-asset' | 'bi
         intuiface_ifd_params: {},
         // eslint-disable-next-line camelcase
         intuiface_ifd_triggers: {},
+        // eslint-disable-next-line camelcase
+        intuiface_ifd_element_classes: {},
         iaTitle: undefined,
         iaDescription: undefined,
         iaCategory: undefined

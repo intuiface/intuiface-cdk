@@ -19,6 +19,75 @@ export function getWorkspaceCategory(): string | undefined
         : undefined;
 }
 
+/** Globals the member decorators fill: the members of each class, under the name of the class that declares them. */
+const MEMBER_REGISTRIES = ['intuiface_ifd_properties', 'intuiface_ifd_actions', 'intuiface_ifd_triggers'] as const;
+
+type MemberRegistry = Record<string, Record<string, unknown> | undefined>;
+
+/**
+ * Add to each element (`@Asset`, `@Collection`) the properties, actions and triggers declared by its parent classes,
+ * which the Player gives it too: `@Property`, `@Action` and `@Trigger` file a member under the class that declares it,
+ * and the descriptor of an element only listed the members of its own class.
+ *
+ * A member declared by the class wins over a member of the same name in a parent class, and a parent over a farther
+ * one. The own members come first, then those of each parent, nearest first.
+ *
+ * Needs the classes @intuiface/core records in `intuiface_ifd_element_classes` (from the version released with this
+ * CLI): with an older core, nothing changes.
+ * Behaviors (`behaviors` of `@Asset`) are not exposed in the CDK: their members are not added.
+ */
+// eslint-disable-next-line prefer-arrow/prefer-arrow-functions
+export function addInheritedMembers(): void
+{
+    const globalThisAny = globalThis as any;
+    const elementClasses: Record<string, unknown> = globalThisAny.intuiface_ifd_element_classes ?? {};
+
+    for (const registryName of MEMBER_REGISTRIES)
+    {
+        const registry: MemberRegistry = globalThisAny[registryName] ?? {};
+        // Computed for every element before any is replaced: a parent class may itself be an element
+        const resolved = Object.entries(elementClasses)
+            .filter((entry): entry is [string, Function] => typeof entry[1] === 'function')
+            .map(([name, ctor]) => [name, collectMembers(registry, ctor, name)] as const);
+        for (const [name, members] of resolved)
+        {
+            registry[name] = members;
+        }
+        globalThisAny[registryName] = registry;
+    }
+}
+
+/**
+ * @param registry members of each class, by class name
+ * @param ctor class to collect the members of
+ * @param elementName name the element is registered with (`options.name` of `@Asset`), which should be the class name
+ * @returns the members of the class, then those of its parents not declared by the class
+ */
+// eslint-disable-next-line prefer-arrow/prefer-arrow-functions
+function collectMembers(registry: MemberRegistry, ctor: Function, elementName?: string): Record<string, unknown>
+{
+    const members: Record<string, unknown> = {};
+    const names = elementName != null && elementName !== ctor.name ? [elementName, ctor.name] : [ctor.name];
+
+    let current: unknown = ctor;
+    while (typeof current === 'function' && current !== Function.prototype)
+    {
+        for (const name of current === ctor ? names : [current.name])
+        {
+            for (const [key, member] of Object.entries(registry[name] ?? {}))
+            {
+                if (!Object.prototype.hasOwnProperty.call(members, key))
+                {
+                    members[key] = member;
+                }
+            }
+        }
+        current = Object.getPrototypeOf(current);
+    }
+
+    return members;
+}
+
 // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
 export function buildSchemas(classNames: string[], buildType: BuildType): Record<string, unknown>
 {

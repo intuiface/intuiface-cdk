@@ -267,6 +267,32 @@ describe('workspace build (init → add → build --all)', () =>
         });
     });
 
+    describe('members inherited from a parent class', () =>
+    {
+        it('lists the properties, actions and triggers of the parent class in the descriptor of each item, as the Player gives them', () =>
+        {
+            // Barometer and Thermostat extend src/shared/sensor.ts, which has no @Asset
+            for (const name of ['Barometer', 'Thermostat'])
+            {
+                const ifd = readIfd(dir, name);
+                expect(ifd.schemas[name].properties.sensorName, name).toMatchObject({ type: 'string', title: 'Sensor name', default: 'Sensor' });
+                // The id names the item being built (here the second one), not the class that declares the action
+                expect(ifd.resources[name].methods.calibrate, name).toMatchObject({ id: `${name}.calibrate`, title: 'Calibrate' });
+                expect(ifd.resources[name].events.calibrated, name).toMatchObject({ id: 'calibrated', title: 'Calibrated' });
+                expect(ifd.schemas.Sensor, name).toBeUndefined();
+            }
+        });
+
+        it('keeps a member the class declares again over the one of its parent, and lists its own members first', () =>
+        {
+            expect(readIfd(dir, 'Barometer').schemas.Barometer.properties.unit).toMatchObject({ title: 'Sensor unit', default: '' });
+            expect(readIfd(dir, 'Thermostat').schemas.Thermostat.properties.unit).toMatchObject({ title: 'Unit', default: 'C' });
+            expect(Object.keys(readIfd(dir, 'Thermostat').schemas.Thermostat.properties))
+                .toEqual(['target', 'unit', 'heating', 'displayText', 'history', 'sensorName']);
+            expect(Object.keys(readIfd(dir, 'Thermostat').resources.Thermostat.methods)).toEqual(['setTarget', 'calibrate']);
+        });
+    });
+
     /**
      * The built items, loaded as the Intuiface Player loads them: with its Module Federation runtime, and the
      * @intuiface/core the host shares (see player-host/player-host.mjs). Only the Player itself can check its own core.

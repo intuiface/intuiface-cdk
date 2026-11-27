@@ -212,7 +212,26 @@ export function Asset(options?: IElementOptions): (cls: any) => any
             globalThis.intuiface_ifd_actions[targetName] = {};
         }
 
+        registerElementClass(targetName, ctor);
     };
+}
+
+/**
+ * Record the class of an element for intuiface-cli: the descriptor of the element also lists the properties, actions and
+ * triggers the class inherits from its parent classes, as the Player does. The decorators of a member file it under the
+ * class that declares it, so the CLI needs the class to walk its parents.
+ *
+ * Only when intuiface-cli builds the item: the Player uses its own core.
+ * @param name name of the element (`options.name`)
+ * @param ctor class of the element
+ */
+function registerElementClass(name: string, ctor: Function): void
+{
+    const elementClasses = (globalThis as any).intuiface_ifd_element_classes;
+    if (elementClasses != null)
+    {
+        elementClasses[name] = ctor;
+    }
 }
 
 /**
@@ -252,5 +271,6 @@ export function Collection(options?: ICollectionOptions): (cls: any) => any
             globalThis.intuiface_ifd_actions[targetName] = {};
         }
 
+        registerElementClass(targetName, ctor);
     };
 }

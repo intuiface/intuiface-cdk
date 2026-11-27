@@ -1,7 +1,8 @@
+/* eslint-disable max-classes-per-file -- a class hierarchy is the input of addInheritedMembers */
 import fs from 'fs-extra';
 import path from 'path';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { buildIFDFile, buildResources, buildSchemas, getWorkspaceCategory, writeIFDFile } from '../../src/services/descriptor.service.js';
+import { addInheritedMembers, buildIFDFile, buildResources, buildSchemas, getWorkspaceCategory, writeIFDFile } from '../../src/services/descriptor.service.js';
 import { createTempDir, removeTempDir, resetIfdGlobals, useCwd, writeFiles } from '../helpers/test-utils.js';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -133,6 +134,87 @@ describe('descriptor.service', () =>
             writeFiles(dir, { 'package.json': { name: 'ws', intuiface: { category: 'Legacy' } } });
 
             expect(buildIFDFile('Gauge', 'interface-asset', {}, {})['if.category']).toBe('Dataviz');
+        });
+    });
+
+    describe('members inherited from parent classes', () =>
+    {
+        // The member decorators file each member under the class that declares it (`target.constructor.name`)
+        class Device {}
+        class Sensor extends Device {}
+        class Barometer extends Sensor {}
+
+        beforeEach(() =>
+        {
+            resetIfdGlobals('Barometer', 'interface-asset');
+            Object.assign(globalThisAny.intuiface_ifd_properties, {
+                Device: { serial: { title: 'Serial' }, unit: { title: 'Device unit' } },
+                Sensor: { unit: { title: 'Sensor unit' }, value: { title: 'Value' } },
+                Barometer: { pressure: { title: 'Pressure' }, value: { title: 'Pressure value' } }
+            });
+            Object.assign(globalThisAny.intuiface_ifd_actions, {
+                Device: { restart: { id: 'Barometer.restart', title: 'Restart' } },
+                Barometer: {}
+            });
+            Object.assign(globalThisAny.intuiface_ifd_triggers, {
+                Sensor: { changed: { id: 'changed', title: 'Changed' } },
+                Barometer: {}
+            });
+            globalThisAny.intuiface_ifd_classes.push('Barometer');
+            // Recorded by @Asset
+            globalThisAny.intuiface_ifd_element_classes.Barometer = Barometer;
+        });
+
+        it('lists the properties, actions and triggers of every parent class (Player behavior)', () =>
+        {
+            addInheritedMembers();
+
+            const schema = buildSchemas(globalThisAny.intuiface_ifd_classes, 'interface-asset').Barometer as { properties: object };
+            const resource = buildResources(globalThisAny.intuiface_ifd_classes, 'interface-asset').Barometer;
+            expect(Object.keys(schema.properties)).toEqual(['pressure', 'value', 'unit', 'serial']);
+            expect(resource.methods).toEqual({ restart: { id: 'Barometer.restart', title: 'Restart' } });
+            expect(resource.events).toEqual({ changed: { id: 'changed', title: 'Changed' } });
+        });
+
+        it('keeps the member a class declares over the one of a parent, and a parent over a farther one', () =>
+        {
+            addInheritedMembers();
+
+            expect(globalThisAny.intuiface_ifd_properties.Barometer.value).toEqual({ title: 'Pressure value' });
+            expect(globalThisAny.intuiface_ifd_properties.Barometer.unit).toEqual({ title: 'Sensor unit' });
+        });
+
+        it('lists a parent that is itself an element with its own members and those of its parents only', () =>
+        {
+            globalThisAny.intuiface_ifd_classes.push('Sensor');
+            globalThisAny.intuiface_ifd_element_classes.Sensor = Sensor;
+
+            addInheritedMembers();
+
+            expect(Object.keys(globalThisAny.intuiface_ifd_properties.Sensor)).toEqual(['unit', 'value', 'serial']);
+            expect(Object.keys(globalThisAny.intuiface_ifd_properties.Barometer)).toEqual(['pressure', 'value', 'unit', 'serial']);
+        });
+
+        it('reads the members of a class registered with another name', () =>
+        {
+            // @Asset({ name: 'MyBarometer' }) on class Barometer: the member decorators use the class name
+            delete globalThisAny.intuiface_ifd_element_classes.Barometer;
+            globalThisAny.intuiface_ifd_element_classes.MyBarometer = Barometer;
+            globalThisAny.intuiface_ifd_properties.MyBarometer = {};
+
+            addInheritedMembers();
+
+            expect(Object.keys(globalThisAny.intuiface_ifd_properties.MyBarometer)).toEqual(['pressure', 'value', 'unit', 'serial']);
+        });
+
+        it('changes nothing without the classes an older @intuiface/core does not record', () =>
+        {
+            delete globalThisAny.intuiface_ifd_element_classes;
+            const before = structuredClone(globalThisAny.intuiface_ifd_properties);
+
+            addInheritedMembers();
+
+            expect(globalThisAny.intuiface_ifd_properties).toEqual(before);
         });
     });
 
