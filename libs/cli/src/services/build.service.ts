@@ -25,6 +25,23 @@ export function cleanBuildFolders(dir: string, outputDir: string | undefined): v
     }
 }
 
+/**
+ * Folder of `tmp/` the JavaScript of an item is compiled to, for Node.js to load it and generate its descriptor.
+ *
+ * Each item has its own folder (review O16). Node.js caches ES modules by URL: with one folder for every item, a module
+ * shared by two items of `build --all` (e.g. a class with `@Asset` used as `itemType`) was evaluated for the first item
+ * only, and the next ones got it from the cache. Its decorators did not run again after {@link resetBuildMetadata}, so
+ * the descriptor of the next items missed what it declares. Each item now loads its own copy, as its bundle has one.
+ * @param tmpDir the `tmp/` folder of the workspace
+ * @param itemName name of the item
+ */
+// eslint-disable-next-line prefer-arrow/prefer-arrow-functions
+export function getItemModuleDir(tmpDir: string, itemName: string): string
+{
+    // Workspace item names are letters and digits; the name given to a build outside a workspace is not checked
+    return path.join(tmpDir, itemName.replace(/[^A-Za-z0-9_-]/g, '_'));
+}
+
 /** Globals copied from a JSDOM window: the next build replaces them with those of its own window. */
 const jsdomGlobalKeys = new Set<string>();
 

@@ -17,6 +17,7 @@ import {
 import { validateIconPath } from '../utils/validators.js';
 import {
     cleanBuildFolders,
+    getItemModuleDir,
     resetBuildMetadata,
     transpileTypeScript,
     resolveBuildIcon,
@@ -192,7 +193,8 @@ async function buildTarget(target: BuildTarget, debug?: boolean): Promise<void>
         await resetBuildMetadata(target);
 
         spinner.start('Compiling TypeScript...');
-        const transpiledEntryPath = transpileTypeScript(path.join(dir, 'tsconfig.json'), path.join(dir, target.entryFile), tmpDir, spinner);
+        const moduleDir = getItemModuleDir(tmpDir, target.name);
+        const transpiledEntryPath = transpileTypeScript(path.join(dir, 'tsconfig.json'), path.join(dir, target.entryFile), moduleDir, spinner);
         if (transpiledEntryPath == null)
         {
             spinner.fail(`Fail generating IFD file for ${target.name}. Please check the entry file and try again (${target.entryFile} is not compiled: it must exist and be included by tsconfig.json).`);
@@ -201,6 +203,7 @@ async function buildTarget(target: BuildTarget, debug?: boolean): Promise<void>
         }
         spinner.succeed('TypeScript compiled.');
 
+        // Also applies to the item folder, under tmp/
         fs.writeFileSync(path.join(tmpDir, 'package.json'), JSON.stringify({ type: 'module' }, null, 2));
 
         spinner.start('Loading interface asset...');

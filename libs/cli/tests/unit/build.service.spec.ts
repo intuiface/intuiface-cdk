@@ -4,6 +4,7 @@ import path from 'path';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import {
     cleanBuildFolders,
+    getItemModuleDir,
     resetBuildMetadata,
     resolveBuildIcon,
     transpileTypeScript,
@@ -131,6 +132,25 @@ describe('build.service', () =>
             fs.removeSync(path.join(dir, 'tmp'));
 
             expect(() => cleanBuildFolders(dir, path.join('dist', 'Missing'))).not.toThrow();
+        });
+    });
+
+    describe('getItemModuleDir', () =>
+    {
+        it('gives each item its own folder of tmp/, so that no module is shared between items (review O16)', () =>
+        {
+            const tmpDir = path.join(dir, 'tmp');
+
+            expect(getItemModuleDir(tmpDir, 'Alpha')).toBe(path.join(tmpDir, 'Alpha'));
+            expect(getItemModuleDir(tmpDir, 'Beta')).toBe(path.join(tmpDir, 'Beta'));
+        });
+
+        it('stays in tmp/ whatever the name given to a build outside a workspace', () =>
+        {
+            const tmpDir = path.join(dir, 'tmp');
+
+            expect(getItemModuleDir(tmpDir, '..')).toBe(path.join(tmpDir, '__'));
+            expect(getItemModuleDir(tmpDir, '../my asset')).toBe(path.join(tmpDir, '___my_asset'));
         });
     });
 

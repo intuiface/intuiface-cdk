@@ -32,7 +32,10 @@ describe('workspace build (init → add → build --all)', () =>
         runCliOrThrow(dir, 'add', 'binding-converter', '-n', 'TextConverters', '-c', 'Text');
         fs.copySync(path.join(fixturesDir, 'text-converters'), path.join(dir, 'src', 'binding-converters', 'TextConverters'), { overwrite: true });
 
-        // Imported by Thermostat and TextConverters
+        runCliOrThrow(dir, 'add', 'interface-asset', '-n', 'Barometer', '-c', 'Home');
+        fs.copySync(path.join(fixturesDir, 'barometer'), path.join(dir, 'src', 'interface-assets', 'Barometer'), { overwrite: true });
+
+        // categories.ts is imported by Thermostat and TextConverters, reading.ts by Thermostat and Barometer
         fs.copySync(path.join(fixturesDir, 'shared'), path.join(dir, 'src', 'shared'));
 
         buildAll = runCli(dir, 'build', '--all');
@@ -47,7 +50,7 @@ describe('workspace build (init → add → build --all)', () =>
     {
         expect(buildAll.status, buildAll.output).toBe(0);
 
-        for (const name of ['Gauge', 'TextConverters', 'TextTools', 'Thermostat'])
+        for (const name of ['Barometer', 'Gauge', 'TextConverters', 'TextTools', 'Thermostat'])
         {
             expect(fs.existsSync(path.join(dir, 'dist', name, `${name}.ifd`)), `${name}.ifd`).toBe(true);
             expect(fs.existsSync(path.join(dir, 'dist', name, `${name}.js`)), `${name}.js`).toBe(true);
@@ -231,11 +234,36 @@ describe('workspace build (init → add → build --all)', () =>
         it('is compiled and bundled with each item that imports it', () =>
         {
             // Thermostat and TextConverters import src/shared/categories.ts. build --all loads every item in one Node.js
-            // process: the item built second gets the shared module from the module cache, with the same values.
+            // process, each from its own folder of tmp/, so each item loads its own copy of the shared module.
             // `build --name Thermostat` below builds it alone, and must give the same descriptor.
             expect(readIfd(dir, 'Thermostat')['if.category']).toBe('Home');
             expect(readIfd(dir, 'TextConverters')['if.category']).toBe('Text');
             expect(fs.existsSync(path.join(dir, 'dist', 'shared'))).toBe(false);
+        });
+
+        it('describes a decorated class it declares in the descriptor of each item that imports it (review O16)', () =>
+        {
+            // build --all loads Barometer, then Thermostat, in one Node.js process. Each item must get its own copy of
+            // src/shared/reading.ts, as in its bundle: a copy from the module cache would not run the decorators of
+            // Reading again, and Thermostat would reference a Reading schema its descriptor does not have.
+            for (const name of ['Barometer', 'Thermostat'])
+            {
+                const ifd = readIfd(dir, name);
+                expect(ifd.schemas.Reading, name).toMatchObject({
+                    id: 'Reading',
+                    properties: {
+                        value: { type: 'number', title: 'Value', default: 0 },
+                        time: { type: 'string', title: 'Time' }
+                    }
+                });
+                expect(ifd.resources.Reading, name).toMatchObject({ id: 'Reading' });
+                expect(ifd.resources[name]['if.interfaceAsset'], name).toBe(true);
+                expect(ifd.resources.Reading['if.interfaceAsset'], name).toBeUndefined();
+            }
+            expect(readIfd(dir, 'Barometer').schemas.Barometer.properties.readings).toMatchObject({ type: 'array', items: { $ref: 'Reading' } });
+            expect(readIfd(dir, 'Thermostat').schemas.Thermostat.properties.history).toMatchObject({ type: 'array', items: { $ref: 'Reading' } });
+            // The item's own @Asset runs after the one of Reading, which it imports
+            expect(readIfd(dir, 'Thermostat')).toMatchObject({ 'title': 'Smart thermostat', 'if.category': 'Home' });
         });
     });
 
