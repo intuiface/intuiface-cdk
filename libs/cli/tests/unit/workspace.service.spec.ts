@@ -66,6 +66,41 @@ describe('workspace.service', () =>
         expect(() => tryReadWorkspaceConfig(dir)).toThrow('Invalid workspace configuration');
     });
 
+    describe('items edited by hand (review R9)', () =>
+    {
+        const writeItems = (items: unknown[]): void =>
+        {
+            writeFiles(dir, { 'intuiface.workspace.json': { version: 1, name: 'ws', items } });
+        };
+        const alpha = sampleConfig.items[0];
+
+        it.each([
+            ['an empty name (would build into dist/ itself)', [{ ...alpha, name: '' }], `Invalid item #1 in 'intuiface.workspace.json': Invalid name ''. Use alphanumeric characters only and start with a letter.`],
+            ['a name webpack cannot use', [alpha, { ...alpha, name: 'My-Asset' }], `Invalid item 'My-Asset' in 'intuiface.workspace.json': Invalid name 'My-Asset'.`],
+            ['no name', [{ type: 'interface-asset', entry: 'src/A.ts' }], `Invalid item #1 in 'intuiface.workspace.json': "name" is missing.`],
+            ['an unknown type', [{ ...alpha, type: 'converter' }], `Invalid item 'Alpha' in 'intuiface.workspace.json': "type" must be 'interface-asset' or 'binding-converter', not "converter".`],
+            ['no type', [{ name: 'Alpha', entry: 'src/A.ts' }], `"type" must be 'interface-asset' or 'binding-converter', not null.`],
+            ['an empty entry', [{ ...alpha, entry: ' ' }], `Invalid item 'Alpha' in 'intuiface.workspace.json': "entry" must be the path of the item's TypeScript file`],
+            ['an icon that is not a path', [{ ...alpha, icon: 32 }], `"icon" must be the path of an image file, or be left out.`],
+            ['an item that is not an object', ['Alpha'], `Invalid item #1 in 'intuiface.workspace.json': an item is an object with a name, a type and an entry.`],
+            ['two names that only differ by case', [alpha, { ...alpha, name: 'ALPHA' }], `Invalid item 'ALPHA' in 'intuiface.workspace.json': 'Alpha' has the same name.`]
+        ])('rejects %s', (description, items, message) =>
+        {
+            writeItems(items);
+
+            expect(() => readWorkspaceConfig(dir)).toThrow(message);
+        });
+
+        it('accepts an item without icon, and an empty workspace', () =>
+        {
+            writeItems([alpha]);
+            expect(readWorkspaceConfig(dir).items).toEqual([alpha]);
+
+            writeItems([]);
+            expect(readWorkspaceConfig(dir).items).toEqual([]);
+        });
+    });
+
     it('rejects a workspace file that is not valid JSON', () =>
     {
         writeFiles(dir, { 'intuiface.workspace.json': '{ not json' });

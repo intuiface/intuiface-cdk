@@ -1,6 +1,7 @@
 import fs from 'fs-extra';
 import path from 'path';
-import { WorkspaceItem, WorkspaceConfig } from '../types.js';
+import { BuildType, WorkspaceItem, WorkspaceConfig } from '../types.js';
+import { validateGeneratedName } from '../utils/validators.js';
 
 const workspaceConfigFileName = 'intuiface.workspace.json';
 
@@ -37,12 +38,73 @@ export function readWorkspaceConfig(dir: string): WorkspaceConfig
     }
 
     const workspaceConfig = fs.readJsonSync(workspaceConfigPath, { throws: true }) as WorkspaceConfig;
-    if (!Array.isArray(workspaceConfig.items))
+    if (workspaceConfig == null || typeof workspaceConfig !== 'object' || !Array.isArray(workspaceConfig.items))
     {
         throw new Error(`Invalid workspace configuration in '${workspaceConfigFileName}'.`);
     }
 
+    // The file can be edited by hand: an item is checked before its name becomes a dist/ folder or a webpack name (review R9)
+    const namesInLowerCase = new Map<string, string>();
+    workspaceConfig.items.forEach((item, index) =>
+    {
+        validateWorkspaceItem(item, index);
+        // On Windows and macOS, two names that only differ by case build to the same dist/ folder
+        const sameName = namesInLowerCase.get(item.name.toLowerCase());
+        if (sameName != null)
+        {
+            throw new Error(`Invalid item '${item.name}' in '${workspaceConfigFileName}': '${sameName}' has the same name.`);
+        }
+        namesInLowerCase.set(item.name.toLowerCase(), item.name);
+    });
+
     return workspaceConfig;
+}
+
+const WORKSPACE_ITEM_TYPES: readonly BuildType[] = ['interface-asset', 'binding-converter'];
+
+/**
+ * Check an item of intuiface.workspace.json: a valid name, a known type, an entry file and, when set, an icon path.
+ * @param index position of the item, to name it in the error message when it has no usable name
+ * @throws with a message naming the item and the invalid field
+ */
+// eslint-disable-next-line prefer-arrow/prefer-arrow-functions
+function validateWorkspaceItem(item: unknown, index: number): asserts item is WorkspaceItem
+{
+    const fields = item != null && typeof item === 'object' ? item as Record<string, unknown> : undefined;
+    const itemLabel = typeof fields?.name === 'string' && fields.name !== '' ? `'${fields.name}'` : `#${index + 1}`;
+    const fail = (reason: string): never =>
+    {
+        throw new Error(`Invalid item ${itemLabel} in '${workspaceConfigFileName}': ${reason}`);
+    };
+
+    if (fields == null || Array.isArray(item))
+    {
+        return fail('an item is an object with a name, a type and an entry.');
+    }
+    if (typeof fields.name !== 'string')
+    {
+        return fail('"name" is missing.');
+    }
+    try
+    {
+        validateGeneratedName(fields.name);
+    }
+    catch (error)
+    {
+        return fail(error instanceof Error ? error.message : String(error));
+    }
+    if (!WORKSPACE_ITEM_TYPES.includes(fields.type as BuildType))
+    {
+        return fail(`"type" must be ${WORKSPACE_ITEM_TYPES.map((type) => `'${type}'`).join(' or ')}, not ${JSON.stringify(fields.type ?? null)}.`);
+    }
+    if (typeof fields.entry !== 'string' || fields.entry.trim() === '')
+    {
+        return fail('"entry" must be the path of the item\'s TypeScript file, e.g. "src/interface-assets/MyAsset/MyAsset.ts".');
+    }
+    if (fields.icon != null && (typeof fields.icon !== 'string' || fields.icon.trim() === ''))
+    {
+        return fail('"icon" must be the path of an image file, or be left out.');
+    }
 }
 
 // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
