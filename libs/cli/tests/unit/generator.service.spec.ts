@@ -14,7 +14,7 @@ import {
     WORKSPACE_BUILD_DEV_DEPENDENCIES,
     WORKSPACE_LINT_DEV_DEPENDENCIES
 } from '../../src/services/generator.service.js';
-import { cliRoot, createTempDir, removeTempDir } from '../helpers/test-utils.js';
+import { cliRoot, createTempDir, PNG_SIGNATURE, removeTempDir } from '../helpers/test-utils.js';
 
 const cliPackageVersion: string = fs.readJsonSync(path.join(cliRoot, 'package.json')).version;
 
@@ -252,6 +252,12 @@ describe('generator.service', () =>
 
             const templateIcon = path.join(cliRoot, 'src', 'templates', 'workspace-items', 'binding-converter', 'icon_converter_32.png');
             expect(fs.readFileSync(path.join(dir, 'icon_converter_32.png')).equals(fs.readFileSync(templateIcon))).toBe(true);
+        });
+
+        it('has a PNG icon template, not a Git LFS pointer (review R2: the checkout needs `lfs: true`)', () =>
+        {
+            const templateIcon = path.join(cliRoot, 'src', 'templates', 'workspace-items', 'binding-converter', 'icon_converter_32.png');
+            expect(fs.readFileSync(templateIcon).subarray(0, PNG_SIGNATURE.length).equals(PNG_SIGNATURE)).toBe(true);
         });
 
         it('uses the Custom category by default', () =>

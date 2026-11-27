@@ -1,7 +1,7 @@
 import fs from 'fs-extra';
 import path from 'path';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
-import { cliRoot, fixturesDir } from '../helpers/test-utils.js';
+import { cliRoot, fixturesDir, PNG_SIGNATURE } from '../helpers/test-utils.js';
 import { assertBuiltPackages, CliResult, createE2EDir, readIfd, removeE2EDir, runCli, runCliOrThrow, withoutVersion } from './e2e-utils.js';
 import { openPlayerHost, PlayerHost, PlayerHostLoad } from './player-host.js';
 
@@ -144,7 +144,10 @@ describe('workspace build (init → add → build --all)', () =>
         it('references and copies the default converter icon', () =>
         {
             expect(readIfd(dir, 'TextTools').icons).toEqual({ x32: 'icon_converter_32.png' });
-            expect(fs.readFileSync(path.join(dir, 'dist', 'TextTools', 'icon_converter_32.png')).equals(fs.readFileSync(converterIconTemplate))).toBe(true);
+            const builtIcon = fs.readFileSync(path.join(dir, 'dist', 'TextTools', 'icon_converter_32.png'));
+            expect(builtIcon.equals(fs.readFileSync(converterIconTemplate))).toBe(true);
+            // A Git LFS pointer instead of the image when the checkout does not fetch LFS files (review R2)
+            expect(builtIcon.subarray(0, PNG_SIGNATURE.length).equals(PNG_SIGNATURE)).toBe(true);
         });
     });
 

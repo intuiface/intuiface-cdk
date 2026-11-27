@@ -16,6 +16,9 @@ export const repoRoot = path.resolve(cliRoot, '..', '..');
 /** Fixture folder shared by the tests. */
 export const fixturesDir = path.resolve(helpersDir, '..', 'fixtures');
 
+/** First bytes of every PNG file (a Git LFS pointer is a text file starting with `version https://git-lfs`). */
+export const PNG_SIGNATURE = Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]);
+
 /**
  * Create an empty temporary folder.
  * @param prefix name prefix of the folder

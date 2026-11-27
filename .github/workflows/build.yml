@@ -6,6 +6,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
+        with:
+          # The converter icon template (*.png) is stored in Git LFS
+          lfs: true
       - uses: actions/setup-node@v7
         with:
           node-version: 24
