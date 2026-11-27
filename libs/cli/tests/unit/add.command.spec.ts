@@ -126,6 +126,40 @@ describe('add command', () =>
         expect(readWorkspaceConfig(dir).items).toHaveLength(1);
     });
 
+    it('rejects a name that only differs by case from an existing item (review R5)', () =>
+    {
+        addInterfaceAsset({ name: 'MyGallery', category: 'Tools' });
+        const assetFile = path.join(dir, 'src', 'interface-assets', 'MyGallery', 'MyGallery.ts');
+        fs.writeFileSync(assetFile, 'export class MyGallery { /* my code */ }\n');
+
+        expect(() => addInterfaceAsset({ name: 'Mygallery', category: 'Tools' }))
+            .toThrow(`A workspace item named 'MyGallery' already exists: names that only differ by case are not allowed.`);
+        expect(fs.readFileSync(assetFile, 'utf8')).toBe('export class MyGallery { /* my code */ }\n');
+        expect(readWorkspaceConfig(dir).items.map((item) => item.name)).toEqual(['MyGallery']);
+    });
+
+    it('keeps the code of an item removed from intuiface.workspace.json and added again (review R5)', () =>
+    {
+        addBindingConverter({ name: 'MyConverter', category: 'Tools' });
+        const converterFile = path.join(dir, 'src', 'binding-converters', 'MyConverter', 'MyConverter.ts');
+        fs.writeFileSync(converterFile, '// my code\n');
+        writeWorkspaceConfig(dir, { version: 1, name: 'ws', items: [] });
+
+        expect(() => addBindingConverter({ name: 'MyConverter', category: 'Tools' }))
+            .toThrow(`The folder 'src/binding-converters/MyConverter' already exists and is not empty.`);
+        expect(fs.readFileSync(converterFile, 'utf8')).toBe('// my code\n');
+        expect(readWorkspaceConfig(dir).items).toEqual([]);
+    });
+
+    it('generates an item in an empty folder of the same name', () =>
+    {
+        fs.ensureDirSync(path.join(dir, 'src', 'interface-assets', 'MyAsset'));
+
+        addInterfaceAsset({ name: 'MyAsset', category: 'Tools' });
+
+        expect(fs.existsSync(path.join(dir, 'src', 'interface-assets', 'MyAsset', 'MyAsset.ts'))).toBe(true);
+    });
+
     it.each(['my-asset', '1Asset', 'My Asset', '../Escape'])('rejects the invalid name %s without writing anything', (name) =>
     {
         expect(() => addInterfaceAsset({ name: name, category: 'Tools' })).toThrow(`Invalid name '${name}'`);

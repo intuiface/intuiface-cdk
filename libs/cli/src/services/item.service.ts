@@ -1,3 +1,4 @@
+import fs from 'fs-extra';
 import path from 'path';
 import chalk from 'chalk';
 import { WorkspaceItem } from '../types.js';
@@ -20,9 +21,13 @@ export function addWorkspaceItem(item: WorkspaceItemCreationInput): WorkspaceIte
     const dir = process.cwd();
     const workspaceConfig = readWorkspaceConfig(dir);
 
-    if (workspaceConfig.items.some((existingItem) => existingItem.name === item.name))
+    // Names that only differ by case are the same files on Windows and macOS, and the same dist/ folder (review R5)
+    const sameNameItem = workspaceConfig.items.find((existingItem) => existingItem.name.toLowerCase() === item.name.toLowerCase());
+    if (sameNameItem)
     {
-        throw new Error(`A workspace item named '${item.name}' already exists.`);
+        throw new Error(sameNameItem.name === item.name
+            ? `A workspace item named '${item.name}' already exists.`
+            : `A workspace item named '${sameNameItem.name}' already exists: names that only differ by case are not allowed.`);
     }
 
     // A missing icon would otherwise only fail at the end of the build
@@ -43,7 +48,16 @@ export function addWorkspaceItem(item: WorkspaceItemCreationInput): WorkspaceIte
         itemConfig.icon = item.icon;
     }
 
+    // Never replace the code of an item, e.g. one removed from intuiface.workspace.json by hand and added again (review R5)
     const itemDirectory = path.join(dir, relativeFolder);
+    if (fs.existsSync(itemDirectory) && fs.readdirSync(itemDirectory).length > 0)
+    {
+        throw new Error(
+            `The folder '${relativeFolder.replace(/\\/g, '/')}' already exists and is not empty. ` +
+            `To register an existing item, add it to ${getWorkspaceConfigFileName()} by hand; to create a new one, choose another name or remove that folder.`
+        );
+    }
+
     const generatedFiles = scaffoldWorkspaceItemFromTemplate(itemConfig, itemDirectory, { category: item.category });
     const hasEntryFile = generatedFiles.some((generatedFile) => generatedFile.relativePath === `${item.name}.ts`);
     if (!hasEntryFile)
