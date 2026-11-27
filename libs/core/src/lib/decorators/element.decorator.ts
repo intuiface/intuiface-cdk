@@ -1,4 +1,6 @@
 /* eslint-disable prefer-arrow/prefer-arrow-functions */
+import { registerElementClass } from './build-registry';
+
 /**
  * Options to configure `@Inject` decorator.
  */
@@ -107,8 +109,7 @@ export function DoNotInjectMethod() {
  *
  * An asset class must extends {@link IntuifaceElement}.
  *
- * @param options Options of the asset (name, display name, description, ...) The option 'name' is important to match the class name. And this can be use in a property to declare its type as another class name. 
- * For this see {@link IPropertyOptions | `itemType`}.
+ * @param options Options of the asset (name, display name, description, ...) The option 'name' is important to match the class name.
  *
  * @example Skeleton of an interface asset class:
  * ```ts
@@ -212,6 +213,9 @@ export function Asset(options?: IElementOptions): (cls: any) => any
             globalThis.intuiface_ifd_actions[targetName] = {};
         }
 
+        // For intuiface-cli: the descriptor lists the members the class inherits from its parent classes (the member
+        // decorators file them under the class that declares them), and takes its title from the class of the item
+        registerElementClass(targetName, ctor, { displayName: options.displayName, description: options.description, category: options.category });
     };
 }
 
@@ -252,5 +256,7 @@ export function Collection(options?: ICollectionOptions): (cls: any) => any
             globalThis.intuiface_ifd_actions[targetName] = {};
         }
 
+        // As @Asset; @Collection only sets the category of the descriptor
+        registerElementClass(targetName, ctor, { category: options.category });
     };
 }

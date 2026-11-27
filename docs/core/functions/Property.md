@@ -84,15 +84,17 @@ this.listItems.push(newItem);
 // call the notify property changed
 this.notifyPropertyChanged('listItems', this.listItems);
 ```
-Also the item class should extends [Watchable](../classes/Watchable.md) and have the decorator [Asset](Asset.md):
+Also the item class should extend [Watchable](../classes/Watchable.md), for the bindings to follow the changes of its properties.
+Its properties declared with `@Property` are described in the descriptor file (.ifd), no need of [\`@Asset\`](Asset.md):
 ```ts
-@Asset({
- name: 'ListItem',
- behaviors: []
-}))
 export class ListItem extends Watchable
 {
-     // Declare here properties for this class 
+     // Declare here properties for this class
+     @Property({
+         displayName: 'Label',
+         type: String
+     })
+     public label: string = '';
 }
 ```
 

@@ -25,7 +25,15 @@ import {
     TypeScriptCompilationError
 } from '../services/build.service.js';
 import { describeTsConfigChangesForTypeScript6 } from '../services/migration.service.js';
-import { buildSchemas, buildResources, buildIFDFile, writeIFDFile } from '../services/descriptor.service.js';
+import {
+    addInheritedMembers,
+    addReferencedClasses,
+    buildSchemas,
+    buildResources,
+    buildIFDFile,
+    useItemClassDetails,
+    writeIFDFile
+} from '../services/descriptor.service.js';
 
 // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
 export async function runBuildCommand(options: { name?: string; all?: boolean; type?: string; icon?: string; debug?: boolean }): Promise<void>
@@ -212,6 +220,9 @@ async function buildTarget(target: BuildTarget, debug?: boolean): Promise<void>
 
         const globalThisAny = globalThis as any;
         spinner.start('Loading interface asset metadata...');
+        addInheritedMembers();
+        addReferencedClasses();
+        useItemClassDetails();
         const schemas = buildSchemas(globalThisAny.intuiface_ifd_classes, target.buildType);
         spinner.succeed('Build Schema');
         const resources = buildResources(globalThisAny.intuiface_ifd_classes, target.buildType);

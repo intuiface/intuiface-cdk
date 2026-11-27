@@ -66,6 +66,12 @@ export async function resetBuildMetadata(target: BuildTarget): Promise<void>
     globalThisAny.intuiface_ifd_actions = {};
     globalThisAny.intuiface_ifd_params = {};
     globalThisAny.intuiface_ifd_triggers = {};
+    // Recorded by @intuiface/core (an older core records none), by name: the classes of the @Asset and @Collection
+    // elements and their title, description and category, and the Watchable classes used as `type` or `itemType`
+    // of a @Property (see addInheritedMembers, addReferencedClasses and useItemClassDetails)
+    globalThisAny.intuiface_ifd_element_classes = {};
+    globalThisAny.intuiface_ifd_element_details = {};
+    globalThisAny.intuiface_ifd_referenced_classes = {};
     globalThisAny.iaTitle = undefined;
     globalThisAny.iaDescription = undefined;
     globalThisAny.iaCategory = undefined;

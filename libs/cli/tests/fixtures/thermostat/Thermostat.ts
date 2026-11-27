@@ -1,13 +1,15 @@
-import { Action, Asset, IntuifaceElement, Parameter, Property, Trigger } from '@intuiface/core';
+import { Action, Asset, Parameter, Property, Trigger } from '@intuiface/core';
 import { formatTemperature } from './format';
 import { HOME_CATEGORY } from '../../shared/categories';
+import { Point } from '../../shared/point';
 import { Reading } from '../../shared/reading';
+import { Sensor } from '../../shared/sensor';
 
 /**
  * Interface asset fixture: several property types, an action with two parameters,
  * a trigger with a parameter, and a relative import (rewritten to `./format.js` by the CLI).
- * Its category comes from a module shared with the TextConverters fixture, and the item type of `history` from a
- * module shared with the Barometer fixture (src/shared/ in the workspace).
+ * Its category comes from a module shared with the TextConverters fixture; the item type of `history` and its parent
+ * class, which declares more members, from modules shared with the Barometer fixture (src/shared/ in the workspace).
  */
 @Asset({
     name: 'Thermostat',
@@ -16,7 +18,7 @@ import { Reading } from '../../shared/reading';
     category: HOME_CATEGORY,
     behaviors: []
 })
-export class Thermostat extends IntuifaceElement
+export class Thermostat extends Sensor
 {
     @Property({
         displayName: 'Target temperature',
@@ -56,6 +58,12 @@ export class Thermostat extends IntuifaceElement
         itemType: Reading
     })
     public history: Reading[] = [];
+
+    @Property({
+        displayName: 'Position',
+        type: Point
+    })
+    public position: Point = new Point();
 
     @Trigger({
         name: 'targetReached',
